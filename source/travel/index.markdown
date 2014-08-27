@@ -7,4 +7,4 @@ sharing: true
 footer: true
 ---
 
-[[Travel] Hampi-Bengaluru-Allepy Part 1]({{ root_url }}/blog/2014/07/30/travel-hampi-bengaluru-allepy-part-1/)
+[[travel] Hampi-Bengaluru-Allepy Part 1]({{ root_url }}/blog/2014/07/30/travel-hampi-bengaluru-allepy-part-1/)

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Travel] Hampi-Bengaluru-Allepy Part 1"
+title: "[travel] Hampi-Bengaluru-Allepy Part 1"
 date: 2014-07-30 23:31:46 +0530
 comments: true
 categories: 
@@ -31,10 +31,7 @@ After walking over some huge rocks by the river, we reached the King's Balance, 
 
 {%img /images/hampi-bengaluru-allepy/vitthal_front.JPG 'The Sun Chariot With The Vitthal Temple In The Background'%}
 
-The Vithhal Temple is probably one of the grandest in Hampi and possibly in all of India. It is housed inside a massive complex with ornately carved walls, entrances and pillars. The complex houses five mantapas, 4 in corners and 1 in the centre. The Sun Chariot from the [Konark temple](http://en.wikipedia.org/wiki/Konark_Sun_Temple) has been replicated here. The vehicle of Vitthal, Garuda (eagle) can be seen inside the chariot. The central mantap houses the famous singing pillars. 
-{% img /images/hampi-bengaluru-allepy/singing_pillars.JPG 'The Singing Pillars Of Hampi' %}
-These stone pillars have been designed in such a way as to create sounds of different musical instruments when hit by a stick or any  other object. The Queen would dance for the King in this mantap to music from the pillars. The roof of the central mantap was blown up by the Muslim rulers who invaded Vijaynagar in 1565 A.D., so the sound is fairly diminished now.
-
+The Vithhal Temple is probably one of the grandest in Hampi and possibly in all of India. It is housed inside a massive complex with ornately carved walls, entrances and pillars. The complex houses five mantapas, 4 in corners and 1 in the centre. The Sun Chariot from the [Konark temple](http://en.wikipedia.org/wiki/Konark_Sun_Temple) has been replicated here. The vehicle of Vitthal, Garuda (eagle) can be seen inside the chariot. The central mantap houses the famous singing pillars. These stone pillars have been designed in such a way as to create sounds of different musical instruments when hit by a stick or any  other object. The Queen would dance for the King in this mantap to the sound of music from the pillars. The roof of the central mantap was blown up by the Muslim rulers who invaded Vijaynagar in 1565 A.D., so the sound is fairly diminished now.
 
 The central mantap houses an inner temple, where the actual idols were kept and worshipped. The original idols of Vitthal and Rukumai were taken to Pandharpur in Maharashtra during the invasion of Vijaynagar. One unique feature  of the Vitthal temple is that the place where one performs ['pradakshina'](http://en.wikipedia.org/wiki/Parikrama) is underground.
 
