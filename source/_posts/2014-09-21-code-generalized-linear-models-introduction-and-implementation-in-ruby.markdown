@@ -65,9 +65,53 @@ The coefficient of x is interpreted as "one unit change in x leads to a change b
 ## Finding the coefficients of a GLM
 
 There are two major methods of finding the coefficients of a GLM: 
-* Newton-Raphson.
+* Maximum Likelihood Estimation (MLE).
 * Iteratively Reweighed Least Squares (IRLS).
 
-#### Newton-Raphson
+#### Maximum Likelihood Estimation
 
-The Newton-Raphson aims to find the co-efficients by trying to maximize the log likelihood function of the given distribution. The first derivative of the log likelihood wrt to beta is calculated (this is the jacobian), and so is the second derivative (this is the hessian). The coefficient is estimated by first choosing an initial estimate for x\_old, and then iteratively correcting this initial estimate by trying to bring the equation x\_new = x\_old - inverse(hessian)*jacobian to equality (with a pre-set tolerance level).
+The most obvious way of finding the coefficients of the given regression analysis is by maximizing the likelihood function of the distribution that the independent variables belong to. This becomes much easier when we take the natural logarithm of the likelihood function. Hence, the name 'Maximum Likelihood Estimation'. The Newton-Raphson method is used to this effect for maximizing the beta values (coefficients) of the log likelihood function.
+
+The first derivative of the log likelihood wrt to beta is calculated for all the xi terms (this is the jacobian matrix), and so is the second derivative (this is the hessian matrix). The coefficient is estimated by first choosing an initial estimate for x\_old, and then iteratively correcting this initial estimate by trying to bring the equation x\_new = x\_old - inverse(hessian)*jacobian ..(1) to equality (with a pre-set tolerance level). A good implementation of MLE can be found [here](http://petertessin.com/MaxLik.pdf).
+
+#### Iteratively Reweighed Least Squares
+
+Another useful but somewhat slower method of estimating the regression coefficients of a dataset is Iteratively Reweighed Least Squares. It is slower mainly because of the number of co-efficients involved and the somewhat extra memory that is taken up by the various matrices used by this method. The upside of IRLS is that it is very easy to implement as is easily extensible to any kind of GLM.
+
+The IRLS method also ultimately boils to the equation of the Newton Raphson (1), but the key difference between the two lies in the manner in which the hessian and jacobian matrices are calculated. The IRLS equation is written as b\_new = b\_old - (X'\*W\*X).inverse\*(X'\*(y - mu)). Here, the hessian matrix is -(X'\*W\*X) and the jacobian is (X'\*(y - mu)). Let's see the significance of each term in each of these matrices:
+
+* _X_ - The matrix of independent variables x1, x2,... alongwith the constant vector.
+* _X'_ - Transpose of X.
+* _W_ - The weight matrix. This is the most important entity in the equation and understanding it completely is paramount to gaining an understanding of the IRLS as whole.
+    - The _weight_ matrix is present to reduce favorism of the best fit curve towards larger values of x. Hence, the weight matrix acts as a mediator of sorts between the very small and very large values of x (if any). It is a diagonal matrix with each non-zero value representing the weight for each vector xi in the sample data.
+    - Calculation of the weight matrix is dependent on the probability distribution shown by the independent random variables. The weight expression can be calculated by taking a look at the equation of the hessian matrix. So for example, in case of logistic regression, the hessian is H = - (sigma - i=1  to n) pi\*(1-pi)\*xi\*xi'. Here, the weight matrix is a diagonal matrix with the ith entry as p(xi, b\_old)\*(1 - p(xi, b\_old)).
+* _(y - mu)_ - This is a matrix whose ith value the is difference between the actual corresponding value on the y-axis minus mu = x\*b_old. The value of this term is crucial in determining the error with which the coefficients have been calculated. Frequently an error of 10e-4 is acceptable.
+
+## Generalized Linear Models in Ruby
+
+Calculating the co-efficients and a host of other properties of a GLM is extremely simple and intuitive in Ruby. Let us see some examples of GLM by using the `statsample` and `statsample-glm` gems:
+
+First install `statsample-glm` by running `gem install statsample-glm` or if the gem isnt updated, clone my fork from [here](https://github.com/v0dro/statsample-glm), statsample will be downloaded alongwith it if it is not installed directly. Then download the CSV files from [here](link to CSV files).
+
+Statsample-glm supports a variety of GLM methods, giving the choice of both, IRLS and MLE algorithms to the user for almost every distribution, and all this through a simple and intutive API. The primary calling function for all distribtions and algorithms is `Statsample::GLM.compute(data_set, dependent, method, options)`. We specify the data set, dependent variable, type of regression and finally an options hash in which one can specify a variety of customization options for the computation.
+
+To compute the co-efficients of a logistic regression, try this code:
+
+```ruby
+# Code for computing coefficients and related attributes of a logistic regression.
+
+data_set = Statsample::CSV.read "logistic\_mle.csv"
+glm = Statsample::GLM.compute data_set, :y, :logistic, {constant: 1, algorithm: :mle} 
+# Options hash specifying addition of an extra constants vector all of whose values is '1' and also specifying that the MLE algorithm is to be used.
+
+puts glm.coefficients   
+  #=> [0.3270, 0.8147, -0.4031,-5.3658]
+puts glm.standard_error
+  #=> [0.4390, 0.4270, 0.3819,1.9045]
+puts glm.log_likelihood 
+  #=> -38.8669
+```
+
+Similar to the above code, you can try implementing poisson, normal or probit regression models and use the data files from the link above as sample data. Just go through the tests in the source code on GitHub or read the documentation for further details and feel free to drop me a mail in case you have any doubts/suggestions for improvements.
+
+Cheers!
