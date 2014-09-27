@@ -8,18 +8,17 @@ categories:
 
 ## Overview
 
-Most of us are well acquainted with linear regression and its use in analysig the relationship of one dataset with another. Linear regression basically shows the (possibly) linear relationship between one or more independent variables and a single dependent varible. But what if this relationship is not linear and the dependent and independent variables are associated with one another through some special function? This is where Generalized Linear Models (or GLMs) come in. This article will break down certain concepts behind GLMs which I found were explained in too complicated a manner in most other posts and their implementation in Ruby using the [statsample-glm](https://github.com/sciruby/statsample-glm) gem.
+Most of us are well acquainted with linear regression and its use in analysig the relationship of one dataset with another. Linear regression basically shows the (possibly) linear relationship between one or more independent variables and a single dependent variable. But what if this relationship is not linear and the dependent and independent variables are associated with one another through some special function? This is where Generalized Linear Models (or GLMs) come in. This article will explain some core GLM concepts and their implementation in Ruby using the [statsample-glm](https://github.com/sciruby/statsample-glm) gem.
 
 ## Generalized Linear Models Basics
 
-The basic linear regression equation relating the dependent varible (y) with the independent variable (x) looks something like 
+The basic linear regression equation relating the dependent varible _y_ with the independent variable _x_ looks something like 
 $$
 \begin{align}
     y = \beta_{0} + x*\beta_{1} 
 \end{align}
 $$
-This is the equation of a straight line, with $$ \begin{align} \beta_{0} 
-\end{align} $$ denoting the intercept of the line with the Y axis and beta1 denoting the slope of the line. GLMs take this a step further. They try to establish a relationship between _x_ and _y_ through _another function_ **g(x)**, which is called the _link function_. This function depends on the probability distribution displayed by the independent variables and their corresponding y values. In its simplest form, it can be denoted as _y = g(x)_.
+This is the equation of a straight line, with $$ \beta_{0} $$ denoting the intercept of the line with the Y axis and $$ \beta_{1} $$ denoting the slope of the line. GLMs take this a step further. They try to establish a relationship between _x_ and _y_ through _another function_ **g(x)**, which is called the _link function_. This function depends on the probability distribution displayed by the independent variables and their corresponding y values. In its simplest form, it can be denoted as _y = g(x)_.
 
 GLMs exist in many forms and have different names depending on the distribution of the independent variables. We will first explore the various kinds of GLMs and their defining parameters and then understand the different methods employed in finding the co-efficients. The different kinds of GLMs are:
 
@@ -31,7 +30,7 @@ GLMs exist in many forms and have different names depending on the distribution 
 Let's see all of the above one by one.
 
 #### Logisitic Regression
-Logistic, or Logit can be said to be one of the most fundamental of the GLMs. It is mainly used in cases where the independent variables show binomial distribution. In case of binomial distribution, the corresponding y value for each random variable is either 0 or 1. By using logit link function, one can determine the maximum probability of the occurence of each random variable. The values so obtained can be used to plot a sigmoid graph of x vs y, using which one can predict the probability of occurence of any random varible not already in the dataset. The defining parameter of the logistic is the probability y.
+Logistic, or Logit can be said to be one of the most fundamental of the GLMs. It is mainly used in cases where the independent variables show binomial distribution. In case of binomial distribution, the corresponding _y_ value for each random variable is either 0 or 1. By using logit link function, one can determine the maximum probability of the occurence of each independent random variable. The values so obtained can be used to plot a sigmoid graph of _x_ vs _y_, using which one can predict the probability of occurence of any random varible not already in the dataset. The defining parameter of the logistic is the probability _y_.
 
 The logit link function looks something like 
 $$
@@ -41,32 +40,26 @@ $$
 $$
 , where y is probability for the given value of x.
 
-Of special interest is the meaning of the values of beta0 and beta1. In case on linear regression, $$ \begin{align} \beta_{0} \end{align} $$ merely denoted the intercept while $$ \begin{align} \beta_{1} \end{align} $$ is the slope of the line. However, here, because of the nature of the link function, the coefficient $$ \begin{align} \beta_{1} \end{align} $$ of the independent variable is interpreted as "for every 1 increase in x the odds of y increase by $$ \begin{align} e^{\beta_{1}} \end{align} $$ times".
+Of special interest is the meaning of the values of the coefficients. In case on linear regression, $$ \beta_{0} $$ merely denotes the intercept while $$ \beta_{1} $$ is the slope of the line. However, here, because of the nature of the link function, the coefficient $$ \beta_{1} $$ of the independent variable is interpreted as "for every 1 increase in _x_ the odds of _y_ increase by $$ e^{\beta_{1}} $$ times".
 
-One thing that puzzled me when I started off with regression was the purpose behind having sevaral variables 
-$$
-\begin{align}
-(x_{1}, x_{2}...) 
-\end{align}
-$$
-in the same regression model at times. The purpose of multiple independent variables against a single dependent is so that we can compare the odds of $$ \begin{align} x_{1} \end{align} $$ against $$ \begin{align} x_{2} \end{align} $$.
+One thing that puzzled me when I started off with regression was the purpose behind having several variables $$ (x_{1}, x_{2}...) $$ in the same regression model at times. The purpose of multiple independent variables against a single dependent is so that we can compare the odds of $$ x_{1} $$ against $$ x_{2} $$.
 <!-- TODO: Put a graph of logit here -->
 
 #### Normal Regression
 
 Normal regression is used when the indepdent variables exihibit a normal probability distribution. The independents are assumed to be normal even in a simple linear or multiple regression, and the coefficients of a normal are more easily calculated using simple linear regression methods. But since this is another very important and commonly found data set, we will look into it.
 
-Normally distributed data is symmetric about the center and its mean is equal to its median. Commonly found normal distributions are heights of people and errors in measurement. The defining parameters of a normal distribution are the mean mu and variance sigma^2. The link function is simply y = x\*beta1 if no constant is present. The coefficient of the independent variable is interpreted in exactly the same manner as it is for linear regression.
+Normally distributed data is symmetric about the center and its mean is equal to its median. Commonly found normal distributions are heights of people and errors in measurement. The defining parameters of a normal distribution are the mean $$ \mu $$ and variance $$ \sigma^2 $$. The link function is simply $$ y = x*\beta_{1} $$ if no constant is present. The coefficient of the independent variable is interpreted in exactly the same manner as it is for linear regression.
 
 <!-- TODO: Graph of normal -->
 
 #### Poisson Regression
 
-A dataset often posseses a Poisson distribution when the data is measured by taking a very large number of trials, each with a small probability of success, for example, the number of earthquakes taking place in a region per year, mainly count data and contingency tables. Binomial distributions often converge into Poisson.
+A dataset often posseses a Poisson distribution when the data is measured by taking a very large number of trials, each with a small probability of success. For example, the number of earthquakes taking place in a region per year. It is mainly used in case of count data and contingency tables. Binomial distributions often converge into Poisson.
 
-The poisson is completely defined by the rate parameter lambda. The link function is ln(y) = x\*beta1, which can be written as y = exp(x\*beta1). Because the link function is logarithmic, it is also referred to as log-linear regression.
+The poisson is completely defined by the rate parameter lambda. The link function is $$ ln(y) = x*\beta_{1} $$, which can be written as $$ y = e^{x*\beta_{1}} $$. Because the link function is logarithmic, it is also referred to as log-linear regression.
 
-The meaning of the co-efficient in the case of poisson is "for increase 1 of x, y changes exp(beta1) times.". Notice that in logit, every 1 increase in the value of x caused the _odds_ of y to change by exp(beta1) times.
+The meaning of the co-efficient in the case of poisson is "for increase 1 of _x_, _y_ changes $$ y = e^\beta_{1} $$ times.". Notice that in logit, every 1 increase in the value of x caused the _odds_ of y to change by $$ y = e^\beta_{1} $$ times.
 
 <!-- TODO: Graph poisson regression -->
 
@@ -74,11 +67,11 @@ The meaning of the co-efficient in the case of poisson is "for increase 1 of x, 
 
 Probit is used for modeling binary outcome varialbles. Probit is similar to  logit, the choice between the two largely being a matter of personal preference.
 
-In the probit model, the inverse standard normal distribution of the probability is modeled as a linear combination of the predictors (in simple terms, something like y = phi(beta0 + x1\*beta1...), phi is the CDF of the standard normal). Therefore, the link function can be written as z = phi^-1(p) where phi(z) is the standard normal cumulative density function (here p is probability of the occurence of a random variable x and z is the z-score of the y value).
+In the probit model, the inverse standard normal distribution of the probability is modeled as a linear combination of the predictors (in simple terms, something like $$ y = \Phi(\beta_{0} + x_{1}*\beta_{1}...) $$ , where $$ \Phi $$ is the CDF of the standard normal). Therefore, the link function can be written as $$ z = \Phi^{-1}(p) $$ where $$ \Phi(z) $$ is the standard normal cumulative density function (here _p_ is probability of the occurence of a random variable _x_ and _z_ is the z-score of the y value).
 
-The fitted mean values of the probit are calculated by setting the upper limit of the normal CDF integral as x\*beta1, and lower limit as -inifinity. This is so because evaluating any normally distributed random number over its CDF will yield the probability of its occurence, which is what we expect from the fitted values of a probit.
+The fitted mean values of the probit are calculated by setting the upper limit of the normal CDF integral as $$ x*\beta_{1} $$, and lower limit as $$ -\infty $$. This is so because evaluating any normally distributed random number over its CDF will yield the probability of its occurence, which is what we expect from the fitted values of a probit.
 
-The coefficient of x is interpreted as "one unit change in x leads to a change beta1 in the z-score of y".
+The coefficient of _x_ is interpreted as "one unit change in _x_ leads to a change $$ \beta_{1} $$ in the z-score of _y_".
 
 <!-- TODO: Graph of probit -->
 
@@ -93,20 +86,36 @@ There are two major methods of finding the coefficients of a GLM:
 
 The most obvious way of finding the coefficients of the given regression analysis is by maximizing the likelihood function of the distribution that the independent variables belong to. This becomes much easier when we take the natural logarithm of the likelihood function. Hence, the name 'Maximum Likelihood Estimation'. The Newton-Raphson method is used to this effect for maximizing the beta values (coefficients) of the log likelihood function.
 
-The first derivative of the log likelihood wrt to beta is calculated for all the xi terms (this is the jacobian matrix), and so is the second derivative (this is the hessian matrix). The coefficient is estimated by first choosing an initial estimate for x\_old, and then iteratively correcting this initial estimate by trying to bring the equation x\_new = x\_old - inverse(hessian)*jacobian ..(1) to equality (with a pre-set tolerance level). A good implementation of MLE can be found [here](http://petertessin.com/MaxLik.pdf).
+The first derivative of the log likelihood wrt to beta is calculated for all the $$ x_{i} $$ terms (this is the jacobian matrix), and so is the second derivative (this is the hessian matrix). The coefficient is estimated by first choosing an initial estimate for $$ x_{old} $$, and then iteratively correcting this initial estimate by trying to bring the equation
+
+$$ 
+\begin{align}
+x_{new} = x_{old} - inverse(hessian)*jacobian   ..(1) 
+\end{align}
+$$
+
+to equality (with a pre-set tolerance level). A good implementation of MLE can be found [here](http://petertessin.com/MaxLik.pdf).
 
 #### Iteratively Reweighed Least Squares
 
 Another useful but somewhat slower method of estimating the regression coefficients of a dataset is Iteratively Reweighed Least Squares. It is slower mainly because of the number of co-efficients involved and the somewhat extra memory that is taken up by the various matrices used by this method. The upside of IRLS is that it is very easy to implement as is easily extensible to any kind of GLM.
 
-The IRLS method also ultimately boils to the equation of the Newton Raphson (1), but the key difference between the two lies in the manner in which the hessian and jacobian matrices are calculated. The IRLS equation is written as b\_new = b\_old - (X'\*W\*X).inverse\*(X'\*(y - mu)). Here, the hessian matrix is -(X'\*W\*X) and the jacobian is (X'\*(y - mu)). Let's see the significance of each term in each of these matrices:
+The IRLS method also ultimately boils to the equation of the Newton Raphson (1), but the key difference between the two lies in the manner in which the hessian and jacobian matrices are calculated. The IRLS equation is written as:
+  
+$$
+\begin{align}
+    b_{new} = b_{old} - inverse(X'*W*X)*(X'*(y - \mu))
+\end{align}
+$$
 
-* _X_ - The matrix of independent variables x1, x2,... alongwith the constant vector.
+Here, the hessian matrix is $$ -(X'*W*X) $$ and the jacobian is $$ (X'*(y - \mu)) $$. Let's see the significance of each term in each of these matrices:
+
+* _X_ - The matrix of independent variables  $$ x_{1}, x_{2},... $$ alongwith the constant vector.
 * _X'_ - Transpose of X.
 * _W_ - The weight matrix. This is the most important entity in the equation and understanding it completely is paramount to gaining an understanding of the IRLS as whole.
-    - The _weight_ matrix is present to reduce favorism of the best fit curve towards larger values of x. Hence, the weight matrix acts as a mediator of sorts between the very small and very large values of x (if any). It is a diagonal matrix with each non-zero value representing the weight for each vector xi in the sample data.
-    - Calculation of the weight matrix is dependent on the probability distribution shown by the independent random variables. The weight expression can be calculated by taking a look at the equation of the hessian matrix. So for example, in case of logistic regression, the hessian is H = - (sigma - i=1  to n) pi\*(1-pi)\*xi\*xi'. Here, the weight matrix is a diagonal matrix with the ith entry as p(xi, b\_old)\*(1 - p(xi, b\_old)).
-* _(y - mu)_ - This is a matrix whose ith value the is difference between the actual corresponding value on the y-axis minus mu = x\*b_old. The value of this term is crucial in determining the error with which the coefficients have been calculated. Frequently an error of 10e-4 is acceptable.
+    - The _weight_ matrix is present to reduce favorism of the best fit curve towards larger values of x. Hence, the weight matrix acts as a mediator of sorts between the very small and very large values of x (if any). It is a diagonal matrix with each non-zero value representing the weight for each vector $$ x_{i} $$ in the sample data.
+    - Calculation of the weight matrix is dependent on the probability distribution shown by the independent random variables. The weight expression can be calculated by taking a look at the equation of the hessian matrix. So in the case of logistic regression, the weight matrix is a diagonal matrix with the ith entry as $$ p(x_{i}, \beta_{old})*(1 - p(x_{i}, \beta_{old})) $$.
+* $$ (y - \mu) $$ - This is a matrix whose ith value the is difference between the actual corresponding value on the y-axis minus $$ \mu = x*b_{old} $$. The value of this term is crucial in determining the error with which the coefficients have been calculated. Frequently an error of 10e-4 is acceptable.
 
 ## Generalized Linear Models in Ruby
 
