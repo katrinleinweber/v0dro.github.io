@@ -12,9 +12,17 @@ Most of us are well acquainted with linear regression and its use in analysig th
 
 ## Generalized Linear Models Basics
 
-The basic linear regression equation relating the dependent varible (y) with the independent variable (x) looks something like y = beta0 + x*beta1. This is the equation of a straight line, with beta0 denoting the intercept of the line with the Y axis and beta1 denoting the slope of the line. GLMs take this a step further. They try to establish a relationship between x and y _through another function_ **g**, which is called the _link function_. This function depends on the probability distribution displayed by the independent variables and their corresponding y values. In its simplest form, it can be denoted as _y = g(x)_.
+The basic linear regression equation relating the dependent varible (y) with the independent variable (x) looks something like 
+$$
+\begin{align}
+    y = \beta_{0} + x*\beta_{1} 
+\end{align}
+$$
+This is the equation of a straight line, with $$ \begin{align} \beta_{0} 
+\end{align} $$ denoting the intercept of the line with the Y axis and beta1 denoting the slope of the line. GLMs take this a step further. They try to establish a relationship between _x_ and _y_ through _another function_ **g(x)**, which is called the _link function_. This function depends on the probability distribution displayed by the independent variables and their corresponding y values. In its simplest form, it can be denoted as _y = g(x)_.
 
 GLMs exist in many forms and have different names depending on the distribution of the independent variables. We will first explore the various kinds of GLMs and their defining parameters and then understand the different methods employed in finding the co-efficients. The different kinds of GLMs are:
+
 * Logistic (or logit) regression.
 * Normal regression.
 * Poisson regression.
@@ -25,11 +33,23 @@ Let's see all of the above one by one.
 #### Logisitic Regression
 Logistic, or Logit can be said to be one of the most fundamental of the GLMs. It is mainly used in cases where the independent variables show binomial distribution. In case of binomial distribution, the corresponding y value for each random variable is either 0 or 1. By using logit link function, one can determine the maximum probability of the occurence of each random variable. The values so obtained can be used to plot a sigmoid graph of x vs y, using which one can predict the probability of occurence of any random varible not already in the dataset. The defining parameter of the logistic is the probability y.
 
-The logit link function looks something like y = exp(beta0 + x\*beta1)/(1 + exp(beta0 + x\*beta1)), where y is probability for the given value of x.
+The logit link function looks something like 
+$$
+\begin{align}
+    y = \frac{e^{(\beta_{0} + x*\beta_{1})}}{1 + e^{(\beta_{0} + x*\beta_{1})}}
+\end{align}
+$$
+, where y is probability for the given value of x.
 
-Of special interest is the meaning of the values of beta0 and beta1. In case on linear regression, beta0 merely denoted the intercept while beta1 the slope of the line. However, here, because of the nature of the link function, the coefficient beta1 of the independent variable is interpreted as "for every 1 increase in x the odds of y increase by exp(beta1) times".
+Of special interest is the meaning of the values of beta0 and beta1. In case on linear regression, $$ \begin{align} \beta_{0} \end{align} $$ merely denoted the intercept while $$ \begin{align} \beta_{1} \end{align} $$ is the slope of the line. However, here, because of the nature of the link function, the coefficient $$ \begin{align} \beta_{1} \end{align} $$ of the independent variable is interpreted as "for every 1 increase in x the odds of y increase by $$ \begin{align} e^{\beta_{1}} \end{align} $$ times".
 
-One thing that puzzled me when I started off with regression was that why do we have multiple independent variables (x1, x2...) sometimes. The purpose of multiple independent variables against a single dependent is so that we can compare the odds of x1 against x2.
+One thing that puzzled me when I started off with regression was the purpose behind having sevaral variables 
+$$
+\begin{align}
+(x_{1}, x_{2}...) 
+\end{align}
+$$
+in the same regression model at times. The purpose of multiple independent variables against a single dependent is so that we can compare the odds of $$ \begin{align} x_{1} \end{align} $$ against $$ \begin{align} x_{2} \end{align} $$.
 <!-- TODO: Put a graph of logit here -->
 
 #### Normal Regression
@@ -64,7 +84,8 @@ The coefficient of x is interpreted as "one unit change in x leads to a change b
 
 ## Finding the coefficients of a GLM
 
-There are two major methods of finding the coefficients of a GLM: 
+There are two major methods of finding the coefficients of a GLM:
+
 * Maximum Likelihood Estimation (MLE).
 * Iteratively Reweighed Least Squares (IRLS).
 
@@ -91,7 +112,7 @@ The IRLS method also ultimately boils to the equation of the Newton Raphson (1),
 
 Calculating the co-efficients and a host of other properties of a GLM is extremely simple and intuitive in Ruby. Let us see some examples of GLM by using the `statsample` and `statsample-glm` gems:
 
-First install `statsample-glm` by running `gem install statsample-glm` or if the gem isnt updated, clone my fork from [here](https://github.com/v0dro/statsample-glm), statsample will be downloaded alongwith it if it is not installed directly. Then download the CSV files from [here](link to CSV files).
+First install `statsample-glm` by running `gem install statsample-glm`, statsample will be downloaded alongwith it if it is not installed directly. Then download the CSV files from [here](link to CSV files).
 
 Statsample-glm supports a variety of GLM methods, giving the choice of both, IRLS and MLE algorithms to the user for almost every distribution, and all this through a simple and intutive API. The primary calling function for all distribtions and algorithms is `Statsample::GLM.compute(data_set, dependent, method, options)`. We specify the data set, dependent variable, type of regression and finally an options hash in which one can specify a variety of customization options for the computation.
 
@@ -100,7 +121,7 @@ To compute the co-efficients of a logistic regression, try this code:
 ```ruby
 # Code for computing coefficients and related attributes of a logistic regression.
 
-data_set = Statsample::CSV.read "logistic\_mle.csv"
+data_set = Statsample::CSV.read "logistic_mle.csv"
 glm = Statsample::GLM.compute data_set, :y, :logistic, {constant: 1, algorithm: :mle} 
 # Options hash specifying addition of an extra constants vector all of whose values is '1' and also specifying that the MLE algorithm is to be used.
 
