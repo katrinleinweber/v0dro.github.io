@@ -8,7 +8,7 @@ categories:
 
 ## Overview
 
-Most of us are well acquainted with linear regression and its use in analysig the relationship of one dataset with another. Linear regression basically shows the (possibly) linear relationship between one or more independent variables and a single dependent variable. But what if this relationship is not linear and the dependent and independent variables are associated with one another through some special function? This is where Generalized Linear Models (or GLMs) come in. This article will explain some core GLM concepts and their implementation in Ruby using the [statsample-glm](https://github.com/sciruby/statsample-glm) gem.
+Most of us are well acquainted with linear regression and its use in analysig the relationship of one dataset with another. Linear regression basically shows the (possibly) linear relationship between one or more independent variables and a single dependent variable. But what if this relationship is not linear and the dependent and independent variables are associated with one another through some special function? This is where Generalized Linear Models (or GLMs) come in. This article will explain some core [GLM](http://en.wikipedia.org/wiki/Generalized_linear_model) concepts and their implementation in Ruby using the [statsample-glm](https://github.com/sciruby/statsample-glm) gem.
 
 ## Generalized Linear Models Basics
 
@@ -38,12 +38,15 @@ $$
     y = \frac{e^{(\beta_{0} + x*\beta_{1})}}{1 + e^{(\beta_{0} + x*\beta_{1})}}
 \end{align}
 $$
-, where y is probability for the given value of x.
+, where y is the probability for the given value of x.
 
 Of special interest is the meaning of the values of the coefficients. In case on linear regression, $$ \beta_{0} $$ merely denotes the intercept while $$ \beta_{1} $$ is the slope of the line. However, here, because of the nature of the link function, the coefficient $$ \beta_{1} $$ of the independent variable is interpreted as "for every 1 increase in _x_ the odds of _y_ increase by $$ e^{\beta_{1}} $$ times".
 
-One thing that puzzled me when I started off with regression was the purpose behind having several variables $$ (x_{1}, x_{2}...) $$ in the same regression model at times. The purpose of multiple independent variables against a single dependent is so that we can compare the odds of $$ x_{1} $$ against $$ x_{2} $$.
-<!-- TODO: Put a graph of logit here -->
+One thing that puzzled me when I started off with regression was the purpose of having several variables $$ (x_{1}, x_{2}...) $$ in the same regression model at times. The purpose of multiple independent variables against a single dependent is so that we can compare the odds of $$ x_{1} $$ against $$ x_{2} $$.
+
+The logistic graph generally looks like this:
+
+{% img center /images/glm/logistic.gif "Generic Graph of Logistic Regression." %}
 
 #### Normal Regression
 
@@ -51,17 +54,21 @@ Normal regression is used when the indepdent variables exihibit a normal probabi
 
 Normally distributed data is symmetric about the center and its mean is equal to its median. Commonly found normal distributions are heights of people and errors in measurement. The defining parameters of a normal distribution are the mean $$ \mu $$ and variance $$ \sigma^2 $$. The link function is simply $$ y = x*\beta_{1} $$ if no constant is present. The coefficient of the independent variable is interpreted in exactly the same manner as it is for linear regression.
 
-<!-- TODO: Graph of normal -->
+A normal regression graph generally looks like this:
+  
+{% img center /images/glm/normal.png "Generic Graph of Normal Regression" %}
 
 #### Poisson Regression
 
 A dataset often posseses a Poisson distribution when the data is measured by taking a very large number of trials, each with a small probability of success. For example, the number of earthquakes taking place in a region per year. It is mainly used in case of count data and contingency tables. Binomial distributions often converge into Poisson.
 
-The poisson is completely defined by the rate parameter lambda. The link function is $$ ln(y) = x*\beta_{1} $$, which can be written as $$ y = e^{x*\beta_{1}} $$. Because the link function is logarithmic, it is also referred to as log-linear regression.
+The poisson is completely defined by the rate parameter $$ \lambda $$. The link function is $$ ln(y) = x*\beta_{1} $$, which can be written as $$ y = e^{x*\beta_{1}} $$. Because the link function is logarithmic, it is also referred to as log-linear regression.
 
 The meaning of the co-efficient in the case of poisson is "for increase 1 of _x_, _y_ changes $$ y = e^\beta_{1} $$ times.". Notice that in logit, every 1 increase in the value of x caused the _odds_ of y to change by $$ y = e^\beta_{1} $$ times.
 
-<!-- TODO: Graph poisson regression -->
+A poisson graph looks something like this:
+  
+{% img center /images/glm/poisson.png "Graph of Poisson Regression" %}
 
 #### Probit Regression
 
@@ -73,7 +80,9 @@ The fitted mean values of the probit are calculated by setting the upper limit o
 
 The coefficient of _x_ is interpreted as "one unit change in _x_ leads to a change $$ \beta_{1} $$ in the z-score of _y_".
 
-<!-- TODO: Graph of probit -->
+Looking at the graph of probit, one can see the similarities between logit and probit:
+  
+{% img center /images/glm/probit.png %}
 
 ## Finding the coefficients of a GLM
 
@@ -86,7 +95,7 @@ There are two major methods of finding the coefficients of a GLM:
 
 The most obvious way of finding the coefficients of the given regression analysis is by maximizing the likelihood function of the distribution that the independent variables belong to. This becomes much easier when we take the natural logarithm of the likelihood function. Hence, the name 'Maximum Likelihood Estimation'. The Newton-Raphson method is used to this effect for maximizing the beta values (coefficients) of the log likelihood function.
 
-The first derivative of the log likelihood wrt to beta is calculated for all the $$ x_{i} $$ terms (this is the jacobian matrix), and so is the second derivative (this is the hessian matrix). The coefficient is estimated by first choosing an initial estimate for $$ x_{old} $$, and then iteratively correcting this initial estimate by trying to bring the equation
+The first derivative of the log likelihood wrt to $$ \beta $$ is calculated for all the $$ x_{i} $$ terms (this is the jacobian matrix), and so is the second derivative (this is the hessian matrix). The coefficient is estimated by first choosing an initial estimate for $$ x_{old} $$, and then iteratively correcting this initial estimate by trying to bring the equation
 
 $$ 
 \begin{align}
@@ -121,7 +130,7 @@ Here, the hessian matrix is $$ -(X'*W*X) $$ and the jacobian is $$ (X'*(y - \mu)
 
 Calculating the co-efficients and a host of other properties of a GLM is extremely simple and intuitive in Ruby. Let us see some examples of GLM by using the `statsample` and `statsample-glm` gems:
 
-First install `statsample-glm` by running `gem install statsample-glm`, statsample will be downloaded alongwith it if it is not installed directly. Then download the CSV files from [here](link to CSV files).
+First install `statsample-glm` by running `gem install statsample-glm`, statsample will be downloaded alongwith it if it is not installed directly. Then download the CSV files from [here](https://github.com/SciRuby/statsample-glm/blob/master/spec/data/logistic_mle.csv).
 
 Statsample-glm supports a variety of GLM methods, giving the choice of both, IRLS and MLE algorithms to the user for almost every distribution, and all this through a simple and intutive API. The primary calling function for all distribtions and algorithms is `Statsample::GLM.compute(data_set, dependent, method, options)`. We specify the data set, dependent variable, type of regression and finally an options hash in which one can specify a variety of customization options for the computation.
 
@@ -145,3 +154,12 @@ puts glm.log_likelihood
 Similar to the above code, you can try implementing poisson, normal or probit regression models and use the data files from the link above as sample data. Just go through the tests in the source code on GitHub or read the documentation for further details and feel free to drop me a mail in case you have any doubts/suggestions for improvements.
 
 Cheers!
+
+------------------
+
+###### Further Reading
+* [A good explanation of IRLS](https://cise.ufl.edu/class/cis6930sp10esl/downloads/LogisticRegression.pdf).
+* [Logistic Regression and Newtons Method](http://www.stat.cmu.edu/~cshalizi/402/lectures/14-logistic-regression/lecture-14.pdf).
+* [A good resource on the how and why behind the calculation of standard errors](https://files.nyu.edu/mrg217/public/mle_introduction1.pdf).
+* [Logit and Probit](http://www.columbia.edu/~so33/SusDev/Lecture_9.pdf).
+* [A very good explanation of the Poisson regression](http://www.nesug.org/Proceedings/nesug10/sa/sa04.pdf).
