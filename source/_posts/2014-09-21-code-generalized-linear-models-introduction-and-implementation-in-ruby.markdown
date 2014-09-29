@@ -15,12 +15,12 @@ Most of us are well acquainted with linear regression and its use in analysig th
 The basic linear regression equation relating the dependent varible _y_ with the independent variable _x_ looks something like 
 $$
 \begin{align}
-    y = \beta_{0} + x*\beta_{1} 
+    y = \beta_{0} + x_{1}*\beta_{1} + x_{2}*\beta_{2}...
 \end{align}
 $$
 This is the equation of a straight line, with $$ \beta_{0} $$ denoting the intercept of the line with the Y axis and $$ \beta_{1} $$ denoting the slope of the line. GLMs take this a step further. They try to establish a relationship between _x_ and _y_ through _another function_ **g(x)**, which is called the _link function_. This function depends on the probability distribution displayed by the independent variables and their corresponding y values. In its simplest form, it can be denoted as _y = g(x)_.
 
-GLMs exist in many forms and have different names depending on the distribution of the independent variables. We will first explore the various kinds of GLMs and their defining parameters and then understand the different methods employed in finding the co-efficients. The different kinds of GLMs are:
+GLM can be used to model numerous relations, depending on the distribution of the dependent conditional on the independent variables. We will first explore the various kinds of GLMs and their defining parameters and then understand the different methods employed in finding the co-efficients. The most common GLMs are:
 
 * Logistic (or logit) regression.
 * Normal regression.
@@ -30,7 +30,7 @@ GLMs exist in many forms and have different names depending on the distribution 
 Let's see all of the above one by one.
 
 #### Logisitic Regression
-Logistic, or Logit can be said to be one of the most fundamental of the GLMs. It is mainly used in cases where the independent variables show binomial distribution. In case of binomial distribution, the corresponding _y_ value for each random variable is either 0 or 1. By using logit link function, one can determine the maximum probability of the occurence of each independent random variable. The values so obtained can be used to plot a sigmoid graph of _x_ vs _y_, using which one can predict the probability of occurence of any random varible not already in the dataset. The defining parameter of the logistic is the probability _y_.
+Logistic, or Logit can be said to be one of the most fundamental of the GLMs. It is mainly used in cases where the independent variables show a binomial distribution (conditional on the dependent). In case of the binomial distribution, the number of successes are modelled on a fixed number of tries. The Bernoulli distribution is a special case of binomial where the outcome is either 0 or 1 (which is the case in the example at the bottom of this post). By using logit link function, one can determine the maximum probability of the occurence of each independent random variable. The values so obtained can be used to plot a sigmoid graph of _x_ vs _y_, using which one can predict the probability of occurence of any random varible not already in the dataset. The defining parameter of the logistic is the probability _y_.
 
 The logit link function looks something like 
 $$
@@ -42,7 +42,7 @@ $$
 
 Of special interest is the meaning of the values of the coefficients. In case on linear regression, $$ \beta_{0} $$ merely denotes the intercept while $$ \beta_{1} $$ is the slope of the line. However, here, because of the nature of the link function, the coefficient $$ \beta_{1} $$ of the independent variable is interpreted as "for every 1 increase in _x_ the odds of _y_ increase by $$ e^{\beta_{1}} $$ times".
 
-One thing that puzzled me when I started off with regression was the purpose of having several variables $$ (x_{1}, x_{2}...) $$ in the same regression model at times. The purpose of multiple independent variables against a single dependent is so that we can compare the odds of $$ x_{1} $$ against $$ x_{2} $$.
+One thing that puzzled me when I started off with regression was the purpose of having several variables $$ (x_{1}, x_{2}...) $$ in the same regression model at times. The purpose of multiple independent variables against a single dependent is so that we can compare the odds of $$ x_{1} $$ against $$ x_{2} $$.  So basically, if you have multiple variables, it is to compare the effect on the dependent of one variable, when the others are constant. To compare the effect of one variable without considering the others, one could use an  independent regression for each one.
 
 The logistic graph generally looks like this:
 
@@ -50,7 +50,7 @@ The logistic graph generally looks like this:
 
 #### Normal Regression
 
-Normal regression is used when the indepdent variables exihibit a normal probability distribution. The independents are assumed to be normal even in a simple linear or multiple regression, and the coefficients of a normal are more easily calculated using simple linear regression methods. But since this is another very important and commonly found data set, we will look into it.
+Normal regression is used when the DEPENDENT variable exhibits a normal probability distribution, CONDITIONAL ON THE independent variables. The independents are assumed to be normal even in a simple linear or multiple regression, and the coefficients of a normal are more easily calculated using simple linear regression methods. But since this is another very important and commonly found data set, we will look into it.
 
 Normally distributed data is symmetric about the center and its mean is equal to its median. Commonly found normal distributions are heights of people and errors in measurement. The defining parameters of a normal distribution are the mean $$ \mu $$ and variance $$ \sigma^2 $$. The link function is simply $$ y = x*\beta_{1} $$ if no constant is present. The coefficient of the independent variable is interpreted in exactly the same manner as it is for linear regression.
 
@@ -60,11 +60,11 @@ A normal regression graph generally looks like this:
 
 #### Poisson Regression
 
-A dataset often posseses a Poisson distribution when the data is measured by taking a very large number of trials, each with a small probability of success. For example, the number of earthquakes taking place in a region per year. It is mainly used in case of count data and contingency tables. Binomial distributions often converge into Poisson.
+A dataset often posseses a Poisson distribution when the data is measured by taking a very large number of trials, each with a small probability of success. For example, the number of earthquakes taking place in a region per year. It is mainly used in case of count data and contingency tables. Binomial distributions often converge into Poisson when the number of cases(n) is large and probability of success(p) small.
 
 The poisson is completely defined by the rate parameter $$ \lambda $$. The link function is $$ ln(y) = x*\beta_{1} $$, which can be written as $$ y = e^{x*\beta_{1}} $$. Because the link function is logarithmic, it is also referred to as log-linear regression.
 
-The meaning of the co-efficient in the case of poisson is "for increase 1 of _x_, _y_ changes $$ y = e^\beta_{1} $$ times.". Notice that in logit, every 1 increase in the value of x caused the _odds_ of y to change by $$ y = e^\beta_{1} $$ times.
+The meaning of the co-efficient in the case of poisson is "for increase 1 of _x_, _y_ changes $$ y = e^\beta_{1} $$ times.".
 
 A poisson graph looks something like this:
   
@@ -109,7 +109,7 @@ to equality (with a pre-set tolerance level). A good implementation of MLE can b
 
 Another useful but somewhat slower method of estimating the regression coefficients of a dataset is Iteratively Reweighed Least Squares. It is slower mainly because of the number of co-efficients involved and the somewhat extra memory that is taken up by the various matrices used by this method. The upside of IRLS is that it is very easy to implement as is easily extensible to any kind of GLM.
 
-The IRLS method also ultimately boils to the equation of the Newton Raphson (1), but the key difference between the two lies in the manner in which the hessian and jacobian matrices are calculated. The IRLS equation is written as:
+The IRLS method also ultimately boils to the equation of the Newton Raphson (1), but the key difference between the two is that in MLE we try to maximize the likelihood but in IRLS we try to minimize the errors. Therefore, the manner in which the hessian and jacobian matrices are calculated is quite different. The IRLS equation is written as:
   
 $$
 \begin{align}
@@ -124,6 +124,7 @@ Here, the hessian matrix is $$ -(X'*W*X) $$ and the jacobian is $$ (X'*(y - \mu)
 * _W_ - The weight matrix. This is the most important entity in the equation and understanding it completely is paramount to gaining an understanding of the IRLS as whole.
     - The _weight_ matrix is present to reduce favorism of the best fit curve towards larger values of x. Hence, the weight matrix acts as a mediator of sorts between the very small and very large values of x (if any). It is a diagonal matrix with each non-zero value representing the weight for each vector $$ x_{i} $$ in the sample data.
     - Calculation of the weight matrix is dependent on the probability distribution shown by the independent random variables. The weight expression can be calculated by taking a look at the equation of the hessian matrix. So in the case of logistic regression, the weight matrix is a diagonal matrix with the ith entry as $$ p(x_{i}, \beta_{old})*(1 - p(x_{i}, \beta_{old})) $$.
+    - The W matrix is (the inverse?) of the variance/covariance matrix. On logistic and Poisson regression, the variance on each case depend on the mean, so that is the meaning of $$ p(x_{i}, \beta_{old})*(1 - p(x_{i}, \beta_{old})) $$.
 * $$ (y - \mu) $$ - This is a matrix whose ith value the is difference between the actual corresponding value on the y-axis minus $$ \mu = x*b_{old} $$. The value of this term is crucial in determining the error with which the coefficients have been calculated. Frequently an error of 10e-4 is acceptable.
 
 ## Generalized Linear Models in Ruby
