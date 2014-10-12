@@ -6,9 +6,10 @@ comments: true
 sharing: true
 footer: true
 ---
+[Accessing Matrix Elements When Expressed As A Contiguous 1D Array]({{ root_url }}/blog/2014/10/12/accessing-matrix-elements-when-expressed-as-a-contiguous-1d-array/)
 
-[[code]Managing Large Open Source Projects: for Beginners.]({{ root_url }}/blog/2014/08/27/code-managing-large-open-source-projects-for-beginners/)
+[An Overview Of Automatic Speech Recognition]({{ root_url }}/blog/2014/10/01/an-overview-of-automatic-speech-recognition/)
 
 [[code]Generalized Linear Models: Introduction and Implementation in Ruby.]({{ root_url }}/blog/2014/09/21/code-generalized-linear-models-introduction-and-implementation-in-ruby/)
 
-[An Overview Of Automatic Speech Recognition]({{ root_url }}/blog/2014/10/01/an-overview-of-automatic-speech-recognition/)
+[[code]Managing Large Open Source Projects: for Beginners.]({{ root_url }}/blog/2014/08/27/code-managing-large-open-source-projects-for-beginners/)
