@@ -96,9 +96,44 @@ Creating a DataFrame by specifying `Vector` objects in place of the values in th
 
 `a = Daru::Vector.new [1,2,3,4,5], index: [:a, :e, :i, :o, :u]`
 `b = Daru::Vector.new [43,22,13], index: [:i, :a, :queen]`
-`on_steroids = Daru::DataFrame.new({a: a, b: b})`
+`on_steroids = Daru::DataFrame.new({a: a, b: b}, name: :on_steroids)`
 
+` => 
+#<Daru::DataFrame:75841450 @name = on_steroids @size = 6>
+                    a          b 
+         a          1         22 
+         e          2        nil 
+         i          3         43 
+         o          4        nil 
+     queen        nil         13 
+         u          5        nil 
+`
 A DataFrame can be constructed from multiple sources:
 * An array of hashes, where the key of each hash is the name of the column to which the value belongs.
 * A hash of arrays, where the hash key is set as the name of the column and the values are the hash value.
 * A hash of vectors. This is the most advanced way of creating a DataFrame. 
+
+## Handling Data
+
+Now that you have a basic idea about representing data in daru, lets see some more features of daru by loading some real-life data from a CSV file and performing some operations on it.
+
+For this purpose, we will use the [iRuby](https://rubygems.org/gems/iruby) notebook, with which daru is compatible. IRuby provides a great interface for visualizing and playing around with your code. I highly recommend installing it for full utilization of this tutorial.
+
+Let us load some data about the music listening history of one user from the [Last.fm data set](https://github.com/v0dro/daru/blob/master/spec/fixtures/music_data.tsv) from a TSV file:
+
+{%img /images/daru1/create_music_df.png 'Create a DataFrame from a TSV file.'%}
+
+As you can see the *timestamp* field is in a somewhat non-Ruby format which is pretty difficult for the default Time class to understand, so we destructively map time zone information (IST in this case) to the already present timestamp and then change every *timestamp* string field into a Ruby _Time_ object, so that operations on time can be easily performed.
+
+Notice the syntax for referencing a particular vector. Use 'row' for referencing any row.
+
+{%img /images/dmap_vector.png 'Destructively map a given vector.'%}
+
+{%img /images/df_row_map.png 'Map all rows of a DataFrame.'%}
+
+A bunch of rows can be selected by specifying a range:
+
+{%img /images/range_row_access.png 'Accessing rows with a range'%}
+
+
+
