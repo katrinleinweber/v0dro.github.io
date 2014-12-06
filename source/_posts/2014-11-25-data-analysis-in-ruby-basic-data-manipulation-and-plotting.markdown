@@ -11,8 +11,9 @@ daru (Data Analysis in RUby) is a ruby gem for performing various data analysis 
 In this first article on daru, I will show you some aspects of how daru handles data and some operations that can be performed on a real-life data set.
 
 daru consists of two major data structures:
-* *Vector* - A named one-dimensional array-like structure.
-* *DataFrame* - A named spreadsheet-like two-dimensional frame of data.
+
+* **Vector** - A named one-dimensional array-like structure.
+* **DataFrame** - A named spreadsheet-like two-dimensional frame of data.
 
 A _Vector_ can either be represented by a Ruby Array, NMatrix(MRI) or MDArray(JRuby) internally. This allows for fast data manipulation in native code. Users can change the underlying implementation at will.
 
@@ -126,11 +127,12 @@ on_steroids = Daru::DataFrame.new({a: a, b: b}, name: :on_steroids)
 ```
 
 A DataFrame can be constructed from multiple sources:
-* *Array of hashes* - Where the key of each hash is the name of the column to which the value belongs.
-* *Hash of name-arrays* - Where the hash key is set as the name of the vector and the data the corresponding value.
-* *Hash of name-vectors* - This is the most advanced way of creating a DataFrame. Treats the hash key as the name of the vector. Also aligns the data correctly based on index.
-* *Array of Arrays* - This will treat each sub-array as an independent row. Use `.rows` class method.
-* *Array of Vectors* - Uses each Vector in the Array as a row of the DataFrame. Sets vector names according to the index of the Vector. Aligns vector elements by index. Use `.rows` class method.
+
+* **Array of hashes** - Where the key of each hash is the name of the column to which the value belongs.
+* **Hash of name-arrays** - Where the hash key is set as the name of the vector and the data the corresponding value.
+* **Hash of name-vectors** - This is the most advanced way of creating a DataFrame. Treats the hash key as the name of the vector. Also aligns the data correctly based on index.
+* **Array of Arrays** - This will treat each sub-array as an independent row. Use `.rows` class method.
+* **Array of Vectors** - Uses each Vector in the Array as a row of the DataFrame. Sets vector names according to the index of the Vector. Aligns vector elements by index. Use `.rows` class method.
 
 ## Handling Data
 
