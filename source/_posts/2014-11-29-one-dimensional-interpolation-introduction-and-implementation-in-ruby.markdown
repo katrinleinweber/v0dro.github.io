@@ -12,7 +12,7 @@ One dimensional interpolation involves considering consecutive points along the 
 
 There are several types of interpolation depending on the number of known points used for predicting the unknown point, and several methods to compute them, each with their own varying accuracy. Methods for interpolation include the classic Polynomial interpolation with Lagrange's formula or spline interpolation using the concept of spline equations between points.
 
-The spline method is found to be more accurate and hence that is what is used in the interpolation gem for interpolating with third degree polynomials.
+The spline method is found to be more accurate and hence that is what is used in the interpolation gem.
 
 ## Common Interpolation Routines
 
@@ -48,4 +48,35 @@ int.interpolate 35
 
 #### Cubic Spline Interpolation
 
-This is a spline interpolation technique that uses a third degree poynomial to interpolate values. It works by determining an equation of the form $$ a_{n-1}x^2 + b_{n-1}x + c_{n-1} = d_{n-1} $$ for each pair of points _n-1_ and _n_. 
+Cubic Spline interpolation defines a cubic spline equation for each set of points between the _1st_ and _nth_ points. Each equation is smooth in its first derivative and continuos in its second derivative.
+
+So for example, if the points on a curve are labelled _i_, where _i = 1..n_, the equations representing any two points _i_ and _i-1_ will look like this:
+
+$$
+\begin{align}
+    a_{i}x^3_{i} + b_{i}x^2_{i} + c_{i}x_{i} + d_{i} = y_{i}
+\end{align}
+$$
+
+
+$$
+\begin{align}
+    a_{i-1}x^3_{i-1} + b_{i-1}x^2_{i-1} + c_{i-1}x_{i-1} + d_{i-1} = y_{i-1}
+\end{align}
+$$
+
+Cubic spline interpolation involves finding the second derivative of all points $$ y_{i} $$, which can then be used for evaluating the cubic spline polynomial, which is a function of _x_, _y_ and the second derivatives of _y_.
+
+For more information read [this](http://mathworld.wolfram.com/CubicSpline.html) resource.
+
+``` ruby
+
+require 'interpolation'
+
+x = (0..9).step(1).to_a
+y = x.map { |e| Math.exp(e) }
+
+f = Interpolation::OneDimensional.new(@x, @y, type: :cubic, sorted: true)
+f.interpolate(2.5)
+# => 12.287
+```
