@@ -49,7 +49,9 @@ The cycle ride back to the center of Hampi (and our hotel) was long but extremel
 
 {% img center /images/hampi-bengaluru-allepy/cycle_ride.JPG 500 500 'The cycle ride back to Hampi' %}
 
-Upon returning we had some late lunch at a South Indian retaurant (Venkateshwara Restaurant), after which we sat in the German Bakery, sipping masala chai, and figuring out the best way to write this blog post :)
+Upon returning we had some late lunch at a South Indian restaurant (Venkateshwara Restaurant), and left for Hospet to catch our bus to Bangalore, which left from there at night.
+
+The bus stop at Hospet is pretty horrible and since we were forced to book our tickets through some petty shop in Hampi, the bus came 3 hours late and the driver stopped at the particular bus stop only because we were calling him repeatedly and telling him and that we're waiting. Go for government transport whenever possible!
 
 Stay tuned for day 3!
 

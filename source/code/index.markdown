@@ -6,6 +6,9 @@ comments: true
 sharing: true
 footer: true
 ---
+
+[One Dimensional Interpolation: Introduction And Implementation In Ruby]({{ root_url }}/blog/2014/11/29/one-dimensional-interpolation-introduction-and-implementation-in-ruby/)
+
 [Data Analysis in RUby: Basic data manipulation and plotting]({{ root_url }}/blog/2014/11/25/data-analysis-in-ruby-basic-data-manipulation-and-plotting/)
 
 [Accessing Matrix Elements When Expressed As A Contiguous 1D Array]({{ root_url }}/blog/2014/10/12/accessing-matrix-elements-when-expressed-as-a-contiguous-1d-array/)
