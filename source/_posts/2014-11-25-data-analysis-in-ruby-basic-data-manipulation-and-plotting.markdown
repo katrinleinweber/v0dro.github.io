@@ -144,39 +144,91 @@ For this purpose, we will use [iruby](https://rubygems.org/gems/iruby) notebook,
 
 Let us load some data about the music listening history of one user from this subset of the [Last.fm data set](https://github.com/v0dro/daru/blob/master/spec/fixtures/music_data.tsv):
 
-{%img /images/daru1/create_music_df.png 'Create a DataFrame from a TSV file.'%}
+``` ruby
+
+require 'daru'
+
+df = Daru::DataFrame.from_csv 'music_data.tsv', col_sep: "\t"
+
+```
+
+{%img /images/daru1/create_music_df.png center 'Create a DataFrame from a TSV file.'%}
 
 As you can see the *timestamp* field is in a somewhat non-Ruby format which is pretty difficult for the default Time class to understand, so we destructively map time zone information (IST in this case) and then change every *timestamp* string field into a Ruby _Time_ object, so that operations on time can be easily performed.
 
 Notice the syntax for referencing a particular vector. Use 'row' for referencing any row.
 
-{%img /images/daru1/dmap_vector.png 'Destructively map a given vector.'%}
+``` ruby
 
-{%img /images/daru1/df_row_map.png 'Map all rows of a DataFrame.'%}
+df.timestamp.map! { |ts| ts += "+5:30"}
+
+```
+{%img center /images/daru1/dmap_vector.png 'Destructively map a given vector.'%}
+
+``` ruby
+
+require 'date'
+df = df.map_rows do |row|
+  row[:timestamp] = DateTime.strptime(row[:timestamp], '%Y-%m-%dT%H:%M:%SZ%z').to_time
+  row
+end
+
+```
+
+{%img center /images/daru1/df_row_map.png center 'Map all rows of a DataFrame.'%}
 
 #### Basic Querying
 
 A bunch of rows can be selected by specifying a range:
 
-{%img /images/daru1/range_row_access.png 'Accessing rows with a range' %}
+`df.row[900..923]`
+
+{%img center /images/daru1/range_row_access.png center 'Accessing rows with a range' %}
 
 #### Data Analysis
 
 Lets dive deeper by actually trying to extract something useful from the data that we have. Say we want to know the name of the artist heard the maximum number of times. So we create a Vector which consists of the names of the artists as the index (in camel\_case) and the number of times the name appears in the data as the corresponding values:
 
-{%img /images/daru1/get_max_artists.png 'Create a vector of artist names vs number of times they appear.'%}
+``` ruby
+artist_counts = {}
 
-To get the maximum value out of these, use `#max`. Passing `:vector` into `#max` will return the result alongwith the index as another Vector object:
+# Populate a hash which has artist names as keys with corresponding values set to the number of times the name of the artist
+# has appeared.
+artists = df.artname.uniq
+artists.each do |artist|
+  artist_counts[artist] = df.artname.count(artist)
+end
 
-{%img /images/daru1/artists_max.png 'Obtain the most heard artist.' %}
+# Since indexes are stored as symbols, convert each artist name to camel_case
+a = artist_counts.to_a.each do |name_val_pair|
+  name_val_pair[0] = name_val_pair[0].downcase.split(' ').join('_')
+end
+counts = Daru::Vector.new Hash[a], name: :counts
+
+```
+
+{%img center /images/daru1/get_max_artists.png 'Create a vector of artist names vs number of times they appear.'%}
+
+To get the maximum value out of these, use `#max_index`. This will return a Vector which has the max :
+
+`count.max_index`
+
+{%img center /images/daru1/artists_max.png 'Obtain the most heard artist.' %}
 
 #### Plotting
 
 daru uses [Nyaplot](https://github.com/domitry/nyaplot) for plotting, which is an optional dependency. Install nyaplot with `gem install nyaplot` and proceed.
 
-To demonstrate, lets find the top ten artists heard by this user and plot the number of times their songs have been heard against their names in a bar graph:
+To demonstrate, lets find the top ten artists heard by this user and plot the number of times their songs have been heard against their names in a bar graph. For this, use the `#sort` function, which will preserve the indexing of the vector.
 
-{%img /images/daru1/plot_top_ten.png 'Top ten artists plotted.'%}
+``` ruby
+
+top_ten = counts.sort[-10..-1]
+
+ten.plot type: :bar, width: 1120, height: 300
+```
+
+{%img center /images/daru1/plot_top_ten.png 'Top ten artists plotted.'%}
 
 #### Statistics
 
