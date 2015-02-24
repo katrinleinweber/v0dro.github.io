@@ -264,6 +264,36 @@ grouped.mean
 A hierarchichally indexed DataFrame is returned. Check the `GroupBy` docs for more aggregation methods.
 
 ### Generating Excel-style Pivot Tables
+
+You can generate an excel-style pivot table with the `#pivot_table` function. The levels of the pivot table are stored in MultiIndex objects.
+
+To demonstrate with an example, consider [this CSV file on sales data].
+
+{%img center /images/daru2/pivot_table_data.png 'Data For Pivot Table Demo' %}
+
+To look at the data from the point of view of the manager and rep:
+
+``` ruby
+
+sales.pivot_table index: [:manager, :rep]
+```
+
+You can see that the pivot table has summarized the data and grouped it according to the manager and representative.
+
+To see the sales broken down by the products:
+
+``` ruby
+
+sales.pivot_table(index: [:manager,:rep], values: :price, vectors: [:product], agg: :sum)
+```
+
+{%img center /images/daru2/pivoted_data.png 'Data Pivoted to Reflect Sales' %}
+
+
+##### References
+
+Pivot Tables example taken from: http://pbpython.com/pandas-pivot-table-explained.html
+
 statsample integration
 pivot table
 working with missing data
