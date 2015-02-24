@@ -14,7 +14,7 @@ The interface for interacting with nyaplot for plotting has also been revamped, 
 
 Lets look at all these features one by one:
 
-### Data Types
+## Data Types
 
 You can now either use Ruby Arrays or NMatrix as the underlying implementation. Since NMatrix is fast and makes use of C storage, it is recommended to use nmatrix when dealing with large sets of data. Daru will store any data as Ruby Array unless explicitly specified.
 
@@ -48,7 +48,85 @@ Thus Daru exposes three methods for querying the type of data:
 * `#type` - Get the generic type of data to know whether numeric computation can be performed on the object. Get the C data type used by nmatrix in case of dtype NMatrix.
 * `#dtype` - Get the underlying data representation (either :array or :nmatrix).
 
-### DSL for plotting with nyaplot
+## Working with Missing Data
+
+Any data scientist knows how common missing data is in real-life data sets, and to address that need, daru provides a host of functions for this purpose.
+This functionality is still in its infancy but should be up to speed soon.
+
+The `#is_nil?` function will return a Vector object with `true` if a value is `nil` and `false` otherwise.
+
+``` ruby
+
+v = Daru::Vector.new([1,2,3,nil,nil,4], index: [:a, :b, :c, :d, :e, :f])
+v.is_nil?
+#=> 
+##<Daru::Vector:93025420 @name = nil @size = 6 >
+#        nil
+#    a   nil
+#    b   nil
+#    c   nil
+#    d  true
+#    e  true
+#    f   nil
+```
+
+The `#nil_positions` function returns an Array that contains the indexes of all the nils in the Vector.
+
+``` ruby
+
+v.nil_positions #=> [:d, :e]
+```
+
+The `#replace_nils` functions replaces nils with a supplied value.
+
+``` ruby
+
+v.replace_nils 69
+#=> 
+##<Daru::Vector:92796730 @name = nil @size = 6 >
+#    nil
+#  a   1
+#  b   2
+#  c   3
+#  d  69
+#  e  69
+#  f   4
+```
+
+The statistics functions implemented on Vectors ensure that missing data is not considered during computation and are thus safe to call on missing data.
+
+## Hierarchical sorting of DataFrame
+
+It is now possible to use the `#sort` function on Daru::DataFrame such that sorting happens hierarchically according to the order of the specified vector names.
+
+In case you want to sort according to a certain attribute of the data in a particular vector, for example sort a Vector of strings by length, then you can supply a code block to the `:by` option of the sort method.
+
+Supply the `:ascending` option with an Array containing 'true' or 'false' depending on whether you want the corresponding vector sorted in ascending or descending order.
+
+``` ruby
+
+df = Daru::DataFrame.new({
+  a: ['ff'  ,  'fwwq',  'efe',  'a',  'efef',  'zzzz',  'efgg',  'q',  'ggf'], 
+  b: ['one'  ,  'one',  'one',  'two',  'two',  'one',  'one',  'two',  'two'],
+  c: ['small','large','large','small','small','large','small','large','small'],
+  d: [-1,2,-2,3,-3,4,-5,6,7],
+  e: [2,4,4,6,6,8,10,12,14]
+  })
+
+df.sort([:a,:d], 
+  by: {
+    a: lambda { |a,b| a.length <=> b.length }, 
+    b: lambda{|a,b| a.abs <=> b.abs } 
+  }, 
+  ascending: [false, true]
+)
+```
+
+{%img center /images/daru2/sorted_df.png 'Hierarchically sorted DataFrame' %}
+
+Vector objects also have a similar sorting method implemented. Check the docs for more details. Indexing is preserved while sorting of both DataFrame and Vector.
+
+## DSL for plotting with nyaplot 
 
 Previously plotting with daru required a lot of arguments to be supplied by the user. The interface did not take advatage of Ruby's blocks, nor did it expose many functionalities of nyaplot. All that changes with this new version, that brings in a new DSL for easy plotting (recommended usage with iruby notebook).
 
@@ -66,7 +144,7 @@ end
 
 As you can see, the `#plot` function exposes the `Nyaplot::Plot` and `Nyaplot::Diagram` objects to user after populating them with the relevant data. So the new interface lets experienced users utilize the full power of nyaplot but keeps basic plotting very simple to use for new users or for quick and dirty visualization needs. Unfortunately for now, until a viable solution to interfacing with nyaplot is found, you will need to use the nyaplot API directly.
 
-### Statistics and arithmetic on DataFrames.
+## Statistics and arithmetic on DataFrames.
 
 Daru includes a host of methods for simple statistical analysis on numeric data. You can call `mean`, `std`, `sum`, `product`, etc. directly on the DataFrame. The corresponding computation is performed on numeric Vectors within the DataFrame, and missing data if any is excluded from the calculation by default.
 
@@ -115,7 +193,7 @@ df.cov
 #          f         40         80        400 
 ```
 
-### Hierarchial indexing
+## Hierarchial indexing
 
 A new way of hierarchially indexing data has been introduced in version 0.0.5. This is done with the new `Daru::MultiIndex` class. Hierarchial indexing allows grouping sets of similar data by index and lets you select sub sets of data by specifying an index name in the upper hierarchy.
 
@@ -177,7 +255,7 @@ df_mi.row[:a, :one,:bar]
 
 Hierachical indexing is especially useful when aggregating or splitting data, or generating data summaries as we'll see in the following examples.
 
-### Splitting and aggregation of data
+## Splitting and aggregation of data
 
 When dealing with large sets of scattered data, it is often useful to 'see' the data grouped according to similar values in a Vector instead of it being scattered all over the place.
 
@@ -263,7 +341,7 @@ grouped.mean
 
 A hierarchichally indexed DataFrame is returned. Check the `GroupBy` docs for more aggregation methods.
 
-### Generating Excel-style Pivot Tables
+## Generating Excel-style Pivot Tables
 
 You can generate an excel-style pivot table with the `#pivot_table` function. The levels of the pivot table are stored in MultiIndex objects.
 
@@ -289,13 +367,9 @@ sales.pivot_table(index: [:manager,:rep], values: :price, vectors: [:product], a
 
 {%img center /images/daru2/pivoted_data.png 'Data Pivoted to Reflect Sales' %}
 
+## Compatibility with statsample
+
 
 ##### References
 
 Pivot Tables example taken from: http://pbpython.com/pandas-pivot-table-explained.html
-
-statsample integration
-pivot table
-working with missing data
-hierarchial sorting of data frames
-index preserving sorting for vectors
