@@ -68,12 +68,52 @@ As you can see, the `#plot` function exposes the `Nyaplot::Plot` and `Nyaplot::D
 
 ### Statistics and arithmetic on DataFrames.
 
-Daru includes a host of methods for simple statistical analysis on numeric data. You can call `mean`, `std`, `sum`, `product`, etc. directly on the DataFrame. The corresponding computation is performed on numeric Vectors within the DataFrame, and missing data if any is excluded from the calculation by default. 
--- individual statistics example
+Daru includes a host of methods for simple statistical analysis on numeric data. You can call `mean`, `std`, `sum`, `product`, etc. directly on the DataFrame. The corresponding computation is performed on numeric Vectors within the DataFrame, and missing data if any is excluded from the calculation by default.
 
-Apart from that you can use the `#describe` method to calculate many statistical features of numeric Vectors in one shot and see a summary of statistics for numerical vectors in the DataFrame that is returned.
+So for this DataFrame:
 
--- describe example
+``` ruby
+
+df = Daru::DataFrame.new({
+  a: ['foo'  ,  'foo',  'foo',  'foo',  'foo',  'bar',  'bar',  'bar',  'bar'], 
+  b: ['one'  ,  'one',  'one',  'two',  'two',  'one',  'one',  'two',  'two'],
+  c: ['small','large','large','small','small','large','small','large','small'],
+  d: [1,2,2,3,3,4,5,6,7],
+  e: [2,4,4,6,6,8,10,12,14],
+  f: [10,20,20,30,30,40,50,60,70]
+})
+``` 
+
+To calculate the mean of numeric vectors:
+
+``` ruby
+
+df.mean
+```
+
+{%img center /images/daru2/df_mean.png 'Calculate Mean of Numeric Vectors' %}
+
+Apart from that you can use the `#describe` method to calculate many statistical features of numeric Vectors in one shot and see a summary of statistics for numerical vectors in the DataFrame that is returned. For example,
+
+``` ruby
+
+df.describe
+```
+
+{%img center /images/daru2/df_describe.png 'Describe Multiple Statistics in One Shot'%}
+
+The covariance and correlation coeffiecients between the numeric vectors can also be found with `#cov` and `#corr`
+
+``` ruby
+
+df.cov
+# => 
+# #<Daru::DataFrame:91700830 @name = f5ae5d7e-9fcb-46c8-90ac-a6420c9dc27f @size # = 3>
+#                     d          e          f 
+#          d          4          8         40 
+#          e          8         16         80 
+#          f         40         80        400 
+```
 
 ### Hierarchial indexing
 
@@ -116,7 +156,7 @@ df_mi = Daru::DataFrame.new([
     vector_arry2], order: order_mi, index: multi_index)
 ```
 
---- photo for multi indexed DF
+{%img center /images/daru2/multi_index_table.png 'DataFrame with hierarchical indexing' %}
 
 Selecting a top level index from the hierarchy will select all the rows under that name, and return a new DataFrame with just that much data and indexes.
 
@@ -125,7 +165,7 @@ Selecting a top level index from the hierarchy will select all the rows under th
 df_mi.row[:a]
 ```
 
---- photo for selected rows
+{%img center /images/daru2/multi_index_partial.png 'Partial Selection Of Multi Indexed DataFrame'%}
 
 Alternatively passing the entire tuple will return just that row as a `Daru::Vector`, indexed according to the column index.
 
@@ -133,8 +173,7 @@ Alternatively passing the entire tuple will return just that row as a `Daru::Vec
 
 df_mi.row[:a, :one,:bar]
 ```
-
---- photo for exact row selection
+{%img center /images/daru2/multi_index_exact.png 'Selecting A Single Row From A Multi Indexed DataFrame' %}
 
 Hierachical indexing is especially useful when aggregating or splitting data, or generating data summaries as we'll see in the following examples.
 
@@ -151,11 +190,21 @@ So for example consider this DataFrame:
 ``` ruby
 
 df = Daru::DataFrame.new({
-      a: %w{foo bar foo bar   foo bar foo foo},
-      b: %w{one one two three two two one three},
-      c:   [1  ,2  ,3  ,1    ,3  ,6  ,3  ,8],
-      d:   [11 ,22 ,33 ,44   ,55 ,66 ,77 ,88]
-    })
+  a: %w{foo bar foo bar   foo bar foo foo},
+  b: %w{one one two three two two one three},
+  c:   [1  ,2  ,3  ,1    ,3  ,6  ,3  ,8],
+  d:   [11 ,22 ,33 ,44   ,55 ,66 ,77 ,88]
+})
+#<Daru::DataFrame:88462950 @name = 0dbc2869-9a82-4044-b72d-a4ef963401fc @size = 8>
+#            a          b          c          d 
+# 0        foo        one          1         11 
+# 1        bar        one          2         22 
+# 2        foo        two          3         33 
+# 3        bar      three          1         44 
+# 4        foo        two          3         55 
+# 5        bar        two          6         66 
+# 6        foo        one          3         77 
+# 7        foo      three          8         88 
 ```
 
 To group this DataFrame by the columns `:a` and `:b`, pass them as arguments to the `#group_by` function, which returns a `Daru::Core::GroupBy` object.
@@ -179,7 +228,7 @@ To see the first group of each group from this collection, call `#first` on the 
 
 ``` ruby
 
-groups.first
+grouped.first
 
 #=>           a          b          c          d 
 #  1        bar        one          2         22 
@@ -196,7 +245,7 @@ The `#get_group` function will select only the rows that a particular group belo
 
 ``` ruby
 
-groups.get_group(["foo", "one"])
+grouped.get_group(["foo", "one"])
 # => 
 # #<Daru::DataFrame:90777050 @name = cdd0afa8-252d-4d07-ad0f-76c7581a492a @size # = 2>
 #                     a          b          c          d 
@@ -208,17 +257,15 @@ The `Daru::Core::GroupBy` object contains a bunch of methods for creating summar
 
 ``` ruby
 
-groups.mean
+grouped.mean
 ```
---- photo showing mean
+{%img center /images/daru2/group_by_mean.png 'Aggregating by Mean After Grouping' %}
 
 A hierarchichally indexed DataFrame is returned. Check the `GroupBy` docs for more aggregation methods.
 
+### Generating Excel-style Pivot Tables
 statsample integration
-group by
 pivot table
-hierarchial indexing
-covariance/correlation
 working with missing data
 hierarchial sorting of data frames
 index preserving sorting for vectors
