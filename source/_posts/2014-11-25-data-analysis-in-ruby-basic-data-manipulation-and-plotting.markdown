@@ -152,7 +152,7 @@ df = Daru::DataFrame.from_csv 'music_data.tsv', col_sep: "\t"
 
 ```
 
-{%img /images/daru1/create_music_df.png center 'Create a DataFrame from a TSV file.'%}
+{%img center /images/daru1/create_music_df.png 'Create a DataFrame from a TSV file.'%}
 
 As you can see the *timestamp* field is in a somewhat non-Ruby format which is pretty difficult for the default Time class to understand, so we destructively map time zone information (IST in this case) and then change every *timestamp* string field into a Ruby _Time_ object, so that operations on time can be easily performed.
 

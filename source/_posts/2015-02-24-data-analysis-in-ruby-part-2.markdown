@@ -6,9 +6,9 @@ comments: true
 categories: 
 ---
 
-I've just released daru version 0.0.5, which brings in a lot of new features and consolidates existing ones. NMatrix is now well integrated into Daru and all of the operations that can be performed using Arrays as the underlying implementation can be performed using NMatrix as well (except some operations involving missing data).
+I've just released daru version 0.0.5, which brings in a lot of new features and consolidates existing ones. [NMatrix](https://github.com/SciRuby/nmatrix) is now well integrated into Daru and all of the operations that can be performed using Arrays as the underlying implementation can be performed using NMatrix as well (except some operations involving missing data).
 
-The new features include extensive support for missing data, hierarchial sorting of data frames by preserving indexing, ability to group, split and aggregate data with group by, and quickly summarizing data by generating excel-style pivot tables. This release also includes new aritmetic and statistical functions on Data Frames and Vectors. Both DataFrame and Vector are now mostly compatible with statsample, allowing for a much larger scope of statistical analysis by leveraging the methods already provided in statsample.
+The new features include extensive support for missing data, hierarchial sorting of data frames and vectors by preserving indexing, ability to group, split and aggregate data with group by, and quickly summarizing data by generating excel-style pivot tables. This release also includes new aritmetic and statistical functions on Data Frames and Vectors. Both DataFrame and Vector are now mostly compatible with [statsample](https://github.com/clbustos/statsample), allowing for a much larger scope of statistical analysis by leveraging the methods already provided in statsample.
 
 The interface for interacting with nyaplot for plotting has also been revamped, allowing much greater control on the way graphs are handled by giving direct access to the graph object. A new class for hierarchial indexing of data (called MultiIndex) has also been added, which is immensely useful when grouping/splitting/aggregating data.
 
@@ -126,9 +126,9 @@ df.sort([:a,:d],
 
 Vector objects also have a similar sorting method implemented. Check the docs for more details. Indexing is preserved while sorting of both DataFrame and Vector.
 
-## DSL for plotting with nyaplot 
+## DSL for plotting with [Nyaplot](https://github.com/domitry/nyaplot)
 
-Previously plotting with daru required a lot of arguments to be supplied by the user. The interface did not take advatage of Ruby's blocks, nor did it expose many functionalities of nyaplot. All that changes with this new version, that brings in a new DSL for easy plotting (recommended usage with iruby notebook).
+Previously plotting with daru required a lot of arguments to be supplied by the user. The interface did not take advatage of Ruby's blocks, nor did it expose many functionalities of nyaplot. All that changes with this new version, that brings in a new DSL for easy plotting (recommended usage with [iruby notebook](https://github.com/minad/iruby)).
 
 Thus to plot a line graph with data present in a DataFrame:
 
@@ -345,7 +345,7 @@ A hierarchichally indexed DataFrame is returned. Check the `GroupBy` docs for mo
 
 You can generate an excel-style pivot table with the `#pivot_table` function. The levels of the pivot table are stored in MultiIndex objects.
 
-To demonstrate with an example, consider [this CSV file on sales data].
+To demonstrate with an example, consider [this CSV file on sales data](https://github.com/v0dro/daru/blob/master/spec/fixtures/sales-funnel.csv).
 
 {%img center /images/daru2/pivot_table_data.png 'Data For Pivot Table Demo' %}
 
@@ -369,7 +369,50 @@ sales.pivot_table(index: [:manager,:rep], values: :price, vectors: [:product], a
 
 ## Compatibility with statsample
 
+Daru is now mostly compatible with [statsample](https://github.com/clbustos/statsample) and you can now mostly perform most of the functions by just passing it a Daru::DataFrame or Daru::Vector to perform most of the useful statistical functions provided by statsample.
+
+Heres an example to demonstrate:
+
+``` ruby
+
+df = Daru::DataFrame.new({a: [1,2,3,4,5,6,7], b: [11,22,33,44,55,66,77]})
+
+Statsample::Analysis.store(Statsample::Test::T) do
+  t_2 = Statsample::Test.t_two_samples_independent(df[:a], df[:b])
+  summary t_2
+end
+
+Statsample::Analysis.run_batch
+
+# Analysis 2015-02-25 13:34:32 +0530
+# = Statsample::Test::T
+#   == Two Sample T Test
+#     Mean and standard deviation
+# +----------+---------+---------+---+
+# | Variable |  mean   |   sd    | n |
+# +----------+---------+---------+---+
+# | a        | 4.0000  | 2.1602  | 7 |
+# | b        | 44.0000 | 23.7627 | 7 |
+# +----------+---------+---------+---+
+# 
+#     Levene test for equality of variances : F(1, 12) = 13.6192 , p = 0.0031
+#     T statistics
+# +--------------------+---------+--------+----------------+
+# |        Type        |    t    |   df   | p (both tails) |
+# +--------------------+---------+--------+----------------+
+# | Equal variance     | -4.4353 | 12     | 0.0008         |
+# | Non equal variance | -4.4353 | 6.0992 | 0.0042         |
+# +--------------------+---------+--------+----------------+
+# 
+#     Effect size
+# +-------+----------+
+# | x1-x2 | -40.0000 |
+# | d     | -12.0007 |
+# +-------+----------+
+
+```
+
 
 ##### References
 
-Pivot Tables example taken from: http://pbpython.com/pandas-pivot-table-explained.html
+* Pivot Tables example taken from [here](http://pbpython.com/pandas-pivot-table-explained.html). 
