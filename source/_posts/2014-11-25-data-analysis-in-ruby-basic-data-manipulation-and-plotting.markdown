@@ -6,20 +6,20 @@ comments: true
 categories: 
 ---
 
-daru (Data Analysis in RUby) is a ruby gem for performing various data analysis and manipulation tasks in Ruby. It draws inspiration from pandas (python) and aims to be completely cross-compatible between all ruby implementations (MRI/YARV/JRuby etc.) yet leverage the individual benefits that each interpreter offers (for example the speed of C in MRI), while offering a simple and powerful DSL for performing complex operations on data.
+daru (Data Analysis in RUby) is a ruby gem for performing various data analysis and manipulation tasks in Ruby. It draws inspiration from pandas (python) and aims to be completely cross-compatible between all ruby implementations (MRI/JRuby etc.) yet leverage the individual benefits that each interpreter offers (for example the speed of C in MRI), while offering a simple and powerful API for data analysis, manipulation and visualization.
 
 In this first article on daru, I will show you some aspects of how daru handles data and some operations that can be performed on a real-life data set.
+
+## Getting Started
 
 daru consists of two major data structures:
 
 * **Vector** - A named one-dimensional array-like structure.
 * **DataFrame** - A named spreadsheet-like two-dimensional frame of data.
 
-A _Vector_ can either be represented by a Ruby Array, NMatrix(MRI) or MDArray(JRuby) internally. This allows for fast data manipulation in native code. Users can change the underlying implementation at will.
+A _Vector_ can either be represented by a Ruby Array, NMatrix(MRI) or MDArray(JRuby) internally. This allows for fast data manipulation in native code. Users can change the underlying implementation at will (demonstrated in the [next]() blog post).
 
-Both of these are indexed by the _Index_ class, which allows us to reference and operate on data by name instead of the traditional numeric indexing, and also perform index-based manipulation, equality and plotting operations.
-
-## Getting Started
+Both of these can be indexed by the `Daru::Index` or `Daru::MultiIndex` class, which allows us to reference and operate on data by name instead of the traditional numeric indexing, and also perform index-based manipulation, equality and plotting operations.
 
 #### Vector
 
@@ -60,6 +60,13 @@ sherlock = Daru::Vector.new [3,2,1,1,2], name: :sherlock, index: [:pipe, :hat, :
 ```
 
 This way we can clearly see the quantity of each item possesed by Sherlock.
+
+Data can be retrieved with the `[]` operator:
+
+``` ruby
+
+sherlock[:pipe] #=> 3
+```
 
 #### DataFrame
 
@@ -128,11 +135,14 @@ on_steroids = Daru::DataFrame.new({a: a, b: b}, name: :on_steroids)
 
 A DataFrame can be constructed from multiple sources:
 
-* **Array of hashes** - Where the key of each hash is the name of the column to which the value belongs.
-* **Hash of name-arrays** - Where the hash key is set as the name of the vector and the data the corresponding value.
-* **Hash of name-vectors** - This is the most advanced way of creating a DataFrame. Treats the hash key as the name of the vector. Also aligns the data correctly based on index.
-* **Array of Arrays** - This will treat each sub-array as an independent row. Use `.rows` class method.
-* **Array of Vectors** - Uses each Vector in the Array as a row of the DataFrame. Sets vector names according to the index of the Vector. Aligns vector elements by index. Use `.rows` class method.
+* To construct by columns:
+    * **Array of hashes** - Where the key of each hash is the name of the column to which the value belongs.
+    * **Name-Array Hash** - Where the hash key is set as the name of the vector and the data the corresponding value.
+    * **Name-Vector Hash** - This is the most advanced way of creating a DataFrame. Treats the hash key as the name of the vector. Also aligns the data correctly based on index.
+    * **Array of Arrays** - Each sub array will be considered as a Vector in the DataFrame.
+* To construct by rows using the `.rows` class method:
+    * **Array of Arrays** - This will treat each sub-array as an independent row.
+    * **Array of Vectors** - Uses each Vector in the Array as a row of the DataFrame. Sets vector names according to the index of the Vector. Aligns vector elements by index.
 
 ## Handling Data
 
@@ -190,21 +200,9 @@ A bunch of rows can be selected by specifying a range:
 Lets dive deeper by actually trying to extract something useful from the data that we have. Say we want to know the name of the artist heard the maximum number of times. So we create a Vector which consists of the names of the artists as the index (in camel\_case) and the number of times the name appears in the data as the corresponding values:
 
 ``` ruby
-artist_counts = {}
 
-# Populate a hash which has artist names as keys with corresponding values set to the number of times the name of the artist
-# has appeared.
-artists = df.artname.uniq
-artists.each do |artist|
-  artist_counts[artist] = df.artname.count(artist)
-end
-
-# Since indexes are stored as symbols, convert each artist name to camel_case
-a = artist_counts.to_a.each do |name_val_pair|
-  name_val_pair[0] = name_val_pair[0].downcase.split(' ').join('_')
-end
-counts = Daru::Vector.new Hash[a], name: :counts
-
+# Group by artist name and call 'size' to see the number of rows each artist populates.
+artists = df.group_by(:artname).size
 ```
 
 {%img center /images/daru1/get_max_artists.png 'Create a vector of artist names vs number of times they appear.'%}
@@ -223,16 +221,16 @@ To demonstrate, lets find the top ten artists heard by this user and plot the nu
 
 ``` ruby
 
-top_ten = counts.sort[-10..-1]
+top_ten = artists.sort(ascending: false)[0..10]
 
-ten.plot type: :bar, width: 1120, height: 300
+top_ten.plot type: :bar do |plt| 
+  plt.width 1120 
+  plt.height 500
+  plt.legend true
+end
 ```
 
 {%img center /images/daru1/plot_top_ten.png 'Top ten artists plotted.'%}
-
-#### Statistics
-
-`Daru::Vector` is compatible with `Statsample::Vector`, though a lot of the functions still need to be implemented. Still, a good amount of statistics can be performed in conjunction with [statsample](https://github.com/clbustos/statsample), with more on the way. Check the docs for a full list of statistics functions.
 
 ## Further Reading
 
@@ -240,8 +238,7 @@ ten.plot type: :bar, width: 1120, height: 300
 * You can find all the above examples implemented in [this notebook](http://nbviewer.ipython.org/github/v0dro/daru/blob/master/notebooks/intro_with_music_data_.ipynb).
 * Contribute to daru over [github](https://github.com/v0dro/daru). Any contributions will be greatly appreciated!
 * Many thanks to [last.fm](http://www.last.fm/) for providing the data.
-
-There will be a lot of new interesting things added to daru over the next few weeks so stay tuned!
+* The next blog post in this series, elaborating on the next release of daru. --add link
 
 
 

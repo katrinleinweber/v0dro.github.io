@@ -116,7 +116,7 @@ df = Daru::DataFrame.new({
 df.sort([:a,:d], 
   by: {
     a: lambda { |a,b| a.length <=> b.length }, 
-    b: lambda{|a,b| a.abs <=> b.abs } 
+    b: lambda { |a,b| a.abs <=> b.abs } 
   }, 
   ascending: [false, true]
 )
@@ -135,9 +135,10 @@ Thus to plot a line graph with data present in a DataFrame:
 ``` ruby
 
 df = Daru::DataFrame.new({a: [1,2,3,4,5], b: [10,14,15,17,44]})
-df.plot legends: [:a, :b], type: :line do |plt,diagram|
-  plt.yrange [0,100]
-  diagram.color "green"
+df.plot legends: [:a, :b], type: :line do |p,d|
+  p.yrange [0,100]
+  p.legend true
+  d.color "green"
 end
 ```
 {%img center /images/daru2/line_graph.png 'Line Graph From DataFrame'%}
@@ -355,6 +356,8 @@ To look at the data from the point of view of the manager and rep:
 
 sales.pivot_table index: [:manager, :rep]
 ```
+
+{%img center /images/daru2/pivot_table_index.png 'Data Pivoted on Index Only.' %}
 
 You can see that the pivot table has summarized the data and grouped it according to the manager and representative.
 
