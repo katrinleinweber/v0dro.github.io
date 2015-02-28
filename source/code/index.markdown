@@ -7,6 +7,10 @@ sharing: true
 footer: true
 ---
 
+[Data Analysis in RUby: Part 2]({{ root_url }}/blog/2015/02/24/data-analysis-in-ruby-part-2/)
+
+[Solving Systems of Linear Equations in Ruby]({{ root_url }}/blog/2014/12/14/solving-systems-of-linear-equations-in-ruby/)
+
 [One Dimensional Interpolation: Introduction And Implementation In Ruby]({{ root_url }}/blog/2014/11/29/one-dimensional-interpolation-introduction-and-implementation-in-ruby/)
 
 [Data Analysis in RUby: Basic data manipulation and plotting]({{ root_url }}/blog/2014/11/25/data-analysis-in-ruby-basic-data-manipulation-and-plotting/)
