@@ -43,7 +43,13 @@ Forward substitution is a technique that involves scanning an upper triangular m
 
 $$
 \begin{align}
- put equation here .. (4)
+  y_{0} = \dfrac{b_{0}}{L_{00}}
+\end{align}
+$$
+
+$$
+\begin{align}
+  y_{i} = \dfrac{1}{L_{ii}}[b_{i} - \sum_{j=0}^{i-1}L_{ii} \times y_{j}] \quad i = 1,2,\dotsc,N-1 \quad (4)
 \end{align}
 $$
 
@@ -83,16 +89,106 @@ $$
 
 $$
 \begin{align}
-  y_{1} = \dfrac{1}{L_{11}}[b_{1} - L_{00} \times y_{0}]
+  y_{1} = \dfrac{1}{L_{11}} \times [b_{1} - L_{00} \times y_{0}]
 \end{align}
 $$
 
 $$
 \begin{align}
-  y_{2} = \dfrac{1}{L_{22}}[b_{2} - (L_{20} \times y_{0} + L_{21} \times y_{1})]
+  y_{2} = \dfrac{1}{L_{22}} \times [b_{2} - (L_{20} \times y_{0} + L_{21} \times y_{1})]
 \end{align}
 $$
 
 Its now quite obvious that forward substitution is called so because we start from the topmost row of the matrix and use the value of the variable calculated in that row to calculate the _y_ for the following rows.
 
-Now that we have the solution to equation (2), we can use the values generated in the _y_ column vector to compute _x_ in equation (3). Recall that the matrix _U_ is the upper triangular decomposed part of _A_ (equation (1)). This matrix  
+Now that we have the solution to equation (2), we can use the values generated in the _y_ column vector to compute _x_ in equation (3). Recall that the matrix _U_ is the upper triangular decomposed part of _A_ (equation (1)). This matrix can be solved using a technique called _backward substitution_. It is the exact reverse of the _forward substitution_ that we just saw, i.e. the values of the bottom-most variables are calculated first and then substituted into the rows above to calculate subsquent variables above.
+
+The equation describing backward substitution is described in Numerical Recipes as:
+
+$$
+\begin{align}
+  x_{N-1} = \dfrac{y_{N-1}}{U_{N-1,N-1}}
+\end{align}
+$$
+
+$$
+\begin{align}
+  x_{i} = \dfrac{1}{U_{ii}}[y_{i} - \sum_{j=i+1}^{N-1}U_{ij} \times x_{j}] \quad i = N-2, N-3,\dotsc,0 \quad (5)
+\end{align}
+$$
+
+Lets try to understand this equation by extending the example we used above to understand forward substitution. To gain a better understanding of this concept, consider the equation (3) written in matrix form (keeping the same 3x3 matrix _A_):
+
+$$
+\begin{align}
+    \begin{pmatrix}
+      U_{00} & U_{01} & U_{02} \\
+      0 & U_{11} & U_{12} \\
+      0 & 0 & U_{22}
+    \end{pmatrix}
+    \begin{pmatrix}
+      x_{0} \\
+      x_{1} \\
+      x_{2}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      y_{0} \\
+      y_{1} \\
+      y_{2}
+    \end{pmatrix}
+\end{align}
+$$
+
+Using the matrix representation above as reference, equation (5) can be expanded in terms of a 3x3 matrix as:
+
+$$
+\begin{align}
+  x_{2} = \dfrac{y_{2}}{U_{22}}
+\end{align}
+$$
+
+$$
+\begin{align}
+  x_{1} = \dfrac{1}{U_{11}} \times [y_{1} - U_{12} \times x_{2}]
+\end{align}
+$$
+
+$$
+\begin{align}
+  x_{0} = \dfrac{1}{U_{00}} \times [y_{0} - (U_{01} \times x_{1} + U_{02} \times x_{2})]
+\end{align}
+$$
+
+Looking at the above equations its easy to see how backward substitution can be used to solve for unknown quantities when given a upper triangular matrix of co-efficients, by starting at the lowermost varible and gradually moving upward.
+
+Now that the methodology behind solving sets of linear equations is clear, lets consider a set of 3 linear equations and 3 unknowns and compute the values of the unknown quantities using the nmatrix #solve method.
+
+The #solve method can be called on any nxn square matrix of a floating point data type, and expects its sole argument to be a column matrix containing the right hand sides. It returns a column nmatrix object containing the computed co-efficients.
+
+For this example, consider these 3 equations:
+
+$$ x + y − z = 4 $$
+
+$$ x − 2y + 3z = −6 $$
+ 
+$$ 2x + 3y + z = 7 $$
+
+These can be translated to Ruby code by creating an NMatrix only for the co-efficients and another one only for right hand sides:
+
+``` ruby
+
+require 'nmatrix'
+coeffs = NMatrix.new([3,3],
+  [1, 1,-1,
+   1,-2, 3,
+   2, 3, 1], dtype: :float32)
+
+rhs = NMatrix.new([3,1],
+  [4,
+  -6,
+   7], dtype: :float32)
+
+solution = coeffs.solve(rhs)
+#=> [1.0, 2.0, -1.0]
+```
