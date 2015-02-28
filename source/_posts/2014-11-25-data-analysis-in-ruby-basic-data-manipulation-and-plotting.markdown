@@ -17,7 +17,7 @@ daru consists of two major data structures:
 * **Vector** - A named one-dimensional array-like structure.
 * **DataFrame** - A named spreadsheet-like two-dimensional frame of data.
 
-A _Vector_ can either be represented by a Ruby Array, NMatrix(MRI) or MDArray(JRuby) internally. This allows for fast data manipulation in native code. Users can change the underlying implementation at will (demonstrated in the [next]() blog post).
+A _Vector_ can either be represented by a Ruby Array, NMatrix(MRI) or MDArray(JRuby) internally. This allows for fast data manipulation in native code. Users can change the underlying implementation at will (demonstrated in the [next](/blog/2015/02/24/data-analysis-in-ruby-part-2/) blog post).
 
 Both of these can be indexed by the `Daru::Index` or `Daru::MultiIndex` class, which allows us to reference and operate on data by name instead of the traditional numeric indexing, and also perform index-based manipulation, equality and plotting operations.
 
@@ -197,7 +197,7 @@ A bunch of rows can be selected by specifying a range:
 
 #### Data Analysis
 
-Lets dive deeper by actually trying to extract something useful from the data that we have. Say we want to know the name of the artist heard the maximum number of times. So we create a Vector which consists of the names of the artists as the index (in camel\_case) and the number of times the name appears in the data as the corresponding values:
+Lets dive deeper by actually trying to extract something useful from the data that we have. Say we want to know the name of the artist heard the maximum number of times. So we create a Vector which consists of the names of the artists as the index and the number of times the name appears in the data as the corresponding values:
 
 ``` ruby
 
@@ -207,7 +207,7 @@ artists = df.group_by(:artname).size
 
 {%img center /images/daru1/get_max_artists.png 'Create a vector of artist names vs number of times they appear.'%}
 
-To get the maximum value out of these, use `#max_index`. This will return a Vector which has the max :
+To get the maximum value out of these, use `#max_index`. This will return a Vector which has the max:
 
 `count.max_index`
 
@@ -236,9 +236,9 @@ end
 
 * This was but a very small subset of the capabilities of daru. Go through the [documentation](https://rubygems.org/gems/daru) for more methods of analysing your data with daru.
 * You can find all the above examples implemented in [this notebook](http://nbviewer.ipython.org/github/v0dro/daru/blob/master/notebooks/intro_with_music_data_.ipynb).
-* Contribute to daru over [github](https://github.com/v0dro/daru). Any contributions will be greatly appreciated!
+* Contribute to daru on [github](https://github.com/v0dro/daru). Any contributions will be greatly appreciated!
 * Many thanks to [last.fm](http://www.last.fm/) for providing the data.
-* The next blog post in this series, elaborating on the next release of daru. --add link
+* Check out the [next blog post in this series](/blog/2015/02/24/data-analysis-in-ruby-part-2/), elaborating on the next release of daru.
 
 
 

@@ -6,9 +6,11 @@ comments: true
 categories: 
 ---
 
-I recently took up a project to implement an algorithm for [NMatrix](https://github.com/SciRuby/nmatrix) to solve sets of linear equations involving _n_ equations and _n_ unknowns. This involved solving a system of linear equations using forward substution followed by back substution using the LU factorization of the matrix of co-efficients.
+Solving systems of linear equations is a very important part of scientific computing (some would say most important), and in this post I will show you how a system of linear equations involving _n_ equations and _n_ unknowns can be solved in Ruby using the [NMatrix](https://github.com/SciRuby/nmatrix) gem and the methodology that I used for simplyfying the algorithms involved.
 
-The reduction techniques were quite baffling at first, because I had always solved equations in the traditional way and this was something completely new. I eventually figured it out and also [implemented it in NMatrix](https://github.com/SciRuby/nmatrix/commit/4241d241ca7744ca2ca5e090782588581160d42b). Here I will document how I did that, and we will also solve a simple set of linear equations in Ruby, using NMatrix. Hopefully, this will be useful to others like me!
+This involved solving a system of linear equations using forward substution followed by back substution using the LU factorization of the matrix of co-efficients.
+
+The reduction techniques were quite baffling at first, because I had always solved equations in the traditional way and this was something completely new. I eventually figured it out and also [implemented it in NMatrix](https://github.com/SciRuby/nmatrix/commit/4241d241ca7744ca2ca5e090782588581160d42b). Here I will document how I did that. Hopefully, this will be useful to others like me!
 
 I'm assuming that you are familiar with the LU decomposed form of a square matrix. If not, read [this](http://en.wikipedia.org/wiki/LU_decomposition) resource first.
 
@@ -17,7 +19,6 @@ Throughout this post, I will refer to _A_ as the square matrix of co-efficients,
 Lets say that the equation you want to solve is represented by:
 
 $$ A.x = b .. (1)$$
-
 
 The basic idea behind an LU decomposition is that a square matrix A can be represented as the product of two matrices _L_ and _U_, where _L_ is a lower [triangular matrix](http://en.wikipedia.org/wiki/Triangular_matrix) and _U_ is an upper triangular matrix.
 
@@ -39,7 +40,7 @@ The LU decomposed matrix is typically carried in a single matrix to reduce stora
 
 The reason for breaking down _A_ and first solving for an upper triangular matrix is that the solution of an upper triangular matrix is quite trivial and thus the solution to (2) is found using the technique of _forward substitution_. 
 
-Forward substitution is a technique that involves scanning an upper triangular matrix from top to bottom, computing a value for the top most variable and substituting that value into subsequent variables below it. This was quite daunting at first, because according to Numerical Recipes, the whole process of forward substitution can be represented by the following equation:
+Forward substitution is a technique that involves scanning an upper triangular matrix from top to bottom, computing a value for the top most variable and substituting that value into subsequent variables below it. This proved to be quite intimidating, because according to [Numerical Recipes](http://www.nr.com/), the whole process of forward substitution can be represented by the following equation:
 
 $$
 \begin{align}
@@ -160,7 +161,7 @@ $$
 \end{align}
 $$
 
-Looking at the above equations its easy to see how backward substitution can be used to solve for unknown quantities when given a upper triangular matrix of co-efficients, by starting at the lowermost varible and gradually moving upward.
+Looking at the above equations its easy to see how backward substitution can be used to solve for unknown quantities when given a upper triangular matrix of co-efficients, by starting at the lowermost variable and gradually moving upward.
 
 Now that the methodology behind solving sets of linear equations is clear, lets consider a set of 3 linear equations and 3 unknowns and compute the values of the unknown quantities using the nmatrix #solve method.
 
