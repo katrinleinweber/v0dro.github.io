@@ -7,6 +7,8 @@ sharing: true
 footer: true
 ---
 
+[Interfacing And Benchmarking High Performance Linear Algebra Libraries With Ruby]({{ root_url }}/blog/2015/03/11/interfacing-and-benchmarking-high-performance-linear-algebra-libraries-with-ruby/)
+
 [Data Analysis in RUby: Part 2]({{ root_url }}/blog/2015/02/24/data-analysis-in-ruby-part-2/)
 
 [Solving Systems of Linear Equations in Ruby]({{ root_url }}/blog/2014/12/14/solving-systems-of-linear-equations-in-ruby/)
