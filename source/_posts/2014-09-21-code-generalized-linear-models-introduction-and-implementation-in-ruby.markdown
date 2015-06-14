@@ -129,7 +129,7 @@ Here, the hessian matrix is $$ -(X'*W*X) $$ and the jacobian is $$ (X'*(y - \mu)
 
 ## Generalized Linear Models in Ruby
 
-Calculating the co-efficients and a host of other properties of a GLM is extremely simple and intuitive in Ruby. Let us see some examples of GLM by using the `statsample` and `statsample-glm` gems:
+Calculating the co-efficients and a host of other properties of a GLM is extremely simple and intuitive in Ruby. Let us see some examples of GLM by using the `daru` and `statsample-glm` gems:
 
 First install `statsample-glm` by running `gem install statsample-glm`, statsample will be downloaded alongwith it if it is not installed directly. Then download the CSV files from [here](https://github.com/SciRuby/statsample-glm/blob/master/spec/data/logistic_mle.csv).
 
@@ -138,11 +138,16 @@ Statsample-glm supports a variety of GLM methods, giving the choice of both, IRL
 To compute the co-efficients of a logistic regression, try this code:
 
 ```ruby
+require 'daru'
+require 'statsample-glm'
 # Code for computing coefficients and related attributes of a logistic regression.
 
-data_set = Statsample::CSV.read "logistic_mle.csv"
+data_set = Daru::DataFrame.from_csv "logistic_mle.csv"
 glm = Statsample::GLM.compute data_set, :y, :logistic, {constant: 1, algorithm: :mle} 
-# Options hash specifying addition of an extra constants vector all of whose values is '1' and also specifying that the MLE algorithm is to be used.
+
+# Options hash specifying addition of an extra constants 
+# vector all of whose values is '1' and also specifying 
+# that the MLE algorithm is to be used.
 
 puts glm.coefficients   
   #=> [0.3270, 0.8147, -0.4031,-5.3658]
