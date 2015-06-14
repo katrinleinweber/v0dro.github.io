@@ -170,7 +170,7 @@ Notice the syntax for referencing a particular vector. Use 'row' for referencing
 
 ``` ruby
 
-df.timestamp.map! { |ts| ts += "+5:30"}
+df.timestamp.recode! { |ts| ts += "+5:30"}
 
 ```
 {%img center /images/daru1/dmap_vector.png 'Destructively map a given vector.'%}
@@ -178,7 +178,7 @@ df.timestamp.map! { |ts| ts += "+5:30"}
 ``` ruby
 
 require 'date'
-df = df.map_rows do |row|
+df = df.recode(:row) do |row|
   row[:timestamp] = DateTime.strptime(row[:timestamp], '%Y-%m-%dT%H:%M:%SZ%z').to_time
   row
 end
@@ -231,6 +231,8 @@ end
 ```
 
 {%img center /images/daru1/plot_top_ten.png 'Top ten artists plotted.'%}
+
+More examples can be found in [the notebooks section of the daru README](https://github.com/v0dro/daru#notebooks).
 
 ## Further Reading
 
