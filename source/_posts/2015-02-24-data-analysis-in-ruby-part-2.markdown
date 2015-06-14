@@ -135,7 +135,7 @@ Thus to plot a line graph with data present in a DataFrame:
 ``` ruby
 
 df = Daru::DataFrame.new({a: [1,2,3,4,5], b: [10,14,15,17,44]})
-df.plot legends: [:a, :b], type: :line do |p,d|
+df.plot type: :line, x: :a, y: :b do |p,d|
   p.yrange [0,100]
   p.legend true
   d.color "green"
@@ -144,6 +144,8 @@ end
 {%img center /images/daru2/line_graph.png 'Line Graph From DataFrame'%}
 
 As you can see, the `#plot` function exposes the `Nyaplot::Plot` and `Nyaplot::Diagram` objects to user after populating them with the relevant data. So the new interface lets experienced users utilize the full power of nyaplot but keeps basic plotting very simple to use for new users or for quick and dirty visualization needs. Unfortunately for now, until a viable solution to interfacing with nyaplot is found, you will need to use the nyaplot API directly.
+
+Refer to [this notebook](http://nbviewer.ipython.org/github/SciRuby/sciruby-notebooks/blob/master/Visualization/Visualizing%20data%20with%20daru%20DataFrame.ipynb) for advanced plotting tutorials.
 
 ## Statistics and arithmetic on DataFrames.
 
@@ -372,7 +374,9 @@ sales.pivot_table(index: [:manager,:rep], values: :price, vectors: [:product], a
 
 ## Compatibility with statsample
 
-Daru is now mostly compatible with [statsample](https://github.com/clbustos/statsample) and you can now mostly perform most of the functions by just passing it a Daru::DataFrame or Daru::Vector to perform most of the useful statistical functions provided by statsample.
+Daru is now completely compatible with [statsample](https://github.com/clbustos/statsample) and you can now perform all of the functions by just passing it a Daru::DataFrame or Daru::Vector to perform statistical analysis.
+
+Find more examples of using daru for statistics [in these notebooks](https://github.com/SciRuby/sciruby-notebooks/tree/master/Statistics).
 
 Heres an example to demonstrate:
 
