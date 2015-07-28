@@ -6,7 +6,11 @@ comments: true
 categories: 
 ---
 
+## Introduction
+
 Daru's (Data Analysis in RUby) latest release (0.2.0) brings in a host of new features, most important among them being time series manipulation functionality. In this post, we will go over the date offsets that daru offers, which can be used for creating date indexes of specific intervals. The offsets offer a host of options for easy creation of different intervals and even work with standalone DateTime objects to increase or decrease time.
+
+## Offset classes and behaviour
 
 The date offsets are contained in the `Daru::Offsets` sub-module. A number of classes are offered, each of which implements business logic for advancing or retracting date times by a specific interval.
 
@@ -23,9 +27,9 @@ offset + DateTime.new(2012,4,5,4)
 
 As you can see in the above example, an hour was added to the time specified by DateTime and returned. All the offset classes work in a similar manner. Following offset classes are available to users:
 
-+-------------------+--------------------------------------------------+
-| Offset Class      | Description                                      |
+| **Offset Class**      | **Description**                                      |
 |:-----------------:|:------------------------------------------------:|
+|---
 |Daru::DateOffset   | Generic offset class                             |
 |Second             | One Second                                       |
 |Minute             | One Minute                                       |
@@ -38,7 +42,8 @@ As you can see in the above example, an hour was added to the time specified by 
 |Year               | One Year.                                        |
 |YearBegin          | Calendar Year Begin.                             |
 |YearEnd            | Calendar Year End.                               |
-+-------------------+--------------------------------------------------+
+
+
 
 The generic Daru::DateOffset class is used for creating a generic offset by passing the number of intervals you want as the value for a key that describes the type of interval. For example to create an offset of 3 days, you pass the option `days: 3` into the Daru::Offset constructor.
 
@@ -81,8 +86,26 @@ offset + DateTime.new(2015,3,5)
 #=> #<DateTime: 2015-06-01T00:00:00+00:00 ((2457175j,0s,0n),+0s,2299161j)>
 ```
 
-#### TODO: Talk about the Week offset
+Of special note is the `Week` offset. This offset can be 'anchored' to any week of the day that you specify. When this is done, the DateTime that is being offset will be offset to that day of the week.
 
+For example, to anchor the Week offset to a Wednesday, pass '3' as a value to the `:weekday` option:
+
+``` ruby
+
+require 'daru'
+
+offset = Daru::Offsets::Week.new(weekday: 3)
+date   = DateTime.new(2012,1,6)
+date.wday #=> 5
+
+o = offset + date
+#=> #<DateTime: 2012-01-11T00:00:00+00:00 ((2455938j,0s,0n),+0s,2299161j)>
+o.wday #=> 3
+```
+
+Likewise, the Week offset can be anchored on any day of the week, by simplying specifying the `:weekday` option. Indexing for days of the week starts from 0 for Sunday and goes on 6 for Saturday.
+
+## Offset string aliases
 
 The most obvious use of date offsets is for creating `DateTimeIndex` objects with a fixed time interval between each date index. To make creation of indexes easy, each of the offset classes have been linked to certain _string alaises_, which can directly passed to the DateTimeIndex class.
 
@@ -99,8 +122,7 @@ offset = Daru::DateTimeIndex.date_range(
 
 Likewise all of the above listed offsets can be aliased using strings, which can be used for specifying the offset in a DateTimeIndex index. The string aliases of each offset class are as follows:
 
-+---------------+--------------------------------+
-| Alias String  | Offset Class / Description     |
+| **Alias String**  | **Offset Class / Description**     |
 |:-------------:|:------------------------------:|
 |'S'            | Second                         |
 |'M'            | Minute                         |
@@ -120,10 +142,5 @@ Likewise all of the above listed offsets can be aliased using strings, which can
 |'YEAR'         | Year                           |
 |'YB'           | YearBegin                      |
 |'YE'           | YearEnd                        |
-+---------------+--------------------------------+
 
-Talk about using date offsets in datetime index with Offset objects and then tell about the string aliases.
-
-For ease of use each date offset is aliased by a string.
-
-A generic date offset (whose use I'll show you shortly) can also be used for generic time intervals.
+See this notebook on daru's time series functions in order to get a good overview of daru's time series manipulation functionality.

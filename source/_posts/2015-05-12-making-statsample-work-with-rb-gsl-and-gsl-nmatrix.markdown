@@ -6,6 +6,8 @@ comments: true
 categories: 
 ---
 
+**Note: It so happens that the latest release of rb-gsl does not depend on narray anymore. Hence rb-gsl can be directly used with statsample. However, if you want to use nmatrix with GSL, use gsl-nmatrix.**
+
 [Statsample](https://github.com/SciRuby/statsample) is the most comprehensive statistical computation suite in Ruby as of now.
 
 Previously, it so happened that statsample would depend on [rb-gsl](https://github.com/blackwinter/rb-gsl) to speed up a lot of computations. This is great, but the biggest drawback of this approach is that rb-gsl depends on [narray](https://github.com/masa16/narray), which is incompatible with [nmatrix](https://github.com/SciRuby/nmatrix) - the numerical storage and linear algebra library from the SciRuby foundation - due to namespace collisions. 

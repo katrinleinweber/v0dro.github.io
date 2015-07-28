@@ -7,6 +7,8 @@ sharing: true
 footer: true
 ---
 
+[Date Offsets in Daru]({{ root_url }}/blog/2015/07/27/date-offsets-in-daru/)
+
 [Making Statsample Work With rb-gsl And gsl-nmatrix]({{ root_url }}/blog/2015/05/12/making-statsample-work-with-rb-gsl-and-gsl-nmatrix/)
 
 [Interfacing And Benchmarking High Performance Linear Algebra Libraries With Ruby]({{ root_url }}/blog/2015/03/11/interfacing-and-benchmarking-high-performance-linear-algebra-libraries-with-ruby/)
