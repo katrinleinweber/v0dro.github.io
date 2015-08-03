@@ -7,6 +7,10 @@ sharing: true
 footer: true
 ---
 
+[Finding and Combining Data in Daru]({{ root_url }}/blog/2015/08/03/finding-and-combining-data-in-daru/)
+
+[Analysis of Time Series in Daru]({{ root_url }}/blog/2015/07/31/analysis-of-time-series-in-daru/)
+
 [Date Offsets in Daru]({{ root_url }}/blog/2015/07/27/date-offsets-in-daru/)
 
 [Making Statsample Work With rb-gsl And gsl-nmatrix]({{ root_url }}/blog/2015/05/12/making-statsample-work-with-rb-gsl-and-gsl-nmatrix/)

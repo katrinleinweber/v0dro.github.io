@@ -130,16 +130,4 @@ GnuplotRB::Multiplot.new(*plots, layout: [3,1], title: 'Rolling sums')
 
 Daru now integrates with [statsample-timeseries](https://github.com/SciRuby/statsample-timeseries), a [statsample](https://github.com/sciruby/statsample) extension that provides many useful statistical analysis tools commonly applied to time series.
 
-We'll see how daru and statsample-timeseries work together with some useful examples.
-
-### Using a Kalman Filter
-
-A [Kalman filter](http://www.cs.cornell.edu/courses/cs4758/2012sp/materials/mi63slides.pdf) is powerful tool mainly used for controlling noisy systems. The basic idea of a Kalman filter is: noisy data in -> hopefully less noisy data out.
-
-Kalman filters are used in a variety of applications ranging from tracking objects, navigation, economics, etc. 
-
-
-## References
-
-* http://www.r-bloggers.com/the-kalman-filter-for-financial-time-series/
-* http://bilgin.esme.org/BitsBytes/KalmanFilterforDummies.aspx
+Some examples with working examples of daru and statsample-timseries are coming soon. Stay tuned!
