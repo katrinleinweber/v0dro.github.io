@@ -7,6 +7,10 @@ sharing: true
 footer: true
 ---
 
+[Summary of work this summer for GSOC 2015]({{ root_url }}/blog/2015/08/16/summary-of-work-this-summer-for-gsoc-2015/)
+
+[Elaboration on certain internals of daru]({{ root_url }}/blog/2015/08/16/elaboration-on-certain-internals-of-daru/)
+
 [Finding and Combining Data in Daru]({{ root_url }}/blog/2015/08/03/finding-and-combining-data-in-daru/)
 
 [Analysis of Time Series in Daru]({{ root_url }}/blog/2015/07/31/analysis-of-time-series-in-daru/)

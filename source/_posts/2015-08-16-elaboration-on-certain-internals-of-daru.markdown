@@ -51,7 +51,7 @@ The where clause in daru lets users query data with a Array containing boolean v
 
 Since the where clause works in cojunction with the comparator methods of Daru::Vector (which return a Boolean Array), it was essential for these boolean arrays to be combined together such that piecewise AND and OR operations could be performed between multiple boolean arrays. Hence, the `Daru::Core::Query::BoolArray` class was created, which is specialized for handling boolean arrays and performing piecewise boolean operations.
 
-The BoolArray defines the '&' method for piecewise AND operations and it defines the '|' method for piecewise OR operations. They work as follows:
+The BoolArray defines the `#&` method for piecewise AND operations and it defines the `#|` method for piecewise OR operations. They work as follows:
 
 ``` ruby
 
