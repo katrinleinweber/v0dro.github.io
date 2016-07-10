@@ -7,6 +7,8 @@ sharing: true
 footer: true
 ---
 
+[Making screencasts in Debian]({{ root_url }}/blog/2016/07/05/making-screencasts-in-debian/)
+
 [Summary of work this summer for GSOC 2015]({{ root_url }}/blog/2015/08/16/summary-of-work-this-summer-for-gsoc-2015/)
 
 [Elaboration on certain internals of daru]({{ root_url }}/blog/2015/08/16/elaboration-on-certain-internals-of-daru/)
