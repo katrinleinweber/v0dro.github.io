@@ -6,3 +6,5 @@ comments: true
 sharing: true
 footer: true
 ---
+
+[Random Thoughts on Bass Tone]({{ root_url }}/blog/2016/07/12/random-thoughts-on-bass-tone/)
