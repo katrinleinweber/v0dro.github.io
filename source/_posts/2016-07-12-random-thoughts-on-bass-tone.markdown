@@ -7,6 +7,7 @@ categories:
 ---
 
 This post is about my learnings about bass tone. I'm currently using the following rig:
+
 * Laney RB2 amplifier
 * Tech 21 Sansamp Bass Driver Programmable DI
 * Fender Mexican Standard Jazz Bass (4 string)
@@ -26,5 +27,19 @@ One thing that was a little confusing was the whole thing about 'harmonic partia
 [Here's](http://www.studybass.com/gear/bass-effects/bass-compressor-settings/) an interesting piece on compressors.
 
 Some more useful links I came across over the course of the past few days:
+
 * https://theproaudiofiles.com/amp-overdrive-vs-pedal-overdrive/
 * http://www.offbeatband.com/2009/08/the-difference-between-gain-volume-level-and-loudness/
+
+#### 28 July 2016
+
+Found an interesting and informative piece on bass pedals [here](http://www.premierguitar.com/articles/Bass_Pedals_Basic_to_Playhouse). It's a good walkthrough of different pedal types and their functionality and purpose.
+
+I wanted to check out some overdrive pedals today but was soon sinking in a sea of terminologies. One thing that intrigued me is the difference between an overdrive, distortion and fuzz. I found a [pretty informative article](http://www.gibson.com/News-Lifestyle/Features/en-us/effects-explained-overdrive-di.aspx) on this topic. The author has the following to say about these 3 different but seemingly similar things.
+
+I had a look at the Darkglass b3k and b7k pedals too. They look like promising overdrive pedals. I'll explore the b3k more since the only difference between the 3 and the 7 is that the 7 also functions as a DI box and has an EQ, while the 3 doesn't. I already have a DI with a 2 band EQ in the sansamp.
+
+#### 29 July 2016
+
+One thing that I noticed when tweaking my sansamp is the level of 'distortion' in my tone varies a LOT when you change the bass or treble keeping the drive at the same level. Why does this happen?
+
