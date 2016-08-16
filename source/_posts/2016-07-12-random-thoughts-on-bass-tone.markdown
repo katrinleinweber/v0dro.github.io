@@ -43,3 +43,16 @@ I had a look at the Darkglass b3k and b7k pedals too. They look like promising o
 
 One thing that I noticed when tweaking my sansamp is the level of 'distortion' in my tone varies a LOT when you change the bass or treble keeping the drive at the same level. Why does this happen?
 
+#### 2 August 2016
+
+Trying to dive further into distortion today. Found [this](http://www.tyquinn.com/2009/lead-tone-part-3-distortion/) article kind of useful. It relates mostly to lead guitar tones, but I think it applies in a general case too. I learned about symmetric and asymmetric clipping in that article. 
+
+According to the article, symmetric clipping is more focused and clear, because it is only generating one set of harmonic overtones. Since asymmetric clipping can be hard-clipped on one side, and soft-clipped on the other, it has the potential to create very thick complex sounds. This means that if you want plenty of overtones, but do not want a lot of gain, asymmetric clipping can be useful. For full-blown distortion symmetric clipping is usually more suitable, since high-gain tones are already very harmonically complex. _Typically asymmetric clipping will have a predominant first harmonic, which the symmetric clipping will not_ (that's probably why in [this](https://www.youtube.com/watch?v=pzua3-xZKHM) video, the SD1 sounds brigther than than the TS-9). High gain distortion tones sound best with most of the distortion coming from the pre-amp, so try to use a fairly neutral pickup or even a slightly 'bright' pickup.
+
+The follow up to the above post [talks about EQ in relation with distortion](http://www.tyquinn.com/2009/lead-tone-part-4-eq-for-distortion-voicing/). It has stuff on pre and post EQ distortion and how it can affect the overall tone. If you place the EQ before the distortion, you can actually shape which frequencies will be clipped. However if you place it after the distortion then the EQ will only act for shaping the already distorted tone. Pre-dist EQ is more useful in most cases since it let's you control the frequencies for clipping.
+
+It also says that humbucking pickups have a mid-boost that is more focused by the lower part of the frequency range. Single coil pickups on the other hand have a mid-boost focused by the upper part of the frequency range. Single coils generally have clearer, more articulate bass end.
+
+#### 3 August 2016
+
+Read something about bass DI in [this](http://www.bestbassgear.com/ebass/gear/electronics/pedals/why-is-di-so-important-to-bass-players.html) article today.
