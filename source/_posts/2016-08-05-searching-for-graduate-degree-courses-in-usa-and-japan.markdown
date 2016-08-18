@@ -8,7 +8,7 @@ categories:
 
 I'm currently searching for master's degree courses in various colleges in Japan and USA. I want to pursue a Computer Science degree specializing in distributed systems. Searching for the right graduate degree courses can get depressing. Here I'm posting various links and leads that I came across through the course of my search.
 
-#### 5 August 2016
+### 5 August 2016
 
 Searching for options in Japan and started with University of Tokyo. Most of their courses seem to be in Japanese but there are a few in English as well. [This page](http://www.i.u-tokyo.ac.jp/ist_en/en-course/prg.shtml) has some starting info about the English courses. Also found a collection of colleges [here](http://www.mastersportal.eu/study-options/270286872/computer-science-it-japan.html).
 
@@ -19,7 +19,7 @@ So apparently the process for getting into a Japanese college for Master's can t
 
 The second is directly give the exam, but I'm not sure how that can be done since they all appear to be written examinations that are conducted in Japan.
 
-#### 16 August 2016
+### 16 August 2016
 
 Having a look at the graudate schools of [University of Tokyo](http://www.u-tokyo.ac.jp/en/academics/grad_ist.html), [Tokyo Insitute of Technology](http://educ.titech.ac.jp/eng/) and Kyoto University today.
 
@@ -39,3 +39,7 @@ All the courses require students to arrange for a Tokyo Tech faculty member to s
 **University of Kyoto**
 
 [Page of dept. of information science](http://www.kuis.kyoto-u.ac.jp/kuis/).
+
+### 17 August 2016
+
+Continuing my research on Tokyo Inst. of Technology. The PDF I pointed to yesterday brought out an interesting observation - IGP(A) students and IGP(C) students seem to have different course work.
