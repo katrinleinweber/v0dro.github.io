@@ -23,3 +23,7 @@ Backpacking in Kyoto -
   http://www.insidekyoto.com/backpacking-in-kyoto
   http://www.insidekyoto.com/hotel-ks-house-kyoto-kyoto-station-area
   http://kshouse.jp/kyoto-e/room.html
+
+Narita-Tokyo transfer -
+  http://accessnarita.jp/en/busstop/
+  https://tokyocheapo.com/travel/transport/cheapest-transport-to-and-from-narita-airport/

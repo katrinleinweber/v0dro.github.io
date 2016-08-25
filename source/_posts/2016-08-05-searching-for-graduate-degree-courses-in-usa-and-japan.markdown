@@ -43,3 +43,32 @@ All the courses require students to arrange for a Tokyo Tech faculty member to s
 ### 17 August 2016
 
 Continuing my research on Tokyo Inst. of Technology. The PDF I pointed to yesterday brought out an interesting observation - IGP(A) students and IGP(C) students seem to have different course work.
+
+### 18 August 2016
+
+It seems the IGP C program at Tokyo Tech. is best for me. I will research that further today. Most probably I'll need to do a 6 month research assistantship first. [Here's a list](http://www.cs.titech.ac.jp/labs-e.html) of the research groups of the Computer Sci. deptartment at Tokyo Tech.
+
+### 20 August 2016
+
+**Tokyo Inst. of Technology**
+
+Found a list of faculties under the IGP(C) program [here](http://www.titech.ac.jp/english/graduate_school/international/graduate_program_c/pdf/listoffaculties_1609c.pdf).
+
+### 23 August 2016
+
+Had a look at Kyushu Inst. of Technology today. The [program for international students](http://www.kyutech.ac.jp/english/admissions/guidelines/iizuka_master.html) looks good.
+
+Also check out scholarship opportunities at Tokyo Inst. of Technology. Links - [1](http://www.titech.ac.jp/english/graduate_school/international/scholarships/), [2](http://www.titech.ac.jp/english/graduate_school/international/scholarships/before_enrollment.html), [3](http://www.mastersportal.eu/universities/scholarships/13128/tokyo-institute-of-technology.html). There are a bunch of scholarships that can be applied to before you enrol in university. Have a look [here](http://www.titech.ac.jp/english/graduate_school/international/scholarships/before_enrollment.html).
+
+There's also the [MEXT scholarship](http://www.titech.ac.jp/english/graduate_school/international/scholarships/mext_scholarship.html)from the Japanese government.
+
+### 24 August 2016
+
+Found an interesting [FAQ on the UoT website](http://www.ic.u-tokyo.ac.jp/ic/guidance/guide05_e.html).
+
+Also having a look at [JASSO scholarships](http://www.jasso.go.jp/en/study_j/scholarships/brochure.html). Found some great scholarships [here](http://www.jasso.go.jp/en/study_j/scholarships/__icsFiles/afieldfile/2016/03/29/scholarshipse_private.pdf).
+
+### 25 August 2016
+
+Found some scholarships. Also, I can also enrol as a [privately funded research student](http://www.titech.ac.jp/english/graduate_school/international/research_students/privately_funded.html) at Tokyo Tech.
+
