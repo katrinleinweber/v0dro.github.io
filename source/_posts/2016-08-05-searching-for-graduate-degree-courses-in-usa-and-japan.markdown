@@ -72,3 +72,10 @@ Also having a look at [JASSO scholarships](http://www.jasso.go.jp/en/study_j/sch
 
 Found some scholarships. Also, I can also enrol as a [privately funded research student](http://www.titech.ac.jp/english/graduate_school/international/research_students/privately_funded.html) at Tokyo Tech.
 
+[This](http://www.titech.ac.jp/english/graduate_school/international/research_students/syutugan/data/applicationoutline.pdf) is a PDF that talks about privately funded research students.
+
+Also checking out [Keio University](http://www.global.keio.ac.jp/en/education/admissions/graduate.html) today. They have a program for internation graduate students. Have a look [here](http://www.st.keio.ac.jp/english/admissions/masters_program/index.html).
+
+I also had a look at the [Kyoto University IGP](http://www.kyoto-u.ac.jp/en/education-campus/international/students1). Here's a [listing of Japanese universities](http://www.shanghairanking.com/World-University-Rankings-2014/Japan.html).
+
+### 
