@@ -65,5 +65,17 @@ while i < len(arr):
 print(arr)
 ```
 
-#### Select Sort
+Worst case time complexity of this algorithm is O(n^2). The best case performance is O(n). This algorithm is better than selection sort since it is adapative and does not necessarily need to swap elements if they are already in sorted order.
 
+
+#### Selection Sort
+
+Worst case time complexity of this algorithm is O(n^2). It differs from insertion sort in a way that insertion sort picks up the first element after the sorted sublist (in the unsorted sublist) and finds a place for it in the sorted sublist, while selection sort selects the smallest element in the unsorted sublist and adds it to the end of the sorted sublist.
+
+#### Quick sort
+
+This has worst case time complexity of O(n^2) if swapping needs to be done for every element, but this behaviour is rare. Average case time complexity is O(nlog(n)).
+
+#### Heap sort
+
+This is similar to insertion sort, but the difference is that a heap data structure is used for getting the largest element from the unsorted list. For this reason, it has a worst case complexity of O(nlog(n)). Best case time complexity is O(n) or O(nlog(n)).

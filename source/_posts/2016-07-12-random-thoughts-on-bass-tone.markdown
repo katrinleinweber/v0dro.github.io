@@ -56,3 +56,17 @@ It also says that humbucking pickups have a mid-boost that is more focused by th
 #### 3 August 2016
 
 Read something about bass DI in [this](http://www.bestbassgear.com/ebass/gear/electronics/pedals/why-is-di-so-important-to-bass-players.html) article today.
+
+#### 10 October 2016
+
+Posting after quite a while!
+
+Reading about the use of compression for bass guitars. Found [this article](http://www.studybass.com/gear/bass-effects/bass-compressors/) which explains why we need compression in the first place.
+
+Also, my band's installation of Main Stage 3 has started giving some really weird problems. More about that soon.
+
+#### 11 October 2016
+
+Coming back to Main Stage. For some reason, pressing Space Bar for play/pause reduces the default sampling rate and makes the tracks sound weird. We need to go to preferences and increase the sampling rate to 48 kHz again (that's what our backing tracks are recorded at). I think its something to do with the key mappings, but I'm not sure. Will need to check it out.
+
+It also so happens that after the space bar has been pressed and the issue with the sampling rate is resolved, the samples (which come from a M-Audio M-Track) start emitting a strange crackling sound. This sounds persists only if the headphones are connected into the audio jack (we use the onboard Mac sound card too). The sound goes away if the headphones are unplugged. Restarting the Mac resolves the issue. I suspect there might be a way without having to restart. Will investigate.

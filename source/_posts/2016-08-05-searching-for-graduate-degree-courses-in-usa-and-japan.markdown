@@ -78,4 +78,22 @@ Also checking out [Keio University](http://www.global.keio.ac.jp/en/education/ad
 
 I also had a look at the [Kyoto University IGP](http://www.kyoto-u.ac.jp/en/education-campus/international/students1). Here's a [listing of Japanese universities](http://www.shanghairanking.com/World-University-Rankings-2014/Japan.html).
 
-### 
+### 28 August 2016
+
+Found a [Computer Engineering IGP at Kyoto University](http://www.g30.i.kyoto-u.ac.jp/en/course), though I still cant find anything related to HPC. This is a link that has [some details on admissions](http://www.g30.i.kyoto-u.ac.jp/en/admission).
+
+More details on Tokyo Tech.'s IGP(A) can be found [here](http://www.ise.titech.ac.jp/english/igpa/detail_114.html). [This](http://www.titech.ac.jp/guide/guide_27/English/index.html) looks like a good resource for curriculum. [This](http://www.titech.ac.jp/english/graduate_school/international/scholarships/without_university.html) has resources for scholarships without recommendation.
+
+### 29 August 2016
+
+Found a good resource on IGP programs at Tokyo Tech [here](http://www.ai.cs.titech.ac.jp/IGP_PR_Program_Final.pdf). [Here's a PPT](http://www.ise.titech.ac.jp/english/igpa/IGPAprogram.pdf) about IGP(A) in particular. IGP(A) coursework can be found [here](http://www.titech.ac.jp/guide/guide_28/English/pdf/A-05.pdf#page=1).
+
+#### 4 November 2016
+
+Posting after quite a while!
+
+I'm currently having a look at [Linz University, Austria](http://www.jku.at/content/e262/e256786). I came to know one of the research groups there is really good and are making some solid progress in high performant software.
+
+Here's the [admissions page of the dept. of computer science](http://informatik.jku.at/teaching/prospective/en/admissions.html). Here's [more info](http://www.jku.at/content/e262/e244/e167855/e167857) on admissions. [This is a PDF](http://informatik.jku.at/teaching/curricula/2013/CS_Master_Guide.pdf) on the Computer Science degree.
+
+The [System Software group](http://www.ssw.uni-linz.ac.at/) looks nice. 

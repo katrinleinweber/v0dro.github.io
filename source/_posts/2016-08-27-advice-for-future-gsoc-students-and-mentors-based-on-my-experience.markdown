@@ -6,7 +6,7 @@ comments: true
 categories: 
 ---
 
-This year I was the admin for the GSOC projects of the [SciRuby foundation](). It's also the first time I mentored a student, having been a student myself last year. Being a mentor is pretty tough task, and for some reason is underestimated by many. I was lucky to have the experience and support of co-admins [@mohawkjohn]() and [@pjotrp]() throughout the GSOC period.
+This year I was the admin for the GSOC projects of the [SciRuby foundation](http://sciruby.com/). It's also the first time I mentored a student, having been a student myself last year. Being a mentor is pretty tough task, and for some reason is underestimated by many. I was lucky to have the experience and support of co-admins [@mohawkjohn](https://github.com/mohawkjohn) and [@pjotrp](https://github.com/pjotrp) throughout the GSOC period.
 
 GSOC has now come to a close. I have learned a great deal myself in the past 3 months, and thought I would share some of my learnings in this blog post in the interest of future GSOC students and mentors.
 
