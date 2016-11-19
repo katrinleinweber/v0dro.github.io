@@ -1,0 +1,47 @@
+---
+layout: post
+title: "Thoughts on writing your own parser"
+date: 2016-11-16 18:13:21 +0530
+comments: true
+categories: 
+---
+
+I'm writing Rubex. It uses racc, an LALR(1) parser generator. Need to write parsers according to the LALR(1) grammar. Started with a [simple description](http://web.cs.dal.ca/~sjackson/lalr1.html) of LALR(1) grammars. Found a grammar checker [here](http://smlweb.cpsc.ucalgary.ca/start.html).
+
+In an LALR(1) grammar, left recursion is often preferred and seems safer.
+
+Parser is just one stage of this, the next challenge is building an AST that can effectively represent your language in such a way that you can easily represent any syntactical and semantic data with the parsed constructs and the different parts of the compiler can communicate effectively with each other.
+
+According to Language Implementation Patterns page 92, ASTs should have the following behaviour:
+- Dense: No unnecessary nodes
+- Convenient: Easy to walk
+- Meaningful: Emphasize operators, operands, and the relationship between them rather than artifacts from the grammar.
+
+Something important to remember when building an AST is that it must be decoupled from the grammar of the language, since grammars change all the time, and this shoul not impact other components of the language. The key idea behind AST structure is that tokens representing operators or operations become subtree roots. All other tokens become operands (children of operator nodes).
+
+Type structure or syntax structure can be enforced by the AST. Whenever a node is being populated, one can know if it is of the right type and raise an error if it is not.
+
+Type declarations can also be recorded in the AST, but we need to create a special 'imaginary token' to represent these. So for example, a token like `VARDECL` can be used for declaring C-like variables that look like `int i;`. In this case the children of the `VARDECL` node will be `int` and `i`.
+
+There are basically three steps in processing the AST:
+  #  There are 3 phases of parse tree processing, applied in order to
+  #  all the statements in a given scope-block:
+  #
+  #  (1) analyse_declarations
+  #        Make symbol table entries for all declarations at the current
+  #        level, both explicit (def, cdef, etc.) and implicit (assignment
+  #        to an otherwise undeclared name).
+  #
+  #   (2) analyse_expressions
+  #         Determine the result types of expressions and fill in the
+  #         'type' attribute of each ExprNode. Insert coercion nodes into the
+  #         tree where needed to convert to and from Python objects. 
+  #         Allocate temporary locals for intermediate results. Fill
+  #         in the 'result' attribute of each ExprNode with a C code
+  #         fragment.
+  #
+  #   (3) generate_code
+  #         Emit C code for all declarations, statements and expressions.
+  #         Recursively applies the 3 processing phases to the bodies of
+  #         functions.
+

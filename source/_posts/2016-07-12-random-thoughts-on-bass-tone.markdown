@@ -70,3 +70,23 @@ Also, my band's installation of Main Stage 3 has started giving some really weir
 Coming back to Main Stage. For some reason, pressing Space Bar for play/pause reduces the default sampling rate and makes the tracks sound weird. We need to go to preferences and increase the sampling rate to 48 kHz again (that's what our backing tracks are recorded at). I think its something to do with the key mappings, but I'm not sure. Will need to check it out.
 
 It also so happens that after the space bar has been pressed and the issue with the sampling rate is resolved, the samples (which come from a M-Audio M-Track) start emitting a strange crackling sound. This sounds persists only if the headphones are connected into the audio jack (we use the onboard Mac sound card too). The sound goes away if the headphones are unplugged. Restarting the Mac resolves the issue. I suspect there might be a way without having to restart. Will investigate.
+
+Turns out you just restart and it solves the problem (and be careful about what keys you press when on stage!). Not worth scratching your head too much.
+
+#### 9 November 2016
+
+I just got a new EHX Micro POG octaver pedal and a TC electronic booster pedal. Also got a TC electronics Polytune. Finally on my way to creating a pedal chain :)
+
+So for now I'm using the pedals in this order:
+
+Tuner -> Octaver -> Booster -> Sansamp
+
+I think this works fine for me for now, though I might change something later on.
+
+I read in [this thread](https://www.talkbass.com/threads/good-uses-for-an-octave-pedal.603423/) that using one octave down with an overdrive (on the sansamp) works wonders. Gonna try that now!
+
+I am also having a look at [this guide](http://smartbassguitar.com/how-to-set-up-a-pedal-board-for-bassists/#.WCNfwfpvbeQ) on setting up a pedal board.
+
+#### 18 November 2016
+
+Checking out [this](http://www.divinemusicstore.com/) YouTube video on getting a James Jamerson Bass tone. Also found an [interesting rig rundown](https://www.youtube.com/watch?v=JsgUqLdgQ1U) by Tim Commerford (RATM).

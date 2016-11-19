@@ -70,7 +70,7 @@ def prepare_parser file_name
 end
 ```
 
-As you can see, we've put the logic for the parser inside the `AddParser` class. Notice that in oedipus_lex, only the parsing logic exists inside the class and everything else (i.e under `header` and `inner`) exists _outside_ the class. Let's go over each part of the parser one by one:
+As you can see, we've put the logic for the parser inside the `AddParser` class. Yacc's `$$` is the `result`; `$0`, `$1`... is an array called `val`, and `$-1`, `$-2`... is an array called `_values`. Notice that in racc, only the parsing logic exists inside the class and everything else (i.e under `header` and `inner`) exists _outside_ the class. Let's go over each part of the parser one by one:
 
 **class AddParser**
 
