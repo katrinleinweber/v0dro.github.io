@@ -89,4 +89,4 @@ I am also having a look at [this guide](http://smartbassguitar.com/how-to-set-up
 
 #### 18 November 2016
 
-Checking out [this](http://www.divinemusicstore.com/) YouTube video on getting a James Jamerson Bass tone. Also found an [interesting rig rundown](https://www.youtube.com/watch?v=JsgUqLdgQ1U) by Tim Commerford (RATM).
+Also found an [interesting rig rundown](https://www.youtube.com/watch?v=JsgUqLdgQ1U) by Tim Commerford (RATM).
