@@ -11,4 +11,10 @@ Searching for decent jam rooms and studios is quite task if you don't know the r
 
 # Jam Rooms
 
+### Jam Works by Divine Music (Camp)
+
+### Just Jam (near MIT, Kothrud)
+
 # Studios
+
+### Gray Spark Audio (Baner)

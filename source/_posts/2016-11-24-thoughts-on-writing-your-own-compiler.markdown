@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Thoughts on writing your own parser"
-date: 2016-11-22 15:35:09 +0530
+title: "Thoughts on writing your own compiler."
+date: 2016-11-24 21:40:55 +0530
 comments: true
 categories: 
 ---
@@ -56,3 +56,13 @@ A compiler may use one large symbol table for all symbols or use separated, hier
 In hierarchical symbol tables, the symbol table entries for Methods have two parts - one which holds the method arguments (the method symbol itself) and the other which holds the locally declared variables of the method.
 
 Now one might think that why is storing information in scopes so necessary if we can store stuff in the nodes of the AST anyway. The reason for this is that, it so happens that the scope needs to be passed around to a lot of objects when the AST is being populated with more information. A lot of these objects might belong somewhere down the hierarchy of the AST and it is important for these objects to have access to the symbols that they operating in to acess more information about them and enhance themselves. Hence, storing information in the hierarchical symbol table is important.
+
+One of the principal requirements of any compiler is type checking and type inference. This is a necessary feature especially if your language is statically typed and knowing the result data type of an expression is necessary. I'm referring to chapter 6.5 (Type Checking) of the Dragon book for this purpose.
+
+A type hierarchy defines which types are wider than which other types. Types lower in the hierarchy can be casted to types higher up in the hierarchy. Other way round is usually not done since it leads to loss of information.
+
+The semantic action for checking an expression E -> E1 + E2 uses two functions mainly:
+- max(t1, t2) - Takes two types t1 and t2 and returns the maximum of the two types in the widening hierarchy. Declares error if either types are not in hierarchy.
+- widen(a,t,w) - generates type conversions if needed to widen the contents of an address a of type t into a value of type w . It returns a itself if t and w are the same type.
+
+One tricky thing is the null rule in the LALR(1) parser. The thing with this is that it basically tells you that if nothing on the stack matches with a rule, and a null rule is present, 'nothing' will be reduced to that rule and the respective production will make its way on top of the stack. This rule must be remembered at all times when writing grammars since it can wreak havoc. See this SO answer: http://stackoverflow.com/questions/8242509/how-does-the-yacc-bison-lalr1-algorithm-treat-empty-rules
