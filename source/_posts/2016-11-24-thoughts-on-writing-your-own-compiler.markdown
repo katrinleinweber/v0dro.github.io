@@ -66,3 +66,12 @@ The semantic action for checking an expression E -> E1 + E2 uses two functions m
 - widen(a,t,w) - generates type conversions if needed to widen the contents of an address a of type t into a value of type w . It returns a itself if t and w are the same type.
 
 One tricky thing is the null rule in the LALR(1) parser. The thing with this is that it basically tells you that if nothing on the stack matches with a rule, and a null rule is present, 'nothing' will be reduced to that rule and the respective production will make its way on top of the stack. This rule must be remembered at all times when writing grammars since it can wreak havoc. See this SO answer: http://stackoverflow.com/questions/8242509/how-does-the-yacc-bison-lalr1-algorithm-treat-empty-rules
+
+Another important concept is associativity of operators. The reason why it is important is covered nicely over here: http://stackoverflow.com/questions/930486/what-is-associativity-of-operators-and-why-is-it-important
+
+
+Take these rules for example:
+bodystmt: stmts opt_terms
+stmts: {} | stmt | stmts terms stmt
+
+When an else block is written as 'else: kELSE stmts' it will fail because the 'stmts terms' will first get matched and the parser will try to find a 'stmt' and it will fail. Replacing that with 'bodystmt' will solve the issue since now the parser can get away with matching 'stmt opt_terms' (stmts resolves to stmt).

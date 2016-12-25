@@ -97,3 +97,9 @@ I'm currently having a look at [Linz University, Austria](http://www.jku.at/cont
 Here's the [admissions page of the dept. of computer science](http://informatik.jku.at/teaching/prospective/en/admissions.html). Here's [more info](http://www.jku.at/content/e262/e244/e167855/e167857) on admissions. [This is a PDF](http://informatik.jku.at/teaching/curricula/2013/CS_Master_Guide.pdf) on the Computer Science degree.
 
 The [System Software group](http://www.ssw.uni-linz.ac.at/) looks nice. 
+
+#### 25 December 2016
+
+Checking out the [Computer Science](http://catalog.uic.edu/gcat/colleges-schools/engineering/cs/) program at UIC and that at [University of Houston](http://www.uh.edu/nsm/computer-science/graduate/programs/).
+
+This is [UICs website](https://www.cs.uic.edu/). This is the [detailed PDF](https://www.cs.uic.edu/~grad/2015_Graduate_Program_Requirements.pdf) of the MS in CS requirements.
