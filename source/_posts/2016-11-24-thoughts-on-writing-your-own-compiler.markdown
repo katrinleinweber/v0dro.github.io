@@ -75,3 +75,5 @@ bodystmt: stmts opt_terms
 stmts: {} | stmt | stmts terms stmt
 
 When an else block is written as 'else: kELSE stmts' it will fail because the 'stmts terms' will first get matched and the parser will try to find a 'stmt' and it will fail. Replacing that with 'bodystmt' will solve the issue since now the parser can get away with matching 'stmt opt_terms' (stmts resolves to stmt).
+
+Another eccentricity I noticed right now is with those expr statements.
