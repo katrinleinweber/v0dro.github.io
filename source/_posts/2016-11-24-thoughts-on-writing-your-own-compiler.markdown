@@ -3,7 +3,7 @@ layout: post
 title: "Thoughts on writing your own compiler."
 date: 2016-11-24 21:40:55 +0530
 comments: true
-categories: 
+categories:
 ---
 
 I'm writing Rubex. It uses racc, an LALR(1) parser generator. Need to write parsers according to the LALR(1) grammar. Started with a [simple description](http://web.cs.dal.ca/~sjackson/lalr1.html) of LALR(1) grammars. Found a grammar checker [here](http://smlweb.cpsc.ucalgary.ca/start.html).
@@ -35,7 +35,7 @@ There are basically three steps in processing the AST:
   #   (2) analyse_expressions
   #         Determine the result types of expressions and fill in the
   #         'type' attribute of each ExprNode. Insert coercion nodes into the
-  #         tree where needed to convert to and from Python objects. 
+  #         tree where needed to convert to and from Python objects.
   #         Allocate temporary locals for intermediate results. Fill
   #         in the 'result' attribute of each ExprNode with a C code
   #         fragment.
@@ -51,7 +51,7 @@ Now we also need a symbol table for knowing where each statement exists and what
 
 every occurrence of an identifier in a source program requires some symbol-table interactio.
 
-A compiler may use one large symbol table for all symbols or use separated, hierarchical symbol tables for different scopes. 
+A compiler may use one large symbol table for all symbols or use separated, hierarchical symbol tables for different scopes.
 
 In hierarchical symbol tables, the symbol table entries for Methods have two parts - one which holds the method arguments (the method symbol itself) and the other which holds the locally declared variables of the method.
 
@@ -77,3 +77,14 @@ stmts: {} | stmt | stmts terms stmt
 When an else block is written as 'else: kELSE stmts' it will fail because the 'stmts terms' will first get matched and the parser will try to find a 'stmt' and it will fail. Replacing that with 'bodystmt' will solve the issue since now the parser can get away with matching 'stmt opt_terms' (stmts resolves to stmt).
 
 Another eccentricity I noticed right now is with those expr statements.
+
+Garbage Collection:
+
+Since we're interfacing with Ruby, it is important to keep track of Ruby objects created (if any) and make sure that they get GC'd properly later.
+
+I'm reading this article: https://ruby-hacking-guide.github.io/gc.html for getting a hang of the Ruby GC.
+
+Some more references on garbage collection and memory management:
+http://stackoverflow.com/questions/2003885/garbage-collection-with-ruby-c-extension
+http://stackoverflow.com/questions/21513666/how-to-free-memory-from-char-array-in-c
+http://cjf.io/2014/03/05/adventures-with-the-ruby-garbage-collector-in-nmatrix/
