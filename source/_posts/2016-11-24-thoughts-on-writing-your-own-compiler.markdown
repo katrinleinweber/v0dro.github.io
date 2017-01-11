@@ -3,6 +3,7 @@ layout: post
 title: "Thoughts on writing your own compiler."
 date: 2016-11-24 21:40:55 +0530
 comments: true
+published: false
 categories:
 ---
 
