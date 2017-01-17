@@ -89,3 +89,20 @@ Some more references on garbage collection and memory management:
 http://stackoverflow.com/questions/2003885/garbage-collection-with-ruby-c-extension
 http://stackoverflow.com/questions/21513666/how-to-free-memory-from-char-array-in-c
 http://cjf.io/2014/03/05/adventures-with-the-ruby-garbage-collector-in-nmatrix/
+
+Now I need to implement an interface for Rubex that will help in easily binding C functions through Rubex. This is one of the main uses of Rubex and it is paramount that this functionality get high preference.
+
+Following are the most important requirements of such an interface:
+* External declarations
+* Public declarations
+* A way to link libraries with various options (maybe using pkg-config)
+* Bind to C functions
+* A way to call the C functions
+* Namespacing rules for C functions that have been bound.
+* Struct allocation/deallocation
+
+One can use objdump for knowing the functions in a file. If we use objdump, the public functions of any binary can simply be bound without the user having to specify any of the functions themselves!
+
+https://silverhammermba.github.io/emberb/c/
+
+http://www.embedded.com/electronics-blogs/programming-pointers/4024450/Tag-vs-Type-Names
