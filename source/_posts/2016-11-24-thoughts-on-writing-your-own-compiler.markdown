@@ -106,3 +106,11 @@ One can use objdump for knowing the functions in a file. If we use objdump, the 
 https://silverhammermba.github.io/emberb/c/
 
 http://www.embedded.com/electronics-blogs/programming-pointers/4024450/Tag-vs-Type-Names
+
+Scoping:
+
+Scoping is a big issue that I'm facing these days. Each block requires its own scoping rules and this scoping is a pain to implement. Now I need to figure out a way to correctly scope singleton methods. They are not acessible by instance methods, and cannot access instance methods.
+
+Ruby constant lookup is interesting. See it here: http://valve.github.io/blog/2013/10/26/constant-resolution-in-ruby/
+
+Constants cannot be defined inside Ruby methods since it leads to a dynamic const assignment error.
