@@ -166,7 +166,16 @@ This algorithm calculates the multipole of a cell. It uses spherical harmonics s
 
 The optimizations that are presented in the `kernel.h` version of this file are quite complex to understand since they look quite different from the original equation. I will explain the code written in the file, however, we will use unoptmized Ruby code that actually resembles the equation for purposes of understanding.
 
+For code that is still sane and easier to read, head over to the [laplace.h](https://github.com/exafmm/exafmm-alpha/blob/develop/kernels/laplace.h#L48) file exafmm-alpha. The explanations here are from this file.
 
+The `evalMultipole` function basically tries to populate the `Ynm` array with data that is computed with the following equation:
+$$
+\begin
+\rho^{n}Y_{n}^{m}=\rho^{n}P_{n}^{m}(x)\sqrt{\frac{(n-m)!}{(n+m)!}}e^{im\beta}
+\end
+$$
+
+The Ruby implementation is here.
 
 ## vector.h
 
@@ -181,6 +190,7 @@ The Ruby implementation of this file is in `vector.rb`.
 ## step1.cxx
 
 ## step2.cxx
+
 
 
 
