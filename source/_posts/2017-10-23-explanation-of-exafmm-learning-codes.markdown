@@ -9,7 +9,6 @@ categories:
 # ExaFMM learning tutorials
 
 In this file I will write descriptions of the exafmm 'learning' codes and my understanding of them. I have been tasked with understanding the code and porting it to Ruby, my favorite language.
-
 We shall start from the first tutorial, i.e. [0_tree](). You can find the full Ruby code here.
 
 # 0_tree
@@ -108,7 +107,7 @@ overall code is more or less a direct port.
 
 # 1_traversal
 
-These codes are for traversal of the tree that was created in the previous step.
+These codes are for traversal of the tree that was created in the previous step. The full code can be found in [1_traversal.rb]() file.
 
 ## step1.cxx
 
@@ -118,3 +117,70 @@ One major difference between the C++ and Ruby implementation is that since Ruby 
 have used the array indices of the elements instead. For this purpose there are two attributes in the
 `Cell` class called `first_child_index` that is responsible for holding the index in the `cells` array
 about the location of the first child of this cell, and the second `first_body_index` which is responsible for holding the index of the body in the `bodies` array.
+
+This step does this by introducing a method called `upwardPass` which iterates through nodes and thier children and computes the P2M and M2M kernels.
+
+## step2.cxx
+
+This step implements the rest of the kernels i.e. M2L, L2L, L2P and P2P. It also introduces two new methods `downward_pass` that calculates the local forces from other local forces and L2P interactions and `horizontal_pass` that calculates the inter-particle interactions and m2l.
+
+No special code as such over here, its just the regular FMM stuff.
+
+# 2_kernels
+
+This code is quite different from the previous two. While the previous programs were mostly retricted to a single file, this program substantially increases complexity and spreads the implementation across several files. We start using 3 dimensional co-ordinates too.
+
+In this code, we start to make a move towards spherical co-ordinate system to represent the particles in 3D. A few notable algorithms taken from some research papers have been implemented in this code.
+
+Lets describe each file and see what implementation lies inside
+
+## kernel.h
+
+The `kernel.h` header file implemenets all the FMM kernels. It also implements two special functions called `evalMultipole` and `evalLocal` that evaluate the multipoles and local expansion for spherical co-ordinates using the actual algorithm that is actually used in exafmm. An implementation of this algorithm can be found on page 16 of the paper ["Treecode and fast multipole method for N-body simulation with CUDA"](https://arxiv.org/pdf/1010.1482.pdf%20) by Yokota. A preliminary implementation of this algorithm can be found in ["A Fast Adaptive Multipole Algorithm in Three Dimensions"](http://www.sciencedirect.com/science/article/pii/S0021999199963556) by Cheng.
+
+The Ruby implementation of this file is in `kernel.rb`.
+
+I will now describe this algorithm here best I can:
+
+### Preliminaries
+
+#### Ynm vector
+
+This is a vector that defines the [spherical harmonics](https://en.wikipedia.org/wiki/Spherical_harmonics) of degree _n_ and order _m_. A primitive version for computing this exists in the paper by Cheng and a newer, faster version in the paper by Yokota.
+
+Spherical harmonics allow us to define series of a function in 3D rather in 1D that is usually the case for things like the expansion of _sin(x)_. They are representations of functions on the surface of a sphere instead of on a circle, which is usually the case with other 2D expansion functions. They are like the Fourier series of the sphere. This [article](http://mathworld.wolfram.com/SphericalHarmonic.html) explains the notations used nicely.
+
+The order (_n_) and degree (_m_) correspond to the order and degree of the [Legendre polynomial](http://mathworld.wolfram.com/LegendrePolynomial.html) that is used for obtaining the spherical harmonic. _n_ is an integer and _m_ goes from _0..n_.
+
+For causes of optimization, the values stored inside `ynm` are not the ones that correspond to the spherical harmonic, but are values that yield optimized results when the actual computation happens.
+
+### Functions
+
+### cart2sph
+
+This function converts cartesian co-ordinates in (X,Y,Z) to spherical co-ordinates involving `radius`, `theta` and `phi`. `radius` is simply the square root of the norm of the co-ordinates (norm is defined as the sum of squares of the co-ordinates in `vec.h`).
+
+### evalMultipole
+
+This algorithm calculates the multipole of a cell. It uses spherical harmonics so that net force of the forces inside a sphere and can be estimated on the surface of the sphere, which can then be treated as a single body for estimating forces.
+
+The optimizations that are presented in the `kernel.h` version of this file are quite complex to understand since they look quite different from the original equation. I will explain the code written in the file, however, we will use unoptmized Ruby code that actually resembles the equation for purposes of understanding.
+
+
+
+## vector.h
+
+This file defines a new custom type for storing 1D vectors called `vec` as a C++ class. It also defines various functions that can be used on vectors like `norm`, `exp` and other simple arithmetic.
+
+The Ruby implementation of this file is in `vector.rb`.
+
+## exafmm.h
+
+## exafmm2d.h
+
+## step1.cxx
+
+## step2.cxx
+
+
+
