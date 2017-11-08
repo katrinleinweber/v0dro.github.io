@@ -166,20 +166,49 @@ This algorithm calculates the multipole of a cell. It uses spherical harmonics s
 
 The optimizations that are presented in the `kernel.h` version of this file are quite complex to understand since they look quite different from the original equation. I will explain the code written in the file, however, we will use unoptmized Ruby code that actually resembles the equation for purposes of understanding.
 
-For code that is still sane and easier to read, head over to the [laplace.h](https://github.com/exafmm/exafmm-alpha/blob/develop/kernels/laplace.h#L48) file exafmm-alpha. The explanations here are from this file.
+For code that is still sane and easier to read, head over to the [laplace.h](https://github.com/exafmm/exafmm-alpha/blob/develop/kernels/laplace.h#L48) file in exafmm-alpha. The explanations here are from this file.
 
 The `evalMultipole` function basically tries to populate the `Ynm` array with data that is computed with the following equation:
 $$
 \begin
-\rho^{n}Y_{n}^{m}=\rho^{n}P_{n}^{m}(x)\sqrt{\frac{(n-m)!}{(n+m)!}}e^{im\beta}
+\rho^{n}Y_{n}^{m}=\sum_{m=0}^{P-1}\sum_{n=m+1}^{P-1}\rho^{n}P_{n}^{m}(x)\sqrt{\frac{(n-m)!}{(n+m)!}}e^{im\beta}
 \end
 $$
 
-The Ruby implementation is here.
+It starts with evaluating terms that need not be computed for every iteration of `n`, and computes those terms in the outer loop itself. The terms in the outer loop corespond to the condition `m=n`. The first of these is the exponential term $$ e^im\beta $$. 
+
+After this is a curious case of computation of some indexes called `npn` and `nmn`. These are computed as follows:
+``` ruby
+npn = m * m + 2 * m # case Yn n
+nmn = m * m         # case Y -n
+```
+
+The corresponding index calculation for the inner loop is like this:
+``` ruby
+npm = n * n + n + m
+nmm = n * n + n - m
+```
+
+This indexes the `Ynm` array. This is done because we are visualizing the Ynm array as a pyramid whose base spans from `-m` to `m` and who height is `n`. A rough visualization of this pyramid would be like so:
+```
+   -m ---------- m
+n  10 11 12 13  14
+|    6  7  8  9
+|     3  4   5  
+|      1   2
+V        0
+```
+
+The above formulas will give the indexes for each half of the pyramid. Since the values of one half of the pyramid are conjugates of the other half, we can only iterate from `m=0` to `m<P` and use the second indexing method for gaining the index of the other half of the pyramid.
+
+
+If you look at the code, you'll also see a line `pnm = pn`. This line 
+
+The Ruby implementation is [here]().
 
 ## vector.h
 
-This file defines a new custom type for storing 1D vectors called `vec` as a C++ class. It also defines various functions that can be used on vectors like `norm`, `exp` and other simple arithmetic.
+This file defines a new custom type for storing 1D vectors called `vec` as a  C++ class. It also defines various functions that can be used on vectors like `norm`, `exp` and other simple arithmetic.
 
 The Ruby implementation of this file is in `vector.rb`.
 
