@@ -160,11 +160,11 @@ For causes of optimization, the values stored inside `ynm` are not the ones that
 
 This function converts cartesian co-ordinates in (X,Y,Z) to spherical co-ordinates involving `radius`, `theta` and `phi`. `radius` is simply the square root of the norm of the co-ordinates (norm is defined as the sum of squares of the co-ordinates in `vec.h`).
 
-### evalMultipole
+### evalMultipole simple implementation
 
 This algorithm calculates the multipole of a cell. It uses spherical harmonics so that net force of the forces inside a sphere and can be estimated on the surface of the sphere, which can then be treated as a single body for estimating forces.
 
-The optimizations that are presented in the `kernel.h` version of this file are quite complex to understand since they look quite different from the original equation. I will explain the code written in the file, however, we will use unoptmized Ruby code that actually resembles the equation for purposes of understanding.
+The optimizations that are presented in the `kernel.h` version of this file are quite complex to understand since they look quite different from the original equation. 
 
 For code that is still sane and easier to read, head over to the [laplace.h](https://github.com/exafmm/exafmm-alpha/blob/develop/kernels/laplace.h#L48) file in exafmm-alpha. The explanations that follow for now are from this file. We will see how the same functions in `kernel.h` have been modified to make computation faster and less dependent on large number divisions which reduce the accuracy of the system.
 
@@ -175,7 +175,7 @@ $$
 \end
 $$
 
-It starts with evaluating terms that need not be computed for every iteration of `n`, and computes those terms in the outer loop itself. The terms in the outer loop corespond to the condition `m=n`. The first of these is the exponential term $$ e^im\beta $$. 
+It starts with evaluating terms that need not be computed for every iteration of `n`, and computes those terms in the outer loop itself. The terms in the outer loop corespond to the condition `m=n`. The first of these is the exponential term $$ e^{im\beta} $$. 
 
 After this is a curious case of computation of some indexes called `npn` and `nmn`. These are computed as follows:
 ``` ruby
@@ -210,6 +210,45 @@ $$
 \end{equation}
 $$
 
+This is expressed in the code with the following line:
+``` ruby
+p = (x * (2 * n + 1) * p1 - (n + m) * p2) / (n - m + 1)
+```
+It can be seen that `p` is equivalent to $$ P^{m}_{n+1} $$, `p1` is equivalent to $$ P^{m}_{n} $$ and `p2` is equivalent to $$ P^{m}_{n-1} $$. This convention is followed everywhere in the code.
+
+Observe that the above equation requires the value of _P_ for _n-1_ and _n+1_ to be computed so that the value for _P_ at _n_ can be computed. Therefore, we first set _m=m+1_ and then compute $$ P^m_{m+1} $$ which can be expressed like this:
+$$
+\begin
+  P^{m}_{m+1}(x)=x(2m+1)P^{m}_{m}(x)
+\end
+$$
+The above equation is expressed by the following line in the code:
+``` ruby
+p = x * (2 * m + 1) * p1
+```
+
+If you read the code closely, you will see that just at the beginning of the `evalMultipole` function, we initialize `p1 = 1` the first time the looping is done. This is because when `p1` at the first instance is identified with `m = 0`, and we substitute `m=0` in this equation:
+$$
+\begin
+  P^{m}_{m} = (-1)^{m}(2m-1)!(1-x^{2})^{\frac{m}{2}}
+\end
+$$
+We will get $$ P^{m}_{m}(x)=1 $$.
+
+When you look at the code initially, there might be some confusion regarding the significance of having to `rho` terms, `rhom` and `rhon`. This is written because each term of `Ynm` depends on a particular power of `rho` raised to `n`. So just before the inner loop, you can see the line `rhon = rhom`, which basically reduces the number of times that `rho` needs to be multiplied since the outer loop's value of `rho` is already set to what it should be for that particular iteration.
+
+Finally, see that there is a line right after the inner loop which reads like this:
+``` ruby
+pn = -pn * fact * y
+```
+This line is for calculating the value of `p1` or $$ P^{m}_{m} $$ after the first iteration of the loop. Since the second factorial term in the equation basically just deals with odd numbers, the calculation of this term can be simplified by simply incrementing by `2` with `fact += 2`. The `y` term in the above equation is in fact `sin(alpha)` (defined at the top of this function). This is because, if you see the original equation, you will see that the third term is $$ (1-x^{2}) $$, and _x_ is in fact `cos(alpha)`. Therefore, using the trigonometric equation, we can say simply substitute the entire term with `y`.
+
+### evalMultipole optimized implementation
+
+Now that a background of the basic implementation of `evalMultipole` has been established, we can move over to understanding the code that is placed inside the [kernel.h](https://github.com/exafmm/exafmm/blob/learning/2_kernels/kernel.h) file of the `exafmm/learning` branch. This code is more optimized and can compute results with much higher accuracy than the code that is present in the `exafmm-alpha` repo that we previously saw. The main insipiration for this code come's from the Treecode paper posted above.
+
+In this code, most of the stuff relating to indexing and calculation of the powers of `rho` is pretty much the same. However, there are some important changes with regards to the computation of the values that go inside the `Ynm` array.
+
 The Ruby implementation is [here]().
 
 ## vector.h
@@ -220,9 +259,9 @@ The Ruby implementation of this file is in `vector.rb`.
 
 ## exafmm.h
 
-## exafmm2d.h
+## exafmm2d.h and step1.cxx
 
-## step1.cxx
+Shows a very simple preliminary implementation of the actuall exafmm code. Mostly useful for understanding purpose only.
 
 ## step2.cxx
 
