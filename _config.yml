@@ -34,11 +34,12 @@ code_dir: downloads/code
 category_dir: blog/categories
 markdown: kramdown
 kramdown:
-  use_coderay: true
-  coderay:
-    coderay_line_numbers: table
-    coderay_css: class
+  syntax_highlighter: coderay
+  syntax_highlighter_opts:
+    line_numbers: table
+    css: class
 highlighter: pygments # default python pygments have been replaced by pygments.rb
+plugins: [jekyll-paginate, octopress-image-tag]
 
 paginate: 10          # Posts per page on the blog index
 paginate_path: "posts/:num"  # Directory base for pagination URLs eg. /posts/2/

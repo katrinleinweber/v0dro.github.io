@@ -1,0 +1,784 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Travel &lt;code&gt; Music</title>
+  <meta name="author" content="Sameer Deshmukh">
+
+  
+  <meta name="description" content="
+  
+  
+  
+    
+      
+  
+    
+      An Overview Of Automatic Speech Recognition
+    
+    
+      
+        
+
+
+
+
+
+        
+      
+    
+  
+
+
+  Speech i...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://v0dro.github.io/posts/3/">
+  <link href="//favicon.png" rel="icon">
+  <link href="//stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Travel &lt;code&gt; Music" type="application/atom+xml">
+  <script src="//javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="//javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-55005305-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="//">Travel &lt;code&gt; Music</a></h1>
+  
+    <h2>A place where I share my experiences with Travel, Programming and Music</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="http://v0dro.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="//blog/archives">Archive</a></li>
+  <li><a href="//travel">Travel</a></li>
+  <li><a href="//code">Code</a></li>
+  <li><a href="//music">Music</a></li>
+  <li><a href="//about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/01/an-overview-of-automatic-speech-recognition/">An Overview Of Automatic Speech Recognition</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Speech is the fundamental method of communication between human beings. Everyone within Human civilization, whether literate or illiterate, can communicate with the people around them through speech.</p>
+
+<p>Using a computer can be a scary proposition for most people. It involves GUIs, text, images, video; intangible entities that many first time users are unable to relate to.</p>
+
+<p>In contrast to the rapid evolution of computing, development of modes of communication between human and computer has been painfully slow and has been primarily restricted to text, images, videos and the like.</p>
+
+<p>This is where the idea of Automatic Speech Recognition comes in. It aims to bridge the communication gap between humans and computers and bring it as close as possible to a human-human interaction. In aims to teach a computer the primary method of communication between humans: speech.</p>
+
+<p>To cite Wikipedia, Automatic Speech Recognition is the translation of spoken words into text. Once we have text (which is the most portable method of information transfer), we can do absolutely anything with it.</p>
+
+<p>In this article, we will be gaining a brief overview of Automatic Speech Recognition (ASR), and take a look at a few algorithms that are used for the same. Most of the methods listed here are language neutral, unless explicitly stated. Let us start with how speech is actually produced by a normal Human being.</p>
+
+<p>The primary organ of speech production is the Vocal Tract. The lungs push out the air, which passes through the vocal tract and mouth and then is released into the atmosphere. On its way out of the mouth, the air is manipulated by a series of obstacles present in the vocal tract, nose and mouth. These manipulations in the raw air pushed through the lungs manifest as speech.</p>
+
+<p>Air first passes through the glottis, which is the combination of the vocal folds (vocal cords) and the space in between the folds. It then passes through the mouth, where the tongue plays a major role in overall speech modulation. Factors like constriction of the vocal tract (for /g/ in ‘ghost’), aspirated stops and nasal tones play a major role in modulating the overall sound wave.</p>
+
+<p><img class="center" src="/images/speech_recognition/glottis.jpg" alt="An Diagram Of The Human Glottis" /></p>
+
+<p>The primary organ of speech production is the Vocal Tract. The lungs push out the air, which passes through the vocal tract and mouth and then is released into the atmosphere. On its way out of the mouth, the air is manipulated by a series of obstacles present in the vocal tract, nose and mouth. These manipulations in the raw air pushed through the lungs manifest as speech.</p>
+
+<p>Air first passes through the glottis, which is the combination of the vocal folds (vocal cords) and the space in between the folds. It then passes through the mouth, where the tongue plays a major role in overall speech modulation. Factors like constriction of the vocal tract (for /g/ in ‘ghost’), aspirated stops and nasal tones play a major role in modulating the overall sound wave.</p>
+
+<p>For the purpose of processing speech using computers, there is a need to digitize the signal. When we receive a speech signal in a computer, we first sample the analog signal at a frequency such that the original waveform is completely preserved. We then perform some basic pre-filtering; for example, observations indicate that human speech is the range of 0-4 kHz, so we pass the sampled signal through a low-pass filter to remove any frequecies above 4 kHz.</p>
+
+<p>Before proceeding with the working of an ASR, we make some fundamental assumptions:</p>
+<ul>
+  <li>Vocal tract changes shape rather slowly in continuos speech and it can be assumed that the vocal tract has fixed shape and characterestics for 10 ms. Thus on an average, the shape of the vocal tract changes every 10 ms.</li>
+  <li>Source of excitation (lungs) and vocal tract are independent of each other.</li>
+</ul>
+
+<p>To extract any meaning from sound, we need to make certain measurements from the sampled wave. Let us explore these one by one:</p>
+
+<ul>
+  <li>Zero Crossing Count - This is number of times the signal crosses the zero-line per unit time. This gives an idea of the frequency of the wave per unit time.</li>
+  <li>Energy - Energy of a signal is represented by the square of each sample of the signal, over the entire duration of the signal.</li>
+</ul>
+
+<p><img class="center" src="/images/speech_recognition/energy_equation.jpg" alt="Energy Equation" /></p>
+
+<ul>
+  <li>Pitch period of utterances - It is found that most utterances have a certain ‘pseudo periodicity’ associated with them. This is called the pitch period.</li>
+</ul>
+
+<p>Speech can be classified into two broad categories - VOICED speech(top) and UNVOICED speech(bottom).</p>
+
+<p><img class="center" src="/images/speech_recognition/voiced_speech.jpg" alt="Waveform of voiced speech" />
+<img class="center" src="/images/speech_recognition/unvoiced_speech.jpg" alt="Waveform of unvoiced speech" /></p>
+
+<p>Voiced speech is characterized in a signal with many undulations (ups and downs). Voiced signals tend to be louder like the vowels /<em>a</em>/, /<em>e</em>/, /<em>i</em>/, /<em>u</em>/, /<em>o</em>/. Unvoiced speech is more of a high frequency, low energy signal, which makes it difficult to interpret since it is difficult to distinguish it from noise. Unvoiced signals, by contrast, do not entail the use of the vocal cords, for example, /<em>s</em>/, /<em>z</em>/, /<em>f</em>/ and /<em>v</em>/.</p>
+
+<p>A basic ASR will consist of three basic steps -</p>
+
+<ul>
+  <li>End Point Detection - Marking the beginning and ending points of the actual utterance of the word in the given speech signal is called End Point Detection.</li>
+  <li>Phoneme<sup id="fnref:3"><a href="#fn:3" class="footnote">1</a></sup> Segmentation - Segregating individual phonemes from a speech signal is called Phoneme Segmentation.</li>
+  <li>Phoneme Identification - Recognizing the phoneme present in each phoneme segment of the waveform is called Phoneme Identification.</li>
+</ul>
+
+<p>Every step in the speech recognition process is an intricate algorithm in itself, and over the years, numerous approaches have been suggested by many people. Let us look at a few simple ones:</p>
+
+<ul>
+  <li>End Point Detection:
+    <ul>
+      <li>We make use of the Zero Crossing Count and Energy parameters of a sound wave for calculating the end points of an utterance in an input sound wave.- It assumes that the first 100 ms of the speech waveform are noise. Based on this assumption, it comes up with the ZCC and energy of the noise signal, through which it computes the points where the speech segment begins and ends. A detailed discussion would be out of the scope of this article, but those interested can always go through the paper written by Rabiner and Sambur<sup id="fnref:1"><a href="#fn:1" class="footnote">2</a></sup>.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img class="center" src="/images/speech_recognition/waveform_and_end_points.jpg" alt="A speech waveform (top) and the detected End Points (bottom)" /></p>
+
+<ul>
+  <li>Phoneme Segmentation
+    <ul>
+      <li>This step in the process is the most important step because what Phoneme gets detected from a particular speech waveform is completely dependent on what wave we pass to the Phoneme Recognition algorithm.</li>
+      <li>The algorithm proposed by Bapat and Nagalkar<sup id="fnref:2"><a href="#fn:2" class="footnote">3</a></sup> functions based on the fact that each phoneme will have a different energy and amplitude, and whenever a variation drastic deviation in these parameters is detected in the sound wave, it is marked as a different phoneme.</li>
+    </ul>
+  </li>
+  <li>Phoneme Recognition
+    <ul>
+      <li>This is by far the most intriguing and researched. Extensive work has been done in this domain, ranging from simple spectral energy analysis of signals, to more complicated Neural Network algorithms. One can find several hypotheses all over the internet regarding this domain. A discussion on these algorithms would get too large, but we will discuss a very simple algorithm which utilises the frequency domain representation of a signal to segregate ‘varnas’ or classes of Phonemes found in the Devnagiri script:
+        <ul>
+          <li>Each class of phonemes in Devnagiri is generated using the same organ but with different air pressure and time of touch for each individual alphabet. This property of Devangiri can be used for detecting only the class of a particular phoneme.</li>
+          <li>If we divide the entire frequency axis of 4 kHz into 17 bands of ~ 235 Hz each, and observe some sample utterances through this grid, we find that the phonemes of a particular class show peak frequencies in the same band or a very predictable set of 2-3 bands. Taking note of these peaks, one can identify the phoneme class by observing which bands the peaks fall into.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>We have discussed some major characterestics and components of an Automatic Speech Recognition engine, and have also seen some interesting facets of digital signals along the way.</p>
+
+<p>It is interesting to note how some basic principles of Digital Signal Processing can be applied to the real world for useful applications.</p>
+
+<hr />
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:3">
+      <p>Phoneme - A phoneme is a basic unit of a language’s phonology, which is combined with other phonemes to form meaningful units such as words. Alternatively, a phoneme is a set of phones or a set of sound features that are thought of as the same element within the phonology of a particular language. <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:1">
+      <p><a href="http://web.cs.wpi.edu/~cs529/f04/slides/RS75.pdf">An Algorithm For Determining The Endpoints For Isolated Utterances ; L.R. Rabiner and M.R. Sambur</a> <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p><a href="http://ieeexplore.ieee.org/xpl/login.jsp?tp=&amp;arnumber=4798390&amp;url=http%3A%2F%2Fieeexplore.ieee.org%2Fiel5%2F4796894%2F4798312%2F04798390.pdf%3Farnumber%3D4798390">Phonetic Speech Analysis for Speech to Text; A. V. Bapat, L. K. Nagalkar</a> <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/28/travel-hampi-bengaluru-allepy-part-2/">[travel] Hampi-Bengaluru-Allepy Part 2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2 id="hampi---day-2">Hampi - Day 2</h2>
+
+<p>The day started at 5 am, and we proceeded to Matanga Hill to watch the sunrise, reaching the foot after a 15 min walk. Matanga Hill has special significance in Hindu mythology, this was the place where <a href="http://en.wikipedia.org/wiki/Hanuman">Hanuman</a> and <a href="http://en.wikipedia.org/wiki/Sugriva">Sugreeva</a> took shelter after being chased by <a href="http://en.wikipedia.org/wiki/Vali_(Ramayana)">Vali</a>, who was ultimately killed by <a href="http://en.wikipedia.org/wiki/Rama">Rama</a>.</p>
+
+<p>As we started climbing the hill, a Naga Yogi waiting at the bottom of the hill asked us to register with the police station before going up the hill. We told him the station was closed, so he guided us up the hill. Along the way he told us that he had converted to a Naga Yogi after a stint at a multinational bank and now lived in a cave up the hill (wow), performing his sadhu duties in the temple town (which blew us away). The climb turned out to be pretty trecherous, with steep cliffs and a very narrow path leading uphill. He guided us to the rooftop of the Veerbhadra Temple present at the top of Matanga Hill, where the sunrise can be experienced best, and set off on his own after inviting us to his cave for tea once we we were done seeing the sunrise.</p>
+
+<p><img class="center" src="/images/hampi-bengaluru-allepy/matanga_sunrise.JPG" width="600" height="600" alt="'Sunrise from Matanga Hill'" /></p>
+
+<p><img class="center" src="/images/hampi-bengaluru-allepy/matanga_view.JPG" width="600" height="600" alt="'View of Achutarya Temple from Matanga Hill'" /></p>
+
+<p>After seeing the sunrise and having some great black tea in our guide’s cave, we started our descent, which took around 40 mins, mainly because of the jagged structure of the rocks. A fantastic breakfast of idli and tea awaited us at the bottom. Breakfast food carts are spread thorughout Hampi and serve cheap, tasty and filling food.</p>
+
+<p>We then proceeded to our cycle tour, which would take us through the outer parts of Hampi; first stopping at the <a href="http://hampi.in/kadalekalu-ganesha">Kadalekalu Ganesha</a> (Kadalekalu because the statue’s belly resembles a Bengal Gram) temple, which houses a massive statue of Ganpati, the Hindu god of wisdom. The statue is now in ruins, after being destroyed by the Deccan Muslim rulers, who thought there was a hidden treasure inside the stomach of the statue, because of its size.</p>
+
+<p><img class="center" src="/images/hampi-bengaluru-allepy/ganpati_kk.JPG" width="500" height="400" alt="'Kadalekalu Ganesha statue'" /></p>
+
+<p>Then we proceeded to the statue of Narsimha and Laxmi. This was a huge monolith of a statue once upon a time, but it was destroyed by the invading army. A lot of it has been restored but it appears nowhere near its former glory. Right next to this is the partially submerged Shivalinga, which happens to be the 2nd largest in the country.</p>
+
+<p><img class="center" src="/images/hampi-bengaluru-allepy/narsimha.JPG" width="500" height="400" alt="'The partially restored statue of Narsimha and Laxmi'" /></p>
+
+<p>We then cycled towards the underground Shiva temple, which was pretty mind-blowing. The temple’s roof is on ground level and the rest of the structure underground, the inner mantapas are kept full of water. Then cycling towards the Lotus Palace we came across the Mohammedan Watch Tower, which was a structure made for the Muslim troops in King Krishnadevaraya’s army. This structure sports typical Persian architecture, the only structure of its kind in Hampi.</p>
+
+<p>The Lotus Palace is where the two Queens of King Krishnadevaraya stayed. The main palace has a state-of-the-art water cooling system, with pipes of water circulating around the entire palace to keep the occupants cool during the summer.</p>
+
+<p><img class="center" src="/images/hampi-bengaluru-allepy/lotus_mahal.JPG" width="600" height="600" alt="'The Lotus Mahal!!'" /></p>
+
+<p>Behind this was a massive stable for the royal elephants, which housed all 11 of them. The Lotus Mahal (palace) consisted of two palaces, called Water Palace and the Queen’s Palace, both of which are now in ruins.</p>
+
+<p><img class="center" src="/images/hampi-bengaluru-allepy/elephant_house.JPG" width="600" height="600" alt="'Elephant Stable'" /></p>
+
+<p>We cycled to the King’s enclosure, which had a whole lot of podiums and open spaces for conducting festivities. Dusshera was celebrated with great pomp here. There was an especially large podium for the King to be seated on so that he could watch all the proceedings from a vantage point.</p>
+
+<p><img class="left" src="/images/hampi-bengaluru-allepy/enclosure.JPG" width="360" height="350" alt="'The King's Enclosure and his podium'" /></p>
+
+<p><img class="right" src="/images/hampi-bengaluru-allepy/bath.JPG" width="360" height="350" alt="'The Queens Bath'" /></p>
+
+<p>The Queen’s bath was just a few minutes cycle ride from here and that is where we went next. This was a huge tank for the Queen to take a bath in, made in Indo-Arabic architecture.</p>
+
+<p>The cycle ride back to the center of Hampi (and our hotel) was long but extremely plesant. The route was lush green with many streams and small waterfalls.</p>
+
+<p><img class="center" src="/images/hampi-bengaluru-allepy/cycle_ride.JPG" width="500" height="500" alt="'The cycle ride back to Hampi'" /></p>
+
+<p>Upon returning we had some late lunch at a South Indian restaurant (Venkateshwara Restaurant), and left for Hospet to catch our bus to Bangalore, which left from there at night.</p>
+
+<p>The bus stop at Hospet is pretty horrible and since we were forced to book our tickets through some petty shop in Hampi, the bus came 3 hours late and the driver stopped at the particular bus stop only because we were calling him repeatedly and telling him and that we’re waiting. Go for government transport whenever possible!</p>
+
+<p>Stay tuned for day 3!</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/21/code-generalized-linear-models-introduction-and-implementation-in-ruby/">[code]Generalized Linear Models: Introduction and Implementation in Ruby.</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2 id="overview">Overview</h2>
+
+<p>Most of us are well acquainted with linear regression and its use in analysig the relationship of one dataset with another. Linear regression basically shows the (possibly) linear relationship between one or more independent variables and a single dependent variable. But what if this relationship is not linear and the dependent and independent variables are associated with one another through some special function? This is where Generalized Linear Models (or GLMs) come in. This article will explain some core <a href="http://en.wikipedia.org/wiki/Generalized_linear_model">GLM</a> concepts and their implementation in Ruby using the <a href="https://github.com/sciruby/statsample-glm">statsample-glm</a> gem.</p>
+
+<h2 id="generalized-linear-models-basics">Generalized Linear Models Basics</h2>
+
+<p>The basic linear regression equation relating the dependent varible <em>y</em> with the independent variable <em>x</em> looks something like 
+<script type="math/tex">\begin{align}
+    y = \beta_{0} + x_{1}*\beta_{1} + x_{2}*\beta_{2}...
+\end{align}</script>
+This is the equation of a straight line, with <script type="math/tex">\beta_{0}</script> denoting the intercept of the line with the Y axis and <script type="math/tex">\beta_{1}</script> denoting the slope of the line. GLMs take this a step further. They try to establish a relationship between <em>x</em> and <em>y</em> through <em>another function</em> <strong>g(x)</strong>, which is called the <em>link function</em>. This function depends on the probability distribution displayed by the independent variables and their corresponding y values. In its simplest form, it can be denoted as <em>y = g(x)</em>.</p>
+
+<p>GLM can be used to model numerous relations, depending on the distribution of the dependent conditional on the independent variables. We will first explore the various kinds of GLMs and their defining parameters and then understand the different methods employed in finding the co-efficients. The most common GLMs are:</p>
+
+<ul>
+  <li>Logistic (or logit) regression.</li>
+  <li>Normal regression.</li>
+  <li>Poisson regression.</li>
+  <li>Probit regression.</li>
+</ul>
+
+<p>Let’s see all of the above one by one.</p>
+
+<h4 id="logisitic-regression">Logisitic Regression</h4>
+<p>Logistic, or Logit can be said to be one of the most fundamental of the GLMs. It is mainly used in cases where the independent variables show a binomial distribution (conditional on the dependent). In case of the binomial distribution, the number of successes are modelled on a fixed number of tries. The Bernoulli distribution is a special case of binomial where the outcome is either 0 or 1 (which is the case in the example at the bottom of this post). By using logit link function, one can determine the maximum probability of the occurence of each independent random variable. The values so obtained can be used to plot a sigmoid graph of <em>x</em> vs <em>y</em>, using which one can predict the probability of occurence of any random varible not already in the dataset. The defining parameter of the logistic is the probability <em>y</em>.</p>
+
+<p>The logit link function looks something like 
+<script type="math/tex">\begin{align}
+    y = \frac{e^{(\beta_{0} + x*\beta_{1})}}{1 + e^{(\beta_{0} + x*\beta_{1})}}
+\end{align}</script>
+, where y is the probability for the given value of x.</p>
+
+<p>Of special interest is the meaning of the values of the coefficients. In case on linear regression, <script type="math/tex">\beta_{0}</script> merely denotes the intercept while <script type="math/tex">\beta_{1}</script> is the slope of the line. However, here, because of the nature of the link function, the coefficient <script type="math/tex">\beta_{1}</script> of the independent variable is interpreted as “for every 1 increase in <em>x</em> the odds of <em>y</em> increase by <script type="math/tex">e^{\beta_{1}}</script> times”.</p>
+
+<p>One thing that puzzled me when I started off with regression was the purpose of having several variables <script type="math/tex">(x_{1}, x_{2}...)</script> in the same regression model at times. The purpose of multiple independent variables against a single dependent is so that we can compare the odds of <script type="math/tex">x_{1}</script> against <script type="math/tex">x_{2}</script>.  So basically, if you have multiple variables, it is to compare the effect on the dependent of one variable, when the others are constant. To compare the effect of one variable without considering the others, one could use an  independent regression for each one.</p>
+
+<p>The logistic graph generally looks like this:</p>
+
+<p><img class="center" src="/images/glm/logistic.gif" alt="Generic Graph of Logistic Regression." /></p>
+
+<h4 id="normal-regression">Normal Regression</h4>
+
+<p>Normal regression is used when the DEPENDENT variable exhibits a normal probability distribution, CONDITIONAL ON THE independent variables. The independents are assumed to be normal even in a simple linear or multiple regression, and the coefficients of a normal are more easily calculated using simple linear regression methods. But since this is another very important and commonly found data set, we will look into it.</p>
+
+<p>Normally distributed data is symmetric about the center and its mean is equal to its median. Commonly found normal distributions are heights of people and errors in measurement. The defining parameters of a normal distribution are the mean <script type="math/tex">\mu</script> and variance <script type="math/tex">\sigma^2</script>. The link function is simply <script type="math/tex">y = x*\beta_{1}</script> if no constant is present. The coefficient of the independent variable is interpreted in exactly the same manner as it is for linear regression.</p>
+
+<p>A normal regression graph generally looks like this:</p>
+
+<p><img class="center" src="/images/glm/normal.png" alt="Generic Graph of Normal Regression" /></p>
+
+<h4 id="poisson-regression">Poisson Regression</h4>
+
+<p>A dataset often posseses a Poisson distribution when the data is measured by taking a very large number of trials, each with a small probability of success. For example, the number of earthquakes taking place in a region per year. It is mainly used in case of count data and contingency tables. Binomial distributions often converge into Poisson when the number of cases(n) is large and probability of success(p) small.</p>
+
+<p>The poisson is completely defined by the rate parameter <script type="math/tex">\lambda</script>. The link function is <script type="math/tex">ln(y) = x*\beta_{1}</script>, which can be written as <script type="math/tex">y = e^{x*\beta_{1}}</script>. Because the link function is logarithmic, it is also referred to as log-linear regression.</p>
+
+<p>The meaning of the co-efficient in the case of poisson is “for increase 1 of <em>x</em>, <em>y</em> changes <script type="math/tex">y = e^\beta_{1}</script> times.”.</p>
+
+<p>A poisson graph looks something like this:</p>
+
+<p><img class="center" src="/images/glm/poisson.png" alt="Graph of Poisson Regression" /></p>
+
+<h4 id="probit-regression">Probit Regression</h4>
+
+<p>Probit is used for modeling binary outcome varialbles. Probit is similar to  logit, the choice between the two largely being a matter of personal preference.</p>
+
+<p>In the probit model, the inverse standard normal distribution of the probability is modeled as a linear combination of the predictors (in simple terms, something like <script type="math/tex">y = \Phi(\beta_{0} + x_{1}*\beta_{1}...)</script> , where <script type="math/tex">\Phi</script> is the CDF of the standard normal). Therefore, the link function can be written as <script type="math/tex">z = \Phi^{-1}(p)</script> where <script type="math/tex">\Phi(z)</script> is the standard normal cumulative density function (here <em>p</em> is probability of the occurence of a random variable <em>x</em> and <em>z</em> is the z-score of the y value).</p>
+
+<p>The fitted mean values of the probit are calculated by setting the upper limit of the normal CDF integral as <script type="math/tex">x*\beta_{1}</script>, and lower limit as <script type="math/tex">-\infty</script>. This is so because evaluating any normally distributed random number over its CDF will yield the probability of its occurence, which is what we expect from the fitted values of a probit.</p>
+
+<p>The coefficient of <em>x</em> is interpreted as “one unit change in <em>x</em> leads to a change <script type="math/tex">\beta_{1}</script> in the z-score of <em>y</em>”.</p>
+
+<p>Looking at the graph of probit, one can see the similarities between logit and probit:</p>
+
+<p><img class="center" src="/images/glm/probit.png" /></p>
+
+<h2 id="finding-the-coefficients-of-a-glm">Finding the coefficients of a GLM</h2>
+
+<p>There are two major methods of finding the coefficients of a GLM:</p>
+
+<ul>
+  <li>Maximum Likelihood Estimation (MLE).</li>
+  <li>Iteratively Reweighed Least Squares (IRLS).</li>
+</ul>
+
+<h4 id="maximum-likelihood-estimation">Maximum Likelihood Estimation</h4>
+
+<p>The most obvious way of finding the coefficients of the given regression analysis is by maximizing the likelihood function of the distribution that the independent variables belong to. This becomes much easier when we take the natural logarithm of the likelihood function. Hence, the name ‘Maximum Likelihood Estimation’. The Newton-Raphson method is used to this effect for maximizing the beta values (coefficients) of the log likelihood function.</p>
+
+<p>The first derivative of the log likelihood wrt to <script type="math/tex">\beta</script> is calculated for all the <script type="math/tex">x_{i}</script> terms (this is the jacobian matrix), and so is the second derivative (this is the hessian matrix). The coefficient is estimated by first choosing an initial estimate for <script type="math/tex">x_{old}</script>, and then iteratively correcting this initial estimate by trying to bring the equation</p>
+
+<script type="math/tex; mode=display">\begin{align}
+x_{new} = x_{old} - inverse(hessian)*jacobian   ..(1) 
+\end{align}</script>
+
+<p>to equality (with a pre-set tolerance level). A good implementation of MLE can be found <a href="http://petertessin.com/MaxLik.pdf">here</a>.</p>
+
+<h4 id="iteratively-reweighed-least-squares">Iteratively Reweighed Least Squares</h4>
+
+<p>Another useful but somewhat slower method of estimating the regression coefficients of a dataset is Iteratively Reweighed Least Squares. It is slower mainly because of the number of co-efficients involved and the somewhat extra memory that is taken up by the various matrices used by this method. The upside of IRLS is that it is very easy to implement as is easily extensible to any kind of GLM.</p>
+
+<p>The IRLS method also ultimately boils to the equation of the Newton Raphson (1), but the key difference between the two is that in MLE we try to maximize the likelihood but in IRLS we try to minimize the errors. Therefore, the manner in which the hessian and jacobian matrices are calculated is quite different. The IRLS equation is written as:</p>
+
+<script type="math/tex; mode=display">\begin{align}
+    b_{new} = b_{old} - inverse(X'*W*X)*(X'*(y - \mu))
+\end{align}</script>
+
+<p>Here, the hessian matrix is <script type="math/tex">-(X'*W*X)</script> and the jacobian is <script type="math/tex">(X'*(y - \mu))</script>. Let’s see the significance of each term in each of these matrices:</p>
+
+<ul>
+  <li><em>X</em> - The matrix of independent variables  <script type="math/tex">x_{1}, x_{2},...</script> alongwith the constant vector.</li>
+  <li><em>X’</em> - Transpose of X.</li>
+  <li><em>W</em> - The weight matrix. This is the most important entity in the equation and understanding it completely is paramount to gaining an understanding of the IRLS as whole.
+    <ul>
+      <li>The <em>weight</em> matrix is present to reduce favorism of the best fit curve towards larger values of x. Hence, the weight matrix acts as a mediator of sorts between the very small and very large values of x (if any). It is a diagonal matrix with each non-zero value representing the weight for each vector <script type="math/tex">x_{i}</script> in the sample data.</li>
+      <li>Calculation of the weight matrix is dependent on the probability distribution shown by the independent random variables. The weight expression can be calculated by taking a look at the equation of the hessian matrix. So in the case of logistic regression, the weight matrix is a diagonal matrix with the ith entry as <script type="math/tex">p(x_{i}, \beta_{old})*(1 - p(x_{i}, \beta_{old}))</script>.</li>
+      <li>The W matrix is (the inverse?) of the variance/covariance matrix. On logistic and Poisson regression, the variance on each case depend on the mean, so that is the meaning of <script type="math/tex">p(x_{i}, \beta_{old})*(1 - p(x_{i}, \beta_{old}))</script>.</li>
+    </ul>
+  </li>
+  <li><script type="math/tex">(y - \mu)</script> - This is a matrix whose ith value the is difference between the actual corresponding value on the y-axis minus <script type="math/tex">\mu = x*b_{old}</script>. The value of this term is crucial in determining the error with which the coefficients have been calculated. Frequently an error of 10e-4 is acceptable.</li>
+</ul>
+
+<h2 id="generalized-linear-models-in-ruby">Generalized Linear Models in Ruby</h2>
+
+<p>Calculating the co-efficients and a host of other properties of a GLM is extremely simple and intuitive in Ruby. Let us see some examples of GLM by using the <code>daru</code> and <code>statsample-glm</code> gems:</p>
+
+<p>First install <code>statsample-glm</code> by running <code>gem install statsample-glm</code>, statsample will be downloaded alongwith it if it is not installed directly. Then download the CSV files from <a href="https://github.com/SciRuby/statsample-glm/blob/master/spec/data/logistic_mle.csv">here</a>.</p>
+
+<p>Statsample-glm supports a variety of GLM methods, giving the choice of both, IRLS and MLE algorithms to the user for almost every distribution, and all this through a simple and intutive API. The primary calling function for all distribtions and algorithms is <code>Statsample::GLM.compute(data_set, dependent, method, options)</code>. We specify the data set, dependent variable, type of regression and finally an options hash in which one can specify a variety of customization options for the computation.</p>
+
+<p>To compute the co-efficients of a logistic regression, try this code:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+</pre></td>
+  <td class="code"><pre>require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span class="string"><span class="delimiter">'</span><span class="content">statsample-glm</span><span class="delimiter">'</span></span>
+<span class="comment"># Code for computing coefficients and related attributes of a logistic regression.</span>
+
+data_set = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.from_csv <span class="string"><span class="delimiter">&quot;</span><span class="content">logistic_mle.csv</span><span class="delimiter">&quot;</span></span>
+glm = <span class="constant">Statsample</span>::<span class="constant">GLM</span>.compute data_set, <span class="symbol">:y</span>, <span class="symbol">:logistic</span>, {<span class="key">constant</span>: <span class="integer">1</span>, <span class="key">algorithm</span>: <span class="symbol">:mle</span>} 
+
+<span class="comment"># Options hash specifying addition of an extra constants </span>
+<span class="comment"># vector all of whose values is '1' and also specifying </span>
+<span class="comment"># that the MLE algorithm is to be used.</span>
+
+puts glm.coefficients   
+  <span class="comment">#=&gt; [0.3270, 0.8147, -0.4031,-5.3658]</span>
+puts glm.standard_error
+  <span class="comment">#=&gt; [0.4390, 0.4270, 0.3819,1.9045]</span>
+puts glm.log_likelihood 
+  <span class="comment">#=&gt; -38.8669</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>Similar to the above code, you can try implementing poisson, normal or probit regression models and use the data files from the link above as sample data. Just go through the tests in the source code on GitHub or read the documentation for further details and feel free to drop me a mail in case you have any doubts/suggestions for improvements.</p>
+
+<p>Cheers!</p>
+
+<hr />
+
+<h6 id="further-reading">Further Reading</h6>
+<ul>
+  <li><a href="https://cise.ufl.edu/class/cis6930sp10esl/downloads/LogisticRegression.pdf">A good explanation of IRLS</a>.</li>
+  <li><a href="http://www.stat.cmu.edu/~cshalizi/402/lectures/14-logistic-regression/lecture-14.pdf">Logistic Regression and Newtons Method</a>.</li>
+  <li><a href="https://files.nyu.edu/mrg217/public/mle_introduction1.pdf">A good resource on the how and why behind the calculation of standard errors</a>.</li>
+  <li><a href="http://www.columbia.edu/~so33/SusDev/Lecture_9.pdf">Logit and Probit</a>.</li>
+  <li><a href="http://www.nesug.org/Proceedings/nesug10/sa/sa04.pdf">A very good explanation of the Poisson regression</a>.</li>
+</ul>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/27/code-managing-large-open-source-projects-for-beginners/">[code]Managing Large Open Source Projects: for Beginners.</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I had just started writing some meaningful code in college and gaining an interest in scientific computation, and really wanted to apply my knowledge somewhere and create a real impact. That is when I read about the ruby <a href="https://github.com/sciruby/nmatrix">NMatrix</a> gem and thought maybe I’d contribute some code, both for experience in dealing with non-trivial software and the personal satifaction derived from the feeling of my work being used by people around the world.</p>
+
+<p>I cloned and installed the source code like any other programmer would, and just as I first open the Issue tracker to find a project to work on, I was hit by an avalanche of information ranging from bugs, documentation appeals, and new feature requests. And this was nothing compared to my first reaction upon going through the source code. Having never worked with more than a few files of source in college, I was dwarfed by the scores of source files and hundreds of method definitions that hung above me like a mountain. I quickly discovered that software is no small thing and that to make real, non-trivial, production grade software requires a certain discipline, focus and patience.</p>
+
+<p>I had never dealt with something like this before, and set out to discover books/courses that would enlighten me on the topic. Most of the blog posts that I came across told me to keep looking through the code and that eventually I would become good at it. While this is true, none spoke of any specific methods to use to get out of this dilemma. It was then that I came across the course <a href="https://www.coursera.org/course/learning">Learning How To Learn</a>, and after enrolling and seeing it through, I must say I have gained quite an insight into managing large software and even my day to day activities, the course having encompassed a large variety of practtical scenarios.</p>
+
+<p>I have written this blog post for the final assignment of the course, which asks me to share the insights I have gained with people who might be in the same dilemma that I was in. I hope you find it helpful.</p>
+
+<p>When first faced with something that you are not trained to handle, you tend to get overwhelhmed and try to avoid it, even dislike it. But this takes you nowhere close to the goal that you might want to accomplish. You just stagnate in the exact same spot that you initially were in and you never really move ahead.</p>
+
+<p>To move ahead, it is important to focus your energies and force yourself to work on a particular problem for a length of time. But how does one do this? And for what length of time? After taking the course, I learned that the mind, at any time, is basically in two modes of thinking, the focused mode and the diffused mode.</p>
+
+<p>Your mind is in the focused mode when you are intently focusing on, say implementing a tree travelsal algorithm that your professor might have told you to implement. Focused mode is required in situations where you know <em>exactly</em> what you’re looking for and want to devise a method of getting there.</p>
+
+<p>The focused mode, however, is not much use when first faced with a large software project. Focusing on just one aspect of the system the first time will leave you more confused than before and more often than not, any changes that you make will create more problems that you’d want to care about.</p>
+
+<p>Scenarios like these are where the diffused mode comes to the rescue. In the diffused mode, the mind is capable of thinking about many things at a time, maybe not making sense of them all, but creating connections between them nonetheless. It is a phase of light concentration that your mind goes through, with the problem you want to solve lightly running in the background. The diffused mode is what helps in making sense of a large project.</p>
+
+<p>You must first learn to relax, sit back and take stock of the entire project and at the same time keep in mind the new functionality that you want to implement or the bug that you want to quash. Try to simply read the names of the files and folders and try to connect them with your problem. Most Open Source projects use very strict conventions and upon lightly thinking for a while you will stumble upon a particular file or folder that will be relevant to what you are looking for.</p>
+
+<p>The diffused mode will only help you in getting a larger picture of things. Once you have a tentative idea of where you might find the problem area, then it is time to switch to the focused mode and dive into ONLY that particular file/function that you think is the right one. Do not think of anything else while searching in the place your diffused mode has taken you to.</p>
+
+<p>You first think in the diffused mode, and then the focused mode. Keep repeating this procedure until you solve the problem, and you will find that eventually, you can intuitively figure out where a particular line of code might reside.</p>
+
+<p>Thinking in the focused mode requires practice, and you will soon realize that you tend to feel distracted after some focused thinking. This is where certain techniques for focused mode thinking come into play. One of the best and easiest to practice is the ‘Pomodoro’ technique, which advocates being focused for 25 min. and then taking a short break for 5 min., then keep repeating this cycle until you think you’ve had enough.</p>
+
+<p>While focusing it is extremely important to focus ONLY on the problem at hand and nowhere else. You should typically sit in a quiet environment and away from distractions if you want pomodoro to work for you. While taking a break, do some light activity, like taking a walk around your work area or watching a small TED talk. Pomodoro has worked wonders for me and I highly recommend using it. You can use one of the scores of mobile apps available for setting a pomodoro timer.</p>
+
+<p>One of the most dangerous things to be absolutely careful about is procrastination. It is very easy to get carried away by some fancy code that you come across for the first time while tracing method calls  and completely forget about the problem that you are trying to tackle. Procrastination happens when you allow yourself to get carried away. It leads you to think that you’ve done a lot of work, when in reality you have done nothing.</p>
+
+<p>If faced by a somewhat difficult problem, write it down on a Post-It note and stick it in a place that is always within your field of view, like in my case, my desk or the palm rest of my laptop. Keep looking at what’s written on this note and periodically ask yourself, “Am I closer to solving the problem than I was before?”, “Will the particular line of code that I am reading right now be of any use in solving this problem?”. If your answers to these questions are negative, you need to realign yourself and remind yourself to get back to work.</p>
+
+<p>Over and above the techniques mentioned above, also remember to break your problem down into small, manageable chunks, and go after one chunk at a time. Also, be sure to mentally go over these chunks once you’re done with your current session so that things will be more clear next time.If you’re having problems in visualizing an algorithm or the flow of a program, take a piece of paper and write down whatever you understand, and you will find that the rest will become clear once you ponder over what you have written. Theres only so much that your memory can store.</p>
+
+<p>Over and above, have fun programming. Its a great thing to do, really.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/31/travel-hampi-bengaluru-allepy-part-1/">[travel] Hampi-Bengaluru-Allepy Part 1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2 id="hampi---day-1">Hampi - Day 1</h2>
+
+<p>Our Engineering exams were just over, and we decided to get out of the rut by going backpacking, and chose South India as an ideal destination. Since we had only one week to spare due to family commitments, we chose a route that would take us down south and give us a dose of both heritage and leisure.</p>
+
+<p>We refered to some posts on the internet, and concluded that Hampi would be an ideal starting point. The erstwhile capital of the mighty Vijaynagar empire, Hampi saw a period of power and growth under the tutelage of King Krishnadevaraya, who was a fantastic strategist, administrator and a patron of the arts.</p>
+
+<p>Althogh destroyed due to invasions of the Deccan Sultanate, the remains of Hampi still bear testament to the craftsmanship of Indian artists during the middle ages and the foresight and economic might of their patrons.</p>
+
+<p>We took one of the regular buses that ply between Pune and Hospet, and reached Hospet at 8 am, after which a ride in a rickshaw took us to Hampi. The first thing  one notices while riding into Hampi is the massive, ornately decorated <a href="http://en.wikipedia.org/wiki/Gopuram">gopuram</a> of the <a href="http://en.wikipedia.org/wiki/Virupaksha_Temple">Virupaksha Temple</a>. This is also one of the few temples in Hampi that is still actively used in worship.</p>
+
+<p><img src="/images/hampi-bengaluru-allepy/virupaksha.JPG" alt="'The Virupaksha Temple'" /></p>
+
+<p>We checked into a hotel which was a 5 minute walk from the Virupaksha temple, which charged us Rs. 800 per night. Since Hampi is a favorite for foreign tourists, one can find many cafes and restaurants here which cater to their needs. We had a  pot of tea at the German Bakery in the market area in morning, and planned for the day’s sightseeing.</p>
+
+<p>We started out toward the Vitthal temple, taking the huge road that was once the Hampi Bazaar. Along the way, we saw the monolithic Nandi statue on the left, and <a href="http://hampi.in/matunga-hill">Matanga hill</a> on the right.</p>
+
+<p><img class="left" src="/images/hampi-bengaluru-allepy/nandi.JPG" width="365" height="300" alt="'The Nandi Statue'" /> <img class="right" src="/images/hampi-bengaluru-allepy/entrance.JPG" width="365" height="300" alt="'Entrance At The Far End Of Hapmi Bazaar.'" /></p>
+
+<p>A flight of steps lead to a grand entrance which opens at the Achyutraya Temple. This temple was build by the successor of King Krishnadevaraya, Achyuta Deva Raya, and is a temple to Lord Venkateshwara, but its ruins are popularly reffered to by the name of its patron.</p>
+
+<p><img src="/images/hampi-bengaluru-allepy/achyutraya_temple.JPG" alt="'Achyutraya Temple'" /></p>
+
+<p>After walking over some huge rocks by the river, we reached the King’s Balance, a stone weighing scale where the King would be weighed against gold, which would then be given away to the priests. We then (finally) reached the Vitthal Temple.</p>
+
+<p><img src="/images/hampi-bengaluru-allepy/vitthal_front.JPG" alt="'The Sun Chariot With The Vitthal Temple In The Background'" /></p>
+
+<p>The Vithhal Temple is probably one of the grandest in Hampi and possibly in all of India. It is housed inside a massive complex with ornately carved walls, entrances and pillars. The complex houses five mantapas, 4 in corners and 1 in the centre. The Sun Chariot from the <a href="http://en.wikipedia.org/wiki/Konark_Sun_Temple">Konark temple</a> has been replicated here. The vehicle of Vitthal, Garuda (eagle) can be seen inside the chariot. The central mantap houses the famous singing pillars. These stone pillars have been designed in such a way as to create sounds of different musical instruments when hit by a stick or any  other object. The Queen would dance for the King in this mantap to the sound of music from the pillars. The roof of the central mantap was blown up by invaders in 1565 A.D., so the sound is fairly diminished now.</p>
+
+<p>The central mantap houses an inner temple, where the actual idols were kept and worshipped. The original idols of Vitthal and Rukumai were taken to Pandharpur in Maharashtra during the invasion of Vijaynagar. One unique feature  of the Vitthal temple is that the place where one performs <a href="http://en.wikipedia.org/wiki/Parikrama">‘pradakshina’</a> is underground.</p>
+
+<p><img class="right" src="/images/hampi-bengaluru-allepy/underground_parikrama.JPG" width="300" height="500" alt="'The Underground Pradakshina Path'" /></p>
+
+<p>There are tiny inlets for light in the roof, which reflects off a stream of water on the floor, which in turn provides illumination for the entire chamber.</p>
+
+<p>We then proceeded towards the river, where the local people offer to take you downstream in a <a href="http://en.wikipedia.org/wiki/Coracle">Coracle</a> (locallly reffered to as ‘joutty’) boat. We were sitting in this kind of a boat for the first time and this turned out to be one hell of a boat ride, with our guide taking the boat under overhanging rocks and letting it spin wildly every now and then. The river is also lined with ruins of temples and everything is quite a pleasure to watch. We disembarked at the Varana temple, which is a big white temple and is still functional. Terribly hungry, we walked to the main temple and ate delicious cheese tomato omelletes at Cafe Chillout.</p>
+
+<p>We rested for a while and then decided to pay a visit to the Virupaksha temple. This is a <em>massive</em> temple. It is mostly functional and the inner complex is mostly intact. One interesting facet of this temple is that one can see the inverse image of the main gopuram in a pond behind the Shivling.</p>
+
+<p>We then proceeded to our hotel for a good night’s sleep.</p>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/2">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/v0dro">@v0dro</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'v0dro',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/10/23/explanation-of-exafmm-learning-codes/">Explanation of ExaFMM learning codes.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/11/24/gsoc-2016-wrap-up-for-sciruby/">GSOC 2016 Wrap Up For SciRuby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/27/advice-for-future-gsoc-students-and-mentors-based-on-my-experience/">Advice for future GSOC students and mentors based on my experience.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/21/setting-up-a-lexical-analyser-and-parser-in-ruby/">Setting up a lexical analyser and parser in Ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/16/random-thoughts-on-music-theory/">Random thoughts on music theory.</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+  
+
+  
+
+
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Sameer Deshmukh -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'v0dro';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

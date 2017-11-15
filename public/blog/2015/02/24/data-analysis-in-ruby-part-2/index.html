@@ -1,0 +1,974 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Data Analysis in RUby: Part 2 - Travel &lt;code&gt; Music</title>
+  <meta name="author" content="Sameer Deshmukh">
+
+  
+  <meta name="description" content="
+
+  
+  
+    
+      Data Analysis in RUby: Part 2
+    
+    
+      
+        
+
+
+
+
+
+        
+      
+    
+  
+
+
+I’ve just released daru version 0.0.5, wh...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://v0dro.github.io/blog/2015/02/24/data-analysis-in-ruby-part-2/">
+  <link href="//favicon.png" rel="icon">
+  <link href="//stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Travel &lt;code&gt; Music" type="application/atom+xml">
+  <script src="//javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="//javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-55005305-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="//">Travel &lt;code&gt; Music</a></h1>
+  
+    <h2>A place where I share my experiences with Travel, Programming and Music</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="http://v0dro.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="//blog/archives">Archive</a></li>
+  <li><a href="//travel">Travel</a></li>
+  <li><a href="//code">Code</a></li>
+  <li><a href="//music">Music</a></li>
+  <li><a href="//about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Data Analysis in RUby: Part 2</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I’ve just released daru version 0.0.5, which brings in a lot of new features and consolidates existing ones. <a href="https://github.com/SciRuby/nmatrix">NMatrix</a> is now well integrated into Daru and all of the operations that can be performed using Arrays as the underlying implementation can be performed using NMatrix as well (except some operations involving missing data).</p>
+
+<p>The new features include extensive support for missing data, hierarchial sorting of data frames and vectors by preserving indexing, ability to group, split and aggregate data with group by, and quickly summarizing data by generating excel-style pivot tables. This release also includes new aritmetic and statistical functions on Data Frames and Vectors. Both DataFrame and Vector are now mostly compatible with <a href="https://github.com/clbustos/statsample">statsample</a>, allowing for a much larger scope of statistical analysis by leveraging the methods already provided in statsample.</p>
+
+<p>The interface for interacting with nyaplot for plotting has also been revamped, allowing much greater control on the way graphs are handled by giving direct access to the graph object. A new class for hierarchial indexing of data (called MultiIndex) has also been added, which is immensely useful when grouping/splitting/aggregating data.</p>
+
+<p>Lets look at all these features one by one:</p>
+
+<h2 id="data-types">Data Types</h2>
+
+<p>You can now either use Ruby Arrays or NMatrix as the underlying implementation. Since NMatrix is fast and makes use of C storage, it is recommended to use nmatrix when dealing with large sets of data. Daru will store any data as Ruby Array unless explicitly specified.</p>
+
+<p>Thus to specify the data type of a Vector use the option <code>:dtype</code> and either supply it with <code>:array</code> or <code>:nmatrix</code>, and if using the NMatrix dtype, you can also specify the C data type that NMatrix will use internall by using the option <code>:nm_dtype</code> and supplying it with one of the NMatrix data types (it currently supports ints, floats, rationals and complex numbers. Check the docs for further details).</p>
+
+<p>As an example, consider creating a Vector which uses NMatrix underneath, and stores data using the <code>:float64</code> NMatrix data type, which stands for double precision floating point numbers.</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+</pre></td>
+  <td class="code"><pre>
+v = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new([<span class="float">1.44</span>,<span class="float">55.54</span>,<span class="float">33.2</span>,<span class="float">5.6</span>],<span class="key">dtype</span>: <span class="symbol">:nmatrix</span>, <span class="key">nm_dtype</span>: <span class="symbol">:float64</span>)
+<span class="comment">#        nil</span>
+<span class="comment">#    0  1.44</span>
+<span class="comment">#    1 55.54</span>
+<span class="comment">#    2  33.2</span>
+<span class="comment">#    3   5.6</span>
+v.dtype <span class="comment">#=&gt; :nmatrix</span>
+v.type  <span class="comment">#=&gt; :float64</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>Another distinction between types of data that daru offers is <code>:numeric</code> and <code>:object</code>. This is a generic feature for distinguishing numerical data from other types of data (like Strings or DateTime objects) that might be contained inside Vectors or DataFrames. These distinctions are important because statistical and arithmetic operations can only be applied on structures with type numeric.</p>
+
+<p>To query the data structure for its type, use the <code>#type</code> method. If the underlying implemetation is an NMatrix, it will return the NMatrix data type, otherwise for Ruby Arrays, it will be either <code>:numeric</code> or <code>:object</code>.</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+</pre></td>
+  <td class="code"><pre>
+v = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new([<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>], <span class="key">dtype</span>: <span class="symbol">:array</span>)
+v.type <span class="comment">#=&gt; :numeric</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>Thus Daru exposes three methods for querying the type of data:</p>
+<ul>
+  <li><code>#type</code> - Get the generic type of data to know whether numeric computation can be performed on the object. Get the C data type used by nmatrix in case of dtype NMatrix.</li>
+  <li><code>#dtype</code> - Get the underlying data representation (either :array or :nmatrix).</li>
+</ul>
+
+<h2 id="working-with-missing-data">Working with Missing Data</h2>
+
+<p>Any data scientist knows how common missing data is in real-life data sets, and to address that need, daru provides a host of functions for this purpose.
+This functionality is still in its infancy but should be up to speed soon.</p>
+
+<p>The <code>#is_nil?</code> function will return a Vector object with <code>true</code> if a value is <code>nil</code> and <code>false</code> otherwise.</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+</pre></td>
+  <td class="code"><pre>
+v = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new([<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="predefined-constant">nil</span>,<span class="predefined-constant">nil</span>,<span class="integer">4</span>], <span class="key">index</span>: [<span class="symbol">:a</span>, <span class="symbol">:b</span>, <span class="symbol">:c</span>, <span class="symbol">:d</span>, <span class="symbol">:e</span>, <span class="symbol">:f</span>])
+v.is_nil?
+<span class="comment">#=&gt; </span>
+<span class="comment">##&lt;Daru::Vector:93025420 @name = nil @size = 6 &gt;</span>
+<span class="comment">#        nil</span>
+<span class="comment">#    a   nil</span>
+<span class="comment">#    b   nil</span>
+<span class="comment">#    c   nil</span>
+<span class="comment">#    d  true</span>
+<span class="comment">#    e  true</span>
+<span class="comment">#    f   nil</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>The <code>#nil_positions</code> function returns an Array that contains the indexes of all the nils in the Vector.</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+</pre></td>
+  <td class="code"><pre>
+v.nil_positions <span class="comment">#=&gt; [:d, :e]</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>The <code>#replace_nils</code> functions replaces nils with a supplied value.</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+</pre></td>
+  <td class="code"><pre>
+v.replace_nils <span class="integer">69</span>
+<span class="comment">#=&gt; </span>
+<span class="comment">##&lt;Daru::Vector:92796730 @name = nil @size = 6 &gt;</span>
+<span class="comment">#    nil</span>
+<span class="comment">#  a   1</span>
+<span class="comment">#  b   2</span>
+<span class="comment">#  c   3</span>
+<span class="comment">#  d  69</span>
+<span class="comment">#  e  69</span>
+<span class="comment">#  f   4</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>The statistics functions implemented on Vectors ensure that missing data is not considered during computation and are thus safe to call on missing data.</p>
+
+<h2 id="hierarchical-sorting-of-dataframe">Hierarchical sorting of DataFrame</h2>
+
+<p>It is now possible to use the <code>#sort</code> function on Daru::DataFrame such that sorting happens hierarchically according to the order of the specified vector names.</p>
+
+<p>In case you want to sort according to a certain attribute of the data in a particular vector, for example sort a Vector of strings by length, then you can supply a code block to the <code>:by</code> option of the sort method.</p>
+
+<p>Supply the <code>:ascending</code> option with an Array containing ‘true’ or ‘false’ depending on whether you want the corresponding vector sorted in ascending or descending order.</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+</pre></td>
+  <td class="code"><pre>
+df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({
+  <span class="key">a</span>: [<span class="string"><span class="delimiter">'</span><span class="content">ff</span><span class="delimiter">'</span></span>  ,  <span class="string"><span class="delimiter">'</span><span class="content">fwwq</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">efe</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">a</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">efef</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">zzzz</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">efgg</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">q</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">ggf</span><span class="delimiter">'</span></span>], 
+  <span class="key">b</span>: [<span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>  ,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>],
+  <span class="key">c</span>: [<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>],
+  <span class="key">d</span>: [<span class="integer">-1</span>,<span class="integer">2</span>,<span class="integer">-2</span>,<span class="integer">3</span>,<span class="integer">-3</span>,<span class="integer">4</span>,<span class="integer">-5</span>,<span class="integer">6</span>,<span class="integer">7</span>],
+  <span class="key">e</span>: [<span class="integer">2</span>,<span class="integer">4</span>,<span class="integer">4</span>,<span class="integer">6</span>,<span class="integer">6</span>,<span class="integer">8</span>,<span class="integer">10</span>,<span class="integer">12</span>,<span class="integer">14</span>]
+  })
+
+df.sort([<span class="symbol">:a</span>,<span class="symbol">:d</span>], 
+  <span class="key">by</span>: {
+    <span class="key">a</span>: lambda { |a,b| a.length &lt;=&gt; b.length }, 
+    <span class="key">b</span>: lambda { |a,b| a.abs &lt;=&gt; b.abs } 
+  }, 
+  <span class="key">ascending</span>: [<span class="predefined-constant">false</span>, <span class="predefined-constant">true</span>]
+)
+</pre></td>
+</tr></table>
+</div>
+
+<p><img class="center" src="/images/daru2/sorted_df.png" alt="'Hierarchically sorted DataFrame'" /></p>
+
+<p>Vector objects also have a similar sorting method implemented. Check the docs for more details. Indexing is preserved while sorting of both DataFrame and Vector.</p>
+
+<h2 id="dsl-for-plotting-with-nyaplot">DSL for plotting with <a href="https://github.com/domitry/nyaplot">Nyaplot</a></h2>
+
+<p>Previously plotting with daru required a lot of arguments to be supplied by the user. The interface did not take advatage of Ruby’s blocks, nor did it expose many functionalities of nyaplot. All that changes with this new version, that brings in a new DSL for easy plotting (recommended usage with <a href="https://github.com/minad/iruby">iruby notebook</a>).</p>
+
+<p>Thus to plot a line graph with data present in a DataFrame:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+</pre></td>
+  <td class="code"><pre>
+df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({<span class="key">a</span>: [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">5</span>], <span class="key">b</span>: [<span class="integer">10</span>,<span class="integer">14</span>,<span class="integer">15</span>,<span class="integer">17</span>,<span class="integer">44</span>]})
+df.plot <span class="key">type</span>: <span class="symbol">:line</span>, <span class="key">x</span>: <span class="symbol">:a</span>, <span class="key">y</span>: <span class="symbol">:b</span> <span class="keyword">do</span> |p,d|
+  p.yrange [<span class="integer">0</span>,<span class="integer">100</span>]
+  p.legend <span class="predefined-constant">true</span>
+  d.color <span class="string"><span class="delimiter">&quot;</span><span class="content">green</span><span class="delimiter">&quot;</span></span>
+<span class="keyword">end</span>
+</pre></td>
+</tr></table>
+</div>
+<p><img class="center" src="/images/daru2/line_graph.png" alt="'Line Graph From DataFrame'" /></p>
+
+<p>As you can see, the <code>#plot</code> function exposes the <code>Nyaplot::Plot</code> and <code>Nyaplot::Diagram</code> objects to user after populating them with the relevant data. So the new interface lets experienced users utilize the full power of nyaplot but keeps basic plotting very simple to use for new users or for quick and dirty visualization needs. Unfortunately for now, until a viable solution to interfacing with nyaplot is found, you will need to use the nyaplot API directly.</p>
+
+<p>Refer to <a href="http://nbviewer.ipython.org/github/SciRuby/sciruby-notebooks/blob/master/Visualization/Visualizing%20data%20with%20daru%20DataFrame.ipynb">this notebook</a> for advanced plotting tutorials.</p>
+
+<h2 id="statistics-and-arithmetic-on-dataframes">Statistics and arithmetic on DataFrames.</h2>
+
+<p>Daru includes a host of methods for simple statistical analysis on numeric data. You can call <code>mean</code>, <code>std</code>, <code>sum</code>, <code>product</code>, etc. directly on the DataFrame. The corresponding computation is performed on numeric Vectors within the DataFrame, and missing data if any is excluded from the calculation by default.</p>
+
+<p>So for this DataFrame:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+</pre></td>
+  <td class="code"><pre>
+df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({
+  <span class="key">a</span>: [<span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>  ,  <span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>], 
+  <span class="key">b</span>: [<span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>  ,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>],
+  <span class="key">c</span>: [<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>],
+  <span class="key">d</span>: [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">5</span>,<span class="integer">6</span>,<span class="integer">7</span>],
+  <span class="key">e</span>: [<span class="integer">2</span>,<span class="integer">4</span>,<span class="integer">4</span>,<span class="integer">6</span>,<span class="integer">6</span>,<span class="integer">8</span>,<span class="integer">10</span>,<span class="integer">12</span>,<span class="integer">14</span>],
+  <span class="key">f</span>: [<span class="integer">10</span>,<span class="integer">20</span>,<span class="integer">20</span>,<span class="integer">30</span>,<span class="integer">30</span>,<span class="integer">40</span>,<span class="integer">50</span>,<span class="integer">60</span>,<span class="integer">70</span>]
+})
+</pre></td>
+</tr></table>
+</div>
+
+<p>To calculate the mean of numeric vectors:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+</pre></td>
+  <td class="code"><pre>
+df.mean
+</pre></td>
+</tr></table>
+</div>
+
+<p><img class="center" src="/images/daru2/df_mean.png" alt="'Calculate Mean of Numeric Vectors'" /></p>
+
+<p>Apart from that you can use the <code>#describe</code> method to calculate many statistical features of numeric Vectors in one shot and see a summary of statistics for numerical vectors in the DataFrame that is returned. For example,</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+</pre></td>
+  <td class="code"><pre>
+df.describe
+</pre></td>
+</tr></table>
+</div>
+
+<p><img class="center" src="/images/daru2/df_describe.png" alt="'Describe Multiple Statistics in One Shot'" /></p>
+
+<p>The covariance and correlation coeffiecients between the numeric vectors can also be found with <code>#cov</code> and <code>#corr</code></p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+</pre></td>
+  <td class="code"><pre>
+df.cov
+<span class="comment"># =&gt; </span>
+<span class="comment"># #&lt;Daru::DataFrame:91700830 @name = f5ae5d7e-9fcb-46c8-90ac-a6420c9dc27f @size # = 3&gt;</span>
+<span class="comment">#                     d          e          f </span>
+<span class="comment">#          d          4          8         40 </span>
+<span class="comment">#          e          8         16         80 </span>
+<span class="comment">#          f         40         80        400 </span>
+</pre></td>
+</tr></table>
+</div>
+
+<h2 id="hierarchial-indexing">Hierarchial indexing</h2>
+
+<p>A new way of hierarchially indexing data has been introduced in version 0.0.5. This is done with the new <code>Daru::MultiIndex</code> class. Hierarchial indexing allows grouping sets of similar data by index and lets you select sub sets of data by specifying an index name in the upper hierarchy.</p>
+
+<p>A MultiIndex can be created by passing a bunch of tuples into the Daru::MultiIndex class. A DataFrame or Vector can be created by passing it a MultiIndex object into the <code>index</code> option. A MultiIndex can be used for determining the order of Vectors in a DataFrame too.</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+<a href="#n19" name="n19">19</a>
+<strong><a href="#n20" name="n20">20</a></strong>
+<a href="#n21" name="n21">21</a>
+<a href="#n22" name="n22">22</a>
+<a href="#n23" name="n23">23</a>
+<a href="#n24" name="n24">24</a>
+<a href="#n25" name="n25">25</a>
+<a href="#n26" name="n26">26</a>
+<a href="#n27" name="n27">27</a>
+<a href="#n28" name="n28">28</a>
+<a href="#n29" name="n29">29</a>
+<strong><a href="#n30" name="n30">30</a></strong>
+<a href="#n31" name="n31">31</a>
+<a href="#n32" name="n32">32</a>
+</pre></td>
+  <td class="code"><pre>
+tuples = [
+  [<span class="symbol">:a</span>,<span class="symbol">:one</span>,<span class="symbol">:bar</span>],
+  [<span class="symbol">:a</span>,<span class="symbol">:one</span>,<span class="symbol">:baz</span>],
+  [<span class="symbol">:a</span>,<span class="symbol">:two</span>,<span class="symbol">:bar</span>],
+  [<span class="symbol">:a</span>,<span class="symbol">:two</span>,<span class="symbol">:baz</span>],
+  [<span class="symbol">:b</span>,<span class="symbol">:one</span>,<span class="symbol">:bar</span>],
+  [<span class="symbol">:b</span>,<span class="symbol">:two</span>,<span class="symbol">:bar</span>],
+  [<span class="symbol">:b</span>,<span class="symbol">:two</span>,<span class="symbol">:baz</span>],
+  [<span class="symbol">:b</span>,<span class="symbol">:one</span>,<span class="symbol">:foo</span>],
+  [<span class="symbol">:c</span>,<span class="symbol">:one</span>,<span class="symbol">:bar</span>],
+  [<span class="symbol">:c</span>,<span class="symbol">:one</span>,<span class="symbol">:baz</span>],
+  [<span class="symbol">:c</span>,<span class="symbol">:two</span>,<span class="symbol">:foo</span>],
+  [<span class="symbol">:c</span>,<span class="symbol">:two</span>,<span class="symbol">:bar</span>]
+]
+
+multi_index = <span class="constant">Daru</span>::<span class="constant">MultiIndex</span>.new(tuples)
+
+vector_arry1 = [<span class="integer">11</span>,<span class="integer">12</span>,<span class="integer">13</span>,<span class="integer">14</span>,<span class="integer">11</span>,<span class="integer">12</span>,<span class="integer">13</span>,<span class="integer">14</span>,<span class="integer">11</span>,<span class="integer">12</span>,<span class="integer">13</span>,<span class="integer">14</span>]
+vector_arry2 = [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>]
+
+order_mi = <span class="constant">Daru</span>::<span class="constant">MultiIndex</span>.new([
+    [<span class="symbol">:a</span>,<span class="symbol">:one</span>,<span class="symbol">:bar</span>],
+    [<span class="symbol">:a</span>,<span class="symbol">:two</span>,<span class="symbol">:baz</span>],
+    [<span class="symbol">:b</span>,<span class="symbol">:two</span>,<span class="symbol">:foo</span>],
+    [<span class="symbol">:b</span>,<span class="symbol">:one</span>,<span class="symbol">:foo</span>]])
+
+df_mi = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new([
+    vector_arry1, 
+    vector_arry2, 
+    vector_arry1, 
+    vector_arry2], <span class="key">order</span>: order_mi, <span class="key">index</span>: multi_index)
+</pre></td>
+</tr></table>
+</div>
+
+<p><img class="center" src="/images/daru2/multi_index_table.png" alt="'DataFrame with hierarchical indexing'" /></p>
+
+<p>Selecting a top level index from the hierarchy will select all the rows under that name, and return a new DataFrame with just that much data and indexes.</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+</pre></td>
+  <td class="code"><pre>
+df_mi.row[<span class="symbol">:a</span>]
+</pre></td>
+</tr></table>
+</div>
+
+<p><img class="center" src="/images/daru2/multi_index_partial.png" alt="'Partial Selection Of Multi Indexed DataFrame'" /></p>
+
+<p>Alternatively passing the entire tuple will return just that row as a <code>Daru::Vector</code>, indexed according to the column index.</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+</pre></td>
+  <td class="code"><pre>
+df_mi.row[<span class="symbol">:a</span>, <span class="symbol">:one</span>,<span class="symbol">:bar</span>]
+</pre></td>
+</tr></table>
+</div>
+<p><img class="center" src="/images/daru2/multi_index_exact.png" alt="'Selecting A Single Row From A Multi Indexed DataFrame'" /></p>
+
+<p>Hierachical indexing is especially useful when aggregating or splitting data, or generating data summaries as we’ll see in the following examples.</p>
+
+<h2 id="splitting-and-aggregation-of-data">Splitting and aggregation of data</h2>
+
+<p>When dealing with large sets of scattered data, it is often useful to ‘see’ the data grouped according to similar values in a Vector instead of it being scattered all over the place.</p>
+
+<p>The <code>#group_by</code> function does exactly that. For those familiar SQL, <code>#group_by</code> works exactly like the GROUP BY clause, but is much easier since its all Ruby.</p>
+
+<p>The <code>#group_by</code> function will accept one or more Vector names and will scan those vectors for common elements that can be grouped together. In case multiple names are specified it will check for common attributes accross rows.</p>
+
+<p>So for example consider this DataFrame:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+</pre></td>
+  <td class="code"><pre>
+df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({
+  <span class="key">a</span>: <span class="string"><span class="delimiter">%w{</span><span class="content">foo bar foo bar   foo bar foo foo</span><span class="delimiter">}</span></span>,
+  <span class="key">b</span>: <span class="string"><span class="delimiter">%w{</span><span class="content">one one two three two two one three</span><span class="delimiter">}</span></span>,
+  <span class="key">c</span>:   [<span class="integer">1</span>  ,<span class="integer">2</span>  ,<span class="integer">3</span>  ,<span class="integer">1</span>    ,<span class="integer">3</span>  ,<span class="integer">6</span>  ,<span class="integer">3</span>  ,<span class="integer">8</span>],
+  <span class="key">d</span>:   [<span class="integer">11</span> ,<span class="integer">22</span> ,<span class="integer">33</span> ,<span class="integer">44</span>   ,<span class="integer">55</span> ,<span class="integer">66</span> ,<span class="integer">77</span> ,<span class="integer">88</span>]
+})
+<span class="comment">#&lt;Daru::DataFrame:88462950 @name = 0dbc2869-9a82-4044-b72d-a4ef963401fc @size = 8&gt;</span>
+<span class="comment">#            a          b          c          d </span>
+<span class="comment"># 0        foo        one          1         11 </span>
+<span class="comment"># 1        bar        one          2         22 </span>
+<span class="comment"># 2        foo        two          3         33 </span>
+<span class="comment"># 3        bar      three          1         44 </span>
+<span class="comment"># 4        foo        two          3         55 </span>
+<span class="comment"># 5        bar        two          6         66 </span>
+<span class="comment"># 6        foo        one          3         77 </span>
+<span class="comment"># 7        foo      three          8         88 </span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>To group this DataFrame by the columns <code>:a</code> and <code>:b</code>, pass them as arguments to the <code>#group_by</code> function, which returns a <code>Daru::Core::GroupBy</code> object.</p>
+
+<p>Calling <code>#groups</code> on the returned <code>GroupBy</code> object returns a <code>Hash</code> with the grouped rows.</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+</pre></td>
+  <td class="code"><pre>
+grouped = df.group_by([<span class="symbol">:a</span>, <span class="symbol">:b</span>])
+grouped.groups
+<span class="comment"># =&gt; {</span>
+<span class="comment">#  [&quot;bar&quot;, &quot;one&quot;]=&gt;[1],</span>
+<span class="comment">#  [&quot;bar&quot;, &quot;three&quot;]=&gt;[3],</span>
+<span class="comment">#  [&quot;bar&quot;, &quot;two&quot;]=&gt;[5],</span>
+<span class="comment">#  [&quot;foo&quot;, &quot;one&quot;]=&gt;[0, 6],</span>
+<span class="comment">#  [&quot;foo&quot;, &quot;three&quot;]=&gt;[7],</span>
+<span class="comment">#  [&quot;foo&quot;, &quot;two&quot;]=&gt;[2, 4]}</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>To see the first group of each group from this collection, call <code>#first</code> on the <code>grouped</code> variable. Calling <code>#last</code> will return the last member of each group.</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+</pre></td>
+  <td class="code"><pre>
+grouped.first
+
+<span class="comment">#=&gt;           a          b          c          d </span>
+<span class="comment">#  1        bar        one          2         22 </span>
+<span class="comment">#  3        bar      three          1         44 </span>
+<span class="comment">#  5        bar        two          6         66 </span>
+<span class="comment">#  0        foo        one          1         11 </span>
+<span class="comment">#  7        foo      three          8         88 </span>
+<span class="comment">#  2        foo        two          3         33 </span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>On a similar note <code>#head(n)</code> will return the first <code>n</code> groups and <code>#tail(n)</code> the last <code>n</code> groups.</p>
+
+<p>The <code>#get_group</code> function will select only the rows that a particular group belongs to and return a DataFrame with those rows. The original indexing is ofcourse preserved.</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+</pre></td>
+  <td class="code"><pre>
+grouped.get_group([<span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">one</span><span class="delimiter">&quot;</span></span>])
+<span class="comment"># =&gt; </span>
+<span class="comment"># #&lt;Daru::DataFrame:90777050 @name = cdd0afa8-252d-4d07-ad0f-76c7581a492a @size # = 2&gt;</span>
+<span class="comment">#                     a          b          c          d </span>
+<span class="comment">#          0        foo        one          1         11 </span>
+<span class="comment">#          6        foo        one          3         77 </span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>The <code>Daru::Core::GroupBy</code> object contains a bunch of methods for creating summaries of the grouped data. These currently include <code>#mean</code>, <code>#std</code>, <code>#product</code>, <code>#sum</code>, etc. and many more to be added in the future. Calling any of the aggregation methods will create a new DataFrame which will have the index as the group and the aggregated data of the non-group vectors as the corresponding value. Of course this aggregation will apply only to <code>:numeric</code> type Vectors and missing data will not be considered while aggregation.</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+</pre></td>
+  <td class="code"><pre>
+grouped.mean
+</pre></td>
+</tr></table>
+</div>
+<p><img class="center" src="/images/daru2/group_by_mean.png" alt="'Aggregating by Mean After Grouping'" /></p>
+
+<p>A hierarchichally indexed DataFrame is returned. Check the <code>GroupBy</code> docs for more aggregation methods.</p>
+
+<h2 id="generating-excel-style-pivot-tables">Generating Excel-style Pivot Tables</h2>
+
+<p>You can generate an excel-style pivot table with the <code>#pivot_table</code> function. The levels of the pivot table are stored in MultiIndex objects.</p>
+
+<p>To demonstrate with an example, consider <a href="https://github.com/v0dro/daru/blob/master/spec/fixtures/sales-funnel.csv">this CSV file on sales data</a>.</p>
+
+<p><img class="center" src="/images/daru2/pivot_table_data.png" alt="'Data For Pivot Table Demo'" /></p>
+
+<p>To look at the data from the point of view of the manager and rep:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+</pre></td>
+  <td class="code"><pre>
+sales.pivot_table <span class="key">index</span>: [<span class="symbol">:manager</span>, <span class="symbol">:rep</span>]
+</pre></td>
+</tr></table>
+</div>
+
+<p><img class="center" src="/images/daru2/pivot_table_index.png" alt="'Data Pivoted on Index Only.'" /></p>
+
+<p>You can see that the pivot table has summarized the data and grouped it according to the manager and representative.</p>
+
+<p>To see the sales broken down by the products:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+</pre></td>
+  <td class="code"><pre>
+sales.pivot_table(<span class="key">index</span>: [<span class="symbol">:manager</span>,<span class="symbol">:rep</span>], <span class="key">values</span>: <span class="symbol">:price</span>, <span class="key">vectors</span>: [<span class="symbol">:product</span>], <span class="key">agg</span>: <span class="symbol">:sum</span>)
+</pre></td>
+</tr></table>
+</div>
+
+<p><img class="center" src="/images/daru2/pivoted_data.png" alt="'Data Pivoted to Reflect Sales'" /></p>
+
+<h2 id="compatibility-with-statsample">Compatibility with statsample</h2>
+
+<p>Daru is now completely compatible with <a href="https://github.com/clbustos/statsample">statsample</a> and you can now perform all of the functions by just passing it a Daru::DataFrame or Daru::Vector to perform statistical analysis.</p>
+
+<p>Find more examples of using daru for statistics <a href="https://github.com/SciRuby/sciruby-notebooks/tree/master/Statistics">in these notebooks</a>.</p>
+
+<p>Heres an example to demonstrate:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+<a href="#n19" name="n19">19</a>
+<strong><a href="#n20" name="n20">20</a></strong>
+<a href="#n21" name="n21">21</a>
+<a href="#n22" name="n22">22</a>
+<a href="#n23" name="n23">23</a>
+<a href="#n24" name="n24">24</a>
+<a href="#n25" name="n25">25</a>
+<a href="#n26" name="n26">26</a>
+<a href="#n27" name="n27">27</a>
+<a href="#n28" name="n28">28</a>
+<a href="#n29" name="n29">29</a>
+<strong><a href="#n30" name="n30">30</a></strong>
+<a href="#n31" name="n31">31</a>
+<a href="#n32" name="n32">32</a>
+<a href="#n33" name="n33">33</a>
+<a href="#n34" name="n34">34</a>
+<a href="#n35" name="n35">35</a>
+<a href="#n36" name="n36">36</a>
+</pre></td>
+  <td class="code"><pre>
+df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({<span class="key">a</span>: [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">5</span>,<span class="integer">6</span>,<span class="integer">7</span>], <span class="key">b</span>: [<span class="integer">11</span>,<span class="integer">22</span>,<span class="integer">33</span>,<span class="integer">44</span>,<span class="integer">55</span>,<span class="integer">66</span>,<span class="integer">77</span>]})
+
+<span class="constant">Statsample</span>::<span class="constant">Analysis</span>.store(<span class="constant">Statsample</span>::<span class="constant">Test</span>::<span class="constant">T</span>) <span class="keyword">do</span>
+  t_2 = <span class="constant">Statsample</span>::<span class="constant">Test</span>.t_two_samples_independent(df[<span class="symbol">:a</span>], df[<span class="symbol">:b</span>])
+  summary t_2
+<span class="keyword">end</span>
+
+<span class="constant">Statsample</span>::<span class="constant">Analysis</span>.run_batch
+
+<span class="comment"># Analysis 2015-02-25 13:34:32 +0530</span>
+<span class="comment"># = Statsample::Test::T</span>
+<span class="comment">#   == Two Sample T Test</span>
+<span class="comment">#     Mean and standard deviation</span>
+<span class="comment"># +----------+---------+---------+---+</span>
+<span class="comment"># | Variable |  mean   |   sd    | n |</span>
+<span class="comment"># +----------+---------+---------+---+</span>
+<span class="comment"># | a        | 4.0000  | 2.1602  | 7 |</span>
+<span class="comment"># | b        | 44.0000 | 23.7627 | 7 |</span>
+<span class="comment"># +----------+---------+---------+---+</span>
+<span class="comment"># </span>
+<span class="comment">#     Levene test for equality of variances : F(1, 12) = 13.6192 , p = 0.0031</span>
+<span class="comment">#     T statistics</span>
+<span class="comment"># +--------------------+---------+--------+----------------+</span>
+<span class="comment"># |        Type        |    t    |   df   | p (both tails) |</span>
+<span class="comment"># +--------------------+---------+--------+----------------+</span>
+<span class="comment"># | Equal variance     | -4.4353 | 12     | 0.0008         |</span>
+<span class="comment"># | Non equal variance | -4.4353 | 6.0992 | 0.0042         |</span>
+<span class="comment"># +--------------------+---------+--------+----------------+</span>
+<span class="comment"># </span>
+<span class="comment">#     Effect size</span>
+<span class="comment"># +-------+----------+</span>
+<span class="comment"># | x1-x2 | -40.0000 |</span>
+<span class="comment"># | d     | -12.0007 |</span>
+<span class="comment"># +-------+----------+</span>
+
+</pre></td>
+</tr></table>
+</div>
+
+<h5 id="references">References</h5>
+
+<ul>
+  <li>Pivot Tables example taken from <a href="http://pbpython.com/pandas-pivot-table-explained.html">here</a>.</li>
+</ul>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+<span class="byline author vcard">Posted by <span class="fn">Sameer Deshmukh</span></span>
+
+      
+
+
+
+
+
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://v0dro.github.io/blog/2015/02/24/data-analysis-in-ruby-part-2/" data-via="v0dro" data-counturl="http://v0dro.github.io/blog/2015/02/24/data-analysis-in-ruby-part-2/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/12/14/solving-systems-of-linear-equations-in-ruby/" title="Previous Post: Solving systems of linear equations in Ruby">&laquo; Solving systems of linear equations in Ruby</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/03/11/interfacing-and-benchmarking-high-performance-linear-algebra-libraries-with-ruby/" title="Next Post: Interfacing and benchmarking high performance linear algebra libraries with Ruby">Interfacing and benchmarking high performance linear algebra libraries with Ruby &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/v0dro">@v0dro</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'v0dro',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/10/23/explanation-of-exafmm-learning-codes/">Explanation of ExaFMM learning codes.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/11/24/gsoc-2016-wrap-up-for-sciruby/">GSOC 2016 Wrap Up For SciRuby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/27/advice-for-future-gsoc-students-and-mentors-based-on-my-experience/">Advice for future GSOC students and mentors based on my experience.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/21/setting-up-a-lexical-analyser-and-parser-in-ruby/">Setting up a lexical analyser and parser in Ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/16/random-thoughts-on-music-theory/">Random thoughts on music theory.</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+  
+
+  
+
+
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Sameer Deshmukh -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'v0dro';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://v0dro.github.io/blog/2015/02/24/data-analysis-in-ruby-part-2/';
+        var disqus_url = 'http://v0dro.github.io/blog/2015/02/24/data-analysis-in-ruby-part-2/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -136,7 +136,7 @@ Lets describe each file and see what implementation lies inside
 
 ## kernel.h
 
-The `kernel.h` header file implemenets all the FMM kernels. It also implements two special functions called `evalMultipole` and `evalLocal` that evaluate the multipoles and local expansion for spherical co-ordinates using the actual algorithm that is actually used in exafmm. An implementation of this algorithm can be found on page 16 of the paper ["Treecode and fast multipole method for N-body simulation with CUDA"](https://arxiv.org/pdf/1010.1482.pdf%20) by Yokota. A preliminary implementation of this algorithm can be found in ["A Fast Adaptive Multipole Algorithm in Three Dimensions"](http://www.sciencedirect.com/science/article/pii/S0021999199963556) by Cheng.
+The `kernel.h` header file implemenets all the FMM kernels. It also implements two special functions called `evalMultipole` and `evalLocal` that evaluate the multipoles and local expansion for spherical co-ordinates using the actual algorithm that is actually used in exafmm. An implementation of this algorithm can be found on page 16 of the paper ["Treecode and fast multipole method for N-body simulation with CUDA"](https://arxiv.org/pdf/1010.1482.pdf%20) by Yokota sensei. A preliminary implementation of this algorithm can be found in ["A Fast Adaptive Multipole Algorithm in Three Dimensions"](http://www.sciencedirect.com/science/article/pii/S0021999199963556) by Cheng.
 
 The Ruby implementation of this file is in `kernel.rb`.
 
@@ -166,7 +166,7 @@ This algorithm calculates the multipole of a cell. It uses spherical harmonics s
 
 The optimizations that are presented in the `kernel.h` version of this file are quite complex to understand since they look quite different from the original equation. I will explain the code written in the file, however, we will use unoptmized Ruby code that actually resembles the equation for purposes of understanding.
 
-For code that is still sane and easier to read, head over to the [laplace.h](https://github.com/exafmm/exafmm-alpha/blob/develop/kernels/laplace.h#L48) file in exafmm-alpha. The explanations here are from this file.
+For code that is still sane and easier to read, head over to the [laplace.h](https://github.com/exafmm/exafmm-alpha/blob/develop/kernels/laplace.h#L48) file in exafmm-alpha. The explanations that follow for now are from this file. We will see how the same functions in `kernel.h` have been modified to make computation faster and less dependent on large number divisions which reduce the accuracy of the system.
 
 The `evalMultipole` function basically tries to populate the `Ynm` array with data that is computed with the following equation:
 $$
@@ -179,14 +179,14 @@ It starts with evaluating terms that need not be computed for every iteration of
 
 After this is a curious case of computation of some indexes called `npn` and `nmn`. These are computed as follows:
 ``` ruby
-npn = m * m + 2 * m # case Yn n
-nmn = m * m         # case Y -n
+npn = m * m + 2 * m # case Y n  n
+nmn = m * m         # case Y n -n
 ```
 
 The corresponding index calculation for the inner loop is like this:
 ``` ruby
-npm = n * n + n + m
-nmm = n * n + n - m
+npm = n * n + n + m # case Y n  m
+nmm = n * n + n - m # case Y n -m
 ```
 
 This indexes the `Ynm` array. This is done because we are visualizing the Ynm array as a pyramid whose base spans from `-m` to `m` and who height is `n`. A rough visualization of this pyramid would be like so:
@@ -199,10 +199,16 @@ n  10 11 12 13  14
 V        0
 ```
 
-The above formulas will give the indexes for each half of the pyramid. Since the values of one half of the pyramid are conjugates of the other half, we can only iterate from `m=0` to `m<P` and use the second indexing method for gaining the index of the other half of the pyramid.
+The above formulas will give the indexes for each half of the pyramid. Since the values of one half of the pyramid are conjugates of the other half, we can only iterate from `m=0` to `m<P` and use this indexing method for gaining the index of the other half of the pyramid.
 
+Now let us talk about the evaluation of the [Associated Legendre Polynomial](http://mathworld.wolfram.com/AssociatedLegendrePolynomial.html) $$ P^m_{n}(cos(\theta)) $$, where _m_ is the order of the differential equation and _n_ is the degree. The Associated Legendre Polynomial is the solution to the [Associated Legendre Equation](http://mathworld.wolfram.com/AssociatedLegendreDifferentialEquation.html). The Legendre polynomial can be expressed in terms of the [Rodrigues form](https://en.wikipedia.org/wiki/Associated_Legendre_polynomials#Definition_for_non-negative_integer_parameters_.E2.84.93_and_m) for computation without dependence on the simple Legendre Polynomial $$ P_{n} $$. However, due to the factorials and rather large divisions that need to be performed to compute the Associated Legendre polynomial in this form, computing this equation for large values of _m_ and _n_ quickly becomes unstable. Therefore, we use a recurrence relation of the Polynomial in order to compute different values.
 
-If you look at the code, you'll also see a line `pnm = pn`. This line 
+The recurrence relation looks like so:
+$$
+\begin{equation}
+  (n-m+1)P^m_{n+1}(x)=x(2n+1)P^m_n(x)-(n+m)P^m_{n-1}(x)
+\end{equation}
+$$
 
 The Ruby implementation is [here]().
 
@@ -219,7 +225,4 @@ The Ruby implementation of this file is in `vector.rb`.
 ## step1.cxx
 
 ## step2.cxx
-
-
-
 

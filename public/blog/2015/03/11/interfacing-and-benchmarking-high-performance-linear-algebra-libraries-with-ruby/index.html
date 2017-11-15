@@ -1,0 +1,440 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Interfacing and benchmarking high performance linear algebra libraries with Ruby - Travel &lt;code&gt; Music</title>
+  <meta name="author" content="Sameer Deshmukh">
+
+  
+  <meta name="description" content="
+
+  
+  
+    
+      Interfacing and benchmarking high performance linear algebra libraries with Ruby
+    
+    
+      
+        
+
+
+
+
+
+        
+      
+...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://v0dro.github.io/blog/2015/03/11/interfacing-and-benchmarking-high-performance-linear-algebra-libraries-with-ruby/">
+  <link href="//favicon.png" rel="icon">
+  <link href="//stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Travel &lt;code&gt; Music" type="application/atom+xml">
+  <script src="//javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="//javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-55005305-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="//">Travel &lt;code&gt; Music</a></h1>
+  
+    <h2>A place where I share my experiences with Travel, Programming and Music</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="http://v0dro.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="//blog/archives">Archive</a></li>
+  <li><a href="//travel">Travel</a></li>
+  <li><a href="//code">Code</a></li>
+  <li><a href="//music">Music</a></li>
+  <li><a href="//about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Interfacing and benchmarking high performance linear algebra libraries with Ruby</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>For my GSOC project, I’m trying to build an extension to NMatrix which will interface with a high performance C library for fast linear algebra calculations. Since one of the major problems affecting the usability and portability of NMatrix is the effort taken for installation (adding/removing dependencies etc.), it is imperative to ship the source of this high performance C library alongwith the ruby gem.</p>
+
+<p>This leaves us with quite a few choices about the library that can be used. The most common and obvious interfaces for performing fast linear algebra calculations are LAPACK and BLAS. Thus the library bundled with the nmatrix extension must expose an interface similar to LAPACK and BLAS. Since ruby running on MRI can only interface with libraries having a C interface, the contenders in this regard are CLAPACK or LAPACKE for a LAPACK in C, and openBLAS or ATLAS for a BLAS interface.</p>
+
+<p>I need to choose an appropriate BLAS and LAPACK interface based on its speed and usability, and to do so, I decided to build some quick ruby interfaces to these libraries and benchmark the <a href="https://software.intel.com/en-us/node/520973"><code>?gesv</code> function</a>  (used for solving <em>n</em> linear equations in <em>n</em> unknowns) present in all LAPACK interfaces, so as to get an idea of what would be the fastest. This would also test the speed of the BLAS implemetation since LAPACK primarily depends on BLAS for actual computations.</p>
+
+<p>To create these benchmarks, <a href="https://github.com/v0dro/scratch/tree/master/ruby_c_exp">I made a couple of simple ruby gems</a> which linked against the binaries of these libraries. All these gems <a href="https://github.com/v0dro/scratch/blob/master/ruby_c_exp/nm_lapacke/lib/nm_lapacke.rb">define a module</a> which contains a method <code>solve_gesv</code>, which calls the C extension that interfaces with the C library. Each library was made in its own little ruby gem so as to nullify any unknown side effects and also to provide more clarity.</p>
+
+<p>To test these libraries against each other, I used the following test code:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+<a href="#n19" name="n19">19</a>
+</pre></td>
+  <td class="code"><pre>
+require <span class="string"><span class="delimiter">'</span><span class="content">benchmark</span><span class="delimiter">'</span></span>
+
+<span class="constant">Benchmark</span>.bm <span class="keyword">do</span> |x|
+  x.report <span class="keyword">do</span>
+    <span class="integer">10000</span>.times <span class="keyword">do</span>
+      a = <span class="constant">NMatrix</span>.new([<span class="integer">3</span>,<span class="integer">3</span>], [<span class="integer">76</span>, <span class="integer">25</span>, <span class="integer">11</span>,
+                              <span class="integer">27</span>, <span class="integer">89</span>, <span class="integer">51</span>,
+                              <span class="integer">18</span>, <span class="integer">60</span>, <span class="integer">32</span>], <span class="key">dtype</span>: <span class="symbol">:float64</span>)
+      b = <span class="constant">NMatrix</span>.new([<span class="integer">3</span>,<span class="integer">1</span>], [<span class="integer">10</span>,
+                               <span class="integer">7</span>,
+                              <span class="integer">43</span>], <span class="key">dtype</span>: <span class="symbol">:float64</span>)
+      <span class="constant">NMatrix</span>::<span class="constant">CLAPACK</span>.solve_gesv(a,b)
+      <span class="comment"># The `NMatrix::CLAPACK` is replaced with NMatrix::LAPACKE </span>
+      <span class="comment"># or NMatrix::LAPACKE_ATLAS as per the underlying binding. Read the</span>
+      <span class="comment"># source code for more details.</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>Here I will list the libraries that I used, the functions I interfaced with, the pros and cons of using each of these libraries, and of course the reported benchmarks:</p>
+
+<h3 id="clapack-lapack-with-openblas-blas">CLAPACK (LAPACK) with openBLAS (BLAS)</h3>
+
+<p><a href="http://www.netlib.org/clapack/">CLAPACK</a> is an F2C’d version of the original LAPACK written in FORTRAN. The creators have made some changes by hand because f2c spews out unnecessary code at times, but otherwise its pretty much as fast as the original LAPACK.</p>
+
+<p>To interface with a BLAS implementation, CLAPACK uses a blas wrapper (blaswrap) to generate wrappers to the relevant CBLAS functions exposed by any BLAS implementation. The blaswrap source files and F2C source files are provided with the CLAPACK library.</p>
+
+<p>The BLAS implementation that we’ll be using is <a href="http://www.openblas.net/">openBLAS</a>, which is a very stable and tested BLAS exposing a C interface. It is extremely simple to use and install, and configures itself automatically according to the computer it is being installed upon. It claims to achieve <a href="http://en.wikipedia.org/wiki/GotoBLAS">performance comparable to intel MKL</a>, which is phenomenal.</p>
+
+<p>To compile CLAPACK with openBLAS, do the following:</p>
+
+<ul>
+  <li><code>cd</code> to your openBLAS directory and run <code>make NO_LAPACK=1</code>. This will create an openBLAS binary with the object files only for BLAS and CBLAS. LAPACK will not be compiled even though the source is present. This will generate a <code>.a</code> file which has a name that is similar to the processor that your computer uses. Mine was <code>libopenblas_sandybridgep-r0.2.13.a</code>.</li>
+  <li>Now rename the openBLAS binary file to <code>libopenblas.a</code> so its easier to type and you lessen your chances of mistakes, and copy to your CLAPACK directory.</li>
+  <li><code>cd</code> to your CLAPACK directory and open the <code>make.inc</code> file in your editor. In it, you should find a <code>BLASDIR</code> variable that points to the BLAS files to link against. Change the value of this variable to <code>../../libopenblas.a</code>.</li>
+  <li>Now run <code>make f2clib</code> to make F2C library. This is needed for interconversion between C and FORTRAN data types.</li>
+  <li>Then run <code>make lapacklib</code> from the CLAPACK root directory to compile CLAPACK against your specified implementation of CBLAS (openBLAS in this case).</li>
+  <li>At the end of this process, you should end up with the CLAPACK, F2C and openBLAS binaries in your directory.</li>
+</ul>
+
+<p>Since the automation of this compilation process would take time, I copied these binaries to the gem and <a href="">wrote the extconf.rb</a> such that they link with these libraries.</p>
+
+<p>On testing this with a ruby wrapper, the benchmarking code listed above yielded the following results:</p>
+
+<pre><code>
+    user     system      total        real
+    0.190000   0.000000   0.190000 (  0.186355)
+</code></pre>
+
+<h3 id="lapacke-lapack-compiled-with-openblas-blas">LAPACKE (LAPACK) compiled with openBLAS (BLAS)</h3>
+
+<p><a href="http://www.netlib.org/lapack/lapacke.html">LAPACKE</a> is the ‘official’ C interface to the FORTRAN-written LAPACK. It consists of two levels; a high level C interface for use with C programs and a low level one that talks to the original FORTRAN LAPACK code. This is not just an f2c’d version of LAPACK, and hence the design of this library is such that it is easy to create a bridge between C and FORTRAN.</p>
+
+<p>For example, C has arrays stored in row-major format while FORTRAN had them column-major. To perform any computation, a matrix needs to be transposed to column-major form first and then be re-transposed to row-major form so as to yield correct results. This needs to be done by the programmer when using CLAPACK, but LAPACKE’s higher level interface accepts arguments (<a href="http://www.netlib.org/lapack/lapacke.html#_array_arguments">LAPACKE_ROW_MAJOR or LAPACKE_COL_MAJOR</a>) which specify whether the matrices passed to it are in row major or column major format. Thus extra (often unoptimized code) on part of the programmer for performing the tranposes is avoided.</p>
+
+<p>To build binaries of LAPACKE compiled with openBLAS, just <code>cd</code> to your openBLAS source code directory and run <code>make</code>. This will generate a <code>.a</code> file with the binaries for LAPACKE and CBLAS interface of openBLAS.</p>
+
+<p>LAPACKE benchmarks turn out to be faster mainly due to the absence of <a href="https://github.com/v0dro/scratch/blob/master/ruby_c_exp/nm_clapack/lib/nm_clapack.rb#L7">manual transposing by high-level code written in Ruby</a>  (the <a href="https://github.com/SciRuby/nmatrix/blob/master/lib/nmatrix/nmatrix.rb#L535">NMatrix#transpose</a> function in this case). I think performing the tranposing using openBLAS functions should remedy this problem.</p>
+
+<p>The benchmarks for LAPACKE are:</p>
+
+<pre><code>
+    user     system      total        real
+    0.150000   0.000000   0.150000 (  0.147790)
+</code></pre>
+
+<p>As you can see these are quite faster than CLAPACK with openBLAS, listed above.</p>
+
+<h3 id="clapacklapack-with-atlasblas">CLAPACK(LAPACK) with ATLAS(BLAS)</h3>
+
+<p>This is the combination that is currently in use with nmatrix. It involves installing the <code>libatlas-base-dev</code> package from the Debian repositories. This pacakage will load all the relevant clapack, atlas, blas and cblas binaries into your computer.</p>
+
+<p>The benchmarks turned out to be:</p>
+
+<pre><code>
+    user     system      total        real
+    0.130000   0.000000   0.130000 (  0.130056)
+</code></pre>
+
+<p>This is fast. But a big limitation on using this approach is that the CLAPACK library exposed by the <code>libatlas-base-dev</code> is outdated and no longer maintained. To top it all, it does not have all the functions that a LAPACK library is supposed to have.</p>
+
+<h3 id="lapackelapack-with-atlasblas">LAPACKE(LAPACK) with ATLAS(BLAS)</h3>
+
+<p>For this test case I compiled <a href="http://www.netlib.org/lapack/lapacke">LAPACKE (downloaded from netlib)</a> with an ATLAS implementation from the Debian repositories. I then included the generated static libraries in the sample ruby gem and compiled the gem against those.</p>
+
+<p>To do this on your machine:</p>
+<ul>
+  <li>Install the package <code>libatlas-base-dev</code> with your package manager. This will install the ATLAS and CBLAS shared objects onto your system.</li>
+  <li><code>cd</code> to the lapack library and in the <code>make.inc</code> file change the <code>BLASLIB = -lblas -lcblas -latlas</code>. Then run <code>make</code>. This will compile LAPACK with ATLAS installed on your system.</li>
+  <li>Then <code>cd</code> to the lacpack/lapacke folder and run <code>make</code>.</li>
+</ul>
+
+<p>Again the function chosen was <code>LAPACKE_?gesv</code>. This test should tell us a great deal about the speed differences between openBLAS and ATLAS, since tranposing overheads are handled by LAPACKE and no Ruby code is interfering with the benchmarks.</p>
+
+<p>The benchmarks turned out to be:</p>
+
+<pre><code>
+    user     system      total        real
+    0.140000   0.000000   0.140000 (  0.140540)
+</code></pre>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>As you can see from the benchmarks above, the approach followed by nmatrix currently (CLAPACK with ATLAS) is the fastest, but this approach has certain limitations:</p>
+
+<ul>
+  <li>Requires installation of tedious to install dependencies.</li>
+  <li>Many pacakages offer the same binaries, causing confusion.</li>
+  <li>CLAPACK library is outdated and not maintained any longer.</li>
+  <li>ATLAS-CLAPACK does not expose all the functions present in LAPACK.</li>
+</ul>
+
+<p>The LAPACKE-openBLAS and the LAPACKE-ATLAS, though a little slower(~10-20 ms), offer a HUGE advantage over CLAPACK-ATLAS, viz. :</p>
+
+<ul>
+  <li>LAPACKE is the ‘standard’ C interface to the LAPACK libraries and is actively maintained, with regular release cycles.</li>
+  <li>LAPACKE is compatible with intel’s MKL, in case a future need arises.</li>
+  <li>LAPACKE bridges the differences between C and FORTRAN with a well thought out interface.</li>
+  <li>LAPACKE exposes the entire LAPACK interface.</li>
+  <li>openBLAS is trivial to install.</li>
+  <li>ATLAS is a little non-trivial to install but is fast.</li>
+</ul>
+
+<p>For a further explanation of the differences between these CBLAS, CLAPACK and LAPACKE, read <a href="http://nicolas.limare.net/pro/notes/2014/10/31_cblas_clapack_lapacke/">this</a> blog post.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+<span class="byline author vcard">Posted by <span class="fn">Sameer Deshmukh</span></span>
+
+      
+
+
+
+
+
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://v0dro.github.io/blog/2015/03/11/interfacing-and-benchmarking-high-performance-linear-algebra-libraries-with-ruby/" data-via="v0dro" data-counturl="http://v0dro.github.io/blog/2015/03/11/interfacing-and-benchmarking-high-performance-linear-algebra-libraries-with-ruby/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/02/24/data-analysis-in-ruby-part-2/" title="Previous Post: Data Analysis in RUby: Part 2">&laquo; Data Analysis in RUby: Part 2</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/05/12/making-statsample-work-with-rb-gsl-and-gsl-nmatrix/" title="Next Post: Making statsample work with rb-gsl and gsl-nmatrix">Making statsample work with rb-gsl and gsl-nmatrix &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/v0dro">@v0dro</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'v0dro',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/10/23/explanation-of-exafmm-learning-codes/">Explanation of ExaFMM learning codes.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/11/24/gsoc-2016-wrap-up-for-sciruby/">GSOC 2016 Wrap Up For SciRuby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/27/advice-for-future-gsoc-students-and-mentors-based-on-my-experience/">Advice for future GSOC students and mentors based on my experience.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/21/setting-up-a-lexical-analyser-and-parser-in-ruby/">Setting up a lexical analyser and parser in Ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/16/random-thoughts-on-music-theory/">Random thoughts on music theory.</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+  
+
+  
+
+
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Sameer Deshmukh -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'v0dro';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://v0dro.github.io/blog/2015/03/11/interfacing-and-benchmarking-high-performance-linear-algebra-libraries-with-ruby/';
+        var disqus_url = 'http://v0dro.github.io/blog/2015/03/11/interfacing-and-benchmarking-high-performance-linear-algebra-libraries-with-ruby/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

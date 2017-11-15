@@ -1,0 +1,517 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Analysis of Time Series in Daru - Travel &lt;code&gt; Music</title>
+  <meta name="author" content="Sameer Deshmukh">
+
+  
+  <meta name="description" content="
+
+  
+  
+    
+      Analysis of Time Series in Daru
+    
+    
+      
+        
+
+
+
+
+
+        
+      
+    
+  
+
+
+The newest release of daru brings along...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://v0dro.github.io/blog/2015/07/31/analysis-of-time-series-in-daru/">
+  <link href="//favicon.png" rel="icon">
+  <link href="//stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Travel &lt;code&gt; Music" type="application/atom+xml">
+  <script src="//javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="//javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-55005305-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="//">Travel &lt;code&gt; Music</a></h1>
+  
+    <h2>A place where I share my experiences with Travel, Programming and Music</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="http://v0dro.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="//blog/archives">Archive</a></li>
+  <li><a href="//travel">Travel</a></li>
+  <li><a href="//code">Code</a></li>
+  <li><a href="//music">Music</a></li>
+  <li><a href="//about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Analysis of Time Series in Daru</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>The newest release of daru brings alongwith it added support for time series data analysis, manipulation and visualization.</p>
+
+<p>A time series is any data is indexed (or labelled) by time. This includes the stock market index, prices of crude oil or precious metals, or even geo-locations over a period of time.</p>
+
+<p>The primary manner in which daru implements a time series is by indexing data objects (i.e Daru::Vector or Daru::DataFrame) on a new index called the DateTimeIndex. A DateTimeIndex consists of dates, which can queried individually or sliced.</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>A very basic time series can be created with something like this:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+</pre></td>
+  <td class="code"><pre>require <span class="string"><span class="delimiter">'</span><span class="content">distribution</span><span class="delimiter">'</span></span>
+require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+
+rng = <span class="constant">Distribution</span>::<span class="constant">Normal</span>.rng
+
+index  = <span class="constant">Daru</span>::<span class="constant">DateTimeIndex</span>.date_range(<span class="symbol">:start</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">2012-4-2</span><span class="delimiter">'</span></span>, <span class="symbol">:periods</span> =&gt; <span class="integer">1000</span>, <span class="symbol">:freq</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">D</span><span class="delimiter">'</span></span>)
+vector = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new(<span class="integer">1000</span>.times.map {rng.call}, <span class="key">index</span>: index)
+</pre></td>
+</tr></table>
+</div>
+<p><img class="center" src="/images/daru_time_series/simple_vector.png" alt="'A Simple Vector indexed on DateTimeIndex'" /></p>
+
+<p>In the above code, the <code>DateTimeIndex.date_range</code> function is creating a <code>DateTimeIndex</code> starting from a particular date and spanning for 1000 periods, with a frequency of 1 day between period. For a complete coverage of DateTimeIndex see <a href="">this</a> notebook. For an introduction to the date offsets used by daru see <a href="http://v0dro.github.io/blog/2015/07/27/date-offsets-in-daru/">this blog post</a>.</p>
+
+<p>The index is passed into the Vector like a normal <code>Daru::Index</code> object.</p>
+
+<h2 id="statistics-functions-and-plotting-for-time-series">Statistics functions and plotting for time series</h2>
+
+<p>Many functions are avaiable in daru for computing useful statistics and analysis. A brief of summary of statistics methods available on time series is as follows:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>Method Name</strong></th>
+      <th style="text-align: center"><strong>Description</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code>rolling_mean</code></td>
+      <td style="text-align: center">Calculate Moving Average</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>rolling_median</code></td>
+      <td style="text-align: center">Calculate Moving Median</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>rolling_std</code></td>
+      <td style="text-align: center">Calculate Moving Standard Deviation</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>rolling_variance</code></td>
+      <td style="text-align: center">Calculate Moving Variance</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>rolling_max</code></td>
+      <td style="text-align: center">Calculate Moving Maximum value</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>rolling_min</code></td>
+      <td style="text-align: center">Calcuclate moving minimum value</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>rolling_count</code></td>
+      <td style="text-align: center">Calculate moving non-missing values</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>rolling_sum</code></td>
+      <td style="text-align: center">Calculate moving sum</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>ema</code></td>
+      <td style="text-align: center">Calculate exponential moving average</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>macd</code></td>
+      <td style="text-align: center">Moving Average Convergence-Divergence</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>acf</code></td>
+      <td style="text-align: center">Calculate Autocorrelation Co-efficients of the Series</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>acvf</code></td>
+      <td style="text-align: center">Provide the auto-covariance value</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>To demonstrate, the rolling mean of a Daru::Vector can be computed as follows:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+</pre></td>
+  <td class="code"><pre>
+require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span class="string"><span class="delimiter">'</span><span class="content">distribution</span><span class="delimiter">'</span></span>
+
+rng    = <span class="constant">Distribution</span>::<span class="constant">Normal</span>.rng
+vector = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new(
+  <span class="integer">1000</span>.times.map { rng.call }, 
+  <span class="key">index</span>: <span class="constant">Daru</span>::<span class="constant">DateTimeIndex</span>.date_range(
+    <span class="symbol">:start</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">2012-4-2</span><span class="delimiter">'</span></span>, <span class="symbol">:periods</span> =&gt; <span class="integer">1000</span>, <span class="symbol">:freq</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">D</span><span class="delimiter">'</span></span>)
+)
+<span class="comment"># Compute the cumulative sum</span>
+vector = vector.cumsum
+rolling = vector.rolling_mean <span class="integer">60</span>
+
+rolling.tail
+</pre></td>
+</tr></table>
+</div>
+<p><img class="center" src="/images/daru_time_series/rolling_mean.png" alt="'Rolling Mean Tail'" /></p>
+
+<p>This time series can be very easily plotted with its rolling mean by using the <a href="https://github.com/dilcom/gnuplotrb">GnuplotRB</a> gem:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+</pre></td>
+  <td class="code"><pre>
+require <span class="string"><span class="delimiter">'</span><span class="content">gnuplotrb</span><span class="delimiter">'</span></span>
+
+<span class="constant">GnuplotRB</span>::<span class="constant">Plot</span>.new(
+  [vector , <span class="key">with</span>: <span class="string"><span class="delimiter">'</span><span class="content">lines</span><span class="delimiter">'</span></span>, <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">Vector</span><span class="delimiter">'</span></span>],
+  [rolling, <span class="key">with</span>: <span class="string"><span class="delimiter">'</span><span class="content">lines</span><span class="delimiter">'</span></span>, <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">Rolling Mean</span><span class="delimiter">'</span></span>])
+</pre></td>
+</tr></table>
+</div>
+
+<p><img class="center" src="/images/daru_time_series/cumsum_rolling_line_graph.png" alt="'Line Graph of Rolling mean and cumsum'" /></p>
+
+<p>These methods are also available on DataFrame, which results in calling them on each of numeric vectors:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+</pre></td>
+  <td class="code"><pre>
+require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span class="string"><span class="delimiter">'</span><span class="content">distribution</span><span class="delimiter">'</span></span>
+
+rng    = <span class="constant">Distribution</span>::<span class="constant">Normal</span>.rng
+index  = <span class="constant">Daru</span>::<span class="constant">DateTimeIndex</span>.date_range(<span class="symbol">:start</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">2012-4-2</span><span class="delimiter">'</span></span>, <span class="symbol">:periods</span> =&gt; <span class="integer">1000</span>, <span class="symbol">:freq</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">D</span><span class="delimiter">'</span></span>)
+df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({
+  <span class="key">a</span>: <span class="integer">1000</span>.times.map { rng.call },
+  <span class="key">b</span>: <span class="integer">1000</span>.times.map { rng.call },
+  <span class="key">c</span>: <span class="integer">1000</span>.times.map { rng.call }
+}, <span class="key">index</span>: index)
+</pre></td>
+</tr></table>
+</div>
+<p><img class="center" src="/images/daru_time_series/dataframe.png" alt="'DateTime indexed DataFrame'" /></p>
+
+<p>In a manner similar to that done with Vectors above, we can easily plot each Vector of the DataFrame with GNU plot:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+</pre></td>
+  <td class="code"><pre>
+require <span class="string"><span class="delimiter">'</span><span class="content">gnuplotrb</span><span class="delimiter">'</span></span>
+
+<span class="comment"># Calculate cumulative sum of each Vector</span>
+df = df.cumsum
+
+<span class="comment"># Compute rolling sum of each Vector with a loopback length of 60.</span>
+r_sum = df.rolling_sum(<span class="integer">60</span>)
+
+plots = []
+r_sum.each_vector_with_index <span class="keyword">do</span> |vec,n|
+  plots &lt;&lt; <span class="constant">GnuplotRB</span>::<span class="constant">Plot</span>.new([vec, <span class="key">with</span>: <span class="string"><span class="delimiter">'</span><span class="content">lines</span><span class="delimiter">'</span></span>, <span class="key">title</span>: n])
+<span class="keyword">end</span>
+<span class="constant">GnuplotRB</span>::<span class="constant">Multiplot</span>.new(*plots, <span class="key">layout</span>: [<span class="integer">3</span>,<span class="integer">1</span>], <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">Rolling sums</span><span class="delimiter">'</span></span>)
+</pre></td>
+</tr></table>
+</div>
+<p><img class="center" src="/images/daru_time_series/dataframe_plot.png" alt="'Plotting the DataFrame'" /></p>
+
+<h2 id="usage-with-statsample-timeseries">Usage with statsample-timeseries</h2>
+
+<p>Daru now integrates with <a href="https://github.com/SciRuby/statsample-timeseries">statsample-timeseries</a>, a <a href="https://github.com/sciruby/statsample">statsample</a> extension that provides many useful statistical analysis tools commonly applied to time series.</p>
+
+<p>Some examples with working examples of daru and statsample-timseries are coming soon. Stay tuned!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+<span class="byline author vcard">Posted by <span class="fn">Sameer Deshmukh</span></span>
+
+      
+
+
+
+
+
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://v0dro.github.io/blog/2015/07/31/analysis-of-time-series-in-daru/" data-via="v0dro" data-counturl="http://v0dro.github.io/blog/2015/07/31/analysis-of-time-series-in-daru/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/07/27/date-offsets-in-daru/" title="Previous Post: Date Offsets in Daru">&laquo; Date Offsets in Daru</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/08/03/finding-and-combining-data-in-daru/" title="Next Post: finding and combining data in daru">finding and combining data in daru &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/v0dro">@v0dro</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'v0dro',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/10/23/explanation-of-exafmm-learning-codes/">Explanation of ExaFMM learning codes.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/11/24/gsoc-2016-wrap-up-for-sciruby/">GSOC 2016 Wrap Up For SciRuby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/27/advice-for-future-gsoc-students-and-mentors-based-on-my-experience/">Advice for future GSOC students and mentors based on my experience.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/21/setting-up-a-lexical-analyser-and-parser-in-ruby/">Setting up a lexical analyser and parser in Ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/16/random-thoughts-on-music-theory/">Random thoughts on music theory.</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+  
+
+  
+
+
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Sameer Deshmukh -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'v0dro';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://v0dro.github.io/blog/2015/07/31/analysis-of-time-series-in-daru/';
+        var disqus_url = 'http://v0dro.github.io/blog/2015/07/31/analysis-of-time-series-in-daru/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

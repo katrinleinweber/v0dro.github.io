@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Making screencasts in Debian - Travel &lt;code&gt; Music</title>
+  <meta name="author" content="Sameer Deshmukh">
+
+  
+  <meta name="description" content="
+
+  
+  
+    
+      Making screencasts in Debian
+    
+    
+      
+        
+
+
+
+
+
+        
+      
+    
+  
+
+
+Overview
+
+I thought I’ll try something new...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://v0dro.github.io/blog/2016/07/05/making-screencasts-in-debian/">
+  <link href="//favicon.png" rel="icon">
+  <link href="//stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Travel &lt;code&gt; Music" type="application/atom+xml">
+  <script src="//javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="//javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-55005305-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="//">Travel &lt;code&gt; Music</a></h1>
+  
+    <h2>A place where I share my experiences with Travel, Programming and Music</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="http://v0dro.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="//blog/archives">Archive</a></li>
+  <li><a href="//travel">Travel</a></li>
+  <li><a href="//code">Code</a></li>
+  <li><a href="//music">Music</a></li>
+  <li><a href="//about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Making screencasts in Debian</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1 id="overview">Overview</h1>
+
+<p>I thought I’ll try something new by recording screencasts for some of my <a href="https://github.com/v0dro">work on Ruby</a> open source libraries.</p>
+
+<p>This is quite a change for me since I’m primarily focused on the programming and designing side of things. Creating documentation is something I’ve not ventured into a lot except the usual <a href="http://yardoc.org/">YARD markup</a> for Ruby methods and classes.</p>
+
+<p>In this blog post (which I will keep updating as time progresses) I hope to document my efforts in creating screencasts. Mind you this is the first time I’m creating a screencast so if you find any potential improvements in my methods please point them out in the comments.</p>
+
+<h1 id="creating-the-video">Creating the video</h1>
+
+<p>My first ever screencast will be for my <a href="https://github.com/v0dro/benchmark-plot">benchmark-plot</a> gem. For creating the video I’m mainly using two tools - <a href="https://kdenlive.org/">Kdenlive</a> for video editing and <a href="https://launchpad.net/kazam">Kazam</a> for recording screen activity. I initially tried using <a href="http://www.pitivi.org/">Pitivi</a> and <a href="http://www.openshot.org/">OpenShot</a> for video editing, but the former did not seem user friendly and the latter kept crashing on my system. For the desktop recording I first tried using <a href="http://recordmydesktop.sourceforge.net/about.php">RecordMyDesktop</a> but gave up on it since it’s too heavy on resources and recoreded poor quality screencasts with not too many customization options.</p>
+
+<p>For creating informative visuals, I’m using <a href="https://www.libreoffice.org/discover/impress/">LibreOffice Impress</a> so that I can create a slide, take it’s screenshot when in slideshow mode and put in the screencast. However I’ve generally found that using slides does not serve well the content delivery in a screencast and will probably not feature too many slides in future screencasts.</p>
+
+<p><a href="https://www.sublimetext.com/3">Sublime Text 3</a> is my primary text editor. I use it’s in built code execution functionality (by pressing <code>Ctrl + Shift + B</code>) to execute a code snippet and display the results immediately.</p>
+
+<h1 id="creating-the-audio">Creating the audio</h1>
+
+<p>I am using Audacity for recording sound. Sadly my mic produces a lot of noise, so for removing that noise in Audacity, I use the inbuilt noise reduction tools.</p>
+
+<p>Noise reduction in Audacity can be achieved by first selecting a small part of the sound that does not contain speech, then go to Effects -&gt; Noise Reduction and click on ‘Get Noise Profile’. Then select the whole sound wave with <code>Ctrl + A</code>. Go to Effects -&gt; Noise Reduction again and click ‘OK’. It should considerably reduce static noise from your sound file.</p>
+
+<p>All files are exported to Ogg Vorbis.</p>
+
+<h1 id="putting-it-all-together">Putting it all together</h1>
+
+<p>I did some research on the screencasting process and found <a href="http://devblog.avdi.org/2013/01/21/my-screencasting-process/">this article</a> by Avdi Grimm and <a href="https://build-podcast.com/setup/">this one</a> by Sayanee Basu extremely helpful.</p>
+
+<p>I first started by writing the transcript along with any code samples that I had to show. I made it a point to describe the code being typed/displayed on the screen since it’s generally more useful to have a voice over explaning the code than having to pause the video and go over it yourself.</p>
+
+<p>Then I recorded the voice over just for the part that featured slides. I imported the screenshots of the slides in kdenlive and adjusted them such that they fit the voice over. Recording the code samples was a bit of a challenge. I started typing out the code and talking about it into the mic. This was more difficult than I thought, almost like playing a Guitar and singing at the same time. I ended up recording the screencast in 4 separate takes, with several retakes for each take.</p>
+
+<p>After importing the screencast with voice over into kdenlive and separating the audio and video components, I did some cuts to reduce redundancy or imperfections in my VO. Some of the parts of the video where there was a lot of typing had to be sped up by using kdenlive’s Speed tool.</p>
+
+<p>Once this was upto my satisfaction, I exported it to mp4.</p>
+
+<p>The video of my first screencast is now up on YouTube in the video below. Have a look and leave your feedback in the comments!</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WW6M4Df-soQ" frameborder="0" allowfullscreen=""></iframe>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+<span class="byline author vcard">Posted by <span class="fn">Sameer Deshmukh</span></span>
+
+      
+
+
+
+
+
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://v0dro.github.io/blog/2016/07/05/making-screencasts-in-debian/" data-via="v0dro" data-counturl="http://v0dro.github.io/blog/2016/07/05/making-screencasts-in-debian/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/08/16/summary-of-work-this-summer-for-gsoc-2015/" title="Previous Post: Summary of work this summer for GSOC 2015">&laquo; Summary of work this summer for GSOC 2015</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2016/07/12/random-thoughts-on-bass-tone/" title="Next Post: Random thoughts on bass tone">Random thoughts on bass tone &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/v0dro">@v0dro</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'v0dro',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/10/23/explanation-of-exafmm-learning-codes/">Explanation of ExaFMM learning codes.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/11/24/gsoc-2016-wrap-up-for-sciruby/">GSOC 2016 Wrap Up For SciRuby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/27/advice-for-future-gsoc-students-and-mentors-based-on-my-experience/">Advice for future GSOC students and mentors based on my experience.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/21/setting-up-a-lexical-analyser-and-parser-in-ruby/">Setting up a lexical analyser and parser in Ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/16/random-thoughts-on-music-theory/">Random thoughts on music theory.</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+  
+
+  
+
+
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Sameer Deshmukh -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'v0dro';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://v0dro.github.io/blog/2016/07/05/making-screencasts-in-debian/';
+        var disqus_url = 'http://v0dro.github.io/blog/2016/07/05/making-screencasts-in-debian/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

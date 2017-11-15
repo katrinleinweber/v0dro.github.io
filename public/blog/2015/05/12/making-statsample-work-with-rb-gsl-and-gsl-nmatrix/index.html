@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Making statsample work with rb-gsl and gsl-nmatrix - Travel &lt;code&gt; Music</title>
+  <meta name="author" content="Sameer Deshmukh">
+
+  
+  <meta name="description" content="
+
+  
+  
+    
+      Making statsample work with rb-gsl and gsl-nmatrix
+    
+    
+      
+        
+
+
+
+
+
+        
+      
+    
+  
+
+
+Note: It so happens ...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://v0dro.github.io/blog/2015/05/12/making-statsample-work-with-rb-gsl-and-gsl-nmatrix/">
+  <link href="//favicon.png" rel="icon">
+  <link href="//stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Travel &lt;code&gt; Music" type="application/atom+xml">
+  <script src="//javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="//javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-55005305-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="//">Travel &lt;code&gt; Music</a></h1>
+  
+    <h2>A place where I share my experiences with Travel, Programming and Music</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="http://v0dro.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="//blog/archives">Archive</a></li>
+  <li><a href="//travel">Travel</a></li>
+  <li><a href="//code">Code</a></li>
+  <li><a href="//music">Music</a></li>
+  <li><a href="//about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Making statsample work with rb-gsl and gsl-nmatrix</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><strong>Note: It so happens that the latest release of rb-gsl does not depend on narray anymore. Hence rb-gsl can be directly used with statsample. However, if you want to use nmatrix with GSL, use gsl-nmatrix.</strong></p>
+
+<p><a href="https://github.com/SciRuby/statsample">Statsample</a> is the most comprehensive statistical computation suite in Ruby as of now.</p>
+
+<p>Previously, it so happened that statsample would depend on <a href="https://github.com/blackwinter/rb-gsl">rb-gsl</a> to speed up a lot of computations. This is great, but the biggest drawback of this approach is that rb-gsl depends on <a href="https://github.com/masa16/narray">narray</a>, which is incompatible with <a href="https://github.com/SciRuby/nmatrix">nmatrix</a> - the numerical storage and linear algebra library from the SciRuby foundation - due to namespace collisions.</p>
+
+<p>NMatrix is used by many current and upcoming ruby scientific gems, most notably <a href="https://github.com/v0dro/daru">daru</a>, <a href="https://github.com/domitry/mikon">mikon</a>, <a href="https://github.com/thisMagpie/fftw">nmatrix-fftw</a>, etc. and the a big hurdle that these gems were facing was that they could not leverage the advanced functionality of rb-gsl or statsample because nmatrix cannot co-exist with narray. On a further note, daru’s <a href="https://github.com/v0dro/daru/blob/master/lib/daru/dataframe.rb">DataFrame</a> and <a href="https://github.com/v0dro/daru/blob/master/lib/daru/vector.rb">Vector</a> data structures are to replace statsample’s <a href="https://github.com/SciRuby/statsample/blob/master/lib/statsample/dataset.rb">Dataset</a> and <a href="https://github.com/SciRuby/statsample/blob/master/lib/statsample/vector.rb">Vector</a>, so that a dedicated library can be used for data storage and munging and statsample can be made to focus on statistical analysis.</p>
+
+<p>The most promising solution to this problem was that rb-gsl must be made to depend on nmatrix instead of narray. This problem was solved by the <a href="https://github.com/v0dro/gsl-nmatrix">gsl-nmatrix</a> gem, which is a port of rb-gsl, but uses nmatrix instead of narray. Gsl-nmatrix also allows conversion of GSL objects to NMatrix and vice versa. Also, latest changes to statsample make it completely independent of GSL, and hence all the methods in statsample are now possible with or without GSL.</p>
+
+<p>To make your installation of statsample work with gsl-nmatrix, follow these instructions:</p>
+
+<ul>
+  <li><a href="https://github.com/SciRuby/nmatrix/wiki/Installation">Install nmatrix</a> and clone, build and install the latest gsl-nmatrix from https://github.com/v0dro/gsl-nmatrix</li>
+  <li>Clone the latest statsample from https://github.com/SciRuby/statsample</li>
+  <li>Open the Gemfile of statsample and add the line <code>gem 'gsl-nmatrix', '~&gt;1.17'</code></li>
+  <li>Build statsample using <code>rake gem</code> and install the resulting <code>.gem</code> file with <code>gem install</code>.</li>
+</ul>
+
+<p>You should be good able to use statsample with gsl-nmatrix on your system now. To use with rb-gsl, just install rb-gsl from rubygems (<code>gem install rb-gsl</code>) and put <code>gem 'rb-gsl', '~&gt;1.16.0.4'</code> in the Gemfile instead of gsl-nmatrix. This will activate the rb-gsl gem and you can use rb-gsl with statsample.</p>
+
+<p>However please take note that narray and nmatrix cannot co-exist on the same gem list. Therefore, you should have either rb-gsl or gsl-nmatrix installed at a particular time otherwise things will malfunction.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+<span class="byline author vcard">Posted by <span class="fn">Sameer Deshmukh</span></span>
+
+      
+
+
+
+
+
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://v0dro.github.io/blog/2015/05/12/making-statsample-work-with-rb-gsl-and-gsl-nmatrix/" data-via="v0dro" data-counturl="http://v0dro.github.io/blog/2015/05/12/making-statsample-work-with-rb-gsl-and-gsl-nmatrix/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/03/11/interfacing-and-benchmarking-high-performance-linear-algebra-libraries-with-ruby/" title="Previous Post: Interfacing and benchmarking high performance linear algebra libraries with Ruby">&laquo; Interfacing and benchmarking high performance linear algebra libraries with Ruby</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/07/27/date-offsets-in-daru/" title="Next Post: Date Offsets in Daru">Date Offsets in Daru &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/v0dro">@v0dro</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'v0dro',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/10/23/explanation-of-exafmm-learning-codes/">Explanation of ExaFMM learning codes.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/11/24/gsoc-2016-wrap-up-for-sciruby/">GSOC 2016 Wrap Up For SciRuby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/27/advice-for-future-gsoc-students-and-mentors-based-on-my-experience/">Advice for future GSOC students and mentors based on my experience.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/21/setting-up-a-lexical-analyser-and-parser-in-ruby/">Setting up a lexical analyser and parser in Ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/16/random-thoughts-on-music-theory/">Random thoughts on music theory.</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+  
+
+  
+
+
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Sameer Deshmukh -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'v0dro';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://v0dro.github.io/blog/2015/05/12/making-statsample-work-with-rb-gsl-and-gsl-nmatrix/';
+        var disqus_url = 'http://v0dro.github.io/blog/2015/05/12/making-statsample-work-with-rb-gsl-and-gsl-nmatrix/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

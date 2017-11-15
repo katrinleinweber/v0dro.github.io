@@ -1,0 +1,1443 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Travel &lt;code&gt; Music</title>
+  <meta name="author" content="Sameer Deshmukh">
+
+  
+  <meta name="description" content="
+  
+  
+  
+    
+      
+  
+    
+      Explanation of ExaFMM learning codes.
+    
+    
+      
+        
+
+
+
+
+
+        
+      
+    
+  
+
+
+  ExaFMM learnin...">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://v0dro.github.io/">
+  <link href="//favicon.png" rel="icon">
+  <link href="//stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Travel &lt;code&gt; Music" type="application/atom+xml">
+  <script src="//javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="//javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-55005305-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="//">Travel &lt;code&gt; Music</a></h1>
+  
+    <h2>A place where I share my experiences with Travel, Programming and Music</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="http://v0dro.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="//blog/archives">Archive</a></li>
+  <li><a href="//travel">Travel</a></li>
+  <li><a href="//code">Code</a></li>
+  <li><a href="//music">Music</a></li>
+  <li><a href="//about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2017/10/23/explanation-of-exafmm-learning-codes/">Explanation of ExaFMM learning codes.</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1 id="exafmm-learning-tutorials">ExaFMM learning tutorials</h1>
+
+<p>In this file I will write descriptions of the exafmm ‘learning’ codes and my understanding of them. I have been tasked with understanding the code and porting it to Ruby, my favorite language.
+We shall start from the first tutorial, i.e. <a href="">0_tree</a>. You can find the full Ruby code here.</p>
+
+<h1 id="0_tree">0_tree</h1>
+
+<h2 id="step1cxx">step1.cxx</h2>
+
+<p>This program simply populates some bodies with random numbers, creates a hypothetical X and Y axes and figures out the quadrant of each of the bodies.</p>
+
+<p>Each of the nodes of the tree have a maximum of <a href="">4 immediate children</a>. We first initialize 100 <code>struct Body</code> objects, and then set the X and Y co-ordinates of each of them to a random number between 0 and 1.</p>
+
+<p>In order to actually build the tree we follow the following steps:</p>
+
+<ul>
+  <li>First <a href="">get the bounds</a> between which the random numbers lie. That is, we figure out the min and max random number that is present in the bodies.</li>
+  <li>We then get a <a href="">‘center’ and a ‘radius’</a>. This is useful for creating ‘quadrants’ and partitioning points into different quandrants in later steps. The center is calculated by adding the min and max numbers (which we treat as the diameter) and dividing by 2. This step is necessary since there is no ‘square’ space that can be partitioned into multiple spaces like there was in the lecture series. The way of calculating the radius <code>r0</code> is a little peculiar. It does not use the distance formula, its main purpose is….</li>
+  <li>And then simply count the bodies in each quadrant and display them.</li>
+</ul>
+
+<p>Ruby code:
+The body is represented as the Ruby class <code>Body</code>:</p>
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+</pre></td>
+  <td class="code"><pre><span class="keyword">class</span> <span class="class">Body</span>
+  attr_reader <span class="symbol">:x</span>
+
+  <span class="keyword">def</span> <span class="function">initialize</span>
+    <span class="instance-variable">@x</span> = [<span class="float">0.0</span>, <span class="float">0.0</span>]
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>There is an interesting way of knowing the quadrant in this code. It goes like this:</p>
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+</pre></td>
+  <td class="code"><pre>a = body.x[<span class="integer">0</span>] &gt; x0[<span class="integer">0</span>] ? <span class="integer">1</span> : <span class="integer">0</span>
+b = body.x[<span class="integer">1</span>] &gt; x0[<span class="integer">1</span>] ? <span class="integer">1</span> : <span class="integer">0</span>
+quadrant = a + (b &lt;&lt; <span class="integer">1</span>)
+</pre></td>
+</tr></table>
+</div>
+<p>Above code basically plays with 0 and 1 and returns a number between 0 and 3 as the correct quadrant number.</p>
+
+<h2 id="step2cxx">step2.cxx</h2>
+
+<p>This code basically takes the bodies created in the previous step, counts the number of bodies in each quadrant and sorts them by quadrant.</p>
+
+<p>The new steps introduced in this program can be summarized as follows:</p>
+<ul>
+  <li>Count the bodies in each quadrant and store the count in an array. The <code>size</code> array in case of the Ruby implementation.</li>
+  <li>In the next step we successively add the number of elements in each quadrant so that it gives us the offset value at which elements from a new quadrant will start in the <code>bodies</code> Array (of course, after it is sorted).</li>
+  <li>We then sort the bodies according to the quadrant that they belong to. Something peculiar that I notice about this part is that counter[quadrant] also gets incremented after each iteration for sorting. Why is this the case even though the counters have been set to the correct offsets previously?</li>
+</ul>
+
+<h2 id="step3cxx">step3.cxx</h2>
+
+<p>This program introduces a new method called <code>buildTree</code>, inside of which we will actually build the tree. It removes some of the sorting logic from <code>main</code> and puts it inside <code>buildTree</code>. The <code>buildTree</code> function performs the following functions:</p>
+<ul>
+  <li>Most of the functions relating to sorting etc are same. Only difference is that there is in-place sorting of the <code>bodies</code> array and the <code>buffer</code> array does not store elements anymore.</li>
+  <li>A new function introduced is that we re-calculate the center and the radius based on sorted co-ordinates. This is done because we want new center and radii for the children.</li>
+  <li>The <code>buildTree</code> function is called recursively such that the quadrants are divided until a point is reached where the inner most quadrant in the hierarchy does not contain more than 4 elements.</li>
+</ul>
+
+<p>Implementation:</p>
+
+<p>There is an interesting piece of code in the part for calculating new center and radius:</p>
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+</pre></td>
+  <td class="code"><pre>center[d] = 
+  x0[d] +
+  radius *
+  (((i &amp; <span class="integer">1</span> &lt;&lt; d) &gt;&gt; d) * <span class="integer">2</span> - <span class="integer">1</span>) <span class="comment"># i is quadrant number</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>In the above code, there is some bit shifting and interleaving taking place whose prime purpose is to split the quadrant number into X and Y dimension and then using this to calculate the center of the child cell.</p>
+
+<p>Another piece of code is this:</p>
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+</pre></td>
+  <td class="code"><pre>counter = <span class="constant">Array</span>.new <span class="integer">4</span>, start
+<span class="integer">1</span>.upto(<span class="integer">3</span>) <span class="keyword">do</span> |i|
+  counter[i] = size[i-<span class="integer">1</span>] + counter[i-<span class="integer">1</span>]
+<span class="keyword">end</span>
+
+<span class="comment"># sort bodies and store them in buffer</span>
+buffer = bodies.dup
+start.upto(finish-<span class="integer">1</span>) <span class="keyword">do</span> |n|
+  quadrant = quadrant_of x0, buffer[n]
+  bodies[counter[quadrant]] = buffer[n]
+  counter[quadrant] += <span class="integer">1</span>
+<span class="keyword">end</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>In the above code, the <code>counter</code> variable is first used to store offsets of the elements in different quadrants. In the next loop it is in fact a counter for that stores in the index of the body that is currently under consideration.</p>
+
+<h2 id="step04cxx">step04.cxx</h2>
+
+<p>In this step we use the code written in the previous steps and actually build the tree.
+The tree is built recursively by splitting into quadrants and then assigning them to cells
+based on the quadrant. The ‘tree’ is actually stored in an array.</p>
+
+<p>The cells are stored in a C++ vector called <code>cells</code>.</p>
+
+<p>In the <code>Cell</code> struct, I wonder why the body is stored as a pointer and not a variable.</p>
+
+<p>Implementation in the Ruby code, like saving the size of an Array during a recursive call 
+is slightly different since Ruby does not support pointers, but the data structures and
+overall code is more or less a direct port.</p>
+
+<h1 id="1_traversal">1_traversal</h1>
+
+<p>These codes are for traversal of the tree that was created in the previous step. The full code can be found in <a href="">1_traversal.rb</a> file.</p>
+
+<h2 id="step1cxx-1">step1.cxx</h2>
+
+<p>This step implements the P2M and M2M passes of the FMM.</p>
+
+<p>One major difference between the C++ and Ruby implementation is that since Ruby does not have pointers, I
+have used the array indices of the elements instead. For this purpose there are two attributes in the
+<code>Cell</code> class called <code>first_child_index</code> that is responsible for holding the index in the <code>cells</code> array
+about the location of the first child of this cell, and the second <code>first_body_index</code> which is responsible for holding the index of the body in the <code>bodies</code> array.</p>
+
+<p>This step does this by introducing a method called <code>upwardPass</code> which iterates through nodes and thier children and computes the P2M and M2M kernels.</p>
+
+<h2 id="step2cxx-1">step2.cxx</h2>
+
+<p>This step implements the rest of the kernels i.e. M2L, L2L, L2P and P2P. It also introduces two new methods <code>downward_pass</code> that calculates the local forces from other local forces and L2P interactions and <code>horizontal_pass</code> that calculates the inter-particle interactions and m2l.</p>
+
+<p>No special code as such over here, its just the regular FMM stuff.</p>
+
+<h1 id="2_kernels">2_kernels</h1>
+
+<p>This code is quite different from the previous two. While the previous programs were mostly retricted to a single file, this program substantially increases complexity and spreads the implementation across several files. We start using 3 dimensional co-ordinates too.</p>
+
+<p>In this code, we start to make a move towards spherical co-ordinate system to represent the particles in 3D. A few notable algorithms taken from some research papers have been implemented in this code.</p>
+
+<p>Lets describe each file and see what implementation lies inside</p>
+
+<h2 id="kernelh">kernel.h</h2>
+
+<p>The <code>kernel.h</code> header file implemenets all the FMM kernels. It also implements two special functions called <code>evalMultipole</code> and <code>evalLocal</code> that evaluate the multipoles and local expansion for spherical co-ordinates using the actual algorithm that is actually used in exafmm. An implementation of this algorithm can be found on page 16 of the paper <a href="https://arxiv.org/pdf/1010.1482.pdf%20">“Treecode and fast multipole method for N-body simulation with CUDA”</a> by Yokota sensei. A preliminary implementation of this algorithm can be found in <a href="http://www.sciencedirect.com/science/article/pii/S0021999199963556">“A Fast Adaptive Multipole Algorithm in Three Dimensions”</a> by Cheng.</p>
+
+<p>The Ruby implementation of this file is in <code>kernel.rb</code>.</p>
+
+<p>I will now describe this algorithm here best I can:</p>
+
+<h3 id="preliminaries">Preliminaries</h3>
+
+<h4 id="ynm-vector">Ynm vector</h4>
+
+<p>This is a vector that defines the <a href="https://en.wikipedia.org/wiki/Spherical_harmonics">spherical harmonics</a> of degree <em>n</em> and order <em>m</em>. A primitive version for computing this exists in the paper by Cheng and a newer, faster version in the paper by Yokota.</p>
+
+<p>Spherical harmonics allow us to define series of a function in 3D rather in 1D that is usually the case for things like the expansion of <em>sin(x)</em>. They are representations of functions on the surface of a sphere instead of on a circle, which is usually the case with other 2D expansion functions. They are like the Fourier series of the sphere. This <a href="http://mathworld.wolfram.com/SphericalHarmonic.html">article</a> explains the notations used nicely.</p>
+
+<p>The order (<em>n</em>) and degree (<em>m</em>) correspond to the order and degree of the <a href="http://mathworld.wolfram.com/LegendrePolynomial.html">Legendre polynomial</a> that is used for obtaining the spherical harmonic. <em>n</em> is an integer and <em>m</em> goes from <em>0..n</em>.</p>
+
+<p>For causes of optimization, the values stored inside <code>ynm</code> are not the ones that correspond to the spherical harmonic, but are values that yield optimized results when the actual computation happens.</p>
+
+<h3 id="functions">Functions</h3>
+
+<h3 id="cart2sph">cart2sph</h3>
+
+<p>This function converts cartesian co-ordinates in (X,Y,Z) to spherical co-ordinates involving <code>radius</code>, <code>theta</code> and <code>phi</code>. <code>radius</code> is simply the square root of the norm of the co-ordinates (norm is defined as the sum of squares of the co-ordinates in <code>vec.h</code>).</p>
+
+<h3 id="evalmultipole">evalMultipole</h3>
+
+<p>This algorithm calculates the multipole of a cell. It uses spherical harmonics so that net force of the forces inside a sphere and can be estimated on the surface of the sphere, which can then be treated as a single body for estimating forces.</p>
+
+<p>The optimizations that are presented in the <code>kernel.h</code> version of this file are quite complex to understand since they look quite different from the original equation. I will explain the code written in the file, however, we will use unoptmized Ruby code that actually resembles the equation for purposes of understanding.</p>
+
+<p>For code that is still sane and easier to read, head over to the <a href="https://github.com/exafmm/exafmm-alpha/blob/develop/kernels/laplace.h#L48">laplace.h</a> file in exafmm-alpha. The explanations that follow for now are from this file. We will see how the same functions in <code>kernel.h</code> have been modified to make computation faster and less dependent on large number divisions which reduce the accuracy of the system.</p>
+
+<p>The <code>evalMultipole</code> function basically tries to populate the <code>Ynm</code> array with data that is computed with the following equation:
+<script type="math/tex">\begin
+\rho^{n}Y_{n}^{m}=\sum_{m=0}^{P-1}\sum_{n=m+1}^{P-1}\rho^{n}P_{n}^{m}(x)\sqrt{\frac{(n-m)!}{(n+m)!}}e^{im\beta}
+\end</script></p>
+
+<p>It starts with evaluating terms that need not be computed for every iteration of <code>n</code>, and computes those terms in the outer loop itself. The terms in the outer loop corespond to the condition <code>m=n</code>. The first of these is the exponential term <script type="math/tex">e^im\beta</script>.</p>
+
+<p>After this is a curious case of computation of some indexes called <code>npn</code> and <code>nmn</code>. These are computed as follows:</p>
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+</pre></td>
+  <td class="code"><pre>npn = m * m + <span class="integer">2</span> * m <span class="comment"># case Y n  n</span>
+nmn = m * m         <span class="comment"># case Y n -n</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>The corresponding index calculation for the inner loop is like this:</p>
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+</pre></td>
+  <td class="code"><pre>npm = n * n + n + m <span class="comment"># case Y n  m</span>
+nmm = n * n + n - m <span class="comment"># case Y n -m</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>This indexes the <code>Ynm</code> array. This is done because we are visualizing the Ynm array as a pyramid whose base spans from <code>-m</code> to <code>m</code> and who height is <code>n</code>. A rough visualization of this pyramid would be like so:</p>
+<pre><code>   -m ---------- m
+n  10 11 12 13  14
+|    6  7  8  9
+|     3  4   5  
+|      1   2
+V        0
+</code></pre>
+
+<p>The above formulas will give the indexes for each half of the pyramid. Since the values of one half of the pyramid are conjugates of the other half, we can only iterate from <code>m=0</code> to <code>m&lt;P</code> and use this indexing method for gaining the index of the other half of the pyramid.</p>
+
+<p>Now let us talk about the evaluation of the <a href="http://mathworld.wolfram.com/AssociatedLegendrePolynomial.html">Associated Legendre Polynomial</a> <script type="math/tex">P^m_{n}(cos(\theta))</script>, where <em>m</em> is the order of the differential equation and <em>n</em> is the degree. The Associated Legendre Polynomial is the solution to the <a href="http://mathworld.wolfram.com/AssociatedLegendreDifferentialEquation.html">Associated Legendre Equation</a>. The Legendre polynomial can be expressed in terms of the <a href="https://en.wikipedia.org/wiki/Associated_Legendre_polynomials#Definition_for_non-negative_integer_parameters_.E2.84.93_and_m">Rodrigues form</a> for computation without dependence on the simple Legendre Polynomial <script type="math/tex">P_{n}</script>. However, due to the factorials and rather large divisions that need to be performed to compute the Associated Legendre polynomial in this form, computing this equation for large values of <em>m</em> and <em>n</em> quickly becomes unstable. Therefore, we use a recurrence relation of the Polynomial in order to compute different values.</p>
+
+<p>The recurrence relation looks like so:
+<script type="math/tex">\begin{equation}
+  (n-m+1)P^m_{n+1}(x)=x(2n+1)P^m_n(x)-(n+m)P^m_{n-1}(x)
+\end{equation}</script></p>
+
+<p>The Ruby implementation is <a href="">here</a>.</p>
+
+<h2 id="vectorh">vector.h</h2>
+
+<p>This file defines a new custom type for storing 1D vectors called <code>vec</code> as a  C++ class. It also defines various functions that can be used on vectors like <code>norm</code>, <code>exp</code> and other simple arithmetic.</p>
+
+<p>The Ruby implementation of this file is in <code>vector.rb</code>.</p>
+
+<h2 id="exafmmh">exafmm.h</h2>
+
+<h2 id="exafmm2dh">exafmm2d.h</h2>
+
+<h2 id="step1cxx-2">step1.cxx</h2>
+
+<h2 id="step2cxx-2">step2.cxx</h2>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/11/24/gsoc-2016-wrap-up-for-sciruby/">GSOC 2016 Wrap Up For SciRuby</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In the summer of 2016 I was chosen by the SciRuby core team to be admin for SciRuby for Google Summer of Code 2016. GSOC is an important yearly event for us as an organization since it provides a great platform for an upcoming organization like SciRuby and helps us get more users and contributors for the various libraries that we maintain.</p>
+
+<p>This blog post is meant to be a summary of the work that SciRuby did over the summer and also of my experience at the GSOC 2016 mentor’s summit.</p>
+
+<h2 id="gsoc-student-work">GSOC student work</h2>
+
+<p>For the 2016 edition of GSOC we had 4 students - <a href="https://github.com/lokeshh">Lokesh Sharma</a>, <a href="https://github.com/prasunanand">Prasun Anand</a>, <a href="https://github.com/gau27">Gaurav Tamba</a> and <a href="https://github.com/rajithv">Rajith Vidanaarachchi</a>. All four were undergraduate computer engineering students from colleges in India or Sri Lanka at the time of GSOC 2016.</p>
+
+<p>Lokesh worked on making improvements to <a href="https://github.com/sciruby/daru">daru</a>, a Ruby DataFrame library. He made very significant contributions to daru by adding functionality for storing and performing operations on categorical data, and also significantly sped up the sorting and grouping functionality of daru. His work has now been successfully integrated into the main branch and has also been released on rubygems. Lokesh has remained active as a daru contributor and regularly contributes code and replies to Pull Requests and issues. You can find a wrap up of the work he did throughout the summer in <a href="http://sciruby.com/blog/2016/11/24/gsoc-2016-adding-categorical-data-support/">this blog post</a>.</p>
+
+<p>Prasun worked on creating a Java backend for <a href="https://github.com/sciruby/nmatrix">NMatrix</a>, a Ruby library for performing linear algebra operations similar to numpy in Python. This project opened the doors for scientific computation on JRuby. Prasun was able to complete all his project objectives, and his work is currently awaiting review because of the <a href="https://github.com/SciRuby/nmatrix/pull/558">sheer size of the Pull Request</a> and the variety of changes to the library that he had to make in order to accomplish his project goals. You can read about his summer’s work <a href="http://sciruby.com/blog/2016/10/24/gsoc-2016-port-nmatrix-to-jruby/">here</a>. Prasun will also be <a href="http://rubyconfindia.org/program/#prasun-anand">speaking at Ruby Conf India 2017</a> about his GSOC work and scientific computing on JRuby in general.</p>
+
+<p>Gaurav worked on creating a Ruby wrapper for NASA’s <a href="https://naif.jpl.nasa.gov/naif/toolkit.html">SPICE toolkit</a>. A need for this was felt since Gaurav’s mentor John is a rocket scientist and was keen having a Ruby wrapper for a library that he used regularly in his work. This resulted in the <a href="https://github.com/SciRuby/spice_rub">spice_rub</a> gem. It exposes a very intuitive Ruby interface to the SPICE toolkit. Gaurav also gave a lightning talk about his work at <a href="">Deccan Ruby Conf (Pune, India)</a>. Blog posts summarizing his work can be found <a href="http://sciruby.com/blog/2016/11/24/spicerub-kernelpool-and-kernels/">here</a>, <a href="http://sciruby.com/blog/2016/11/24/gsoc-2016-a-look-at-spicerub-body/">here</a> and <a href="http://sciruby.com/blog/2016/11/24/gsoc-2016-a-look-at-spicerub-time/">here</a>.</p>
+
+<p>Rajith worked on growing the Ruby wrapper over <a href="https://github.com/symengine/symengine">symengine</a>. His mentor Abinash was a student with SciRuby for GSOC 2015 and volunteered to mentor Rajith so that Rajith could build upon the work that he had done the previous summer. This resulted in a huge increase in functionality for the <a href="https://github.com/symengine/symengine.rb">symengine.rb ruby gem</a>.</p>
+
+<p>To summarize, all four of our students could execute their chosen tasks within the stipulated time and we did not have to fail anyone. All in all, we mentors had a great time working with the students and hope to keep doing this year on year!</p>
+
+<h2 id="gsoc-2016-mentors-summit">GSOC 2016 mentor’s summit</h2>
+
+<p>The GSOC 2016 mentor’s summit was fantastic. It was great meeting all the contributors and listening to ideas from projects that I had never heard about previously. I also had the opportunity to conduct an unconference session and  share my ideas on Scientific Computation in Ruby with like minded people from other organizations.</p>
+
+<p>Here are some photos that I took at the summit:</p>
+
+<p><img src="/images/gsoc_summit/1.JPG" alt="'ID card'" /></p>
+
+<p><img src="/images/gsoc_summit/2.JPG" alt="'A visit to the Computer History Museum'" /></p>
+
+<p><img src="/images/gsoc_summit/3.JPG" alt="'The (now discontinued) self driving car'" /></p>
+
+<p><img src="/images/gsoc_summit/4.JPG" alt="'Chocolate table at the GSOC summit'" /></p>
+
+<p><img src="/images/gsoc_summit/5.JPG" alt="'Attendees from India'" /></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/08/27/advice-for-future-gsoc-students-and-mentors-based-on-my-experience/">Advice for future GSOC students and mentors based on my experience.</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This year I was the admin for the GSOC projects of the <a href="http://sciruby.com/">SciRuby foundation</a>. It’s also the first time I mentored a student, having been a student myself last year. Being a mentor is pretty tough task, and for some reason is underestimated by many. I was lucky to have the experience and support of co-admins <a href="https://github.com/mohawkjohn">@mohawkjohn</a> and <a href="https://github.com/pjotrp">@pjotrp</a> throughout the GSOC period.</p>
+
+<p>GSOC has now come to a close. I have learned a great deal myself in the past 3 months, and thought I would share some of my learnings in this blog post in the interest of future GSOC students and mentors.</p>
+
+<h2 id="advice-for-future-students">Advice for future students</h2>
+
+<p><strong>Writing a proposal</strong></p>
+
+<p>Research your ideas at least for a day before asking your first question. Mentors are volunteers and it’s important to respect the time and effort that they’re putting into FOSS. When you do propose an idea, you should also have a good knowledge of why you’re working on that idea in the first place and what kind of long term impact the realization of that idea can have. Putting this across through your proposal can have a positive on your selection. Know how to ask questions on mailing lists. A properly researched question should show that you have first taken an effort to understand the topic and are asking the question only because you got stuck somewhere.</p>
+
+<p><strong>Community bonding</strong></p>
+
+<p>Make sure you figure out what exactly you have to research and learn during the community bonding phase. There’s a lot of things out there that can be learned, but only a few specific things will helpful for your project. Focus on them only. Ask specific questions to your mentor.</p>
+
+<p><strong>Coding</strong></p>
+
+<p>Setup a daily schedule for coding and stick to it. Constantly keep in touch with your mentor and make sure they know your progress as well as you do. If you run into previously unseen problems (frequent in programming), tell mentor about this ASAP and work out a solution together.</p>
+
+<p>Don’t burn yourself out in your enthusiasm. Take regular breaks. Overworking does more harm than good.</p>
+
+<h2 id="advice-for-future-mentors">Advice for future mentors</h2>
+
+<p><strong>Student selection</strong></p>
+
+<p>Short story:
+If you’re unsure about a student, <em>don’t select him</em>. It’s better to have a more quality than quantity.</p>
+
+<p>Long story:
+First and foremost, it is very important to establish some organization-wide procedure that will be followed when selecting a student. As a start, consider making a proposal template that contains all the information and details that the student needs to fill up when submitting the proposal. Have a look at the <a href="https://github.com/SciRuby/sciruby/wiki/GSoC-2016-Student-Application">SciRuby application template</a> as an example.</p>
+
+<p>When students start asking questions on the mailing list, it is important for the org admins to keep a watch on students and get a rough idea of who asks the better questions and who don’t. Community participation is a great measure of understanding whether a student will live upto your expectations or not. A proposal with a bad first draft might just turn out to be great simply because the student is open to feedback and is willing to put it in the effort to work on it.</p>
+
+<p>We have 3 rounds:
+First round every mentor rates their <em>own</em> student only. In the next round all mentors rate <em>all</em> students (students without a mentor and bad proposals drop off).</p>
+
+<p>In each case when rating a student. mentors put in a comment, making sure to tell how a student has interacted in the proposal phase, what his current coding looks like, how responsive he is. Mentors can still push their students to do stuff. We like it when students keep responsive in this phase.</p>
+
+<p>In the 3rd round the <em>org admins</em> make the final ranking to set the number of slots. By this stage we are pretty clear about the individuals involved (and note that mentor activity counts).  When Google  allocates the slots the top-ranked students get in.</p>
+
+<p><strong>Coding period</strong></p>
+
+<p>Make sure you communicate with your student that they are supposed to send you <em>daily</em> updates of their progress. One paragraph about their work that particular day should suffice.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/08/21/setting-up-a-lexical-analyser-and-parser-in-ruby/">Setting up a lexical analyser and parser in Ruby</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I wrote this post as I was setting up the lexer and parser for Rubex, a new superset of Ruby that I’m developing.</p>
+
+<p>Let’s demonstrate the basic working of a lexical analyser and parser in action with a demonstration of a very simple addition program. Before you start, please make sure <a href="https://github.com/ruby/rake">rake</a>, <a href="https://github.com/seattlerb/oedipus_lex">oedipus_lex</a> and <a href="https://github.com/tenderlove/racc">racc</a> are installed on your computer.</p>
+
+<h3 id="configuring-the-lexical-analyser">Configuring the lexical analyser</h3>
+
+<p>The most fundamental need of any parser is that it needs string tokens to work with, which we will provide by way of lexical analysis by using the <a href="https://github.com/seattlerb/oedipus_lex">oedipus_lex</a> gem (the logical successor of <a href="https://github.com/tenderlove/rexical">rexical</a>). Go ahead and create a file <code>lexer.rex</code> with the following code:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+</pre></td>
+  <td class="code"><pre><span class="keyword">class</span> <span class="class">AddLexer</span>
+macro
+  <span class="constant">DIGIT</span>         <span class="regexp"><span class="delimiter">/</span><span class="char">\d</span><span class="content">+</span><span class="delimiter">/</span></span>
+rule
+  <span class="regexp"><span class="delimiter">/</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">DIGIT</span><span class="inline-delimiter">}</span></span><span class="delimiter">/</span></span>    { [<span class="symbol">:DIGIT</span>, text.to_i] }
+  <span class="regexp"><span class="delimiter">/</span><span class="content">.|</span><span class="char">\n</span><span class="delimiter">/</span></span>        { [text, text] }
+inner
+  <span class="keyword">def</span> <span class="function">do_parse</span>; <span class="keyword">end</span> <span class="comment"># this is a stub.</span>
+<span class="keyword">end</span> <span class="comment"># AddLexer</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>In the above code, we have defined the lexical analyser using Oedipus Lex’s syntax inside the <code>AddLexer</code> class. Let’s go over each element of the lexer one by one:</p>
+
+<p><strong>macro</strong></p>
+
+<p>The macro keyword lets you define macros for certain regular expressions
+that you might need to write repeatedly. In the above lexer, the macro <code>DIGIT</code> is a regular expression (<code>\d+</code>) for detecting one or more integers. We place the regular expression inside forward slashes (<code>/../</code>) because oedipus_lex requires it that way. The lexer can handle any valid Ruby regular expression. See the Ruby docs for details on Ruby regexps.</p>
+
+<p><strong>rule</strong></p>
+
+<p>The section under the <code>rule</code> keyword defines your rules for the lexical analysis. Now it so happens that we’ve defined a macro for detecting digits, and in order to use that macro in the rules, it must be inside a Ruby string interpolation (<code>#{..}</code>). The line to the right of the <code>/#{DIGIT}/</code> states the action that must be taken if such a regular expression is encountered. Thus the lexer will return a Ruby Array that contains the first element as <code>:DIGIT</code>. The second element uses the <code>text</code> variable. This is a reserved variable in lex that holds the text that the lexer has matched. Similar the second rule will match any character (<code>.</code>) or a newline (<code>/n</code>) and return an <code>Array</code> with <code>[text, text]</code> inside it.</p>
+
+<p><strong>inner</strong></p>
+
+<p>Under the <code>inner</code> keyword you can specify any code that you want to occur inside your lexer class. This can be any logic that you want your lexer to execute. The Ruby code under the <code>inner</code> section is copied as-is into the final lexer class. In the above example, we’ve written an empty method called <code>do_parse</code> inside this section. This method is mandatory if you want your lexer to sucessfully execute. We’ll be coupling the lexer with <code>racc</code> shortly, so unless you want to write your own parsing logic, you should leave this method empty.</p>
+
+<h3 id="configuring-the-parser">Configuring the parser</h3>
+
+<p>In order for our addition program to be successful, it needs to know what to do with the tokens that are generated by the lexer. For this purpose, we need <a href="">racc</a>, an LALR(1) parser generator for Ruby. It is similar to yacc or bison and let’s you specify grammars easily.</p>
+
+<p>Go ahead and create a file called <code>parser.racc</code> in the same folder as the previous <code>lexer.rex</code> and <code>Rakefile</code>, and put the following code inside it:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+<a href="#n19" name="n19">19</a>
+<strong><a href="#n20" name="n20">20</a></strong>
+</pre></td>
+  <td class="code"><pre><span class="keyword">class</span> <span class="class">AddParser</span>
+rule
+  <span class="key">target</span>: exp { result = <span class="integer">0</span> }
+  
+  <span class="key">exp</span>: exp <span class="string"><span class="delimiter">'</span><span class="content">+</span><span class="delimiter">'</span></span> exp { result += val[<span class="integer">2</span>]; puts result }
+     | <span class="constant">DIGIT</span>
+<span class="keyword">end</span>
+
+---- header
+require_relative <span class="string"><span class="delimiter">'</span><span class="content">lexer.rex.rb</span><span class="delimiter">'</span></span>
+
+---- inner
+<span class="keyword">def</span> <span class="function">next_token</span>
+  <span class="instance-variable">@lexer</span>.next_token
+<span class="keyword">end</span>
+
+<span class="keyword">def</span> <span class="function">prepare_parser</span> file_name
+  <span class="instance-variable">@lexer</span> = <span class="constant">AddLexer</span>.new
+  <span class="instance-variable">@lexer</span>.parse_file file_name
+<span class="keyword">end</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>As you can see, we’ve put the logic for the parser inside the <code>AddParser</code> class. Yacc’s <code>$$</code> is the <code>result</code>; <code>$0</code>, <code>$1</code>… is an array called <code>val</code>, and <code>$-1</code>, <code>$-2</code>… is an array called <code>_values</code>. Notice that in racc, only the parsing logic exists inside the class and everything else (i.e under <code>header</code> and <code>inner</code>) exists <em>outside</em> the class. Let’s go over each part of the parser one by one:</p>
+
+<p><strong>class AddParser</strong></p>
+
+<p>This is the core class that contains the parsing logic for the addition parser. Similar to <code>oedipus_lex</code>, it contains a <code>rule</code> section that specifies the grammar. The parser expects tokens in the form of <code>[:TOKEN_NAME, matched_text]</code>. The <code>:TOKEN_NAME</code> must be a symbol. This token name is matched to literal characters in the grammar (<code>DIGIT</code> in the above case). <code>token</code> and <code>expr</code> are varibles. Have a look at <a href="https://en.wikipedia.org/wiki/LALR_parser">this introduction to LALR(1) grammars</a> for further information.</p>
+
+<p><strong>header</strong></p>
+
+<p>The <code>header</code> keyword tells racc what code should be put at the top of the parser that it generates. You usually put your <code>require</code> statements here. In this case, we load the lexer class so that the parser can use it for accessing the tokens generated by the lexer. Notice that <code>header</code> has 4 hyphens (<code>-</code>) and a space before it. This is mandatory if your program is to not malfunction.</p>
+
+<p><strong>inner</strong></p>
+
+<p>The <code>inner</code> keyword tells racc what should be put <em>inside</em> the generated parser class. As you can see there are two methods in the above example - <code>next_token</code> and <code>prepare_parser</code>. The <code>next_token</code> method is mandatory for the parser to function and you must include it in your code. It should contain logic that will return the next token for the parser to consider. Moving on the <code>prepare_parser</code> method, it takes a file name that is to be parsed as an argument (how we pass that argument in will be seen later), and initialzes the lexer. It then calls the <code>parse_file</code> method, which is present in the lexer class by default.</p>
+
+<p>The <code>next_token</code> method in turn uses the <code>@lexer</code> object’s <code>next_token</code> method to get a token generated by the lexer so that it can be used by the parser.</p>
+
+<h3 id="putting-it-all-together">Putting it all together</h3>
+
+<p>Our lexical analyser and parser are now coupled to work with each other, and we now use them in a Ruby program to parse a file. Create a new file called <code>adder.rb</code> and put the following code in it:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+</pre></td>
+  <td class="code"><pre>require_relative <span class="string"><span class="delimiter">'</span><span class="content">parser.racc.rb</span><span class="delimiter">'</span></span>
+
+file_name = <span class="predefined-constant">ARGV</span>[<span class="integer">0</span>]
+parser = <span class="constant">AddParser</span>.new
+parser.prepare_parser(file_name)
+parser.do_parse
+</pre></td>
+</tr></table>
+</div>
+
+<p>The <code>prepare_parser</code> is the same one that was defined in the <code>inner</code> section of the <code>parser.racc</code> above. The <code>do_parse</code> method called on the parser will signal the parser to start doing it’s job.</p>
+
+<p>In a separate file called <code>text.txt</code> put the following text:</p>
+
+<pre><code>2+2
+</code></pre>
+
+<p>Oedipus Lex does not have a command line tool like rexical for generating a lexer from the logic specified, but rather has a bunch of rake tasks defined for doing this job.
+So now create a <code>Rakefile</code> in the same folder and put this code inside it:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+</pre></td>
+  <td class="code"><pre>require <span class="string"><span class="delimiter">'</span><span class="content">oedipus_lex</span><span class="delimiter">'</span></span>
+
+<span class="constant">Rake</span>.application.rake_require <span class="string"><span class="delimiter">&quot;</span><span class="content">oedipus_lex</span><span class="delimiter">&quot;</span></span>
+
+desc <span class="string"><span class="delimiter">&quot;</span><span class="content">Generate Lexer</span><span class="delimiter">&quot;</span></span>
+task <span class="symbol">:lexer</span>  =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">lexer.rex.rb</span><span class="delimiter">&quot;</span></span>
+
+desc <span class="string"><span class="delimiter">&quot;</span><span class="content">Generate Parser</span><span class="delimiter">&quot;</span></span>
+task <span class="symbol">:parser</span> =&gt; <span class="symbol">:lexer</span> <span class="keyword">do</span>
+  <span class="shell"><span class="delimiter">`</span><span class="content">racc parser.racc -o parser.racc.rb</span><span class="delimiter">`</span></span>
+<span class="keyword">end</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>Running <code>rake parser</code> will generate a two new files - <code>lexer.rex.rb</code> and <code>parser.racc.rb</code> - which will house the classes and logic for the lexer and parser, respectively. You can use your newly written lexer + parser with a <code>ruby adder.rb text.txt</code> command. It should output <code>4</code> as the answer.</p>
+
+<p>You can find all the code in this blogpost <a href="https://github.com/v0dro/scratch/tree/master/lexer_parser">here</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/08/16/random-thoughts-on-music-theory/">Random thoughts on music theory.</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Title explains what this is about.</p>
+
+<h3 id="16-august-2016">16 August 2016</h3>
+
+<p>Was checking out <a href="https://www.youtube.com/watch?v=0qIP3_YLKpk">this</a> video (Contortionist - Language 1) and learned about standard C# tuning on a 6 string bass guitar today. He’s used tuning G# C# F# B E A. Killer bass tone. <a href="https://en.wikipedia.org/wiki/D%E2%99%AD_tuning">This wiki</a> says something different about C# standard, though.</p>
+
+<h3 id="30-november-2016">30 November 2016</h3>
+
+<p>Trying out some interval training with <a href="https://www.youtube.com/watch?v=rPSRH3tf5B8">this video</a> today. Supposd to be really good.</p>
+
+<p>So there are two types of intervals: harmonic and melodic. Harmonic is when is two or more notes are played at a time and melodic is when two or more notes are played separately.</p>
+
+<p>Intervals are described by some properties:</p>
+<ul>
+  <li>Quality: Whether it is perfect, major, minor, augmented or diminished. Perfect intervals, if they’re raised by half step become augmented, if they are lowered by half step they become diminished. If perfect intervals are inverted, they remain perfect intervals. So a perfect fifth interved becomes a perfect fourth, and vice versa a perfect fourth interved becomes a perfect fifth. Minor or major intervals can become augmented or diminshed but never perfect.</li>
+  <li>Number: Unison, 2nd, 3rd, 4th, 5th,6th,7th, 8th, etc. Number of the interval is the number of letter names that the letter name spans. For example, C to G is a fifth because it spans 5 letter names C-D-E-F-G.</li>
+</ul>
+
+<p>A dyad is a two note chord.</p>
+
+<p>Aural characterestics of intervals:
+Consonance category: 
+Perfect fifth and octaves are open consonances. Major and minor thirds and sixths are called soft consonances.</p>
+
+<p>Dissonant category:
+Minor sevenths (C-Bb) and major seconds (C-D) are called mild dissonances. Minor seconds (like C-Db) and major sevenths (C-B) are called sharp dissonances.</p>
+
+<p>The perfect fourth is characterized as a consonant or distant interval depending on its used in context. If a perfect 4th is part of a second inversion major triad</p>
+
+<p>The major 6th interval can be remebered with ‘My Bonnie Lies…’.</p>
+
+<p>To identify a minor 6th interval, play the first inversion of the triad and then play the 1st and 3rd of the inversion.</p>
+
+<p>To identify a major 6th, play the second inversion of the triad so you get the 1st and 3rd notes at a major 6th interval.</p>
+
+<h3 id="11-decemeber-2016">11 Decemeber 2016</h3>
+
+<p>Songs for remembering ascending invtervals:</p>
+
+<ul>
+  <li>Major 2nd   - Happy Birthday to You.</li>
+  <li>Major 3rd   - Oh when the saints go marching.</li>
+  <li>Perfect 4th - Star Trek Theme (TNG).</li>
+  <li>Perfect 5th - Scarborough Fair. (are we ^going….)</li>
+  <li>Major 6th   - My Bonnie Lies Over…</li>
+  <li>Major 7th   - Superman theme</li>
+  <li>Octave      - The Christmas Song</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/08/05/searching-for-graduate-degree-courses-in-usa-and-japan/">Searching for graduate degree courses in USA and Japan.</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I’m currently searching for master’s degree courses in various colleges in Japan and USA. I want to pursue a Computer Science degree specializing in distributed systems. Searching for the right graduate degree courses can get depressing. Here I’m posting various links and leads that I came across through the course of my search.</p>
+
+<h3 id="5-august-2016">5 August 2016</h3>
+
+<p>Searching for options in Japan and started with University of Tokyo. Most of their courses seem to be in Japanese but there are a few in English as well. <a href="http://www.i.u-tokyo.ac.jp/ist_en/en-course/prg.shtml">This page</a> has some starting info about the English courses. Also found a collection of colleges <a href="http://www.mastersportal.eu/study-options/270286872/computer-science-it-japan.html">here</a>.</p>
+
+<p>So apparently the process for getting into a Japanese college for Master’s can take two paths. The first is like so:</p>
+
+<ol>
+  <li>Talk to a professor and gain a research assistantship with him/her.</li>
+  <li>Give an exam and enroll for a 2 year master’s course if you pass that exam.</li>
+</ol>
+
+<p>The second is directly give the exam, but I’m not sure how that can be done since they all appear to be written examinations that are conducted in Japan.</p>
+
+<h3 id="16-august-2016">16 August 2016</h3>
+
+<p>Having a look at the graudate schools of <a href="http://www.u-tokyo.ac.jp/en/academics/grad_ist.html">University of Tokyo</a>, <a href="http://educ.titech.ac.jp/eng/">Tokyo Insitute of Technology</a> and Kyoto University today.</p>
+
+<p><strong>University of Tokyo</strong></p>
+
+<p>UoT seems to have some special selection process for international applicants (<a href="http://www.i.u-tokyo.ac.jp/ist_en/howto_apply/special.shtml">link</a>), though it’s not useful for me. There’s a decent contact page <a href="http://www.i.u-tokyo.ac.jp/edu/entra/index_e.shtml">here</a>. They’ve also put up a check list for applications <a href="http://www.i.u-tokyo.ac.jp/edu/entra/pdf/check_list_m_e_revised.pdf">here</a>.</p>
+
+<p><strong>Tokyo Inst. of Technology</strong></p>
+
+<p>This also has a good <a href="http://www.titech.ac.jp/english/graduate_school/">graduate program</a>.Tokyo Inst. of Technology has an <a href="http://www.titech.ac.jp/english/graduate_school/international/international_graduate/">international graduate program for overseas applicants</a>. The courses seems to be in English mostly. The school of computer science has also <a href="http://www.titech.ac.jp/english/graduate_school/international/international_graduate/participating.html">participated</a> in the IGP and accept the IGP(A), IGP(B)3 and IGP(C) types of applicants. I seem to be most qualified for the <a href="http://www.titech.ac.jp/english/graduate_school/international/graduate_program_a/index.html">IGP(A)</a> and <a href="http://www.titech.ac.jp/english/graduate_school/international/graduate_program_c/overseas.html">IGP(C)</a> applications.</p>
+
+<p>The ‘Education Program of Advanced Information Technology Leaders’ seems to be most relevant to my case. <a href="http://www.titech.ac.jp/guide/guide_28/English/index.html">This</a> looks like a good PDF to brief about the program.</p>
+
+<p>All the courses require students to arrange for a Tokyo Tech faculty member to serve as their academic supervisor. <a href="http://search.star.titech.ac.jp/titech-ss/lang.act?forward=search.act&amp;lang=en&amp;">This handy web application</a> allows you to do that. They also have the MEXT scholarship for outstanding students.</p>
+
+<p><strong>University of Kyoto</strong></p>
+
+<p><a href="http://www.kuis.kyoto-u.ac.jp/kuis/">Page of dept. of information science</a>.</p>
+
+<h3 id="17-august-2016">17 August 2016</h3>
+
+<p>Continuing my research on Tokyo Inst. of Technology. The PDF I pointed to yesterday brought out an interesting observation - IGP(A) students and IGP(C) students seem to have different course work.</p>
+
+<h3 id="18-august-2016">18 August 2016</h3>
+
+<p>It seems the IGP C program at Tokyo Tech. is best for me. I will research that further today. Most probably I’ll need to do a 6 month research assistantship first. <a href="http://www.cs.titech.ac.jp/labs-e.html">Here’s a list</a> of the research groups of the Computer Sci. deptartment at Tokyo Tech.</p>
+
+<h3 id="20-august-2016">20 August 2016</h3>
+
+<p><strong>Tokyo Inst. of Technology</strong></p>
+
+<p>Found a list of faculties under the IGP(C) program <a href="http://www.titech.ac.jp/english/graduate_school/international/graduate_program_c/pdf/listoffaculties_1609c.pdf">here</a>.</p>
+
+<h3 id="23-august-2016">23 August 2016</h3>
+
+<p>Had a look at Kyushu Inst. of Technology today. The <a href="http://www.kyutech.ac.jp/english/admissions/guidelines/iizuka_master.html">program for international students</a> looks good.</p>
+
+<p>Also check out scholarship opportunities at Tokyo Inst. of Technology. Links - <a href="http://www.titech.ac.jp/english/graduate_school/international/scholarships/">1</a>, <a href="http://www.titech.ac.jp/english/graduate_school/international/scholarships/before_enrollment.html">2</a>, <a href="http://www.mastersportal.eu/universities/scholarships/13128/tokyo-institute-of-technology.html">3</a>. There are a bunch of scholarships that can be applied to before you enrol in university. Have a look <a href="http://www.titech.ac.jp/english/graduate_school/international/scholarships/before_enrollment.html">here</a>.</p>
+
+<p>There’s also the <a href="http://www.titech.ac.jp/english/graduate_school/international/scholarships/mext_scholarship.html">MEXT scholarship</a>from the Japanese government.</p>
+
+<h3 id="24-august-2016">24 August 2016</h3>
+
+<p>Found an interesting <a href="http://www.ic.u-tokyo.ac.jp/ic/guidance/guide05_e.html">FAQ on the UoT website</a>.</p>
+
+<p>Also having a look at <a href="http://www.jasso.go.jp/en/study_j/scholarships/brochure.html">JASSO scholarships</a>. Found some great scholarships <a href="http://www.jasso.go.jp/en/study_j/scholarships/__icsFiles/afieldfile/2016/03/29/scholarshipse_private.pdf">here</a>.</p>
+
+<h3 id="25-august-2016">25 August 2016</h3>
+
+<p>Found some scholarships. Also, I can also enrol as a <a href="http://www.titech.ac.jp/english/graduate_school/international/research_students/privately_funded.html">privately funded research student</a> at Tokyo Tech.</p>
+
+<p><a href="http://www.titech.ac.jp/english/graduate_school/international/research_students/syutugan/data/applicationoutline.pdf">This</a> is a PDF that talks about privately funded research students.</p>
+
+<p>Also checking out <a href="http://www.global.keio.ac.jp/en/education/admissions/graduate.html">Keio University</a> today. They have a program for internation graduate students. Have a look <a href="http://www.st.keio.ac.jp/english/admissions/masters_program/index.html">here</a>.</p>
+
+<p>I also had a look at the <a href="http://www.kyoto-u.ac.jp/en/education-campus/international/students1">Kyoto University IGP</a>. Here’s a <a href="http://www.shanghairanking.com/World-University-Rankings-2014/Japan.html">listing of Japanese universities</a>.</p>
+
+<h3 id="28-august-2016">28 August 2016</h3>
+
+<p>Found a <a href="http://www.g30.i.kyoto-u.ac.jp/en/course">Computer Engineering IGP at Kyoto University</a>, though I still cant find anything related to HPC. This is a link that has <a href="http://www.g30.i.kyoto-u.ac.jp/en/admission">some details on admissions</a>.</p>
+
+<p>More details on Tokyo Tech.’s IGP(A) can be found <a href="http://www.ise.titech.ac.jp/english/igpa/detail_114.html">here</a>. <a href="http://www.titech.ac.jp/guide/guide_27/English/index.html">This</a> looks like a good resource for curriculum. <a href="http://www.titech.ac.jp/english/graduate_school/international/scholarships/without_university.html">This</a> has resources for scholarships without recommendation.</p>
+
+<h3 id="29-august-2016">29 August 2016</h3>
+
+<p>Found a good resource on IGP programs at Tokyo Tech <a href="http://www.ai.cs.titech.ac.jp/IGP_PR_Program_Final.pdf">here</a>. <a href="http://www.ise.titech.ac.jp/english/igpa/IGPAprogram.pdf">Here’s a PPT</a> about IGP(A) in particular. IGP(A) coursework can be found <a href="http://www.titech.ac.jp/guide/guide_28/English/pdf/A-05.pdf#page=1">here</a>.</p>
+
+<h4 id="4-november-2016">4 November 2016</h4>
+
+<p>Posting after quite a while!</p>
+
+<p>I’m currently having a look at <a href="http://www.jku.at/content/e262/e256786">Linz University, Austria</a>. I came to know one of the research groups there is really good and are making some solid progress in high performant software.</p>
+
+<p>Here’s the <a href="http://informatik.jku.at/teaching/prospective/en/admissions.html">admissions page of the dept. of computer science</a>. Here’s <a href="http://www.jku.at/content/e262/e244/e167855/e167857">more info</a> on admissions. <a href="http://informatik.jku.at/teaching/curricula/2013/CS_Master_Guide.pdf">This is a PDF</a> on the Computer Science degree.</p>
+
+<p>The <a href="http://www.ssw.uni-linz.ac.at/">System Software group</a> looks nice.</p>
+
+<h4 id="25-december-2016">25 December 2016</h4>
+
+<p>Checking out the <a href="http://catalog.uic.edu/gcat/colleges-schools/engineering/cs/">Computer Science</a> program at UIC and that at <a href="http://www.uh.edu/nsm/computer-science/graduate/programs/">University of Houston</a>.</p>
+
+<p>This is <a href="https://www.cs.uic.edu/">UICs website</a>. This is the <a href="https://www.cs.uic.edu/~grad/2015_Graduate_Program_Requirements.pdf">detailed PDF</a> of the MS in CS requirements.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/07/12/random-thoughts-on-bass-tone/">Random thoughts on bass tone</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This post is about my learnings about bass tone. I’m currently using the following rig:</p>
+
+<ul>
+  <li>Laney RB2 amplifier</li>
+  <li>Tech 21 Sansamp Bass Driver Programmable DI</li>
+  <li>Fender Mexican Standard Jazz Bass (4 string)</li>
+</ul>
+
+<p>I will updating this post as and when I learn something new that I’d like to document or share. Suggestions are welcome. You can email me (see the ‘about’ section) or post a comment below.</p>
+
+<h4 id="26-july-2016">26 July 2016</h4>
+
+<p>As of now I’m tweaking the sansamp and trying to achieve good tone that will compliment the post/prog rock sound of my band <a href="">Cat Kamikazee</a>. I’m also reading up on different terminologies and use cases on the internet. For instance I found <a href="http://www.premierguitar.com/articles/solving-the-bass-di-dilemma-1">this explanation</a> on DI boxes quite useful. For instance I learned that the ‘XLR Out Pad’ button on the sansamp actually provides a 20 db cut to the soundboard if your signal is too hot.</p>
+
+<p>I am trying to couple the sansamp with a basic overdrive pedal I picked up from a friend. <a href="https://www.talkbass.com/threads/sansamp-bddi-pedal-placement.843750/">This thread on talkbass</a> is pretty useful for that. The guy who answered the question states that it’s better to place the sansamp last in the chain so that the DI can deliver the output of the sound chain.</p>
+
+<p>So the BLEND knob on the sansamp modulates how much of the dry signal is mixed with the sansamp tube amplifier emulation circutry. Can be useful when chaining effects pedals with the sansamp by reducing the blend and letting more of the dry signal pass through. Btw the <em>bass</em>, <em>treble</em> and <em>level</em> controls remain active irrespective of the position of BLEND.</p>
+
+<p>One thing that was a little confusing was the whole thing about ‘harmonic partials’. I found a pretty informative thread about the same on <a href="https://www.talkbass.com/threads/what-are-upper-harmonics-or-harmonic-partials.471553/">this TalkBass thread</a>.</p>
+
+<p><a href="http://www.studybass.com/gear/bass-effects/bass-compressor-settings/">Here’s</a> an interesting piece on compressors.</p>
+
+<p>Some more useful links I came across over the course of the past few days:</p>
+
+<ul>
+  <li>https://theproaudiofiles.com/amp-overdrive-vs-pedal-overdrive/</li>
+  <li>http://www.offbeatband.com/2009/08/the-difference-between-gain-volume-level-and-loudness/</li>
+</ul>
+
+<h4 id="28-july-2016">28 July 2016</h4>
+
+<p>Found an interesting and informative piece on bass pedals <a href="http://www.premierguitar.com/articles/Bass_Pedals_Basic_to_Playhouse">here</a>. It’s a good walkthrough of different pedal types and their functionality and purpose.</p>
+
+<p>I wanted to check out some overdrive pedals today but was soon sinking in a sea of terminologies. One thing that intrigued me is the difference between an overdrive, distortion and fuzz. I found a <a href="http://www.gibson.com/News-Lifestyle/Features/en-us/effects-explained-overdrive-di.aspx">pretty informative article</a> on this topic. The author has the following to say about these 3 different but seemingly similar things.</p>
+
+<p>I had a look at the Darkglass b3k and b7k pedals too. They look like promising overdrive pedals. I’ll explore the b3k more since the only difference between the 3 and the 7 is that the 7 also functions as a DI box and has an EQ, while the 3 doesn’t. I already have a DI with a 2 band EQ in the sansamp.</p>
+
+<h4 id="29-july-2016">29 July 2016</h4>
+
+<p>One thing that I noticed when tweaking my sansamp is the level of ‘distortion’ in my tone varies a LOT when you change the bass or treble keeping the drive at the same level. Why does this happen?</p>
+
+<h4 id="2-august-2016">2 August 2016</h4>
+
+<p>Trying to dive further into distortion today. Found <a href="http://www.tyquinn.com/2009/lead-tone-part-3-distortion/">this</a> article kind of useful. It relates mostly to lead guitar tones, but I think it applies in a general case too. I learned about symmetric and asymmetric clipping in that article.</p>
+
+<p>According to the article, symmetric clipping is more focused and clear, because it is only generating one set of harmonic overtones. Since asymmetric clipping can be hard-clipped on one side, and soft-clipped on the other, it has the potential to create very thick complex sounds. This means that if you want plenty of overtones, but do not want a lot of gain, asymmetric clipping can be useful. For full-blown distortion symmetric clipping is usually more suitable, since high-gain tones are already very harmonically complex. <em>Typically asymmetric clipping will have a predominant first harmonic, which the symmetric clipping will not</em> (that’s probably why in <a href="https://www.youtube.com/watch?v=pzua3-xZKHM">this</a> video, the SD1 sounds brigther than than the TS-9). High gain distortion tones sound best with most of the distortion coming from the pre-amp, so try to use a fairly neutral pickup or even a slightly ‘bright’ pickup.</p>
+
+<p>The follow up to the above post <a href="http://www.tyquinn.com/2009/lead-tone-part-4-eq-for-distortion-voicing/">talks about EQ in relation with distortion</a>. It has stuff on pre and post EQ distortion and how it can affect the overall tone. If you place the EQ before the distortion, you can actually shape which frequencies will be clipped. However if you place it after the distortion then the EQ will only act for shaping the already distorted tone. Pre-dist EQ is more useful in most cases since it let’s you control the frequencies for clipping.</p>
+
+<p>It also says that humbucking pickups have a mid-boost that is more focused by the lower part of the frequency range. Single coil pickups on the other hand have a mid-boost focused by the upper part of the frequency range. Single coils generally have clearer, more articulate bass end.</p>
+
+<h4 id="3-august-2016">3 August 2016</h4>
+
+<p>Read something about bass DI in <a href="http://www.bestbassgear.com/ebass/gear/electronics/pedals/why-is-di-so-important-to-bass-players.html">this</a> article today.</p>
+
+<h4 id="10-october-2016">10 October 2016</h4>
+
+<p>Posting after quite a while!</p>
+
+<p>Reading about the use of compression for bass guitars. Found <a href="http://www.studybass.com/gear/bass-effects/bass-compressors/">this article</a> which explains why we need compression in the first place.</p>
+
+<p>Also, my band’s installation of Main Stage 3 has started giving some really weird problems. More about that soon.</p>
+
+<h4 id="11-october-2016">11 October 2016</h4>
+
+<p>Coming back to Main Stage. For some reason, pressing Space Bar for play/pause reduces the default sampling rate and makes the tracks sound weird. We need to go to preferences and increase the sampling rate to 48 kHz again (that’s what our backing tracks are recorded at). I think its something to do with the key mappings, but I’m not sure. Will need to check it out.</p>
+
+<p>It also so happens that after the space bar has been pressed and the issue with the sampling rate is resolved, the samples (which come from a M-Audio M-Track) start emitting a strange crackling sound. This sounds persists only if the headphones are connected into the audio jack (we use the onboard Mac sound card too). The sound goes away if the headphones are unplugged. Restarting the Mac resolves the issue. I suspect there might be a way without having to restart. Will investigate.</p>
+
+<p>Turns out you just restart and it solves the problem (and be careful about what keys you press when on stage!). Not worth scratching your head too much.</p>
+
+<h4 id="9-november-2016">9 November 2016</h4>
+
+<p>I just got a new EHX Micro POG octaver pedal and a TC electronic booster pedal. Also got a TC electronics Polytune. Finally on my way to creating a pedal chain :)</p>
+
+<p>So for now I’m using the pedals in this order:</p>
+
+<p>Tuner -&gt; Octaver -&gt; Booster -&gt; Sansamp</p>
+
+<p>I think this works fine for me for now, though I might change something later on.</p>
+
+<p>I read in <a href="https://www.talkbass.com/threads/good-uses-for-an-octave-pedal.603423/">this thread</a> that using one octave down with an overdrive (on the sansamp) works wonders. Gonna try that now!</p>
+
+<p>I am also having a look at <a href="http://smartbassguitar.com/how-to-set-up-a-pedal-board-for-bassists/#.WCNfwfpvbeQ">this guide</a> on setting up a pedal board.</p>
+
+<h4 id="18-november-2016">18 November 2016</h4>
+
+<p>Also found an <a href="https://www.youtube.com/watch?v=JsgUqLdgQ1U">interesting rig rundown</a> by Tim Commerford (RATM).</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/07/05/making-screencasts-in-debian/">Making screencasts in Debian</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1 id="overview">Overview</h1>
+
+<p>I thought I’ll try something new by recording screencasts for some of my <a href="https://github.com/v0dro">work on Ruby</a> open source libraries.</p>
+
+<p>This is quite a change for me since I’m primarily focused on the programming and designing side of things. Creating documentation is something I’ve not ventured into a lot except the usual <a href="http://yardoc.org/">YARD markup</a> for Ruby methods and classes.</p>
+
+<p>In this blog post (which I will keep updating as time progresses) I hope to document my efforts in creating screencasts. Mind you this is the first time I’m creating a screencast so if you find any potential improvements in my methods please point them out in the comments.</p>
+
+<h1 id="creating-the-video">Creating the video</h1>
+
+<p>My first ever screencast will be for my <a href="https://github.com/v0dro/benchmark-plot">benchmark-plot</a> gem. For creating the video I’m mainly using two tools - <a href="https://kdenlive.org/">Kdenlive</a> for video editing and <a href="https://launchpad.net/kazam">Kazam</a> for recording screen activity. I initially tried using <a href="http://www.pitivi.org/">Pitivi</a> and <a href="http://www.openshot.org/">OpenShot</a> for video editing, but the former did not seem user friendly and the latter kept crashing on my system. For the desktop recording I first tried using <a href="http://recordmydesktop.sourceforge.net/about.php">RecordMyDesktop</a> but gave up on it since it’s too heavy on resources and recoreded poor quality screencasts with not too many customization options.</p>
+
+<p>For creating informative visuals, I’m using <a href="https://www.libreoffice.org/discover/impress/">LibreOffice Impress</a> so that I can create a slide, take it’s screenshot when in slideshow mode and put in the screencast. However I’ve generally found that using slides does not serve well the content delivery in a screencast and will probably not feature too many slides in future screencasts.</p>
+
+<p><a href="https://www.sublimetext.com/3">Sublime Text 3</a> is my primary text editor. I use it’s in built code execution functionality (by pressing <code>Ctrl + Shift + B</code>) to execute a code snippet and display the results immediately.</p>
+
+<h1 id="creating-the-audio">Creating the audio</h1>
+
+<p>I am using Audacity for recording sound. Sadly my mic produces a lot of noise, so for removing that noise in Audacity, I use the inbuilt noise reduction tools.</p>
+
+<p>Noise reduction in Audacity can be achieved by first selecting a small part of the sound that does not contain speech, then go to Effects -&gt; Noise Reduction and click on ‘Get Noise Profile’. Then select the whole sound wave with <code>Ctrl + A</code>. Go to Effects -&gt; Noise Reduction again and click ‘OK’. It should considerably reduce static noise from your sound file.</p>
+
+<p>All files are exported to Ogg Vorbis.</p>
+
+<h1 id="putting-it-all-together">Putting it all together</h1>
+
+<p>I did some research on the screencasting process and found <a href="http://devblog.avdi.org/2013/01/21/my-screencasting-process/">this article</a> by Avdi Grimm and <a href="https://build-podcast.com/setup/">this one</a> by Sayanee Basu extremely helpful.</p>
+
+<p>I first started by writing the transcript along with any code samples that I had to show. I made it a point to describe the code being typed/displayed on the screen since it’s generally more useful to have a voice over explaning the code than having to pause the video and go over it yourself.</p>
+
+<p>Then I recorded the voice over just for the part that featured slides. I imported the screenshots of the slides in kdenlive and adjusted them such that they fit the voice over. Recording the code samples was a bit of a challenge. I started typing out the code and talking about it into the mic. This was more difficult than I thought, almost like playing a Guitar and singing at the same time. I ended up recording the screencast in 4 separate takes, with several retakes for each take.</p>
+
+<p>After importing the screencast with voice over into kdenlive and separating the audio and video components, I did some cuts to reduce redundancy or imperfections in my VO. Some of the parts of the video where there was a lot of typing had to be sped up by using kdenlive’s Speed tool.</p>
+
+<p>Once this was upto my satisfaction, I exported it to mp4.</p>
+
+<p>The video of my first screencast is now up on YouTube in the video below. Have a look and leave your feedback in the comments!</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WW6M4Df-soQ" frameborder="0" allowfullscreen=""></iframe>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/16/summary-of-work-this-summer-for-gsoc-2015/">Summary of work this summer for GSOC 2015</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Over this summer as a part of <a href="www.google-melange.com">Google Summer of Code 2015</a>, <a href="www.github.com/v0dro/daru/">daru</a> received a lot of upgrades and new features which have made a pretty robust tool for data analysis in pure ruby. Of course, a lot of work still remains for bringing daru at par with the other data analysis solutions on offer today, but I feel the work done this summer has put daru on that path.</p>
+
+<p>The new features led to the inclusion of daru in many of SciRuby’s gems, which use daru’s data storage, access and indexing features for storing and carrying around data. <a href="https://github.com/SciRuby/statsample">Statsample</a>, <a href="https://github.com/SciRuby/statsample-glm">statsample-glm</a>, <a href="https://github.com/SciRuby/statsample-timeseries">statsample-timeseries</a>, <a href="https://github.com/SciRuby/statsample-bivariate-extension">statsample-bivariate-extensions</a> are all now compatible with daru and use Vector and DataFrame as their primary data structures. Daru’s <a href="http://nbviewer.ipython.org/github/SciRuby/sciruby-notebooks/blob/master/Visualization/Visualizing%20data%20with%20daru%20DataFrame.ipynb">plotting functionality</a>, that interfaced with <a href="https://github.com/domitry/nyaplot">nyaplot</a> for creating interactive plots directly from the data was also significantly overhauled.</p>
+
+<p>Also, new gems developed by other GSOC students, notably <a href="https://github.com/dilcom/gnuplotrb">Ivan’s GnuplotRB gem</a> and <a href="https://github.com/agisga/mixed_models">Alexej’s mixed_models gem</a> both accept data from daru data structures. Do see their repo pages for seeing interesting ways of using daru.</p>
+
+<p>The work on daru is also proving to be quite useful for other people, which led a talk/presentation at <a href="http://www.deccanrubyconf.org/">DeccanRubyConf 2015</a>, which is one of the three major ruby conferences in India. You can see the slides and notebooks presented at the talk <a href="https://github.com/v0dro/talks/tree/master/DeccanRubyConf15">here</a>. Given the current interest in data analysis and the need for a viable solution in ruby, I plan to take daru much further. Keep watching the repo for interesting updates :)</p>
+
+<p>In the rest of this post I’ll elaborate on all the work done this summer.</p>
+
+<h2 id="pre-mid-term-submissions">Pre-mid term submissions</h2>
+
+<p>Daru as a gem before GSOC was not exactly user friendly. There were many cases, particularly the iterators, that required some thinking before anybody used them. This is against the design philosophy of daru, or even ruby general, where surprising programmers with ubiqtuos constructs is usually frowned down upon by the community. So the first thing that I did mainly concerned overhauling the daru’s many iterators for both <code>Vector</code> and <code>DataFrame</code>.</p>
+
+<p>For example, the <code>#map</code> iterator from <code>Enumerable</code> returns an <code>Array</code> no matter object you call it on. This was not the case before, where <code>#map</code> would a <code>Daru::Vector</code> or <code>Daru::DataFrame</code>. This behaviour was changed, and now <code>#map</code> returns an <code>Array</code>. If you want a <code>Vector</code> or a <code>DataFrame</code> of the modified values, you should call <code>#recode</code> on <code>Vector</code> or <code>DataFrame</code>.</p>
+
+<p>Each of these iterators also accepts an optional argument, <code>:row</code> or <code>:vector</code>, which will define the axis over which iteration is supposed to be carried out. So now there are the <code>#each</code>, <code>#map</code>, <code>#map!</code>, <code>#recode</code>, <code>#recode!</code>, <code>#collect</code>, <code>#collect_matrix</code>, <code>#all?</code>, <code>#any?</code>, <code>#keep_vector_if</code> and <code>#keep_row_if</code>. To iterate over elements along with their respective indexes (or labels), you can likewise use <code>#each_row_with_index</code>, <code>#each_vector_with_index</code>, <code>#map_rows_with_index</code>, <code>#map_vector_with_index</code>, <code>#collect_rows_with_index</code>, <code>#collect_vector_with_index</code> or <code>#each_index</code>. I urge you to go over the docs of each of these methods to utilize the full power of daru.</p>
+
+<p>Apart from this there was also quite a bit of refactoring involved for many methods (courtesy <a href="https://github.com/agisga">Alexej</a>). This has made daru much faster than previous versions.</p>
+
+<p>The next (major) thing to do was making daru compatible with statsample. This was very essential since statsample is very important tool for statistics in ruby and it was using its own <code>Vector</code> and <code>Dataset</code> classes, which weren’t very robust as computation tools and very difficult to use when it came to cleaning or munging data. So I replaced statsample’s Vector and Dataset clases with Daru::Vector and Daru::DataFrame. It involved a significant amount of work on both statsample and daru. Statsample because many constructs had to changed to make them compatible with daru, and daru because there was a lot of essential functionality in these classes that had to be ported to daru.</p>
+
+<p>Porting code from statsample to daru improved daru significantly. There were a whole of statistics methods in statsample that were imported into daru and you can now use all them from daru. Statsample also works well with <a href="https://github.com/clbustos/rubyvis">rubyvis</a>, a great tool for visualization. <a href="https://github.com/SciRuby/statsample#visualizations">You can now do that with daru as well</a>.</p>
+
+<p>Many new methods for reading and writing data to and from files were also added to daru. You can now read and write data to and from CSV, Excel, plain text files or even SQL databases.</p>
+
+<p>In effect, daru is now completely compatible with statsample (and all the other statsample extensions). You can use daru data structures for storing data and pass them to statsample for performing computations. The biggest advantage of this approach is that the analysed data can be passed around to other scientific ruby libraries (some of which listed above) that use daru as well. Since daru offers in-built functions to better ‘see’ your data, better visualization is possible.</p>
+
+<p>See these <a href="https://github.com/v0dro/daru#blog-posts">blogs</a> and <a href="https://github.com/v0dro/daru#notebooks">notebooks</a> for a complete overview of daru’s new features.</p>
+
+<p>Also see the <a href="https://github.com/SciRuby/statsample#notebooks">notebooks in the statsample README</a> for using daru with statsample.</p>
+
+<h2 id="post-mid-term-submissions">Post-mid term submissions</h2>
+
+<p>Most of time post the mid term submissions was spent in implementing the time series functions for daru.</p>
+
+<p>I implemented a new index, the DateTimeIndex, which can used for indexing data on time stamps. It enables users to query data based on time stamps. Time stamps can either be specified with precise ruby DateTime objects or can be specified as strings, which will lead to retrival of all the data falling under that time. For example specifying ‘2012’ returns all data that falls in the year 2012. See detailed usage of <code>DateTimeIndex</code> in conjunction with other daru constructs <a href="https://github.com/v0dro/daru/blob/master/README.md">in the daru README</a>.</p>
+
+<p>An essential utility in implementing <code>DateTimeIndex</code> was <code>DateOffset</code>, which is a new set of classes that offsets dates based on certain rules or business logic. It can advance or lag a ruby <code>DateTime</code> to the nearest day or any day of the week or the end or beginning of the month etc. <code>DateOffset</code> is an essential part of <code>DateTimeIndex</code> and can also be used as a standalone utility for advancing/lagging <code>DateTime</code> objects. <a href="http://v0dro.github.io/blog/2015/07/27/date-offsets-in-daru/">This blog post</a> elaborates more on the nuances of <code>DateOffset</code> and its usage.</p>
+
+<p>The last thing done during the post mid term was complete compatibility with <a href="https://github.com/SciRuby/statsample-timeseries">statsample-timeseries</a>, which was created by <a href="https://github.com/AnkurGel">Ankur Goel</a> during GSOC 2013. It offers many uesful functions for analysis of time series data. It now works with daru containers. See some use cases <a href="https://github.com/SciRuby/statsample-timeseries/blob/master/README.rdoc">here</a>.</p>
+
+<p>Thats all, as far as I can remember.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/16/elaboration-on-certain-internals-of-daru/">Elaboration on certain internals of daru</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In this blog post I will elaborate on how a few of the features in <a href="https://github.com/v0dro/daru">daru</a> were implemeted. Notably I will stress on what spurred a need for that particular design of the code.</p>
+
+<p>This post is primarily intended to serve as documentation for me and future contributors. If readers have any inputs on improving this post, I’d be happy to accept new contributions :)</p>
+
+<h2 id="index-factory-architecture">Index factory architecture</h2>
+
+<p>Daru currently supports three types of indexes, Index, MultiIndex and DateTimeIndex.</p>
+
+<p>It became very tedious to write if statements in the Vector or DataFrame codebase whenever a new data structure was to be created, since there were 3 possible indexes that could be attached with every data set. This mainly depended on what kind of data was present in the index, i.e. tuples would create a MultiIndex, DateTime objects or date-like strings would create a DateTimeIndex, and everything else would create a Daru::Index.</p>
+
+<p>This looked something like the perfect use case for the <a href="https://en.wikipedia.org/wiki/Factory_method_pattern">factory pattern</a>, the only hurdle being that the factory pattern in the pure sense of the term would be a superclass, something called <code>Daru::IndexFactory</code> that created an Index, DateTimeIndex or MultiIndex index using some methods and logic. The problem is that I did not want to call a separate class for creating Indexes. This would break existing code and possibly cause problems in libraries that were already using daru (viz. <a href="https://github.com/SciRuby/statsample">statsample</a>), not to mention confusing users about which class they’re actually supposed to be using.</p>
+
+<p>The solution came after I read <a href="http://blog.sidu.in/2007/12/rubys-new-as-factory.html">this blog post</a>, which demonstrates that the <code>.new</code> method for any class can be overridden. Thus, instead of calling <code>initialize</code> for creating the instance of a class, it calls the overridden <code>new</code>, which can then call initialize for instantiating an instance of that class. It so happens that you can make <code>new</code> return any object you want, unlike initialize which must an instance of the class it is declared in. Thus, for the factory pattern implementation of Daru::Index, we over-ride the <code>.new</code> method of the Daru::Index and write logic such that it manufactures the appropriate kind of index based on the data that is passed to <code>Daru::Index.new(data)</code>. The pseudo code for doing this looks something like this:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+<a href="#n19" name="n19">19</a>
+<strong><a href="#n20" name="n20">20</a></strong>
+</pre></td>
+  <td class="code"><pre>
+<span class="keyword">class</span> <span class="class">Daru::Index</span>
+  <span class="comment"># some stuff...</span>
+
+  <span class="keyword">def</span> <span class="predefined-constant">self</span>.<span class="function">new</span> *args, &amp;block
+    source = args[<span class="integer">0</span>]
+
+    <span class="keyword">if</span> source_looks_like_a_multi_index
+      create_multi_index_and_return
+    <span class="keyword">elsif</span> source_looks_like_date_time_index
+      create_date_time_index_and_return
+    <span class="keyword">else</span> <span class="comment"># Create the Daru::Index by calling initialize</span>
+      i = <span class="predefined-constant">self</span>.allocate
+      i.send <span class="symbol">:initialize</span>, *args, &amp;block
+      i
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+
+  <span class="comment"># more stuff...</span>
+<span class="keyword">end</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>Also, since over-riding <code>.new</code> tampers with the subclasses of the class as well, <a href="https://github.com/v0dro/daru/blob/master/lib/daru/index.rb#L14">an <code>inherited</code> hook that replaces the over-ridden <code>.new</code></a> of the inherited class with the original one was added to <code>Daru::Index</code>.</p>
+
+<h2 id="working-of-the-where-clause">Working of the where clause</h2>
+
+<p>The where clause in daru lets users query data with a Array containing boolean variables. So whenever you call <code>where</code> on Daru::Vector or DataFrame, and pass in an Array containing true or false values, all the rows corresponding with <code>true</code> will be returned as a Vector or DataFrame respectively.</p>
+
+<p>Since the where clause works in cojunction with the comparator methods of Daru::Vector (which return a Boolean Array), it was essential for these boolean arrays to be combined together such that piecewise AND and OR operations could be performed between multiple boolean arrays. Hence, the <code>Daru::Core::Query::BoolArray</code> class was created, which is specialized for handling boolean arrays and performing piecewise boolean operations.</p>
+
+<p>The BoolArray defines the <code>#&amp;</code> method for piecewise AND operations and it defines the <code>#|</code> method for piecewise OR operations. They work as follows:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+</pre></td>
+  <td class="code"><pre>
+require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+
+a = <span class="constant">Daru</span>::<span class="constant">Core</span>::<span class="constant">Query</span>::<span class="constant">BoolArray</span>.new([<span class="predefined-constant">true</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>])
+<span class="comment">#=&gt; (Daru::Core::Query::BoolArray:84314110 bool_arry=[true, false, false, true, false, true])</span>
+b = <span class="constant">Daru</span>::<span class="constant">Core</span>::<span class="constant">Query</span>::<span class="constant">BoolArray</span>.new([<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>])
+<span class="comment">#=&gt; (Daru::Core::Query::BoolArray:84143650 bool_arry=[false, true, false, true, false, true])</span>
+a &amp; b
+<span class="comment">#=&gt; (Daru::Core::Query::BoolArray:83917880 bool_arry=[false, false, false, true, false, true])</span>
+a | b
+<span class="comment">#=&gt; (Daru::Core::Query::BoolArray:83871560 bool_arry=[true, true, false, true, false, true])</span>
+</pre></td>
+</tr></table>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/2">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/v0dro">@v0dro</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'v0dro',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+  <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/10/23/explanation-of-exafmm-learning-codes/">Explanation of ExaFMM learning codes.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/11/24/gsoc-2016-wrap-up-for-sciruby/">GSOC 2016 Wrap Up For SciRuby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/27/advice-for-future-gsoc-students-and-mentors-based-on-my-experience/">Advice for future GSOC students and mentors based on my experience.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/21/setting-up-a-lexical-analyser-and-parser-in-ruby/">Setting up a lexical analyser and parser in Ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/16/random-thoughts-on-music-theory/">Random thoughts on music theory.</a>
+      </li>
+    
+  </ul>
+</section>
+
+  
+  
+
+  
+
+
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Sameer Deshmukh -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'v0dro';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
