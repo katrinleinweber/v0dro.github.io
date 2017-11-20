@@ -3,7 +3,7 @@ layout: post
 title: "Explanation of ExaFMM learning codes."
 date: 2017-10-23 21:33:24 +0900
 comments: true
-categories: 
+categories:
 ---
 
 # ExaFMM learning tutorials
@@ -53,19 +53,19 @@ The new steps introduced in this program can be summarized as follows:
   * Count the bodies in each quadrant and store the count in an array. The `size` array in case of the Ruby implementation.
   * In the next step we successively add the number of elements in each quadrant so that it gives us the offset value at which elements from a new quadrant will start in the `bodies` Array (of course, after it is sorted).
   * We then sort the bodies according to the quadrant that they belong to. Something peculiar that I notice about this part is that counter[quadrant] also gets incremented after each iteration for sorting. Why is this the case even though the counters have been set to the correct offsets previously?
-  
+
 ## step3.cxx
 
 This program introduces a new method called `buildTree`, inside of which we will actually build the tree. It removes some of the sorting logic from `main` and puts it inside `buildTree`. The `buildTree` function performs the following functions:
   * Most of the functions relating to sorting etc are same. Only difference is that there is in-place sorting of the `bodies` array and the `buffer` array does not store elements anymore.
   * A new function introduced is that we re-calculate the center and the radius based on sorted co-ordinates. This is done because we want new center and radii for the children.
   * The `buildTree` function is called recursively such that the quadrants are divided until a point is reached where the inner most quadrant in the hierarchy does not contain more than 4 elements.
-  
+
 Implementation:
 
 There is an interesting piece of code in the part for calculating new center and radius:
 ``` ruby
-center[d] = 
+center[d] =
   x0[d] +
   radius *
   (((i & 1 << d) >> d) * 2 - 1) # i is quadrant number
@@ -101,7 +101,7 @@ The cells are stored in a C++ vector called `cells`.
 
 In the `Cell` struct, I wonder why the body is stored as a pointer and not a variable.
 
-Implementation in the Ruby code, like saving the size of an Array during a recursive call 
+Implementation in the Ruby code, like saving the size of an Array during a recursive call
 is slightly different since Ruby does not support pointers, but the data structures and
 overall code is more or less a direct port.
 
@@ -174,7 +174,7 @@ This function converts cartesian co-ordinates in (X,Y,Z) to spherical co-ordinat
 
 This algorithm calculates the multipole of a cell. It uses spherical harmonics so that net force of the forces inside a sphere and can be estimated on the surface of the sphere, which can then be treated as a single body for estimating forces.
 
-The optimizations that are presented in the `kernel.h` version of this file are quite complex to understand since they look quite different from the original equation. 
+The optimizations that are presented in the `kernel.h` version of this file are quite complex to understand since they look quite different from the original equation.
 
 For code that is still sane and easier to read, head over to the [laplace.h](https://github.com/exafmm/exafmm-alpha/blob/develop/kernels/laplace.h#L48) file in exafmm-alpha. The explanations that follow for now are from this file. We will see how the same functions in `kernel.h` have been modified to make computation faster and less dependent on large number divisions which reduce the accuracy of the system.
 
@@ -185,7 +185,7 @@ $$
 \end
 $$
 
-It starts with evaluating terms that need not be computed for every iteration of `n`, and computes those terms in the outer loop itself. The terms in the outer loop corespond to the condition `m=n`. The first of these is the exponential term $$ e^{im\beta} $$. 
+It starts with evaluating terms that need not be computed for every iteration of `n`, and computes those terms in the outer loop itself. The terms in the outer loop correspond to the condition `m=n`. The first of these is the exponential term $$ e^{im\beta} $$.
 
 After this is a curious case of computation of some indexes called `npn` and `nmn`. These are computed as follows:
 ``` ruby
@@ -257,7 +257,9 @@ This line is for calculating the value of `p1` or $$ P^{m}_{m} $$ after the firs
 
 Now that a background of the basic implementation of `evalMultipole` has been established, we can move over to understanding the code that is placed inside the [kernel.h](https://github.com/exafmm/exafmm/blob/learning/2_kernels/kernel.h) file of the `exafmm/learning` branch. This code is more optimized and can compute results with much higher accuracy than the code that is present in the `exafmm-alpha` repo that we previously saw. The main insipiration for this code come's from the Treecode paper posted above.
 
-In this code, most of the stuff relating to indexing and calculation of the powers of `rho` is pretty much the same. However, there are some important changes with regards to the computation of the values that go inside the `Ynm` array.
+In this code, most of the stuff relating to indexing and calculation of the powers of `rho` is pretty much the same. However, there are some important changes with regards to the computation of the values that go inside the `Ynm` array. This change is also reflected in the subsequent kernels.
+
+For instance, this new function derives an important term $$ O^{m}_{n} $$ from [Epton's paper](http://epubs.siam.org/doi/abs/10.1137/0916051) (equation `2.20`). 
 
 The Ruby implementation is [here]().
 
@@ -287,4 +289,3 @@ The Ruby implementation of this file is in `vector.rb`.
 Shows a very simple preliminary implementation of the actuall exafmm code. Mostly useful for understanding purpose only.
 
 ## step2.cxx
-
