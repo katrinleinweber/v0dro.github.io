@@ -154,13 +154,23 @@ The order (_n_) and degree (_m_) correspond to the order and degree of the [Lege
 
 For causes of optimization, the values stored inside `ynm` are not the ones that correspond to the spherical harmonic, but are values that yield optimized results when the actual computation happens.
 
+#### Historical origins of kernel.h
+
+This file is a new and improved version of the laplace.h file from the exafmm-alpha repo. Due to the enhacements made, the code in this file performs calculations that are significantly more accurate than those in laplace.h.
+
+laplace.h consists of a C++ class inside which all the functions reside, along with a constructor that computes pre-determined values for subsequent computation of the kernels. For example, in the constructor of the `Kernel` class, there is a line like so:
+``` cpp
+Anm[nm] = oddOrEven(n)/std::sqrt(fnmm*fnpm);
+```
+This line is computing the value of $$ A^{m}_{n} $$ as is given by Cheng's paper (equation 14). This value is used in M2L and L2L kernels later. However, this value is never directly computed in the new and optimized `kernel.h` file. Instead, it modifies the computation of the `Ynm` vector such that it no longer becomes necessary to involve the `Anm` term in any kernel computation.
+
 ### Functions
 
-### cart2sph
+#### cart2sph
 
 This function converts cartesian co-ordinates in (X,Y,Z) to spherical co-ordinates involving `radius`, `theta` and `phi`. `radius` is simply the square root of the norm of the co-ordinates (norm is defined as the sum of squares of the co-ordinates in `vec.h`).
 
-### evalMultipole simple implementation
+#### evalMultipole simple implementation
 
 This algorithm calculates the multipole of a cell. It uses spherical harmonics so that net force of the forces inside a sphere and can be estimated on the surface of the sphere, which can then be treated as a single body for estimating forces.
 
@@ -243,13 +253,26 @@ pn = -pn * fact * y
 ```
 This line is for calculating the value of `p1` or $$ P^{m}_{m} $$ after the first iteration of the loop. Since the second factorial term in the equation basically just deals with odd numbers, the calculation of this term can be simplified by simply incrementing by `2` with `fact += 2`. The `y` term in the above equation is in fact `sin(alpha)` (defined at the top of this function). This is because, if you see the original equation, you will see that the third term is $$ (1-x^{2}) $$, and _x_ is in fact `cos(alpha)`. Therefore, using the trigonometric equation, we can say simply substitute the entire term with `y`.
 
-### evalMultipole optimized implementation
+#### evalMultipole optimized implementation
 
 Now that a background of the basic implementation of `evalMultipole` has been established, we can move over to understanding the code that is placed inside the [kernel.h](https://github.com/exafmm/exafmm/blob/learning/2_kernels/kernel.h) file of the `exafmm/learning` branch. This code is more optimized and can compute results with much higher accuracy than the code that is present in the `exafmm-alpha` repo that we previously saw. The main insipiration for this code come's from the Treecode paper posted above.
 
 In this code, most of the stuff relating to indexing and calculation of the powers of `rho` is pretty much the same. However, there are some important changes with regards to the computation of the values that go inside the `Ynm` array.
 
 The Ruby implementation is [here]().
+
+#### P2M
+
+#### M2M
+
+A major difference exists between computation of M2M in the `kernel.h` and `laplace.h` files. 
+#### M2L
+
+#### L2L
+
+#### L2P
+
+#### P2P
 
 ## vector.h
 
