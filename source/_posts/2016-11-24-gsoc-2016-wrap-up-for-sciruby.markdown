@@ -3,7 +3,7 @@ layout: post
 title: "GSOC 2016 Wrap Up For SciRuby"
 date: 2016-11-24 09:57:34 +0530
 comments: true
-categories: 
+categories:
 ---
 
 In the summer of 2016 I was chosen by the SciRuby core team to be admin for SciRuby for Google Summer of Code 2016. GSOC is an important yearly event for us as an organization since it provides a great platform for an upcoming organization like SciRuby and helps us get more users and contributors for the various libraries that we maintain.

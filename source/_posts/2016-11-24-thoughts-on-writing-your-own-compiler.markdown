@@ -89,6 +89,7 @@ Some more references on garbage collection and memory management:
 http://stackoverflow.com/questions/2003885/garbage-collection-with-ruby-c-extension
 http://stackoverflow.com/questions/21513666/how-to-free-memory-from-char-array-in-c
 http://cjf.io/2014/03/05/adventures-with-the-ruby-garbage-collector-in-nmatrix/
+<<<<<<< Updated upstream
 
 Now I need to implement an interface for Rubex that will help in easily binding C functions through Rubex. This is one of the main uses of Rubex and it is paramount that this functionality get high preference.
 
@@ -114,3 +115,6 @@ Scoping is a big issue that I'm facing these days. Each block requires its own s
 Ruby constant lookup is interesting. See it here: http://valve.github.io/blog/2013/10/26/constant-resolution-in-ruby/
 
 Constants cannot be defined inside Ruby methods since it leads to a dynamic const assignment error.
+=======
+https://silverhammermba.github.io/emberb/c/#methods
+>>>>>>> Stashed changes
