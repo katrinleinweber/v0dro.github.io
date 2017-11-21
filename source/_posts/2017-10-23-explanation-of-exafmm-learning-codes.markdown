@@ -6,10 +6,28 @@ comments: true
 categories:
 ---
 
-# ExaFMM learning tutorials
-
 In this file I will write descriptions of the exafmm 'learning' codes and my understanding of them. I have been tasked with understanding the code and porting it to Ruby, my favorite language.
 We shall start from the first tutorial, i.e. [0_tree](). You can find the full Ruby code here.
+
+<!-- MarkdownTOC style="round" autolink="true" depth="4" -->
+
+- 0_tree
+  - step1.cxx
+  - step2.cxx
+  - step3.cxx
+  - step04.cxx
+- 1_traversal
+  - step1.cxx
+  - step2.cxx
+- 2_kernels
+  - kernel.h
+  - vector.h
+  - exafmm.h
+  - exafmm2d.h and step1.cxx
+  - step2.cxx
+
+<!-- /MarkdownTOC -->
+
 
 # 0_tree
 
@@ -65,10 +83,8 @@ Implementation:
 
 There is an interesting piece of code in the part for calculating new center and radius:
 ``` ruby
-center[d] =
-  x0[d] +
-  radius *
-  (((i & 1 << d) >> d) * 2 - 1) # i is quadrant number
+ # i is quadrant number
+center[d] = x0[d] + radius * (((i & 1 << d) >> d) * 2 - 1)
 ```
 
 In the above code, there is some bit shifting and interleaving taking place whose prime purpose is to split the quadrant number into X and Y dimension and then using this to calculate the center of the child cell.
@@ -179,10 +195,9 @@ The optimizations that are presented in the `kernel.h` version of this file are 
 For code that is still sane and easier to read, head over to the [laplace.h](https://github.com/exafmm/exafmm-alpha/blob/develop/kernels/laplace.h#L48) file in exafmm-alpha. The explanations that follow for now are from this file. We will see how the same functions in `kernel.h` have been modified to make computation faster and less dependent on large number divisions which reduce the accuracy of the system.
 
 The `evalMultipole` function basically tries to populate the `Ynm` array with data that is computed with the following equation:
+
 $$
-\begin
 \rho^{n}Y_{n}^{m}=\sum_{m=0}^{P-1}\sum_{n=m+1}^{P-1}\rho^{n}P_{n}^{m}(x)\sqrt{\frac{(n-m)!}{(n+m)!}}e^{im\beta}
-\end
 $$
 
 It starts with evaluating terms that need not be computed for every iteration of `n`, and computes those terms in the outer loop itself. The terms in the outer loop correspond to the condition `m=n`. The first of these is the exponential term $$ e^{im\beta} $$.
@@ -214,10 +229,9 @@ The above formulas will give the indexes for each half of the pyramid. Since the
 Now let us talk about the evaluation of the [Associated Legendre Polynomial](http://mathworld.wolfram.com/AssociatedLegendrePolynomial.html) $$ P^m_{n}(cos(\theta)) $$, where _m_ is the order of the differential equation and _n_ is the degree. The Associated Legendre Polynomial is the solution to the [Associated Legendre Equation](http://mathworld.wolfram.com/AssociatedLegendreDifferentialEquation.html). The Legendre polynomial can be expressed in terms of the [Rodrigues form](https://en.wikipedia.org/wiki/Associated_Legendre_polynomials#Definition_for_non-negative_integer_parameters_.E2.84.93_and_m) for computation without dependence on the simple Legendre Polynomial $$ P_{n} $$. However, due to the factorials and rather large divisions that need to be performed to compute the Associated Legendre polynomial in this form, computing this equation for large values of _m_ and _n_ quickly becomes unstable. Therefore, we use a recurrence relation of the Polynomial in order to compute different values.
 
 The recurrence relation looks like so:
+
 $$
-\begin{equation}
-  (n-m+1)P^m_{n+1}(x)=x(2n+1)P^m_n(x)-(n+m)P^m_{n-1}(x)
-\end{equation}
+(n-m+1)P^m_{n+1}(x)=x(2n+1)P^m_n(x)-(n+m)P^m_{n-1}(x)
 $$
 
 This is expressed in the code with the following line:
@@ -228,21 +242,20 @@ It can be seen that `p` is equivalent to $$ P^{m}_{n+1} $$, `p1` is equivalent t
 
 Observe that the above equation requires the value of _P_ for _n-1_ and _n+1_ to be computed so that the value for _P_ at _n_ can be computed. Therefore, we first set _m=m+1_ and then compute $$ P^m_{m+1} $$ which can be expressed like this:
 $$
-\begin
-  P^{m}_{m+1}(x)=x(2m+1)P^{m}_{m}(x)
-\end
+P^{m}_{m+1}(x)=x(2m+1)P^{m}_{m}(x)
 $$
+
 The above equation is expressed by the following line in the code:
 ``` ruby
 p = x * (2 * m + 1) * p1
 ```
 
 If you read the code closely, you will see that just at the beginning of the `evalMultipole` function, we initialize `p1 = 1` the first time the looping is done. This is because when `p1` at the first instance is identified with `m = 0`, and we substitute `m=0` in this equation:
+
 $$
-\begin
-  P^{m}_{m} = (-1)^{m}(2m-1)!(1-x^{2})^{\frac{m}{2}}
-\end
+P^{m}_{m} = (-1)^{m}(2m-1)!(1-x^{2})^{\frac{m}{2}}
 $$
+
 We will get $$ P^{m}_{m}(x)=1 $$.
 
 When you look at the code initially, there might be some confusion regarding the significance of having to `rho` terms, `rhom` and `rhon`. This is written because each term of `Ynm` depends on a particular power of `rho` raised to `n`. So just before the inner loop, you can see the line `rhon = rhom`, which basically reduces the number of times that `rho` needs to be multiplied since the outer loop's value of `rho` is already set to what it should be for that particular iteration.

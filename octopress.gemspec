@@ -29,6 +29,11 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "octopress-escape-code", "~> 2.0"
   spec.add_runtime_dependency "rack"
   spec.add_runtime_dependency "sinatra"
+  spec.add_runtime_dependency "pygments.rb"
+  spec.add_runtime_dependency "jekyll-sitemap"
+  spec.add_runtime_dependency "stringex"  
+  spec.add_runtime_dependency "haml"
+  spec.add_runtime_dependency "kramdown"
 
   spec.add_development_dependency "octopress-ink"
   spec.add_development_dependency "bundler", "~> 1.3"

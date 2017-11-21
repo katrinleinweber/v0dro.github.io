@@ -4,7 +4,7 @@
   <title><![CDATA[Travel &lt;code&gt; Music]]></title>
   <link href="http://v0dro.github.io/atom.xml" rel="self"/>
   <link href="http://v0dro.github.io/"/>
-  <updated>2017-11-15T20:23:46+09:00</updated>
+  <updated>2017-11-21T22:28:29+09:00</updated>
   <id>http://v0dro.github.io/</id>
   <author>
     <name><![CDATA[Sameer Deshmukh]]></name>
@@ -14,14 +14,42 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Explanation of ExaFMM learning codes.]]></title>
+    <title type="html"><![CDATA[Explanation of ExaFMM Learning Codes.]]></title>
     <link href="http://v0dro.github.io/blog/2017/10/23/explanation-of-exafmm-learning-codes/"/>
     <updated>2017-10-23T21:33:24+09:00</updated>
     <id>http://v0dro.github.io/blog/2017/10/23/explanation-of-exafmm-learning-codes</id>
-    <content type="html"><![CDATA[<h1 id="exafmm-learning-tutorials">ExaFMM learning tutorials</h1>
-
-<p>In this file I will write descriptions of the exafmm ‘learning’ codes and my understanding of them. I have been tasked with understanding the code and porting it to Ruby, my favorite language.
+    <content type="html"><![CDATA[<p>In this file I will write descriptions of the exafmm ‘learning’ codes and my understanding of them. I have been tasked with understanding the code and porting it to Ruby, my favorite language.
 We shall start from the first tutorial, i.e. <a href="">0_tree</a>. You can find the full Ruby code here.</p>
+
+<!-- MarkdownTOC style="round" autolink="true" depth="4" -->
+
+<ul>
+  <li>0_tree
+    <ul>
+      <li>step1.cxx</li>
+      <li>step2.cxx</li>
+      <li>step3.cxx</li>
+      <li>step04.cxx</li>
+    </ul>
+  </li>
+  <li>1_traversal
+    <ul>
+      <li>step1.cxx</li>
+      <li>step2.cxx</li>
+    </ul>
+  </li>
+  <li>2_kernels
+    <ul>
+      <li>kernel.h</li>
+      <li>vector.h</li>
+      <li>exafmm.h</li>
+      <li>exafmm2d.h and step1.cxx</li>
+      <li>step2.cxx</li>
+    </ul>
+  </li>
+</ul>
+
+<!-- /MarkdownTOC -->
 
 <h1 id="0_tree">0_tree</h1>
 
@@ -101,13 +129,9 @@ quadrant = a + (b &lt;&lt; <span class="integer">1</span>)
 <div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 <a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
 </pre></td>
-  <td class="code"><pre>center[d] = 
-  x0[d] +
-  radius *
-  (((i &amp; <span class="integer">1</span> &lt;&lt; d) &gt;&gt; d) * <span class="integer">2</span> - <span class="integer">1</span>) <span class="comment"># i is quadrant number</span>
+  <td class="code"><pre> <span class="comment"># i is quadrant number</span>
+center[d] = x0[d] + radius * (((i &amp; <span class="integer">1</span> &lt;&lt; d) &gt;&gt; d) * <span class="integer">2</span> - <span class="integer">1</span>)
 </pre></td>
 </tr></table>
 </div>
@@ -157,7 +181,7 @@ based on the quadrant. The ‘tree’ is actually stored in an array.</p>
 
 <p>In the <code>Cell</code> struct, I wonder why the body is stored as a pointer and not a variable.</p>
 
-<p>Implementation in the Ruby code, like saving the size of an Array during a recursive call 
+<p>Implementation in the Ruby code, like saving the size of an Array during a recursive call
 is slightly different since Ruby does not support pointers, but the data structures and
 overall code is more or less a direct port.</p>
 
@@ -210,26 +234,39 @@ about the location of the first child of this cell, and the second <code>first_b
 
 <p>For causes of optimization, the values stored inside <code>ynm</code> are not the ones that correspond to the spherical harmonic, but are values that yield optimized results when the actual computation happens.</p>
 
+<h4 id="historical-origins-of-kernelh">Historical origins of kernel.h</h4>
+
+<p>This file is a new and improved version of the laplace.h file from the exafmm-alpha repo. Due to the enhacements made, the code in this file performs calculations that are significantly more accurate than those in laplace.h.</p>
+
+<p>laplace.h consists of a C++ class inside which all the functions reside, along with a constructor that computes pre-determined values for subsequent computation of the kernels. For example, in the constructor of the <code>Kernel</code> class, there is a line like so:</p>
+<div class="language-cpp highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+</pre></td>
+  <td class="code"><pre>Anm[nm] = oddOrEven(n)/std::sqrt(fnmm*fnpm);
+</pre></td>
+</tr></table>
+</div>
+<p>This line is computing the value of <script type="math/tex">A^{m}_{n}</script> as is given by Cheng’s paper (equation 14). This value is used in M2L and L2L kernels later. However, this value is never directly computed in the new and optimized <code>kernel.h</code> file. Instead, it modifies the computation of the <code>Ynm</code> vector such that it no longer becomes necessary to involve the <code>Anm</code> term in any kernel computation.</p>
+
 <h3 id="functions">Functions</h3>
 
-<h3 id="cart2sph">cart2sph</h3>
+<h4 id="cart2sph">cart2sph</h4>
 
 <p>This function converts cartesian co-ordinates in (X,Y,Z) to spherical co-ordinates involving <code>radius</code>, <code>theta</code> and <code>phi</code>. <code>radius</code> is simply the square root of the norm of the co-ordinates (norm is defined as the sum of squares of the co-ordinates in <code>vec.h</code>).</p>
 
-<h3 id="evalmultipole">evalMultipole</h3>
+<h4 id="evalmultipole-simple-implementation">evalMultipole simple implementation</h4>
 
 <p>This algorithm calculates the multipole of a cell. It uses spherical harmonics so that net force of the forces inside a sphere and can be estimated on the surface of the sphere, which can then be treated as a single body for estimating forces.</p>
 
-<p>The optimizations that are presented in the <code>kernel.h</code> version of this file are quite complex to understand since they look quite different from the original equation. I will explain the code written in the file, however, we will use unoptmized Ruby code that actually resembles the equation for purposes of understanding.</p>
+<p>The optimizations that are presented in the <code>kernel.h</code> version of this file are quite complex to understand since they look quite different from the original equation.</p>
 
 <p>For code that is still sane and easier to read, head over to the <a href="https://github.com/exafmm/exafmm-alpha/blob/develop/kernels/laplace.h#L48">laplace.h</a> file in exafmm-alpha. The explanations that follow for now are from this file. We will see how the same functions in <code>kernel.h</code> have been modified to make computation faster and less dependent on large number divisions which reduce the accuracy of the system.</p>
 
-<p>The <code>evalMultipole</code> function basically tries to populate the <code>Ynm</code> array with data that is computed with the following equation:
-<script type="math/tex">\begin
-\rho^{n}Y_{n}^{m}=\sum_{m=0}^{P-1}\sum_{n=m+1}^{P-1}\rho^{n}P_{n}^{m}(x)\sqrt{\frac{(n-m)!}{(n+m)!}}e^{im\beta}
-\end</script></p>
+<p>The <code>evalMultipole</code> function basically tries to populate the <code>Ynm</code> array with data that is computed with the following equation:</p>
 
-<p>It starts with evaluating terms that need not be computed for every iteration of <code>n</code>, and computes those terms in the outer loop itself. The terms in the outer loop corespond to the condition <code>m=n</code>. The first of these is the exponential term <script type="math/tex">e^im\beta</script>.</p>
+<script type="math/tex; mode=display">\rho^{n}Y_{n}^{m}=\sum_{m=0}^{P-1}\sum_{n=m+1}^{P-1}\rho^{n}P_{n}^{m}(x)\sqrt{\frac{(n-m)!}{(n+m)!}}e^{im\beta}</script>
+
+<p>It starts with evaluating terms that need not be computed for every iteration of <code>n</code>, and computes those terms in the outer loop itself. The terms in the outer loop correspond to the condition <code>m=n</code>. The first of these is the exponential term <script type="math/tex">e^{im\beta}</script>.</p>
 
 <p>After this is a curious case of computation of some indexes called <code>npn</code> and <code>nmn</code>. These are computed as follows:</p>
 <div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
@@ -266,12 +303,72 @@ V        0
 
 <p>Now let us talk about the evaluation of the <a href="http://mathworld.wolfram.com/AssociatedLegendrePolynomial.html">Associated Legendre Polynomial</a> <script type="math/tex">P^m_{n}(cos(\theta))</script>, where <em>m</em> is the order of the differential equation and <em>n</em> is the degree. The Associated Legendre Polynomial is the solution to the <a href="http://mathworld.wolfram.com/AssociatedLegendreDifferentialEquation.html">Associated Legendre Equation</a>. The Legendre polynomial can be expressed in terms of the <a href="https://en.wikipedia.org/wiki/Associated_Legendre_polynomials#Definition_for_non-negative_integer_parameters_.E2.84.93_and_m">Rodrigues form</a> for computation without dependence on the simple Legendre Polynomial <script type="math/tex">P_{n}</script>. However, due to the factorials and rather large divisions that need to be performed to compute the Associated Legendre polynomial in this form, computing this equation for large values of <em>m</em> and <em>n</em> quickly becomes unstable. Therefore, we use a recurrence relation of the Polynomial in order to compute different values.</p>
 
-<p>The recurrence relation looks like so:
-<script type="math/tex">\begin{equation}
-  (n-m+1)P^m_{n+1}(x)=x(2n+1)P^m_n(x)-(n+m)P^m_{n-1}(x)
-\end{equation}</script></p>
+<p>The recurrence relation looks like so:</p>
+
+<script type="math/tex; mode=display">(n-m+1)P^m_{n+1}(x)=x(2n+1)P^m_n(x)-(n+m)P^m_{n-1}(x)</script>
+
+<p>This is expressed in the code with the following line:</p>
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+</pre></td>
+  <td class="code"><pre>p = (x * (<span class="integer">2</span> * n + <span class="integer">1</span>) * p1 - (n + m) * p2) / (n - m + <span class="integer">1</span>)
+</pre></td>
+</tr></table>
+</div>
+<p>It can be seen that <code>p</code> is equivalent to <script type="math/tex">P^{m}_{n+1}</script>, <code>p1</code> is equivalent to <script type="math/tex">P^{m}_{n}</script> and <code>p2</code> is equivalent to <script type="math/tex">P^{m}_{n-1}</script>. This convention is followed everywhere in the code.</p>
+
+<p>Observe that the above equation requires the value of <em>P</em> for <em>n-1</em> and <em>n+1</em> to be computed so that the value for <em>P</em> at <em>n</em> can be computed. Therefore, we first set <em>m=m+1</em> and then compute <script type="math/tex">P^m_{m+1}</script> which can be expressed like this:
+<script type="math/tex">P^{m}_{m+1}(x)=x(2m+1)P^{m}_{m}(x)</script></p>
+
+<p>The above equation is expressed by the following line in the code:</p>
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+</pre></td>
+  <td class="code"><pre>p = x * (<span class="integer">2</span> * m + <span class="integer">1</span>) * p1
+</pre></td>
+</tr></table>
+</div>
+
+<p>If you read the code closely, you will see that just at the beginning of the <code>evalMultipole</code> function, we initialize <code>p1 = 1</code> the first time the looping is done. This is because when <code>p1</code> at the first instance is identified with <code>m = 0</code>, and we substitute <code>m=0</code> in this equation:</p>
+
+<script type="math/tex; mode=display">P^{m}_{m} = (-1)^{m}(2m-1)!(1-x^{2})^{\frac{m}{2}}</script>
+
+<p>We will get <script type="math/tex">P^{m}_{m}(x)=1</script>.</p>
+
+<p>When you look at the code initially, there might be some confusion regarding the significance of having to <code>rho</code> terms, <code>rhom</code> and <code>rhon</code>. This is written because each term of <code>Ynm</code> depends on a particular power of <code>rho</code> raised to <code>n</code>. So just before the inner loop, you can see the line <code>rhon = rhom</code>, which basically reduces the number of times that <code>rho</code> needs to be multiplied since the outer loop’s value of <code>rho</code> is already set to what it should be for that particular iteration.</p>
+
+<p>Finally, see that there is a line right after the inner loop which reads like this:</p>
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+</pre></td>
+  <td class="code"><pre>pn = -pn * fact * y
+</pre></td>
+</tr></table>
+</div>
+<p>This line is for calculating the value of <code>p1</code> or <script type="math/tex">P^{m}_{m}</script> after the first iteration of the loop. Since the second factorial term in the equation basically just deals with odd numbers, the calculation of this term can be simplified by simply incrementing by <code>2</code> with <code>fact += 2</code>. The <code>y</code> term in the above equation is in fact <code>sin(alpha)</code> (defined at the top of this function). This is because, if you see the original equation, you will see that the third term is <script type="math/tex">(1-x^{2})</script>, and <em>x</em> is in fact <code>cos(alpha)</code>. Therefore, using the trigonometric equation, we can say simply substitute the entire term with <code>y</code>.</p>
+
+<h4 id="evalmultipole-optimized-implementation">evalMultipole optimized implementation</h4>
+
+<p>Now that a background of the basic implementation of <code>evalMultipole</code> has been established, we can move over to understanding the code that is placed inside the <a href="https://github.com/exafmm/exafmm/blob/learning/2_kernels/kernel.h">kernel.h</a> file of the <code>exafmm/learning</code> branch. This code is more optimized and can compute results with much higher accuracy than the code that is present in the <code>exafmm-alpha</code> repo that we previously saw. The main insipiration for this code come’s from the Treecode paper posted above.</p>
+
+<p>In this code, most of the stuff relating to indexing and calculation of the powers of <code>rho</code> is pretty much the same. However, there are some important changes with regards to the computation of the values that go inside the <code>Ynm</code> array. This change is also reflected in the subsequent kernels.</p>
+
+<p>For instance, this new function derives an important term <script type="math/tex">O^{m}_{n}</script> from <a href="http://epubs.siam.org/doi/abs/10.1137/0916051">Epton’s paper</a> (equation <code>2.20</code>).</p>
 
 <p>The Ruby implementation is <a href="">here</a>.</p>
+
+<h4 id="p2m">P2M</h4>
+
+<h4 id="m2m">M2M</h4>
+
+<p>A major difference exists between computation of M2M in the <code>kernel.h</code> and <code>laplace.h</code> files.</p>
+<h4 id="m2l">M2L</h4>
+
+<h4 id="l2l">L2L</h4>
+
+<h4 id="l2p">L2P</h4>
+
+<h4 id="p2p">P2P</h4>
 
 <h2 id="vectorh">vector.h</h2>
 
@@ -281,17 +378,16 @@ V        0
 
 <h2 id="exafmmh">exafmm.h</h2>
 
-<h2 id="exafmm2dh">exafmm2d.h</h2>
+<h2 id="exafmm2dh-and-step1cxx">exafmm2d.h and step1.cxx</h2>
 
-<h2 id="step1cxx-2">step1.cxx</h2>
+<p>Shows a very simple preliminary implementation of the actuall exafmm code. Mostly useful for understanding purpose only.</p>
 
 <h2 id="step2cxx-2">step2.cxx</h2>
-
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[GSOC 2016 Wrap Up For SciRuby]]></title>
+    <title type="html"><![CDATA[GSOC 2016 Wrap Up for SciRuby]]></title>
     <link href="http://v0dro.github.io/blog/2016/11/24/gsoc-2016-wrap-up-for-sciruby/"/>
     <updated>2016-11-24T13:27:34+09:00</updated>
     <id>http://v0dro.github.io/blog/2016/11/24/gsoc-2016-wrap-up-for-sciruby</id>
@@ -319,20 +415,20 @@ V        0
 
 <p>Here are some photos that I took at the summit:</p>
 
-<p><img src="/images/gsoc_summit/1.JPG" alt="'ID card'" /></p>
+<p><img src="http://v0dro.github.io/images/gsoc_summit/1.JPG" alt="'ID card'" /></p>
 
-<p><img src="/images/gsoc_summit/2.JPG" alt="'A visit to the Computer History Museum'" /></p>
+<p><img src="http://v0dro.github.io/images/gsoc_summit/2.JPG" alt="'A visit to the Computer History Museum'" /></p>
 
-<p><img src="/images/gsoc_summit/3.JPG" alt="'The (now discontinued) self driving car'" /></p>
+<p><img src="http://v0dro.github.io/images/gsoc_summit/3.JPG" alt="'The (now discontinued) self driving car'" /></p>
 
-<p><img src="/images/gsoc_summit/4.JPG" alt="'Chocolate table at the GSOC summit'" /></p>
+<p><img src="http://v0dro.github.io/images/gsoc_summit/4.JPG" alt="'Chocolate table at the GSOC summit'" /></p>
 
-<p><img src="/images/gsoc_summit/5.JPG" alt="'Attendees from India'" /></p>
+<p><img src="http://v0dro.github.io/images/gsoc_summit/5.JPG" alt="'Attendees from India'" /></p>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Advice for future GSOC students and mentors based on my experience.]]></title>
+    <title type="html"><![CDATA[Advice for Future GSOC Students and Mentors Based on My Experience.]]></title>
     <link href="http://v0dro.github.io/blog/2016/08/27/advice-for-future-gsoc-students-and-mentors-based-on-my-experience/"/>
     <updated>2016-08-27T21:34:51+09:00</updated>
     <id>http://v0dro.github.io/blog/2016/08/27/advice-for-future-gsoc-students-and-mentors-based-on-my-experience</id>
@@ -382,7 +478,7 @@ First round every mentor rates their <em>own</em> student only. In the next roun
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Setting up a lexical analyser and parser in Ruby]]></title>
+    <title type="html"><![CDATA[Setting Up a Lexical Analyser and Parser in Ruby]]></title>
     <link href="http://v0dro.github.io/blog/2016/08/21/setting-up-a-lexical-analyser-and-parser-in-ruby/"/>
     <updated>2016-08-21T16:06:05+09:00</updated>
     <id>http://v0dro.github.io/blog/2016/08/21/setting-up-a-lexical-analyser-and-parser-in-ruby</id>
@@ -568,7 +664,7 @@ task <span class="symbol">:parser</span> =&gt; <span class="symbol">:lexer</span
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Random thoughts on music theory.]]></title>
+    <title type="html"><![CDATA[Random Thoughts on Music Theory.]]></title>
     <link href="http://v0dro.github.io/blog/2016/08/16/random-thoughts-on-music-theory/"/>
     <updated>2016-08-16T22:37:01+09:00</updated>
     <id>http://v0dro.github.io/blog/2016/08/16/random-thoughts-on-music-theory</id>
@@ -625,7 +721,7 @@ Minor sevenths (C-Bb) and major seconds (C-D) are called mild dissonances. Minor
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Searching for graduate degree courses in USA and Japan.]]></title>
+    <title type="html"><![CDATA[Searching for Graduate Degree Courses in USA and Japan.]]></title>
     <link href="http://v0dro.github.io/blog/2016/08/05/searching-for-graduate-degree-courses-in-usa-and-japan/"/>
     <updated>2016-08-05T19:59:23+09:00</updated>
     <id>http://v0dro.github.io/blog/2016/08/05/searching-for-graduate-degree-courses-in-usa-and-japan</id>
@@ -731,7 +827,7 @@ Minor sevenths (C-Bb) and major seconds (C-D) are called mild dissonances. Minor
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Random thoughts on bass tone]]></title>
+    <title type="html"><![CDATA[Random Thoughts on Bass Tone]]></title>
     <link href="http://v0dro.github.io/blog/2016/07/12/random-thoughts-on-bass-tone/"/>
     <updated>2016-07-12T20:09:06+09:00</updated>
     <id>http://v0dro.github.io/blog/2016/07/12/random-thoughts-on-bass-tone</id>
@@ -827,7 +923,7 @@ Minor sevenths (C-Bb) and major seconds (C-D) are called mild dissonances. Minor
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Making screencasts in Debian]]></title>
+    <title type="html"><![CDATA[Making Screencasts in Debian]]></title>
     <link href="http://v0dro.github.io/blog/2016/07/05/making-screencasts-in-debian/"/>
     <updated>2016-07-05T16:37:45+09:00</updated>
     <id>http://v0dro.github.io/blog/2016/07/05/making-screencasts-in-debian</id>
@@ -874,7 +970,7 @@ Minor sevenths (C-Bb) and major seconds (C-D) are called mild dissonances. Minor
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Summary of work this summer for GSOC 2015]]></title>
+    <title type="html"><![CDATA[Summary of Work This Summer for GSOC 2015]]></title>
     <link href="http://v0dro.github.io/blog/2015/08/16/summary-of-work-this-summer-for-gsoc-2015/"/>
     <updated>2015-08-16T17:08:51+09:00</updated>
     <id>http://v0dro.github.io/blog/2015/08/16/summary-of-work-this-summer-for-gsoc-2015</id>
@@ -925,7 +1021,7 @@ Minor sevenths (C-Bb) and major seconds (C-D) are called mild dissonances. Minor
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Elaboration on certain internals of daru]]></title>
+    <title type="html"><![CDATA[Elaboration on Certain Internals of Daru]]></title>
     <link href="http://v0dro.github.io/blog/2015/08/16/elaboration-on-certain-internals-of-daru/"/>
     <updated>2015-08-16T17:06:34+09:00</updated>
     <id>http://v0dro.github.io/blog/2015/08/16/elaboration-on-certain-internals-of-daru</id>
@@ -1030,7 +1126,7 @@ a | b
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[finding and combining data in daru]]></title>
+    <title type="html"><![CDATA[Finding and Combining Data in Daru]]></title>
     <link href="http://v0dro.github.io/blog/2015/08/03/finding-and-combining-data-in-daru/"/>
     <updated>2015-08-03T03:52:19+09:00</updated>
     <id>http://v0dro.github.io/blog/2015/08/03/finding-and-combining-data-in-daru</id>
@@ -1328,7 +1424,7 @@ vector = <span class="constant">Daru</span>::<span class="constant">Vector</span
 </pre></td>
 </tr></table>
 </div>
-<p><img class="center" src="/images/daru_time_series/simple_vector.png" alt="'A Simple Vector indexed on DateTimeIndex'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru_time_series/simple_vector.png" alt="'A Simple Vector indexed on DateTimeIndex'" /></p>
 
 <p>In the above code, the <code>DateTimeIndex.date_range</code> function is creating a <code>DateTimeIndex</code> starting from a particular date and spanning for 1000 periods, with a frequency of 1 day between period. For a complete coverage of DateTimeIndex see <a href="">this</a> notebook. For an introduction to the date offsets used by daru see <a href="http://v0dro.github.io/blog/2015/07/27/date-offsets-in-daru/">this blog post</a>.</p>
 
@@ -1434,7 +1530,7 @@ rolling.tail
 </pre></td>
 </tr></table>
 </div>
-<p><img class="center" src="/images/daru_time_series/rolling_mean.png" alt="'Rolling Mean Tail'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru_time_series/rolling_mean.png" alt="'Rolling Mean Tail'" /></p>
 
 <p>This time series can be very easily plotted with its rolling mean by using the <a href="https://github.com/dilcom/gnuplotrb">GnuplotRB</a> gem:</p>
 
@@ -1456,7 +1552,7 @@ require <span class="string"><span class="delimiter">'</span><span class="conten
 </tr></table>
 </div>
 
-<p><img class="center" src="/images/daru_time_series/cumsum_rolling_line_graph.png" alt="'Line Graph of Rolling mean and cumsum'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru_time_series/cumsum_rolling_line_graph.png" alt="'Line Graph of Rolling mean and cumsum'" /></p>
 
 <p>These methods are also available on DataFrame, which results in calling them on each of numeric vectors:</p>
 
@@ -1487,7 +1583,7 @@ df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>
 </pre></td>
 </tr></table>
 </div>
-<p><img class="center" src="/images/daru_time_series/dataframe.png" alt="'DateTime indexed DataFrame'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru_time_series/dataframe.png" alt="'DateTime indexed DataFrame'" /></p>
 
 <p>In a manner similar to that done with Vectors above, we can easily plot each Vector of the DataFrame with GNU plot:</p>
 
@@ -1524,7 +1620,7 @@ r_sum.each_vector_with_index <span class="keyword">do</span> |vec,n|
 </pre></td>
 </tr></table>
 </div>
-<p><img class="center" src="/images/daru_time_series/dataframe_plot.png" alt="'Plotting the DataFrame'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru_time_series/dataframe_plot.png" alt="'Plotting the DataFrame'" /></p>
 
 <h2 id="usage-with-statsample-timeseries">Usage with statsample-timeseries</h2>
 
@@ -1848,7 +1944,7 @@ offset = <span class="constant">Daru</span>::<span class="constant">DateTimeInde
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Making statsample work with rb-gsl and gsl-nmatrix]]></title>
+    <title type="html"><![CDATA[Making Statsample Work With Rb-gsl and Gsl-nmatrix]]></title>
     <link href="http://v0dro.github.io/blog/2015/05/12/making-statsample-work-with-rb-gsl-and-gsl-nmatrix/"/>
     <updated>2015-05-12T21:53:46+09:00</updated>
     <id>http://v0dro.github.io/blog/2015/05/12/making-statsample-work-with-rb-gsl-and-gsl-nmatrix</id>
@@ -1878,7 +1974,7 @@ offset = <span class="constant">Daru</span>::<span class="constant">DateTimeInde
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Interfacing and benchmarking high performance linear algebra libraries with Ruby]]></title>
+    <title type="html"><![CDATA[Interfacing and Benchmarking High Performance Linear Algebra Libraries With Ruby]]></title>
     <link href="http://v0dro.github.io/blog/2015/03/11/interfacing-and-benchmarking-high-performance-linear-algebra-libraries-with-ruby/"/>
     <updated>2015-03-11T17:05:45+09:00</updated>
     <id>http://v0dro.github.io/blog/2015/03/11/interfacing-and-benchmarking-high-performance-linear-algebra-libraries-with-ruby</id>
@@ -2238,7 +2334,7 @@ df.sort([<span class="symbol">:a</span>,<span class="symbol">:d</span>],
 </tr></table>
 </div>
 
-<p><img class="center" src="/images/daru2/sorted_df.png" alt="'Hierarchically sorted DataFrame'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru2/sorted_df.png" alt="'Hierarchically sorted DataFrame'" /></p>
 
 <p>Vector objects also have a similar sorting method implemented. Check the docs for more details. Indexing is preserved while sorting of both DataFrame and Vector.</p>
 
@@ -2267,7 +2363,7 @@ df.plot <span class="key">type</span>: <span class="symbol">:line</span>, <span 
 </pre></td>
 </tr></table>
 </div>
-<p><img class="center" src="/images/daru2/line_graph.png" alt="'Line Graph From DataFrame'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru2/line_graph.png" alt="'Line Graph From DataFrame'" /></p>
 
 <p>As you can see, the <code>#plot</code> function exposes the <code>Nyaplot::Plot</code> and <code>Nyaplot::Diagram</code> objects to user after populating them with the relevant data. So the new interface lets experienced users utilize the full power of nyaplot but keeps basic plotting very simple to use for new users or for quick and dirty visualization needs. Unfortunately for now, until a viable solution to interfacing with nyaplot is found, you will need to use the nyaplot API directly.</p>
 
@@ -2315,7 +2411,7 @@ df.mean
 </tr></table>
 </div>
 
-<p><img class="center" src="/images/daru2/df_mean.png" alt="'Calculate Mean of Numeric Vectors'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru2/df_mean.png" alt="'Calculate Mean of Numeric Vectors'" /></p>
 
 <p>Apart from that you can use the <code>#describe</code> method to calculate many statistical features of numeric Vectors in one shot and see a summary of statistics for numerical vectors in the DataFrame that is returned. For example,</p>
 
@@ -2329,7 +2425,7 @@ df.describe
 </tr></table>
 </div>
 
-<p><img class="center" src="/images/daru2/df_describe.png" alt="'Describe Multiple Statistics in One Shot'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru2/df_describe.png" alt="'Describe Multiple Statistics in One Shot'" /></p>
 
 <p>The covariance and correlation coeffiecients between the numeric vectors can also be found with <code>#cov</code> and <code>#corr</code></p>
 
@@ -2431,7 +2527,7 @@ df_mi = <span class="constant">Daru</span>::<span class="constant">DataFrame</sp
 </tr></table>
 </div>
 
-<p><img class="center" src="/images/daru2/multi_index_table.png" alt="'DataFrame with hierarchical indexing'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru2/multi_index_table.png" alt="'DataFrame with hierarchical indexing'" /></p>
 
 <p>Selecting a top level index from the hierarchy will select all the rows under that name, and return a new DataFrame with just that much data and indexes.</p>
 
@@ -2445,7 +2541,7 @@ df_mi.row[<span class="symbol">:a</span>]
 </tr></table>
 </div>
 
-<p><img class="center" src="/images/daru2/multi_index_partial.png" alt="'Partial Selection Of Multi Indexed DataFrame'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru2/multi_index_partial.png" alt="'Partial Selection Of Multi Indexed DataFrame'" /></p>
 
 <p>Alternatively passing the entire tuple will return just that row as a <code>Daru::Vector</code>, indexed according to the column index.</p>
 
@@ -2458,7 +2554,7 @@ df_mi.row[<span class="symbol">:a</span>, <span class="symbol">:one</span>,<span
 </pre></td>
 </tr></table>
 </div>
-<p><img class="center" src="/images/daru2/multi_index_exact.png" alt="'Selecting A Single Row From A Multi Indexed DataFrame'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru2/multi_index_exact.png" alt="'Selecting A Single Row From A Multi Indexed DataFrame'" /></p>
 
 <p>Hierachical indexing is especially useful when aggregating or splitting data, or generating data summaries as we’ll see in the following examples.</p>
 
@@ -2605,7 +2701,7 @@ grouped.mean
 </pre></td>
 </tr></table>
 </div>
-<p><img class="center" src="/images/daru2/group_by_mean.png" alt="'Aggregating by Mean After Grouping'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru2/group_by_mean.png" alt="'Aggregating by Mean After Grouping'" /></p>
 
 <p>A hierarchichally indexed DataFrame is returned. Check the <code>GroupBy</code> docs for more aggregation methods.</p>
 
@@ -2615,7 +2711,7 @@ grouped.mean
 
 <p>To demonstrate with an example, consider <a href="https://github.com/v0dro/daru/blob/master/spec/fixtures/sales-funnel.csv">this CSV file on sales data</a>.</p>
 
-<p><img class="center" src="/images/daru2/pivot_table_data.png" alt="'Data For Pivot Table Demo'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru2/pivot_table_data.png" alt="'Data For Pivot Table Demo'" /></p>
 
 <p>To look at the data from the point of view of the manager and rep:</p>
 
@@ -2629,7 +2725,7 @@ sales.pivot_table <span class="key">index</span>: [<span class="symbol">:manager
 </tr></table>
 </div>
 
-<p><img class="center" src="/images/daru2/pivot_table_index.png" alt="'Data Pivoted on Index Only.'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru2/pivot_table_index.png" alt="'Data Pivoted on Index Only.'" /></p>
 
 <p>You can see that the pivot table has summarized the data and grouped it according to the manager and representative.</p>
 
@@ -2645,7 +2741,7 @@ sales.pivot_table(<span class="key">index</span>: [<span class="symbol">:manager
 </tr></table>
 </div>
 
-<p><img class="center" src="/images/daru2/pivoted_data.png" alt="'Data Pivoted to Reflect Sales'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru2/pivoted_data.png" alt="'Data Pivoted to Reflect Sales'" /></p>
 
 <h2 id="compatibility-with-statsample">Compatibility with statsample</h2>
 
@@ -2742,7 +2838,7 @@ df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Solving systems of linear equations in Ruby]]></title>
+    <title type="html"><![CDATA[Solving Systems of Linear Equations in Ruby]]></title>
     <link href="http://v0dro.github.io/blog/2014/12/14/solving-systems-of-linear-equations-in-ruby/"/>
     <updated>2014-12-14T15:27:34+09:00</updated>
     <id>http://v0dro.github.io/blog/2014/12/14/solving-systems-of-linear-equations-in-ruby</id>
@@ -2794,7 +2890,7 @@ df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>
 
 <p>Let <em>L</em> in equation (2) to be the lower part of a 3x3 matrix A (as per (1)). So equation (2) can be represented in matrix form as:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
+<script type="math/tex; mode=display">% &lt;![CDATA[
 \begin{align}
     \begin{pmatrix}
       L_{00} & 0 & 0 \\
@@ -2812,7 +2908,7 @@ df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>
       b_{1} \\
       b_{2}
     \end{pmatrix}
-\end{align} %]]></script>
+\end{align} %]]&gt;</script>
 
 <p>Our task now is calculate the column matrix containing the <em>y</em> unknowns.
 Thus by equation (4), each of them can be calculated with the following sets of equations (if you find them confusing just correlate each value with that present in the matrices above and it should be clear):</p>
@@ -2845,7 +2941,7 @@ Thus by equation (4), each of them can be calculated with the following sets of 
 
 <p>Lets try to understand this equation by extending the example we used above to understand forward substitution. To gain a better understanding of this concept, consider the equation (3) written in matrix form (keeping the same 3x3 matrix <em>A</em>):</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
+<script type="math/tex; mode=display">% &lt;![CDATA[
 \begin{align}
     \begin{pmatrix}
       U_{00} & U_{01} & U_{02} \\
@@ -2863,7 +2959,7 @@ Thus by equation (4), each of them can be calculated with the following sets of 
       y_{1} \\
       y_{2}
     \end{pmatrix}
-\end{align} %]]></script>
+\end{align} %]]&gt;</script>
 
 <p>Using the matrix representation above as reference, equation (5) can be expanded in terms of a 3x3 matrix as:</p>
 
@@ -2932,7 +3028,7 @@ solution = coeffs.solve(rhs)
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[One Dimensional Interpolation: Introduction And Implementation In Ruby]]></title>
+    <title type="html"><![CDATA[One Dimensional Interpolation: Introduction and Implementation in Ruby]]></title>
     <link href="http://v0dro.github.io/blog/2014/11/29/one-dimensional-interpolation-introduction-and-implementation-in-ruby/"/>
     <updated>2014-11-29T03:53:04+09:00</updated>
     <id>http://v0dro.github.io/blog/2014/11/29/one-dimensional-interpolation-introduction-and-implementation-in-ruby</id>
@@ -3031,7 +3127,7 @@ f.interpolate(<span class="float">2.5</span>)
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Data Analysis in RUby: Basic data manipulation and plotting]]></title>
+    <title type="html"><![CDATA[Data Analysis in RUby: Basic Data Manipulation and Plotting]]></title>
     <link href="http://v0dro.github.io/blog/2014/11/25/data-analysis-in-ruby-basic-data-manipulation-and-plotting/"/>
     <updated>2014-11-25T17:25:13+09:00</updated>
     <id>http://v0dro.github.io/blog/2014/11/25/data-analysis-in-ruby-basic-data-manipulation-and-plotting</id>
@@ -3048,7 +3144,7 @@ f.interpolate(<span class="float">2.5</span>)
   <li><strong>DataFrame</strong> - A named spreadsheet-like two-dimensional frame of data.</li>
 </ul>
 
-<p>A <em>Vector</em> can either be represented by a Ruby Array, NMatrix(MRI) or MDArray(JRuby) internally. This allows for fast data manipulation in native code. Users can change the underlying implementation at will (demonstrated in the <a href="/blog/2015/02/24/data-analysis-in-ruby-part-2/">next</a> blog post).</p>
+<p>A <em>Vector</em> can either be represented by a Ruby Array, NMatrix(MRI) or MDArray(JRuby) internally. This allows for fast data manipulation in native code. Users can change the underlying implementation at will (demonstrated in the <a href="http://v0dro.github.io/blog/2015/02/24/data-analysis-in-ruby-part-2/">next</a> blog post).</p>
 
 <p>Both of these can be indexed by the <code>Daru::Index</code> or <code>Daru::MultiIndex</code> class, which allows us to reference and operate on data by name instead of the traditional numeric indexing, and also perform index-based manipulation, equality and plotting operations.</p>
 
@@ -3299,7 +3395,7 @@ df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>
 </tr></table>
 </div>
 
-<p><img class="center" src="/images/daru1/create_music_df.png" alt="'Create a DataFrame from a TSV file.'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru1/create_music_df.png" alt="'Create a DataFrame from a TSV file.'" /></p>
 
 <p>As you can see the <em>timestamp</em> field is in a somewhat non-Ruby format which is pretty difficult for the default Time class to understand, so we destructively map time zone information (IST in this case) and then change every <em>timestamp</em> string field into a Ruby <em>Time</em> object, so that operations on time can be easily performed.</p>
 
@@ -3316,7 +3412,7 @@ df.timestamp.recode! { |ts| ts += <span class="string"><span class="delimiter">&
 </pre></td>
 </tr></table>
 </div>
-<p><img class="center" src="/images/daru1/dmap_vector.png" alt="'Destructively map a given vector.'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru1/dmap_vector.png" alt="'Destructively map a given vector.'" /></p>
 
 <div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
@@ -3338,7 +3434,7 @@ df = df.recode(<span class="symbol">:row</span>) <span class="keyword">do</span>
 </tr></table>
 </div>
 
-<p><img class="center" src="/images/daru1/df_row_map.png" alt="center 'Map all rows of a DataFrame.'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru1/df_row_map.png" alt="center 'Map all rows of a DataFrame.'" /></p>
 
 <h4 id="basic-querying">Basic Querying</h4>
 
@@ -3346,7 +3442,7 @@ df = df.recode(<span class="symbol">:row</span>) <span class="keyword">do</span>
 
 <p><code>df.row[900..923]</code></p>
 
-<p><img class="center" src="/images/daru1/range_row_access.png" alt="center 'Accessing rows with a range'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru1/range_row_access.png" alt="center 'Accessing rows with a range'" /></p>
 
 <h4 id="data-analysis">Data Analysis</h4>
 
@@ -3364,13 +3460,13 @@ artists = df.group_by(<span class="symbol">:artname</span>).size
 </tr></table>
 </div>
 
-<p><img class="center" src="/images/daru1/get_max_artists.png" alt="'Create a vector of artist names vs number of times they appear.'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru1/get_max_artists.png" alt="'Create a vector of artist names vs number of times they appear.'" /></p>
 
 <p>To get the maximum value out of these, use <code>#max_index</code>. This will return a Vector which has the max:</p>
 
 <p><code>count.max_index</code></p>
 
-<p><img class="center" src="/images/daru1/artists_max.png" alt="'Obtain the most heard artist.'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru1/artists_max.png" alt="'Obtain the most heard artist.'" /></p>
 
 <h4 id="plotting">Plotting</h4>
 
@@ -3400,7 +3496,7 @@ top_ten.plot <span class="key">type</span>: <span class="symbol">:bar</span> <sp
 </tr></table>
 </div>
 
-<p><img class="center" src="/images/daru1/plot_top_ten.png" alt="'Top ten artists plotted.'" /></p>
+<p><img class="center" src="http://v0dro.github.io/images/daru1/plot_top_ten.png" alt="'Top ten artists plotted.'" /></p>
 
 <p>More examples can be found in <a href="https://github.com/v0dro/daru#notebooks">the notebooks section of the daru README</a>.</p>
 
@@ -3411,14 +3507,14 @@ top_ten.plot <span class="key">type</span>: <span class="symbol">:bar</span> <sp
   <li>You can find all the above examples implemented in <a href="http://nbviewer.ipython.org/github/v0dro/daru/blob/master/notebooks/intro_with_music_data_.ipynb">this notebook</a>.</li>
   <li>Contribute to daru on <a href="https://github.com/v0dro/daru">github</a>. Any contributions will be greatly appreciated!</li>
   <li>Many thanks to <a href="http://www.last.fm/">last.fm</a> for providing the data.</li>
-  <li>Check out the <a href="/blog/2015/02/24/data-analysis-in-ruby-part-2/">next blog post in this series</a>, elaborating on the next release of daru.</li>
+  <li>Check out the <a href="http://v0dro.github.io/blog/2015/02/24/data-analysis-in-ruby-part-2/">next blog post in this series</a>, elaborating on the next release of daru.</li>
 </ul>
 
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Accessing matrix elements when expressed as a contiguous 1D array]]></title>
+    <title type="html"><![CDATA[Accessing Matrix Elements When Expressed as a Contiguous 1D Array]]></title>
     <link href="http://v0dro.github.io/blog/2014/10/12/accessing-matrix-elements-when-expressed-as-a-contiguous-1d-array/"/>
     <updated>2014-10-12T22:22:10+09:00</updated>
     <id>http://v0dro.github.io/blog/2014/10/12/accessing-matrix-elements-when-expressed-as-a-contiguous-1d-array</id>

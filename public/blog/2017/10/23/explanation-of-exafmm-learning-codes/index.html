@@ -5,34 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Explanation of ExaFMM learning codes. - Travel &lt;code&gt; Music</title>
+  <title>Explanation of ExaFMM Learning Codes. - Travel &lt;code&gt; Music</title>
   <meta name="author" content="Sameer Deshmukh">
 
   
-  <meta name="description" content="
-
-  
-  
-    
-      Explanation of ExaFMM learning codes.
-    
-    
-      
-        
-
-
-
-
-
-        
-      
-    
-  
-
-
-ExaFMM learning tutorials
-
-In thi...">
+  <meta name="description" content="In this file I will write descriptions of the exafmm ‘learning’ codes and my understanding of them. I have been tasked with understanding the code &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -42,13 +19,13 @@ In thi...">
 
   
   <link rel="canonical" href="http://v0dro.github.io/blog/2017/10/23/explanation-of-exafmm-learning-codes/">
-  <link href="//favicon.png" rel="icon">
-  <link href="//stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Travel &lt;code&gt; Music" type="application/atom+xml">
-  <script src="//javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="//javascripts/octopress.js" type="text/javascript"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -67,11 +44,27 @@ In thi...">
   </script>
 
 
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      jax: ["input/TeX", "output/HTML-CSS"],
+      tex2jax: {
+        inlineMath: [ ['$', '$'], ["\(", "\)"] ],
+        displayMath: [ ['$$', '$$'], ["\[", "\]"] ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+      //,
+      //displayAlign: "left",
+      //displayIndent: "2em"
+    });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML" type="text/javascript"></script>
 </head>
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="//">Travel &lt;code&gt; Music</a></h1>
+  <h1><a href="/">Travel &lt;code&gt; Music</a></h1>
   
     <h2>A place where I share my experiences with Travel, Programming and Music</h2>
   
@@ -85,17 +78,17 @@ In thi...">
   
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
-    <input type="hidden" name="sitesearch" value="http://v0dro.github.io">
+    <input type="hidden" name="sitesearch" value="v0dro.github.io">
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
   
 <ul class="main-navigation">
-  <li><a href="//blog/archives">Archive</a></li>
-  <li><a href="//travel">Travel</a></li>
-  <li><a href="//code">Code</a></li>
-  <li><a href="//music">Music</a></li>
-  <li><a href="//about">About</a></li>
+  <li><a href="/blog/archives">Archive</a></li>
+  <li><a href="/travel">Travel</a></li>
+  <li><a href="/code">Code</a></li>
+  <li><a href="/music">Music</a></li>
+  <li><a href="/about">About</a></li>
 </ul>
 
 </nav>
@@ -106,7 +99,7 @@ In thi...">
   
   <header>
     
-      <h1 class="entry-title">Explanation of ExaFMM learning codes.</h1>
+      <h1 class="entry-title">Explanation of ExaFMM Learning Codes.</h1>
     
     
       <p class="meta">
@@ -122,10 +115,38 @@ In thi...">
   </header>
 
 
-<div class="entry-content"><h1 id="exafmm-learning-tutorials">ExaFMM learning tutorials</h1>
-
-<p>In this file I will write descriptions of the exafmm ‘learning’ codes and my understanding of them. I have been tasked with understanding the code and porting it to Ruby, my favorite language.
+<div class="entry-content"><p>In this file I will write descriptions of the exafmm ‘learning’ codes and my understanding of them. I have been tasked with understanding the code and porting it to Ruby, my favorite language.
 We shall start from the first tutorial, i.e. <a href="">0_tree</a>. You can find the full Ruby code here.</p>
+
+<!-- MarkdownTOC style="round" autolink="true" depth="4" -->
+
+<ul>
+  <li>0_tree
+    <ul>
+      <li>step1.cxx</li>
+      <li>step2.cxx</li>
+      <li>step3.cxx</li>
+      <li>step04.cxx</li>
+    </ul>
+  </li>
+  <li>1_traversal
+    <ul>
+      <li>step1.cxx</li>
+      <li>step2.cxx</li>
+    </ul>
+  </li>
+  <li>2_kernels
+    <ul>
+      <li>kernel.h</li>
+      <li>vector.h</li>
+      <li>exafmm.h</li>
+      <li>exafmm2d.h and step1.cxx</li>
+      <li>step2.cxx</li>
+    </ul>
+  </li>
+</ul>
+
+<!-- /MarkdownTOC -->
 
 <h1 id="0_tree">0_tree</h1>
 
@@ -205,13 +226,9 @@ quadrant = a + (b &lt;&lt; <span class="integer">1</span>)
 <div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 <a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
 </pre></td>
-  <td class="code"><pre>center[d] = 
-  x0[d] +
-  radius *
-  (((i &amp; <span class="integer">1</span> &lt;&lt; d) &gt;&gt; d) * <span class="integer">2</span> - <span class="integer">1</span>) <span class="comment"># i is quadrant number</span>
+  <td class="code"><pre> <span class="comment"># i is quadrant number</span>
+center[d] = x0[d] + radius * (((i &amp; <span class="integer">1</span> &lt;&lt; d) &gt;&gt; d) * <span class="integer">2</span> - <span class="integer">1</span>)
 </pre></td>
 </tr></table>
 </div>
@@ -261,7 +278,7 @@ based on the quadrant. The ‘tree’ is actually stored in an array.</p>
 
 <p>In the <code>Cell</code> struct, I wonder why the body is stored as a pointer and not a variable.</p>
 
-<p>Implementation in the Ruby code, like saving the size of an Array during a recursive call 
+<p>Implementation in the Ruby code, like saving the size of an Array during a recursive call
 is slightly different since Ruby does not support pointers, but the data structures and
 overall code is more or less a direct port.</p>
 
@@ -314,26 +331,39 @@ about the location of the first child of this cell, and the second <code>first_b
 
 <p>For causes of optimization, the values stored inside <code>ynm</code> are not the ones that correspond to the spherical harmonic, but are values that yield optimized results when the actual computation happens.</p>
 
+<h4 id="historical-origins-of-kernelh">Historical origins of kernel.h</h4>
+
+<p>This file is a new and improved version of the laplace.h file from the exafmm-alpha repo. Due to the enhacements made, the code in this file performs calculations that are significantly more accurate than those in laplace.h.</p>
+
+<p>laplace.h consists of a C++ class inside which all the functions reside, along with a constructor that computes pre-determined values for subsequent computation of the kernels. For example, in the constructor of the <code>Kernel</code> class, there is a line like so:</p>
+<div class="language-cpp highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+</pre></td>
+  <td class="code"><pre>Anm[nm] = oddOrEven(n)/std::sqrt(fnmm*fnpm);
+</pre></td>
+</tr></table>
+</div>
+<p>This line is computing the value of <script type="math/tex">A^{m}_{n}</script> as is given by Cheng’s paper (equation 14). This value is used in M2L and L2L kernels later. However, this value is never directly computed in the new and optimized <code>kernel.h</code> file. Instead, it modifies the computation of the <code>Ynm</code> vector such that it no longer becomes necessary to involve the <code>Anm</code> term in any kernel computation.</p>
+
 <h3 id="functions">Functions</h3>
 
-<h3 id="cart2sph">cart2sph</h3>
+<h4 id="cart2sph">cart2sph</h4>
 
 <p>This function converts cartesian co-ordinates in (X,Y,Z) to spherical co-ordinates involving <code>radius</code>, <code>theta</code> and <code>phi</code>. <code>radius</code> is simply the square root of the norm of the co-ordinates (norm is defined as the sum of squares of the co-ordinates in <code>vec.h</code>).</p>
 
-<h3 id="evalmultipole">evalMultipole</h3>
+<h4 id="evalmultipole-simple-implementation">evalMultipole simple implementation</h4>
 
 <p>This algorithm calculates the multipole of a cell. It uses spherical harmonics so that net force of the forces inside a sphere and can be estimated on the surface of the sphere, which can then be treated as a single body for estimating forces.</p>
 
-<p>The optimizations that are presented in the <code>kernel.h</code> version of this file are quite complex to understand since they look quite different from the original equation. I will explain the code written in the file, however, we will use unoptmized Ruby code that actually resembles the equation for purposes of understanding.</p>
+<p>The optimizations that are presented in the <code>kernel.h</code> version of this file are quite complex to understand since they look quite different from the original equation.</p>
 
 <p>For code that is still sane and easier to read, head over to the <a href="https://github.com/exafmm/exafmm-alpha/blob/develop/kernels/laplace.h#L48">laplace.h</a> file in exafmm-alpha. The explanations that follow for now are from this file. We will see how the same functions in <code>kernel.h</code> have been modified to make computation faster and less dependent on large number divisions which reduce the accuracy of the system.</p>
 
-<p>The <code>evalMultipole</code> function basically tries to populate the <code>Ynm</code> array with data that is computed with the following equation:
-<script type="math/tex">\begin
-\rho^{n}Y_{n}^{m}=\sum_{m=0}^{P-1}\sum_{n=m+1}^{P-1}\rho^{n}P_{n}^{m}(x)\sqrt{\frac{(n-m)!}{(n+m)!}}e^{im\beta}
-\end</script></p>
+<p>The <code>evalMultipole</code> function basically tries to populate the <code>Ynm</code> array with data that is computed with the following equation:</p>
 
-<p>It starts with evaluating terms that need not be computed for every iteration of <code>n</code>, and computes those terms in the outer loop itself. The terms in the outer loop corespond to the condition <code>m=n</code>. The first of these is the exponential term <script type="math/tex">e^im\beta</script>.</p>
+<script type="math/tex; mode=display">\rho^{n}Y_{n}^{m}=\sum_{m=0}^{P-1}\sum_{n=m+1}^{P-1}\rho^{n}P_{n}^{m}(x)\sqrt{\frac{(n-m)!}{(n+m)!}}e^{im\beta}</script>
+
+<p>It starts with evaluating terms that need not be computed for every iteration of <code>n</code>, and computes those terms in the outer loop itself. The terms in the outer loop correspond to the condition <code>m=n</code>. The first of these is the exponential term <script type="math/tex">e^{im\beta}</script>.</p>
 
 <p>After this is a curious case of computation of some indexes called <code>npn</code> and <code>nmn</code>. These are computed as follows:</p>
 <div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
@@ -370,12 +400,72 @@ V        0
 
 <p>Now let us talk about the evaluation of the <a href="http://mathworld.wolfram.com/AssociatedLegendrePolynomial.html">Associated Legendre Polynomial</a> <script type="math/tex">P^m_{n}(cos(\theta))</script>, where <em>m</em> is the order of the differential equation and <em>n</em> is the degree. The Associated Legendre Polynomial is the solution to the <a href="http://mathworld.wolfram.com/AssociatedLegendreDifferentialEquation.html">Associated Legendre Equation</a>. The Legendre polynomial can be expressed in terms of the <a href="https://en.wikipedia.org/wiki/Associated_Legendre_polynomials#Definition_for_non-negative_integer_parameters_.E2.84.93_and_m">Rodrigues form</a> for computation without dependence on the simple Legendre Polynomial <script type="math/tex">P_{n}</script>. However, due to the factorials and rather large divisions that need to be performed to compute the Associated Legendre polynomial in this form, computing this equation for large values of <em>m</em> and <em>n</em> quickly becomes unstable. Therefore, we use a recurrence relation of the Polynomial in order to compute different values.</p>
 
-<p>The recurrence relation looks like so:
-<script type="math/tex">\begin{equation}
-  (n-m+1)P^m_{n+1}(x)=x(2n+1)P^m_n(x)-(n+m)P^m_{n-1}(x)
-\end{equation}</script></p>
+<p>The recurrence relation looks like so:</p>
+
+<script type="math/tex; mode=display">(n-m+1)P^m_{n+1}(x)=x(2n+1)P^m_n(x)-(n+m)P^m_{n-1}(x)</script>
+
+<p>This is expressed in the code with the following line:</p>
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+</pre></td>
+  <td class="code"><pre>p = (x * (<span class="integer">2</span> * n + <span class="integer">1</span>) * p1 - (n + m) * p2) / (n - m + <span class="integer">1</span>)
+</pre></td>
+</tr></table>
+</div>
+<p>It can be seen that <code>p</code> is equivalent to <script type="math/tex">P^{m}_{n+1}</script>, <code>p1</code> is equivalent to <script type="math/tex">P^{m}_{n}</script> and <code>p2</code> is equivalent to <script type="math/tex">P^{m}_{n-1}</script>. This convention is followed everywhere in the code.</p>
+
+<p>Observe that the above equation requires the value of <em>P</em> for <em>n-1</em> and <em>n+1</em> to be computed so that the value for <em>P</em> at <em>n</em> can be computed. Therefore, we first set <em>m=m+1</em> and then compute <script type="math/tex">P^m_{m+1}</script> which can be expressed like this:
+<script type="math/tex">P^{m}_{m+1}(x)=x(2m+1)P^{m}_{m}(x)</script></p>
+
+<p>The above equation is expressed by the following line in the code:</p>
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+</pre></td>
+  <td class="code"><pre>p = x * (<span class="integer">2</span> * m + <span class="integer">1</span>) * p1
+</pre></td>
+</tr></table>
+</div>
+
+<p>If you read the code closely, you will see that just at the beginning of the <code>evalMultipole</code> function, we initialize <code>p1 = 1</code> the first time the looping is done. This is because when <code>p1</code> at the first instance is identified with <code>m = 0</code>, and we substitute <code>m=0</code> in this equation:</p>
+
+<script type="math/tex; mode=display">P^{m}_{m} = (-1)^{m}(2m-1)!(1-x^{2})^{\frac{m}{2}}</script>
+
+<p>We will get <script type="math/tex">P^{m}_{m}(x)=1</script>.</p>
+
+<p>When you look at the code initially, there might be some confusion regarding the significance of having to <code>rho</code> terms, <code>rhom</code> and <code>rhon</code>. This is written because each term of <code>Ynm</code> depends on a particular power of <code>rho</code> raised to <code>n</code>. So just before the inner loop, you can see the line <code>rhon = rhom</code>, which basically reduces the number of times that <code>rho</code> needs to be multiplied since the outer loop’s value of <code>rho</code> is already set to what it should be for that particular iteration.</p>
+
+<p>Finally, see that there is a line right after the inner loop which reads like this:</p>
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+</pre></td>
+  <td class="code"><pre>pn = -pn * fact * y
+</pre></td>
+</tr></table>
+</div>
+<p>This line is for calculating the value of <code>p1</code> or <script type="math/tex">P^{m}_{m}</script> after the first iteration of the loop. Since the second factorial term in the equation basically just deals with odd numbers, the calculation of this term can be simplified by simply incrementing by <code>2</code> with <code>fact += 2</code>. The <code>y</code> term in the above equation is in fact <code>sin(alpha)</code> (defined at the top of this function). This is because, if you see the original equation, you will see that the third term is <script type="math/tex">(1-x^{2})</script>, and <em>x</em> is in fact <code>cos(alpha)</code>. Therefore, using the trigonometric equation, we can say simply substitute the entire term with <code>y</code>.</p>
+
+<h4 id="evalmultipole-optimized-implementation">evalMultipole optimized implementation</h4>
+
+<p>Now that a background of the basic implementation of <code>evalMultipole</code> has been established, we can move over to understanding the code that is placed inside the <a href="https://github.com/exafmm/exafmm/blob/learning/2_kernels/kernel.h">kernel.h</a> file of the <code>exafmm/learning</code> branch. This code is more optimized and can compute results with much higher accuracy than the code that is present in the <code>exafmm-alpha</code> repo that we previously saw. The main insipiration for this code come’s from the Treecode paper posted above.</p>
+
+<p>In this code, most of the stuff relating to indexing and calculation of the powers of <code>rho</code> is pretty much the same. However, there are some important changes with regards to the computation of the values that go inside the <code>Ynm</code> array. This change is also reflected in the subsequent kernels.</p>
+
+<p>For instance, this new function derives an important term <script type="math/tex">O^{m}_{n}</script> from <a href="http://epubs.siam.org/doi/abs/10.1137/0916051">Epton’s paper</a> (equation <code>2.20</code>).</p>
 
 <p>The Ruby implementation is <a href="">here</a>.</p>
+
+<h4 id="p2m">P2M</h4>
+
+<h4 id="m2m">M2M</h4>
+
+<p>A major difference exists between computation of M2M in the <code>kernel.h</code> and <code>laplace.h</code> files.</p>
+<h4 id="m2l">M2L</h4>
+
+<h4 id="l2l">L2L</h4>
+
+<h4 id="l2p">L2P</h4>
+
+<h4 id="p2p">P2P</h4>
 
 <h2 id="vectorh">vector.h</h2>
 
@@ -385,12 +475,11 @@ V        0
 
 <h2 id="exafmmh">exafmm.h</h2>
 
-<h2 id="exafmm2dh">exafmm2d.h</h2>
+<h2 id="exafmm2dh-and-step1cxx">exafmm2d.h and step1.cxx</h2>
 
-<h2 id="step1cxx-2">step1.cxx</h2>
+<p>Shows a very simple preliminary implementation of the actuall exafmm code. Mostly useful for understanding purpose only.</p>
 
 <h2 id="step2cxx-2">step2.cxx</h2>
-
 </div>
 
 
@@ -438,6 +527,33 @@ V        0
 
 <aside class="sidebar">
   
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/10/23/explanation-of-exafmm-learning-codes/">Explanation of ExaFMM Learning Codes.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/11/24/gsoc-2016-wrap-up-for-sciruby/">GSOC 2016 Wrap Up for SciRuby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/27/advice-for-future-gsoc-students-and-mentors-based-on-my-experience/">Advice for Future GSOC Students and Mentors Based on My Experience.</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/21/setting-up-a-lexical-analyser-and-parser-in-ruby/">Setting Up a Lexical Analyser and Parser in Ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/08/16/random-thoughts-on-music-theory/">Random Thoughts on Music Theory.</a>
+      </li>
+    
+  </ul>
+</section>
+
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
@@ -468,39 +584,10 @@ V        0
 </section>
 
 
-  <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2017/10/23/explanation-of-exafmm-learning-codes/">Explanation of ExaFMM learning codes.</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/11/24/gsoc-2016-wrap-up-for-sciruby/">GSOC 2016 Wrap Up For SciRuby</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/08/27/advice-for-future-gsoc-students-and-mentors-based-on-my-experience/">Advice for future GSOC students and mentors based on my experience.</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/08/21/setting-up-a-lexical-analyser-and-parser-in-ruby/">Setting up a lexical analyser and parser in Ruby</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/08/16/random-thoughts-on-music-theory/">Random thoughts on music theory.</a>
-      </li>
-    
-  </ul>
-</section>
+
+
 
   
-  
-
-  
-
-
 </aside>
 
 
