@@ -34,10 +34,10 @@ code_dir: downloads/code
 category_dir: blog/categories
 markdown: kramdown
 kramdown:
+  # enable_coderay: true
   syntax_highlighter: coderay
   syntax_highlighter_opts:
     line_numbers: table
-    css: class
 highlighter: pygments.rb # default python pygments have been replaced by pygments.rb
 plugins_dir: plugins
 plugins: [jekyll-paginate, octopress-image-tag]

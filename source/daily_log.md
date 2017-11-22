@@ -1,0 +1,8 @@
+---
+title:
+---
+
+A page with my daily log. I list interesting stuff that I happened to read or things that I saw over here.
+
+**22 November 2017**
+

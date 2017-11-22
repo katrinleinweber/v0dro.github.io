@@ -134,11 +134,11 @@
 <a href="#n6" name="n6">6</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-offset = <span class="constant">Daru</span>::<span class="constant">Offsets</span>::<span class="constant">Hour</span>.new
-offset + <span class="constant">DateTime</span>.new(<span class="integer">2012</span>,<span class="integer">4</span>,<span class="integer">5</span>,<span class="integer">4</span>)
-<span class="comment">#=&gt; #&lt;DateTime: 2012-04-05T05:00:00+00:00 ((2456023j,18000s,0n),+0s,2299161j)&gt;</span>
+offset = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Offsets</span>::<span style="color:#036;font-weight:bold">Hour</span>.new
+offset + <span style="color:#036;font-weight:bold">DateTime</span>.new(<span style="color:#00D">2012</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>,<span style="color:#00D">4</span>)
+<span style="color:#777">#=&gt; #&lt;DateTime: 2012-04-05T05:00:00+00:00 ((2456023j,18000s,0n),+0s,2299161j)&gt;</span>
 </pre></td>
 </tr></table>
 </div>
@@ -215,11 +215,11 @@ offset + <span class="constant">DateTime</span>.new(<span class="integer">2012</
 <a href="#n6" name="n6">6</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-offset = <span class="constant">Daru</span>::<span class="constant">DateOffset</span>.new(<span class="key">days</span>: <span class="integer">3</span>)
-offset + <span class="constant">DateTime</span>.new(<span class="integer">2012</span>,<span class="integer">4</span>,<span class="integer">5</span>,<span class="integer">2</span>)
-<span class="comment">#=&gt; #&lt;DateTime: 2012-04-08T02:00:00+00:00 ((2456026j,7200s,0n),+0s,2299161j)&gt;</span>
+offset = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DateOffset</span>.new(<span style="color:#606">days</span>: <span style="color:#00D">3</span>)
+offset + <span style="color:#036;font-weight:bold">DateTime</span>.new(<span style="color:#00D">2012</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>,<span style="color:#00D">2</span>)
+<span style="color:#777">#=&gt; #&lt;DateTime: 2012-04-08T02:00:00+00:00 ((2456026j,7200s,0n),+0s,2299161j)&gt;</span>
 </pre></td>
 </tr></table>
 </div>
@@ -235,11 +235,11 @@ offset + <span class="constant">DateTime</span>.new(<span class="integer">2012</
 <a href="#n6" name="n6">6</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-offset = <span class="constant">Daru</span>::<span class="constant">DateOffset</span>.new(<span class="key">months</span>: <span class="integer">2</span>, <span class="key">n</span>: <span class="integer">4</span>)
-offset + <span class="constant">DateTime</span>.new(<span class="integer">2011</span>,<span class="integer">5</span>,<span class="integer">2</span>)
-<span class="comment">#=&gt; #&lt;DateTime: 2012-01-02T00:00:00+00:00 ((2455929j,0s,0n),+0s,2299161j)&gt;</span>
+offset = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DateOffset</span>.new(<span style="color:#606">months</span>: <span style="color:#00D">2</span>, <span style="color:#606">n</span>: <span style="color:#00D">4</span>)
+offset + <span style="color:#036;font-weight:bold">DateTime</span>.new(<span style="color:#00D">2011</span>,<span style="color:#00D">5</span>,<span style="color:#00D">2</span>)
+<span style="color:#777">#=&gt; #&lt;DateTime: 2012-01-02T00:00:00+00:00 ((2455929j,0s,0n),+0s,2299161j)&gt;</span>
 </pre></td>
 </tr></table>
 </div>
@@ -263,17 +263,17 @@ offset + <span class="constant">DateTime</span>.new(<span class="integer">2011</
 <a href="#n12" name="n12">12</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-offset = <span class="constant">Daru</span>::<span class="constant">Offsets</span>::<span class="constant">YearEnd</span>.new
-offset + <span class="constant">DateTime</span>.new(<span class="integer">2012</span>,<span class="integer">5</span>,<span class="integer">1</span>,<span class="integer">5</span>,<span class="integer">2</span>,<span class="integer">1</span>)
-<span class="comment">#=&gt; #&lt;DateTime: 2012-12-31T05:02:01+00:00 ((2456293j,18121s,0n),+0s,2299161j)&gt;</span>
+offset = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Offsets</span>::<span style="color:#036;font-weight:bold">YearEnd</span>.new
+offset + <span style="color:#036;font-weight:bold">DateTime</span>.new(<span style="color:#00D">2012</span>,<span style="color:#00D">5</span>,<span style="color:#00D">1</span>,<span style="color:#00D">5</span>,<span style="color:#00D">2</span>,<span style="color:#00D">1</span>)
+<span style="color:#777">#=&gt; #&lt;DateTime: 2012-12-31T05:02:01+00:00 ((2456293j,18121s,0n),+0s,2299161j)&gt;</span>
 
-<span class="comment"># Passing an Integer into an Offsets object will apply the offset that many times:</span>
+<span style="color:#777"># Passing an Integer into an Offsets object will apply the offset that many times:</span>
 
-offset = <span class="constant">Daru</span>::<span class="constant">Offsets</span>::<span class="constant">MonthBegin</span>.new(<span class="integer">3</span>)
-offset + <span class="constant">DateTime</span>.new(<span class="integer">2015</span>,<span class="integer">3</span>,<span class="integer">5</span>)
-<span class="comment">#=&gt; #&lt;DateTime: 2015-06-01T00:00:00+00:00 ((2457175j,0s,0n),+0s,2299161j)&gt;</span>
+offset = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Offsets</span>::<span style="color:#036;font-weight:bold">MonthBegin</span>.new(<span style="color:#00D">3</span>)
+offset + <span style="color:#036;font-weight:bold">DateTime</span>.new(<span style="color:#00D">2015</span>,<span style="color:#00D">3</span>,<span style="color:#00D">5</span>)
+<span style="color:#777">#=&gt; #&lt;DateTime: 2015-06-01T00:00:00+00:00 ((2457175j,0s,0n),+0s,2299161j)&gt;</span>
 </pre></td>
 </tr></table>
 </div>
@@ -295,15 +295,15 @@ offset + <span class="constant">DateTime</span>.new(<span class="integer">2015</
 <strong><a href="#n10" name="n10">10</a></strong>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-offset = <span class="constant">Daru</span>::<span class="constant">Offsets</span>::<span class="constant">Week</span>.new(<span class="key">weekday</span>: <span class="integer">3</span>)
-date   = <span class="constant">DateTime</span>.new(<span class="integer">2012</span>,<span class="integer">1</span>,<span class="integer">6</span>)
-date.wday <span class="comment">#=&gt; 5</span>
+offset = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Offsets</span>::<span style="color:#036;font-weight:bold">Week</span>.new(<span style="color:#606">weekday</span>: <span style="color:#00D">3</span>)
+date   = <span style="color:#036;font-weight:bold">DateTime</span>.new(<span style="color:#00D">2012</span>,<span style="color:#00D">1</span>,<span style="color:#00D">6</span>)
+date.wday <span style="color:#777">#=&gt; 5</span>
 
 o = offset + date
-<span class="comment">#=&gt; #&lt;DateTime: 2012-01-11T00:00:00+00:00 ((2455938j,0s,0n),+0s,2299161j)&gt;</span>
-o.wday <span class="comment">#=&gt; 3</span>
+<span style="color:#777">#=&gt; #&lt;DateTime: 2012-01-11T00:00:00+00:00 ((2455938j,0s,0n),+0s,2299161j)&gt;</span>
+o.wday <span style="color:#777">#=&gt; 3</span>
 </pre></td>
 </tr></table>
 </div>
@@ -325,11 +325,11 @@ o.wday <span class="comment">#=&gt; 3</span>
 <a href="#n6" name="n6">6</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-offset = <span class="constant">Daru</span>::<span class="constant">DateTimeIndex</span>.date_range(
-  <span class="symbol">:start</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">2015-4-4</span><span class="delimiter">'</span></span>, <span class="symbol">:periods</span> =&gt; <span class="integer">100</span>, <span class="symbol">:freq</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">H</span><span class="delimiter">'</span></span>)
-<span class="comment">#=&gt; #&lt;DateTimeIndex:86417320 offset=H periods=100 data=[2015-04-04T00:00:00+00:00...2015-04-08T03:00:00+00:00]&gt;</span>
+offset = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DateTimeIndex</span>.date_range(
+  <span style="color:#A60">:start</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">2015-4-4</span><span style="color:#710">'</span></span>, <span style="color:#A60">:periods</span> =&gt; <span style="color:#00D">100</span>, <span style="color:#A60">:freq</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">H</span><span style="color:#710">'</span></span>)
+<span style="color:#777">#=&gt; #&lt;DateTimeIndex:86417320 offset=H periods=100 data=[2015-04-04T00:00:00+00:00...2015-04-08T03:00:00+00:00]&gt;</span>
 </pre></td>
 </tr></table>
 </div>

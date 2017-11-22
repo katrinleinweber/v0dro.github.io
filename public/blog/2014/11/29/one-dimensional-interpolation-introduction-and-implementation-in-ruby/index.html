@@ -153,14 +153,14 @@
 <a href="#n9" name="n9">9</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">interpolation</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">interpolation</span><span style="color:#710">'</span></span>
 
-x = (<span class="integer">0</span>..<span class="integer">100</span>).step(<span class="integer">3</span>).to_a
-y = x.map { |a| <span class="constant">Math</span>.sin(a) }
+x = (<span style="color:#00D">0</span>..<span style="color:#00D">100</span>).step(<span style="color:#00D">3</span>).to_a
+y = x.map { |a| <span style="color:#036;font-weight:bold">Math</span>.sin(a) }
 
-int = <span class="constant">Interpolation</span>::<span class="constant">OneDimensional</span>.new x, y, <span class="key">type</span>: <span class="symbol">:linear</span>
-int.interpolate <span class="integer">35</span>
-<span class="comment"># =&gt; -0.328</span>
+int = <span style="color:#036;font-weight:bold">Interpolation</span>::<span style="color:#036;font-weight:bold">OneDimensional</span>.new x, y, <span style="color:#606">type</span>: <span style="color:#A60">:linear</span>
+int.interpolate <span style="color:#00D">35</span>
+<span style="color:#777"># =&gt; -0.328</span>
 </pre></td>
 </tr></table>
 </div>
@@ -195,14 +195,14 @@ int.interpolate <span class="integer">35</span>
 <a href="#n9" name="n9">9</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">interpolation</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">interpolation</span><span style="color:#710">'</span></span>
 
-x = (<span class="integer">0</span>..<span class="integer">9</span>).step(<span class="integer">1</span>).to_a
-y = x.map { |e| <span class="constant">Math</span>.exp(e) }
+x = (<span style="color:#00D">0</span>..<span style="color:#00D">9</span>).step(<span style="color:#00D">1</span>).to_a
+y = x.map { |e| <span style="color:#036;font-weight:bold">Math</span>.exp(e) }
 
-f = <span class="constant">Interpolation</span>::<span class="constant">OneDimensional</span>.new(<span class="instance-variable">@x</span>, <span class="instance-variable">@y</span>, <span class="key">type</span>: <span class="symbol">:cubic</span>, <span class="key">sorted</span>: <span class="predefined-constant">true</span>)
-f.interpolate(<span class="float">2.5</span>)
-<span class="comment"># =&gt; 12.287</span>
+f = <span style="color:#036;font-weight:bold">Interpolation</span>::<span style="color:#036;font-weight:bold">OneDimensional</span>.new(<span style="color:#33B">@x</span>, <span style="color:#33B">@y</span>, <span style="color:#606">type</span>: <span style="color:#A60">:cubic</span>, <span style="color:#606">sorted</span>: <span style="color:#069">true</span>)
+f.interpolate(<span style="color:#60E">2.5</span>)
+<span style="color:#777"># =&gt; 12.287</span>
 </pre></td>
 </tr></table>
 </div>

@@ -69,8 +69,8 @@ This code basically takes the bodies created in the previous step, counts the nu
 
 The new steps introduced in this program can be summarized as follows:
   * Count the bodies in each quadrant and store the count in an array. The `size` array in case of the Ruby implementation.
-  * In the next step we successively add the number of elements in each quadrant so that it gives us the offset value at which elements from a new quadrant will start in the `bodies` Array (of course, after it is sorted).
-  * We then sort the bodies according to the quadrant that they belong to. Something peculiar that I notice about this part is that counter[quadrant] also gets incremented after each iteration for sorting. Why is this the case even though the counters have been set to the correct offsets previously?
+  * In the next step we successively add the number of elements in each quadrant so that it gives us the offset value at which elements from a new quadrant will start in the `bodies` Array \(of course, after it is sorted\).
+  * We then sort the bodies according to the quadrant that they belong to. Something peculiar that I notice about this part is that `counter[quadrant]` also gets incremented after each iteration for sorting. Why is this the case even though the counters have been set to the correct offsets previously?
 
 ## step3.cxx
 

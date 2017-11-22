@@ -143,14 +143,14 @@
 <a href="#n9" name="n9">9</a>
 </pre></td>
   <td class="code"><pre>
-v = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new([<span class="float">1.44</span>,<span class="float">55.54</span>,<span class="float">33.2</span>,<span class="float">5.6</span>],<span class="key">dtype</span>: <span class="symbol">:nmatrix</span>, <span class="key">nm_dtype</span>: <span class="symbol">:float64</span>)
-<span class="comment">#        nil</span>
-<span class="comment">#    0  1.44</span>
-<span class="comment">#    1 55.54</span>
-<span class="comment">#    2  33.2</span>
-<span class="comment">#    3   5.6</span>
-v.dtype <span class="comment">#=&gt; :nmatrix</span>
-v.type  <span class="comment">#=&gt; :float64</span>
+v = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new([<span style="color:#60E">1.44</span>,<span style="color:#60E">55.54</span>,<span style="color:#60E">33.2</span>,<span style="color:#60E">5.6</span>],<span style="color:#606">dtype</span>: <span style="color:#A60">:nmatrix</span>, <span style="color:#606">nm_dtype</span>: <span style="color:#A60">:float64</span>)
+<span style="color:#777">#        nil</span>
+<span style="color:#777">#    0  1.44</span>
+<span style="color:#777">#    1 55.54</span>
+<span style="color:#777">#    2  33.2</span>
+<span style="color:#777">#    3   5.6</span>
+v.dtype <span style="color:#777">#=&gt; :nmatrix</span>
+v.type  <span style="color:#777">#=&gt; :float64</span>
 </pre></td>
 </tr></table>
 </div>
@@ -165,8 +165,8 @@ v.type  <span class="comment">#=&gt; :float64</span>
 <a href="#n3" name="n3">3</a>
 </pre></td>
   <td class="code"><pre>
-v = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new([<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>], <span class="key">dtype</span>: <span class="symbol">:array</span>)
-v.type <span class="comment">#=&gt; :numeric</span>
+v = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new([<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>], <span style="color:#606">dtype</span>: <span style="color:#A60">:array</span>)
+v.type <span style="color:#777">#=&gt; :numeric</span>
 </pre></td>
 </tr></table>
 </div>
@@ -199,17 +199,17 @@ This functionality is still in its infancy but should be up to speed soon.</p>
 <a href="#n12" name="n12">12</a>
 </pre></td>
   <td class="code"><pre>
-v = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new([<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="predefined-constant">nil</span>,<span class="predefined-constant">nil</span>,<span class="integer">4</span>], <span class="key">index</span>: [<span class="symbol">:a</span>, <span class="symbol">:b</span>, <span class="symbol">:c</span>, <span class="symbol">:d</span>, <span class="symbol">:e</span>, <span class="symbol">:f</span>])
+v = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new([<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#069">nil</span>,<span style="color:#069">nil</span>,<span style="color:#00D">4</span>], <span style="color:#606">index</span>: [<span style="color:#A60">:a</span>, <span style="color:#A60">:b</span>, <span style="color:#A60">:c</span>, <span style="color:#A60">:d</span>, <span style="color:#A60">:e</span>, <span style="color:#A60">:f</span>])
 v.is_nil?
-<span class="comment">#=&gt; </span>
-<span class="comment">##&lt;Daru::Vector:93025420 @name = nil @size = 6 &gt;</span>
-<span class="comment">#        nil</span>
-<span class="comment">#    a   nil</span>
-<span class="comment">#    b   nil</span>
-<span class="comment">#    c   nil</span>
-<span class="comment">#    d  true</span>
-<span class="comment">#    e  true</span>
-<span class="comment">#    f   nil</span>
+<span style="color:#777">#=&gt; </span>
+<span style="color:#777">##&lt;Daru::Vector:93025420 @name = nil @size = 6 &gt;</span>
+<span style="color:#777">#        nil</span>
+<span style="color:#777">#    a   nil</span>
+<span style="color:#777">#    b   nil</span>
+<span style="color:#777">#    c   nil</span>
+<span style="color:#777">#    d  true</span>
+<span style="color:#777">#    e  true</span>
+<span style="color:#777">#    f   nil</span>
 </pre></td>
 </tr></table>
 </div>
@@ -221,7 +221,7 @@ v.is_nil?
 <a href="#n2" name="n2">2</a>
 </pre></td>
   <td class="code"><pre>
-v.nil_positions <span class="comment">#=&gt; [:d, :e]</span>
+v.nil_positions <span style="color:#777">#=&gt; [:d, :e]</span>
 </pre></td>
 </tr></table>
 </div>
@@ -242,16 +242,16 @@ v.nil_positions <span class="comment">#=&gt; [:d, :e]</span>
 <a href="#n11" name="n11">11</a>
 </pre></td>
   <td class="code"><pre>
-v.replace_nils <span class="integer">69</span>
-<span class="comment">#=&gt; </span>
-<span class="comment">##&lt;Daru::Vector:92796730 @name = nil @size = 6 &gt;</span>
-<span class="comment">#    nil</span>
-<span class="comment">#  a   1</span>
-<span class="comment">#  b   2</span>
-<span class="comment">#  c   3</span>
-<span class="comment">#  d  69</span>
-<span class="comment">#  e  69</span>
-<span class="comment">#  f   4</span>
+v.replace_nils <span style="color:#00D">69</span>
+<span style="color:#777">#=&gt; </span>
+<span style="color:#777">##&lt;Daru::Vector:92796730 @name = nil @size = 6 &gt;</span>
+<span style="color:#777">#    nil</span>
+<span style="color:#777">#  a   1</span>
+<span style="color:#777">#  b   2</span>
+<span style="color:#777">#  c   3</span>
+<span style="color:#777">#  d  69</span>
+<span style="color:#777">#  e  69</span>
+<span style="color:#777">#  f   4</span>
 </pre></td>
 </tr></table>
 </div>
@@ -285,20 +285,20 @@ v.replace_nils <span class="integer">69</span>
 <a href="#n16" name="n16">16</a>
 </pre></td>
   <td class="code"><pre>
-df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({
-  <span class="key">a</span>: [<span class="string"><span class="delimiter">'</span><span class="content">ff</span><span class="delimiter">'</span></span>  ,  <span class="string"><span class="delimiter">'</span><span class="content">fwwq</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">efe</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">a</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">efef</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">zzzz</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">efgg</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">q</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">ggf</span><span class="delimiter">'</span></span>], 
-  <span class="key">b</span>: [<span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>  ,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>],
-  <span class="key">c</span>: [<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>],
-  <span class="key">d</span>: [<span class="integer">-1</span>,<span class="integer">2</span>,<span class="integer">-2</span>,<span class="integer">3</span>,<span class="integer">-3</span>,<span class="integer">4</span>,<span class="integer">-5</span>,<span class="integer">6</span>,<span class="integer">7</span>],
-  <span class="key">e</span>: [<span class="integer">2</span>,<span class="integer">4</span>,<span class="integer">4</span>,<span class="integer">6</span>,<span class="integer">6</span>,<span class="integer">8</span>,<span class="integer">10</span>,<span class="integer">12</span>,<span class="integer">14</span>]
+df = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({
+  <span style="color:#606">a</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">ff</span><span style="color:#710">'</span></span>  ,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">fwwq</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">efe</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">a</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">efef</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">zzzz</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">efgg</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">q</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">ggf</span><span style="color:#710">'</span></span>], 
+  <span style="color:#606">b</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>  ,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">two</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">two</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">two</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">two</span><span style="color:#710">'</span></span>],
+  <span style="color:#606">c</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">large</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">large</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">large</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">large</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>],
+  <span style="color:#606">d</span>: [<span style="color:#00D">-1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">-2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">-3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">-5</span>,<span style="color:#00D">6</span>,<span style="color:#00D">7</span>],
+  <span style="color:#606">e</span>: [<span style="color:#00D">2</span>,<span style="color:#00D">4</span>,<span style="color:#00D">4</span>,<span style="color:#00D">6</span>,<span style="color:#00D">6</span>,<span style="color:#00D">8</span>,<span style="color:#00D">10</span>,<span style="color:#00D">12</span>,<span style="color:#00D">14</span>]
   })
 
-df.sort([<span class="symbol">:a</span>,<span class="symbol">:d</span>], 
-  <span class="key">by</span>: {
-    <span class="key">a</span>: lambda { |a,b| a.length &lt;=&gt; b.length }, 
-    <span class="key">b</span>: lambda { |a,b| a.abs &lt;=&gt; b.abs } 
+df.sort([<span style="color:#A60">:a</span>,<span style="color:#A60">:d</span>], 
+  <span style="color:#606">by</span>: {
+    <span style="color:#606">a</span>: lambda { |a,b| a.length &lt;=&gt; b.length }, 
+    <span style="color:#606">b</span>: lambda { |a,b| a.abs &lt;=&gt; b.abs } 
   }, 
-  <span class="key">ascending</span>: [<span class="predefined-constant">false</span>, <span class="predefined-constant">true</span>]
+  <span style="color:#606">ascending</span>: [<span style="color:#069">false</span>, <span style="color:#069">true</span>]
 )
 </pre></td>
 </tr></table>
@@ -324,12 +324,12 @@ df.sort([<span class="symbol">:a</span>,<span class="symbol">:d</span>],
 <a href="#n7" name="n7">7</a>
 </pre></td>
   <td class="code"><pre>
-df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({<span class="key">a</span>: [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">5</span>], <span class="key">b</span>: [<span class="integer">10</span>,<span class="integer">14</span>,<span class="integer">15</span>,<span class="integer">17</span>,<span class="integer">44</span>]})
-df.plot <span class="key">type</span>: <span class="symbol">:line</span>, <span class="key">x</span>: <span class="symbol">:a</span>, <span class="key">y</span>: <span class="symbol">:b</span> <span class="keyword">do</span> |p,d|
-  p.yrange [<span class="integer">0</span>,<span class="integer">100</span>]
-  p.legend <span class="predefined-constant">true</span>
-  d.color <span class="string"><span class="delimiter">&quot;</span><span class="content">green</span><span class="delimiter">&quot;</span></span>
-<span class="keyword">end</span>
+df = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({<span style="color:#606">a</span>: [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>], <span style="color:#606">b</span>: [<span style="color:#00D">10</span>,<span style="color:#00D">14</span>,<span style="color:#00D">15</span>,<span style="color:#00D">17</span>,<span style="color:#00D">44</span>]})
+df.plot <span style="color:#606">type</span>: <span style="color:#A60">:line</span>, <span style="color:#606">x</span>: <span style="color:#A60">:a</span>, <span style="color:#606">y</span>: <span style="color:#A60">:b</span> <span style="color:#080;font-weight:bold">do</span> |p,d|
+  p.yrange [<span style="color:#00D">0</span>,<span style="color:#00D">100</span>]
+  p.legend <span style="color:#069">true</span>
+  d.color <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">green</span><span style="color:#710">&quot;</span></span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
@@ -357,13 +357,13 @@ df.plot <span class="key">type</span>: <span class="symbol">:line</span>, <span 
 <a href="#n9" name="n9">9</a>
 </pre></td>
   <td class="code"><pre>
-df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({
-  <span class="key">a</span>: [<span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>  ,  <span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>], 
-  <span class="key">b</span>: [<span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>  ,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>],
-  <span class="key">c</span>: [<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>],
-  <span class="key">d</span>: [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">5</span>,<span class="integer">6</span>,<span class="integer">7</span>],
-  <span class="key">e</span>: [<span class="integer">2</span>,<span class="integer">4</span>,<span class="integer">4</span>,<span class="integer">6</span>,<span class="integer">6</span>,<span class="integer">8</span>,<span class="integer">10</span>,<span class="integer">12</span>,<span class="integer">14</span>],
-  <span class="key">f</span>: [<span class="integer">10</span>,<span class="integer">20</span>,<span class="integer">20</span>,<span class="integer">30</span>,<span class="integer">30</span>,<span class="integer">40</span>,<span class="integer">50</span>,<span class="integer">60</span>,<span class="integer">70</span>]
+df = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({
+  <span style="color:#606">a</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">foo</span><span style="color:#710">'</span></span>  ,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">foo</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">foo</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">foo</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">foo</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">bar</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">bar</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">bar</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">bar</span><span style="color:#710">'</span></span>], 
+  <span style="color:#606">b</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>  ,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">two</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">two</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">two</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">two</span><span style="color:#710">'</span></span>],
+  <span style="color:#606">c</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">large</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">large</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">large</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">large</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>],
+  <span style="color:#606">d</span>: [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>,<span style="color:#00D">6</span>,<span style="color:#00D">7</span>],
+  <span style="color:#606">e</span>: [<span style="color:#00D">2</span>,<span style="color:#00D">4</span>,<span style="color:#00D">4</span>,<span style="color:#00D">6</span>,<span style="color:#00D">6</span>,<span style="color:#00D">8</span>,<span style="color:#00D">10</span>,<span style="color:#00D">12</span>,<span style="color:#00D">14</span>],
+  <span style="color:#606">f</span>: [<span style="color:#00D">10</span>,<span style="color:#00D">20</span>,<span style="color:#00D">20</span>,<span style="color:#00D">30</span>,<span style="color:#00D">30</span>,<span style="color:#00D">40</span>,<span style="color:#00D">50</span>,<span style="color:#00D">60</span>,<span style="color:#00D">70</span>]
 })
 </pre></td>
 </tr></table>
@@ -411,12 +411,12 @@ df.describe
 </pre></td>
   <td class="code"><pre>
 df.cov
-<span class="comment"># =&gt; </span>
-<span class="comment"># #&lt;Daru::DataFrame:91700830 @name = f5ae5d7e-9fcb-46c8-90ac-a6420c9dc27f @size # = 3&gt;</span>
-<span class="comment">#                     d          e          f </span>
-<span class="comment">#          d          4          8         40 </span>
-<span class="comment">#          e          8         16         80 </span>
-<span class="comment">#          f         40         80        400 </span>
+<span style="color:#777"># =&gt; </span>
+<span style="color:#777"># #&lt;Daru::DataFrame:91700830 @name = f5ae5d7e-9fcb-46c8-90ac-a6420c9dc27f @size # = 3&gt;</span>
+<span style="color:#777">#                     d          e          f </span>
+<span style="color:#777">#          d          4          8         40 </span>
+<span style="color:#777">#          e          8         16         80 </span>
+<span style="color:#777">#          f         40         80        400 </span>
 </pre></td>
 </tr></table>
 </div>
@@ -463,36 +463,36 @@ df.cov
 </pre></td>
   <td class="code"><pre>
 tuples = [
-  [<span class="symbol">:a</span>,<span class="symbol">:one</span>,<span class="symbol">:bar</span>],
-  [<span class="symbol">:a</span>,<span class="symbol">:one</span>,<span class="symbol">:baz</span>],
-  [<span class="symbol">:a</span>,<span class="symbol">:two</span>,<span class="symbol">:bar</span>],
-  [<span class="symbol">:a</span>,<span class="symbol">:two</span>,<span class="symbol">:baz</span>],
-  [<span class="symbol">:b</span>,<span class="symbol">:one</span>,<span class="symbol">:bar</span>],
-  [<span class="symbol">:b</span>,<span class="symbol">:two</span>,<span class="symbol">:bar</span>],
-  [<span class="symbol">:b</span>,<span class="symbol">:two</span>,<span class="symbol">:baz</span>],
-  [<span class="symbol">:b</span>,<span class="symbol">:one</span>,<span class="symbol">:foo</span>],
-  [<span class="symbol">:c</span>,<span class="symbol">:one</span>,<span class="symbol">:bar</span>],
-  [<span class="symbol">:c</span>,<span class="symbol">:one</span>,<span class="symbol">:baz</span>],
-  [<span class="symbol">:c</span>,<span class="symbol">:two</span>,<span class="symbol">:foo</span>],
-  [<span class="symbol">:c</span>,<span class="symbol">:two</span>,<span class="symbol">:bar</span>]
+  [<span style="color:#A60">:a</span>,<span style="color:#A60">:one</span>,<span style="color:#A60">:bar</span>],
+  [<span style="color:#A60">:a</span>,<span style="color:#A60">:one</span>,<span style="color:#A60">:baz</span>],
+  [<span style="color:#A60">:a</span>,<span style="color:#A60">:two</span>,<span style="color:#A60">:bar</span>],
+  [<span style="color:#A60">:a</span>,<span style="color:#A60">:two</span>,<span style="color:#A60">:baz</span>],
+  [<span style="color:#A60">:b</span>,<span style="color:#A60">:one</span>,<span style="color:#A60">:bar</span>],
+  [<span style="color:#A60">:b</span>,<span style="color:#A60">:two</span>,<span style="color:#A60">:bar</span>],
+  [<span style="color:#A60">:b</span>,<span style="color:#A60">:two</span>,<span style="color:#A60">:baz</span>],
+  [<span style="color:#A60">:b</span>,<span style="color:#A60">:one</span>,<span style="color:#A60">:foo</span>],
+  [<span style="color:#A60">:c</span>,<span style="color:#A60">:one</span>,<span style="color:#A60">:bar</span>],
+  [<span style="color:#A60">:c</span>,<span style="color:#A60">:one</span>,<span style="color:#A60">:baz</span>],
+  [<span style="color:#A60">:c</span>,<span style="color:#A60">:two</span>,<span style="color:#A60">:foo</span>],
+  [<span style="color:#A60">:c</span>,<span style="color:#A60">:two</span>,<span style="color:#A60">:bar</span>]
 ]
 
-multi_index = <span class="constant">Daru</span>::<span class="constant">MultiIndex</span>.new(tuples)
+multi_index = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">MultiIndex</span>.new(tuples)
 
-vector_arry1 = [<span class="integer">11</span>,<span class="integer">12</span>,<span class="integer">13</span>,<span class="integer">14</span>,<span class="integer">11</span>,<span class="integer">12</span>,<span class="integer">13</span>,<span class="integer">14</span>,<span class="integer">11</span>,<span class="integer">12</span>,<span class="integer">13</span>,<span class="integer">14</span>]
-vector_arry2 = [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>]
+vector_arry1 = [<span style="color:#00D">11</span>,<span style="color:#00D">12</span>,<span style="color:#00D">13</span>,<span style="color:#00D">14</span>,<span style="color:#00D">11</span>,<span style="color:#00D">12</span>,<span style="color:#00D">13</span>,<span style="color:#00D">14</span>,<span style="color:#00D">11</span>,<span style="color:#00D">12</span>,<span style="color:#00D">13</span>,<span style="color:#00D">14</span>]
+vector_arry2 = [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>]
 
-order_mi = <span class="constant">Daru</span>::<span class="constant">MultiIndex</span>.new([
-    [<span class="symbol">:a</span>,<span class="symbol">:one</span>,<span class="symbol">:bar</span>],
-    [<span class="symbol">:a</span>,<span class="symbol">:two</span>,<span class="symbol">:baz</span>],
-    [<span class="symbol">:b</span>,<span class="symbol">:two</span>,<span class="symbol">:foo</span>],
-    [<span class="symbol">:b</span>,<span class="symbol">:one</span>,<span class="symbol">:foo</span>]])
+order_mi = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">MultiIndex</span>.new([
+    [<span style="color:#A60">:a</span>,<span style="color:#A60">:one</span>,<span style="color:#A60">:bar</span>],
+    [<span style="color:#A60">:a</span>,<span style="color:#A60">:two</span>,<span style="color:#A60">:baz</span>],
+    [<span style="color:#A60">:b</span>,<span style="color:#A60">:two</span>,<span style="color:#A60">:foo</span>],
+    [<span style="color:#A60">:b</span>,<span style="color:#A60">:one</span>,<span style="color:#A60">:foo</span>]])
 
-df_mi = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new([
+df_mi = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new([
     vector_arry1, 
     vector_arry2, 
     vector_arry1, 
-    vector_arry2], <span class="key">order</span>: order_mi, <span class="key">index</span>: multi_index)
+    vector_arry2], <span style="color:#606">order</span>: order_mi, <span style="color:#606">index</span>: multi_index)
 </pre></td>
 </tr></table>
 </div>
@@ -506,7 +506,7 @@ df_mi = <span class="constant">Daru</span>::<span class="constant">DataFrame</sp
 <a href="#n2" name="n2">2</a>
 </pre></td>
   <td class="code"><pre>
-df_mi.row[<span class="symbol">:a</span>]
+df_mi.row[<span style="color:#A60">:a</span>]
 </pre></td>
 </tr></table>
 </div>
@@ -520,7 +520,7 @@ df_mi.row[<span class="symbol">:a</span>]
 <a href="#n2" name="n2">2</a>
 </pre></td>
   <td class="code"><pre>
-df_mi.row[<span class="symbol">:a</span>, <span class="symbol">:one</span>,<span class="symbol">:bar</span>]
+df_mi.row[<span style="color:#A60">:a</span>, <span style="color:#A60">:one</span>,<span style="color:#A60">:bar</span>]
 </pre></td>
 </tr></table>
 </div>
@@ -558,22 +558,22 @@ df_mi.row[<span class="symbol">:a</span>, <span class="symbol">:one</span>,<span
 <a href="#n17" name="n17">17</a>
 </pre></td>
   <td class="code"><pre>
-df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({
-  <span class="key">a</span>: <span class="string"><span class="delimiter">%w{</span><span class="content">foo bar foo bar   foo bar foo foo</span><span class="delimiter">}</span></span>,
-  <span class="key">b</span>: <span class="string"><span class="delimiter">%w{</span><span class="content">one one two three two two one three</span><span class="delimiter">}</span></span>,
-  <span class="key">c</span>:   [<span class="integer">1</span>  ,<span class="integer">2</span>  ,<span class="integer">3</span>  ,<span class="integer">1</span>    ,<span class="integer">3</span>  ,<span class="integer">6</span>  ,<span class="integer">3</span>  ,<span class="integer">8</span>],
-  <span class="key">d</span>:   [<span class="integer">11</span> ,<span class="integer">22</span> ,<span class="integer">33</span> ,<span class="integer">44</span>   ,<span class="integer">55</span> ,<span class="integer">66</span> ,<span class="integer">77</span> ,<span class="integer">88</span>]
+df = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({
+  <span style="color:#606">a</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">%w{</span><span style="color:#D20">foo bar foo bar   foo bar foo foo</span><span style="color:#710">}</span></span>,
+  <span style="color:#606">b</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">%w{</span><span style="color:#D20">one one two three two two one three</span><span style="color:#710">}</span></span>,
+  <span style="color:#606">c</span>:   [<span style="color:#00D">1</span>  ,<span style="color:#00D">2</span>  ,<span style="color:#00D">3</span>  ,<span style="color:#00D">1</span>    ,<span style="color:#00D">3</span>  ,<span style="color:#00D">6</span>  ,<span style="color:#00D">3</span>  ,<span style="color:#00D">8</span>],
+  <span style="color:#606">d</span>:   [<span style="color:#00D">11</span> ,<span style="color:#00D">22</span> ,<span style="color:#00D">33</span> ,<span style="color:#00D">44</span>   ,<span style="color:#00D">55</span> ,<span style="color:#00D">66</span> ,<span style="color:#00D">77</span> ,<span style="color:#00D">88</span>]
 })
-<span class="comment">#&lt;Daru::DataFrame:88462950 @name = 0dbc2869-9a82-4044-b72d-a4ef963401fc @size = 8&gt;</span>
-<span class="comment">#            a          b          c          d </span>
-<span class="comment"># 0        foo        one          1         11 </span>
-<span class="comment"># 1        bar        one          2         22 </span>
-<span class="comment"># 2        foo        two          3         33 </span>
-<span class="comment"># 3        bar      three          1         44 </span>
-<span class="comment"># 4        foo        two          3         55 </span>
-<span class="comment"># 5        bar        two          6         66 </span>
-<span class="comment"># 6        foo        one          3         77 </span>
-<span class="comment"># 7        foo      three          8         88 </span>
+<span style="color:#777">#&lt;Daru::DataFrame:88462950 @name = 0dbc2869-9a82-4044-b72d-a4ef963401fc @size = 8&gt;</span>
+<span style="color:#777">#            a          b          c          d </span>
+<span style="color:#777"># 0        foo        one          1         11 </span>
+<span style="color:#777"># 1        bar        one          2         22 </span>
+<span style="color:#777"># 2        foo        two          3         33 </span>
+<span style="color:#777"># 3        bar      three          1         44 </span>
+<span style="color:#777"># 4        foo        two          3         55 </span>
+<span style="color:#777"># 5        bar        two          6         66 </span>
+<span style="color:#777"># 6        foo        one          3         77 </span>
+<span style="color:#777"># 7        foo      three          8         88 </span>
 </pre></td>
 </tr></table>
 </div>
@@ -595,15 +595,15 @@ df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>
 <strong><a href="#n10" name="n10">10</a></strong>
 </pre></td>
   <td class="code"><pre>
-grouped = df.group_by([<span class="symbol">:a</span>, <span class="symbol">:b</span>])
+grouped = df.group_by([<span style="color:#A60">:a</span>, <span style="color:#A60">:b</span>])
 grouped.groups
-<span class="comment"># =&gt; {</span>
-<span class="comment">#  [&quot;bar&quot;, &quot;one&quot;]=&gt;[1],</span>
-<span class="comment">#  [&quot;bar&quot;, &quot;three&quot;]=&gt;[3],</span>
-<span class="comment">#  [&quot;bar&quot;, &quot;two&quot;]=&gt;[5],</span>
-<span class="comment">#  [&quot;foo&quot;, &quot;one&quot;]=&gt;[0, 6],</span>
-<span class="comment">#  [&quot;foo&quot;, &quot;three&quot;]=&gt;[7],</span>
-<span class="comment">#  [&quot;foo&quot;, &quot;two&quot;]=&gt;[2, 4]}</span>
+<span style="color:#777"># =&gt; {</span>
+<span style="color:#777">#  [&quot;bar&quot;, &quot;one&quot;]=&gt;[1],</span>
+<span style="color:#777">#  [&quot;bar&quot;, &quot;three&quot;]=&gt;[3],</span>
+<span style="color:#777">#  [&quot;bar&quot;, &quot;two&quot;]=&gt;[5],</span>
+<span style="color:#777">#  [&quot;foo&quot;, &quot;one&quot;]=&gt;[0, 6],</span>
+<span style="color:#777">#  [&quot;foo&quot;, &quot;three&quot;]=&gt;[7],</span>
+<span style="color:#777">#  [&quot;foo&quot;, &quot;two&quot;]=&gt;[2, 4]}</span>
 </pre></td>
 </tr></table>
 </div>
@@ -625,13 +625,13 @@ grouped.groups
   <td class="code"><pre>
 grouped.first
 
-<span class="comment">#=&gt;           a          b          c          d </span>
-<span class="comment">#  1        bar        one          2         22 </span>
-<span class="comment">#  3        bar      three          1         44 </span>
-<span class="comment">#  5        bar        two          6         66 </span>
-<span class="comment">#  0        foo        one          1         11 </span>
-<span class="comment">#  7        foo      three          8         88 </span>
-<span class="comment">#  2        foo        two          3         33 </span>
+<span style="color:#777">#=&gt;           a          b          c          d </span>
+<span style="color:#777">#  1        bar        one          2         22 </span>
+<span style="color:#777">#  3        bar      three          1         44 </span>
+<span style="color:#777">#  5        bar        two          6         66 </span>
+<span style="color:#777">#  0        foo        one          1         11 </span>
+<span style="color:#777">#  7        foo      three          8         88 </span>
+<span style="color:#777">#  2        foo        two          3         33 </span>
 </pre></td>
 </tr></table>
 </div>
@@ -650,12 +650,12 @@ grouped.first
 <a href="#n7" name="n7">7</a>
 </pre></td>
   <td class="code"><pre>
-grouped.get_group([<span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">one</span><span class="delimiter">&quot;</span></span>])
-<span class="comment"># =&gt; </span>
-<span class="comment"># #&lt;Daru::DataFrame:90777050 @name = cdd0afa8-252d-4d07-ad0f-76c7581a492a @size # = 2&gt;</span>
-<span class="comment">#                     a          b          c          d </span>
-<span class="comment">#          0        foo        one          1         11 </span>
-<span class="comment">#          6        foo        one          3         77 </span>
+grouped.get_group([<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">foo</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">one</span><span style="color:#710">&quot;</span></span>])
+<span style="color:#777"># =&gt; </span>
+<span style="color:#777"># #&lt;Daru::DataFrame:90777050 @name = cdd0afa8-252d-4d07-ad0f-76c7581a492a @size # = 2&gt;</span>
+<span style="color:#777">#                     a          b          c          d </span>
+<span style="color:#777">#          0        foo        one          1         11 </span>
+<span style="color:#777">#          6        foo        one          3         77 </span>
 </pre></td>
 </tr></table>
 </div>
@@ -690,7 +690,7 @@ grouped.mean
 <a href="#n2" name="n2">2</a>
 </pre></td>
   <td class="code"><pre>
-sales.pivot_table <span class="key">index</span>: [<span class="symbol">:manager</span>, <span class="symbol">:rep</span>]
+sales.pivot_table <span style="color:#606">index</span>: [<span style="color:#A60">:manager</span>, <span style="color:#A60">:rep</span>]
 </pre></td>
 </tr></table>
 </div>
@@ -706,7 +706,7 @@ sales.pivot_table <span class="key">index</span>: [<span class="symbol">:manager
 <a href="#n2" name="n2">2</a>
 </pre></td>
   <td class="code"><pre>
-sales.pivot_table(<span class="key">index</span>: [<span class="symbol">:manager</span>,<span class="symbol">:rep</span>], <span class="key">values</span>: <span class="symbol">:price</span>, <span class="key">vectors</span>: [<span class="symbol">:product</span>], <span class="key">agg</span>: <span class="symbol">:sum</span>)
+sales.pivot_table(<span style="color:#606">index</span>: [<span style="color:#A60">:manager</span>,<span style="color:#A60">:rep</span>], <span style="color:#606">values</span>: <span style="color:#A60">:price</span>, <span style="color:#606">vectors</span>: [<span style="color:#A60">:product</span>], <span style="color:#606">agg</span>: <span style="color:#A60">:sum</span>)
 </pre></td>
 </tr></table>
 </div>
@@ -760,40 +760,40 @@ sales.pivot_table(<span class="key">index</span>: [<span class="symbol">:manager
 <a href="#n36" name="n36">36</a>
 </pre></td>
   <td class="code"><pre>
-df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({<span class="key">a</span>: [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">5</span>,<span class="integer">6</span>,<span class="integer">7</span>], <span class="key">b</span>: [<span class="integer">11</span>,<span class="integer">22</span>,<span class="integer">33</span>,<span class="integer">44</span>,<span class="integer">55</span>,<span class="integer">66</span>,<span class="integer">77</span>]})
+df = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({<span style="color:#606">a</span>: [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>,<span style="color:#00D">6</span>,<span style="color:#00D">7</span>], <span style="color:#606">b</span>: [<span style="color:#00D">11</span>,<span style="color:#00D">22</span>,<span style="color:#00D">33</span>,<span style="color:#00D">44</span>,<span style="color:#00D">55</span>,<span style="color:#00D">66</span>,<span style="color:#00D">77</span>]})
 
-<span class="constant">Statsample</span>::<span class="constant">Analysis</span>.store(<span class="constant">Statsample</span>::<span class="constant">Test</span>::<span class="constant">T</span>) <span class="keyword">do</span>
-  t_2 = <span class="constant">Statsample</span>::<span class="constant">Test</span>.t_two_samples_independent(df[<span class="symbol">:a</span>], df[<span class="symbol">:b</span>])
+<span style="color:#036;font-weight:bold">Statsample</span>::<span style="color:#036;font-weight:bold">Analysis</span>.store(<span style="color:#036;font-weight:bold">Statsample</span>::<span style="color:#036;font-weight:bold">Test</span>::<span style="color:#036;font-weight:bold">T</span>) <span style="color:#080;font-weight:bold">do</span>
+  t_2 = <span style="color:#036;font-weight:bold">Statsample</span>::<span style="color:#036;font-weight:bold">Test</span>.t_two_samples_independent(df[<span style="color:#A60">:a</span>], df[<span style="color:#A60">:b</span>])
   summary t_2
-<span class="keyword">end</span>
+<span style="color:#080;font-weight:bold">end</span>
 
-<span class="constant">Statsample</span>::<span class="constant">Analysis</span>.run_batch
+<span style="color:#036;font-weight:bold">Statsample</span>::<span style="color:#036;font-weight:bold">Analysis</span>.run_batch
 
-<span class="comment"># Analysis 2015-02-25 13:34:32 +0530</span>
-<span class="comment"># = Statsample::Test::T</span>
-<span class="comment">#   == Two Sample T Test</span>
-<span class="comment">#     Mean and standard deviation</span>
-<span class="comment"># +----------+---------+---------+---+</span>
-<span class="comment"># | Variable |  mean   |   sd    | n |</span>
-<span class="comment"># +----------+---------+---------+---+</span>
-<span class="comment"># | a        | 4.0000  | 2.1602  | 7 |</span>
-<span class="comment"># | b        | 44.0000 | 23.7627 | 7 |</span>
-<span class="comment"># +----------+---------+---------+---+</span>
-<span class="comment"># </span>
-<span class="comment">#     Levene test for equality of variances : F(1, 12) = 13.6192 , p = 0.0031</span>
-<span class="comment">#     T statistics</span>
-<span class="comment"># +--------------------+---------+--------+----------------+</span>
-<span class="comment"># |        Type        |    t    |   df   | p (both tails) |</span>
-<span class="comment"># +--------------------+---------+--------+----------------+</span>
-<span class="comment"># | Equal variance     | -4.4353 | 12     | 0.0008         |</span>
-<span class="comment"># | Non equal variance | -4.4353 | 6.0992 | 0.0042         |</span>
-<span class="comment"># +--------------------+---------+--------+----------------+</span>
-<span class="comment"># </span>
-<span class="comment">#     Effect size</span>
-<span class="comment"># +-------+----------+</span>
-<span class="comment"># | x1-x2 | -40.0000 |</span>
-<span class="comment"># | d     | -12.0007 |</span>
-<span class="comment"># +-------+----------+</span>
+<span style="color:#777"># Analysis 2015-02-25 13:34:32 +0530</span>
+<span style="color:#777"># = Statsample::Test::T</span>
+<span style="color:#777">#   == Two Sample T Test</span>
+<span style="color:#777">#     Mean and standard deviation</span>
+<span style="color:#777"># +----------+---------+---------+---+</span>
+<span style="color:#777"># | Variable |  mean   |   sd    | n |</span>
+<span style="color:#777"># +----------+---------+---------+---+</span>
+<span style="color:#777"># | a        | 4.0000  | 2.1602  | 7 |</span>
+<span style="color:#777"># | b        | 44.0000 | 23.7627 | 7 |</span>
+<span style="color:#777"># +----------+---------+---------+---+</span>
+<span style="color:#777"># </span>
+<span style="color:#777">#     Levene test for equality of variances : F(1, 12) = 13.6192 , p = 0.0031</span>
+<span style="color:#777">#     T statistics</span>
+<span style="color:#777"># +--------------------+---------+--------+----------------+</span>
+<span style="color:#777"># |        Type        |    t    |   df   | p (both tails) |</span>
+<span style="color:#777"># +--------------------+---------+--------+----------------+</span>
+<span style="color:#777"># | Equal variance     | -4.4353 | 12     | 0.0008         |</span>
+<span style="color:#777"># | Non equal variance | -4.4353 | 6.0992 | 0.0042         |</span>
+<span style="color:#777"># +--------------------+---------+--------+----------------+</span>
+<span style="color:#777"># </span>
+<span style="color:#777">#     Effect size</span>
+<span style="color:#777"># +-------+----------+</span>
+<span style="color:#777"># | x1-x2 | -40.0000 |</span>
+<span style="color:#777"># | d     | -12.0007 |</span>
+<span style="color:#777"># +-------+----------+</span>
 
 </pre></td>
 </tr></table>

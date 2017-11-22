@@ -266,23 +266,23 @@ x_{new} = x_{old} - inverse(hessian)*jacobian   ..(1)
 <a href="#n16" name="n16">16</a>
 <a href="#n17" name="n17">17</a>
 </pre></td>
-  <td class="code"><pre>require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
-require <span class="string"><span class="delimiter">'</span><span class="content">statsample-glm</span><span class="delimiter">'</span></span>
-<span class="comment"># Code for computing coefficients and related attributes of a logistic regression.</span>
+  <td class="code"><pre>require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">statsample-glm</span><span style="color:#710">'</span></span>
+<span style="color:#777"># Code for computing coefficients and related attributes of a logistic regression.</span>
 
-data_set = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.from_csv <span class="string"><span class="delimiter">&quot;</span><span class="content">logistic_mle.csv</span><span class="delimiter">&quot;</span></span>
-glm = <span class="constant">Statsample</span>::<span class="constant">GLM</span>.compute data_set, <span class="symbol">:y</span>, <span class="symbol">:logistic</span>, {<span class="key">constant</span>: <span class="integer">1</span>, <span class="key">algorithm</span>: <span class="symbol">:mle</span>} 
+data_set = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.from_csv <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">logistic_mle.csv</span><span style="color:#710">&quot;</span></span>
+glm = <span style="color:#036;font-weight:bold">Statsample</span>::<span style="color:#036;font-weight:bold">GLM</span>.compute data_set, <span style="color:#A60">:y</span>, <span style="color:#A60">:logistic</span>, {<span style="color:#606">constant</span>: <span style="color:#00D">1</span>, <span style="color:#606">algorithm</span>: <span style="color:#A60">:mle</span>} 
 
-<span class="comment"># Options hash specifying addition of an extra constants </span>
-<span class="comment"># vector all of whose values is '1' and also specifying </span>
-<span class="comment"># that the MLE algorithm is to be used.</span>
+<span style="color:#777"># Options hash specifying addition of an extra constants </span>
+<span style="color:#777"># vector all of whose values is '1' and also specifying </span>
+<span style="color:#777"># that the MLE algorithm is to be used.</span>
 
 puts glm.coefficients   
-  <span class="comment">#=&gt; [0.3270, 0.8147, -0.4031,-5.3658]</span>
+  <span style="color:#777">#=&gt; [0.3270, 0.8147, -0.4031,-5.3658]</span>
 puts glm.standard_error
-  <span class="comment">#=&gt; [0.4390, 0.4270, 0.3819,1.9045]</span>
+  <span style="color:#777">#=&gt; [0.4390, 0.4270, 0.3819,1.9045]</span>
 puts glm.log_likelihood 
-  <span class="comment">#=&gt; -38.8669</span>
+  <span style="color:#777">#=&gt; -38.8669</span>
 </pre></td>
 </tr></table>
 </div>

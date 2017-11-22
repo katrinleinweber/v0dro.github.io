@@ -152,25 +152,25 @@
 <strong><a href="#n20" name="n20">20</a></strong>
 </pre></td>
   <td class="code"><pre>
-<span class="keyword">class</span> <span class="class">Daru::Index</span>
-  <span class="comment"># some stuff...</span>
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Daru::Index</span>
+  <span style="color:#777"># some stuff...</span>
 
-  <span class="keyword">def</span> <span class="predefined-constant">self</span>.<span class="function">new</span> *args, &amp;block
-    source = args[<span class="integer">0</span>]
+  <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">new</span> *args, &amp;block
+    source = args[<span style="color:#00D">0</span>]
 
-    <span class="keyword">if</span> source_looks_like_a_multi_index
+    <span style="color:#080;font-weight:bold">if</span> source_looks_like_a_multi_index
       create_multi_index_and_return
-    <span class="keyword">elsif</span> source_looks_like_date_time_index
+    <span style="color:#080;font-weight:bold">elsif</span> source_looks_like_date_time_index
       create_date_time_index_and_return
-    <span class="keyword">else</span> <span class="comment"># Create the Daru::Index by calling initialize</span>
-      i = <span class="predefined-constant">self</span>.allocate
-      i.send <span class="symbol">:initialize</span>, *args, &amp;block
+    <span style="color:#080;font-weight:bold">else</span> <span style="color:#777"># Create the Daru::Index by calling initialize</span>
+      i = <span style="color:#069">self</span>.allocate
+      i.send <span style="color:#A60">:initialize</span>, *args, &amp;block
       i
-    <span class="keyword">end</span>
-  <span class="keyword">end</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
 
-  <span class="comment"># more stuff...</span>
-<span class="keyword">end</span>
+  <span style="color:#777"># more stuff...</span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
@@ -199,16 +199,16 @@
 <a href="#n11" name="n11">11</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-a = <span class="constant">Daru</span>::<span class="constant">Core</span>::<span class="constant">Query</span>::<span class="constant">BoolArray</span>.new([<span class="predefined-constant">true</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>])
-<span class="comment">#=&gt; (Daru::Core::Query::BoolArray:84314110 bool_arry=[true, false, false, true, false, true])</span>
-b = <span class="constant">Daru</span>::<span class="constant">Core</span>::<span class="constant">Query</span>::<span class="constant">BoolArray</span>.new([<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>])
-<span class="comment">#=&gt; (Daru::Core::Query::BoolArray:84143650 bool_arry=[false, true, false, true, false, true])</span>
+a = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Query</span>::<span style="color:#036;font-weight:bold">BoolArray</span>.new([<span style="color:#069">true</span>,<span style="color:#069">false</span>,<span style="color:#069">false</span>,<span style="color:#069">true</span>,<span style="color:#069">false</span>,<span style="color:#069">true</span>])
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:84314110 bool_arry=[true, false, false, true, false, true])</span>
+b = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Query</span>::<span style="color:#036;font-weight:bold">BoolArray</span>.new([<span style="color:#069">false</span>,<span style="color:#069">true</span>,<span style="color:#069">false</span>,<span style="color:#069">true</span>,<span style="color:#069">false</span>,<span style="color:#069">true</span>])
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:84143650 bool_arry=[false, true, false, true, false, true])</span>
 a &amp; b
-<span class="comment">#=&gt; (Daru::Core::Query::BoolArray:83917880 bool_arry=[false, false, false, true, false, true])</span>
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:83917880 bool_arry=[false, false, false, true, false, true])</span>
 a | b
-<span class="comment">#=&gt; (Daru::Core::Query::BoolArray:83871560 bool_arry=[true, true, false, true, false, true])</span>
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:83871560 bool_arry=[true, true, false, true, false, true])</span>
 </pre></td>
 </tr></table>
 </div>

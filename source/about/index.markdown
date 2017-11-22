@@ -7,13 +7,31 @@ sharing: true
 footer: true
 ---
 
-Hi!
+<!-- MarkdownTOC style="round" autolink="true" depth="4"-->
 
-I'm Sameer. I live in Pune, India and I love programming, travelling and listening/playing music.
+- Introduction
+- Projects
+- Speaking gigs
 
-On the programming front, I am currently working on making Ruby a more sought after tool for Scientific Computation. I contribute to the [SciRuby](www.sciruby.com) project in that regard.
+<!-- /MarkdownTOC -->
 
-In my spare time I love reading books, cycling and watching Star Trek.
+
+# Introduction
+
+I'm Sameer. I live in Tokyo, Japan and I love programming, travelling and listening/playing music.
+
+I am currently a Master's degree student at Tokyo Institute of Technology at the Rio Yokota lab, researching on N-body simulations using the Fast Multipole Method. I also work on making Ruby a better language for Scientific Computing and contribute to libraries of the Ruby Science Foundation for this purpose.
+
+In my spare time I love reading books and playing my bass guitar.
+
+# Projects
+
+## Daru
+
+## Rubex
+
+# Speaking gigs
+
 
 I hope you find my blog useful. If you have any suggestions/queries, feel free to drop me a mail at sameer.deshmukh93 at icloud dot com.
 

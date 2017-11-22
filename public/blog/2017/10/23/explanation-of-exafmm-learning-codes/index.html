@@ -175,13 +175,13 @@ The body is represented as the Ruby class <code>Body</code>:</p>
 <a href="#n6" name="n6">6</a>
 <a href="#n7" name="n7">7</a>
 </pre></td>
-  <td class="code"><pre><span class="keyword">class</span> <span class="class">Body</span>
-  attr_reader <span class="symbol">:x</span>
+  <td class="code"><pre><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Body</span>
+  attr_reader <span style="color:#A60">:x</span>
 
-  <span class="keyword">def</span> <span class="function">initialize</span>
-    <span class="instance-variable">@x</span> = [<span class="float">0.0</span>, <span class="float">0.0</span>]
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
+  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">initialize</span>
+    <span style="color:#33B">@x</span> = [<span style="color:#60E">0.0</span>, <span style="color:#60E">0.0</span>]
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
@@ -192,9 +192,9 @@ The body is represented as the Ruby class <code>Body</code>:</p>
 <a href="#n2" name="n2">2</a>
 <a href="#n3" name="n3">3</a>
 </pre></td>
-  <td class="code"><pre>a = body.x[<span class="integer">0</span>] &gt; x0[<span class="integer">0</span>] ? <span class="integer">1</span> : <span class="integer">0</span>
-b = body.x[<span class="integer">1</span>] &gt; x0[<span class="integer">1</span>] ? <span class="integer">1</span> : <span class="integer">0</span>
-quadrant = a + (b &lt;&lt; <span class="integer">1</span>)
+  <td class="code"><pre>a = body.x[<span style="color:#00D">0</span>] &gt; x0[<span style="color:#00D">0</span>] ? <span style="color:#00D">1</span> : <span style="color:#00D">0</span>
+b = body.x[<span style="color:#00D">1</span>] &gt; x0[<span style="color:#00D">1</span>] ? <span style="color:#00D">1</span> : <span style="color:#00D">0</span>
+quadrant = a + (b &lt;&lt; <span style="color:#00D">1</span>)
 </pre></td>
 </tr></table>
 </div>
@@ -208,7 +208,7 @@ quadrant = a + (b &lt;&lt; <span class="integer">1</span>)
 <ul>
   <li>Count the bodies in each quadrant and store the count in an array. The <code>size</code> array in case of the Ruby implementation.</li>
   <li>In the next step we successively add the number of elements in each quadrant so that it gives us the offset value at which elements from a new quadrant will start in the <code>bodies</code> Array (of course, after it is sorted).</li>
-  <li>We then sort the bodies according to the quadrant that they belong to. Something peculiar that I notice about this part is that counter[quadrant] also gets incremented after each iteration for sorting. Why is this the case even though the counters have been set to the correct offsets previously?</li>
+  <li>We then sort the bodies according to the quadrant that they belong to. Something peculiar that I notice about this part is that <code>counter[quadrant]</code> also gets incremented after each iteration for sorting. Why is this the case even though the counters have been set to the correct offsets previously?</li>
 </ul>
 
 <h2 id="step3cxx">step3.cxx</h2>
@@ -227,8 +227,8 @@ quadrant = a + (b &lt;&lt; <span class="integer">1</span>)
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 <a href="#n2" name="n2">2</a>
 </pre></td>
-  <td class="code"><pre> <span class="comment"># i is quadrant number</span>
-center[d] = x0[d] + radius * (((i &amp; <span class="integer">1</span> &lt;&lt; d) &gt;&gt; d) * <span class="integer">2</span> - <span class="integer">1</span>)
+  <td class="code"><pre> <span style="color:#777"># i is quadrant number</span>
+center[d] = x0[d] + radius * (((i &amp; <span style="color:#00D">1</span> &lt;&lt; d) &gt;&gt; d) * <span style="color:#00D">2</span> - <span style="color:#00D">1</span>)
 </pre></td>
 </tr></table>
 </div>
@@ -250,18 +250,18 @@ center[d] = x0[d] + radius * (((i &amp; <span class="integer">1</span> &lt;&lt; 
 <a href="#n11" name="n11">11</a>
 <a href="#n12" name="n12">12</a>
 </pre></td>
-  <td class="code"><pre>counter = <span class="constant">Array</span>.new <span class="integer">4</span>, start
-<span class="integer">1</span>.upto(<span class="integer">3</span>) <span class="keyword">do</span> |i|
-  counter[i] = size[i-<span class="integer">1</span>] + counter[i-<span class="integer">1</span>]
-<span class="keyword">end</span>
+  <td class="code"><pre>counter = <span style="color:#036;font-weight:bold">Array</span>.new <span style="color:#00D">4</span>, start
+<span style="color:#00D">1</span>.upto(<span style="color:#00D">3</span>) <span style="color:#080;font-weight:bold">do</span> |i|
+  counter[i] = size[i-<span style="color:#00D">1</span>] + counter[i-<span style="color:#00D">1</span>]
+<span style="color:#080;font-weight:bold">end</span>
 
-<span class="comment"># sort bodies and store them in buffer</span>
+<span style="color:#777"># sort bodies and store them in buffer</span>
 buffer = bodies.dup
-start.upto(finish-<span class="integer">1</span>) <span class="keyword">do</span> |n|
+start.upto(finish-<span style="color:#00D">1</span>) <span style="color:#080;font-weight:bold">do</span> |n|
   quadrant = quadrant_of x0, buffer[n]
   bodies[counter[quadrant]] = buffer[n]
-  counter[quadrant] += <span class="integer">1</span>
-<span class="keyword">end</span>
+  counter[quadrant] += <span style="color:#00D">1</span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
@@ -370,8 +370,8 @@ about the location of the first child of this cell, and the second <code>first_b
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 <a href="#n2" name="n2">2</a>
 </pre></td>
-  <td class="code"><pre>npn = m * m + <span class="integer">2</span> * m <span class="comment"># case Y n  n</span>
-nmn = m * m         <span class="comment"># case Y n -n</span>
+  <td class="code"><pre>npn = m * m + <span style="color:#00D">2</span> * m <span style="color:#777"># case Y n  n</span>
+nmn = m * m         <span style="color:#777"># case Y n -n</span>
 </pre></td>
 </tr></table>
 </div>
@@ -381,8 +381,8 @@ nmn = m * m         <span class="comment"># case Y n -n</span>
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 <a href="#n2" name="n2">2</a>
 </pre></td>
-  <td class="code"><pre>npm = n * n + n + m <span class="comment"># case Y n  m</span>
-nmm = n * n + n - m <span class="comment"># case Y n -m</span>
+  <td class="code"><pre>npm = n * n + n + m <span style="color:#777"># case Y n  m</span>
+nmm = n * n + n - m <span style="color:#777"># case Y n -m</span>
 </pre></td>
 </tr></table>
 </div>
@@ -408,7 +408,7 @@ V        0
 <div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 </pre></td>
-  <td class="code"><pre>p = (x * (<span class="integer">2</span> * n + <span class="integer">1</span>) * p1 - (n + m) * p2) / (n - m + <span class="integer">1</span>)
+  <td class="code"><pre>p = (x * (<span style="color:#00D">2</span> * n + <span style="color:#00D">1</span>) * p1 - (n + m) * p2) / (n - m + <span style="color:#00D">1</span>)
 </pre></td>
 </tr></table>
 </div>
@@ -421,7 +421,7 @@ V        0
 <div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 </pre></td>
-  <td class="code"><pre>p = x * (<span class="integer">2</span> * m + <span class="integer">1</span>) * p1
+  <td class="code"><pre>p = x * (<span style="color:#00D">2</span> * m + <span style="color:#00D">1</span>) * p1
 </pre></td>
 </tr></table>
 </div>

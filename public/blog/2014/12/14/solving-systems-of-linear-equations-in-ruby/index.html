@@ -281,19 +281,19 @@ Thus by equation (4), each of them can be calculated with the following sets of 
 <a href="#n14" name="n14">14</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">nmatrix</span><span class="delimiter">'</span></span>
-coeffs = <span class="constant">NMatrix</span>.new([<span class="integer">3</span>,<span class="integer">3</span>],
-  [<span class="integer">1</span>, <span class="integer">1</span>,<span class="integer">-1</span>,
-   <span class="integer">1</span>,<span class="integer">-2</span>, <span class="integer">3</span>,
-   <span class="integer">2</span>, <span class="integer">3</span>, <span class="integer">1</span>], <span class="key">dtype</span>: <span class="symbol">:float32</span>)
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">nmatrix</span><span style="color:#710">'</span></span>
+coeffs = <span style="color:#036;font-weight:bold">NMatrix</span>.new([<span style="color:#00D">3</span>,<span style="color:#00D">3</span>],
+  [<span style="color:#00D">1</span>, <span style="color:#00D">1</span>,<span style="color:#00D">-1</span>,
+   <span style="color:#00D">1</span>,<span style="color:#00D">-2</span>, <span style="color:#00D">3</span>,
+   <span style="color:#00D">2</span>, <span style="color:#00D">3</span>, <span style="color:#00D">1</span>], <span style="color:#606">dtype</span>: <span style="color:#A60">:float32</span>)
 
-rhs = <span class="constant">NMatrix</span>.new([<span class="integer">3</span>,<span class="integer">1</span>],
-  [<span class="integer">4</span>,
-  <span class="integer">-6</span>,
-   <span class="integer">7</span>], <span class="key">dtype</span>: <span class="symbol">:float32</span>)
+rhs = <span style="color:#036;font-weight:bold">NMatrix</span>.new([<span style="color:#00D">3</span>,<span style="color:#00D">1</span>],
+  [<span style="color:#00D">4</span>,
+  <span style="color:#00D">-6</span>,
+   <span style="color:#00D">7</span>], <span style="color:#606">dtype</span>: <span style="color:#A60">:float32</span>)
 
 solution = coeffs.solve(rhs)
-<span class="comment">#=&gt; [1.0, 2.0, -1.0]</span>
+<span style="color:#777">#=&gt; [1.0, 2.0, -1.0]</span>
 </pre></td>
 </tr></table>
 </div>

@@ -147,24 +147,24 @@
 <a href="#n19" name="n19">19</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">benchmark</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">benchmark</span><span style="color:#710">'</span></span>
 
-<span class="constant">Benchmark</span>.bm <span class="keyword">do</span> |x|
-  x.report <span class="keyword">do</span>
-    <span class="integer">10000</span>.times <span class="keyword">do</span>
-      a = <span class="constant">NMatrix</span>.new([<span class="integer">3</span>,<span class="integer">3</span>], [<span class="integer">76</span>, <span class="integer">25</span>, <span class="integer">11</span>,
-                              <span class="integer">27</span>, <span class="integer">89</span>, <span class="integer">51</span>,
-                              <span class="integer">18</span>, <span class="integer">60</span>, <span class="integer">32</span>], <span class="key">dtype</span>: <span class="symbol">:float64</span>)
-      b = <span class="constant">NMatrix</span>.new([<span class="integer">3</span>,<span class="integer">1</span>], [<span class="integer">10</span>,
-                               <span class="integer">7</span>,
-                              <span class="integer">43</span>], <span class="key">dtype</span>: <span class="symbol">:float64</span>)
-      <span class="constant">NMatrix</span>::<span class="constant">CLAPACK</span>.solve_gesv(a,b)
-      <span class="comment"># The `NMatrix::CLAPACK` is replaced with NMatrix::LAPACKE </span>
-      <span class="comment"># or NMatrix::LAPACKE_ATLAS as per the underlying binding. Read the</span>
-      <span class="comment"># source code for more details.</span>
-    <span class="keyword">end</span>
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
+<span style="color:#036;font-weight:bold">Benchmark</span>.bm <span style="color:#080;font-weight:bold">do</span> |x|
+  x.report <span style="color:#080;font-weight:bold">do</span>
+    <span style="color:#00D">10000</span>.times <span style="color:#080;font-weight:bold">do</span>
+      a = <span style="color:#036;font-weight:bold">NMatrix</span>.new([<span style="color:#00D">3</span>,<span style="color:#00D">3</span>], [<span style="color:#00D">76</span>, <span style="color:#00D">25</span>, <span style="color:#00D">11</span>,
+                              <span style="color:#00D">27</span>, <span style="color:#00D">89</span>, <span style="color:#00D">51</span>,
+                              <span style="color:#00D">18</span>, <span style="color:#00D">60</span>, <span style="color:#00D">32</span>], <span style="color:#606">dtype</span>: <span style="color:#A60">:float64</span>)
+      b = <span style="color:#036;font-weight:bold">NMatrix</span>.new([<span style="color:#00D">3</span>,<span style="color:#00D">1</span>], [<span style="color:#00D">10</span>,
+                               <span style="color:#00D">7</span>,
+                              <span style="color:#00D">43</span>], <span style="color:#606">dtype</span>: <span style="color:#A60">:float64</span>)
+      <span style="color:#036;font-weight:bold">NMatrix</span>::<span style="color:#036;font-weight:bold">CLAPACK</span>.solve_gesv(a,b)
+      <span style="color:#777"># The `NMatrix::CLAPACK` is replaced with NMatrix::LAPACKE </span>
+      <span style="color:#777"># or NMatrix::LAPACKE_ATLAS as per the underlying binding. Read the</span>
+      <span style="color:#777"># source code for more details.</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>

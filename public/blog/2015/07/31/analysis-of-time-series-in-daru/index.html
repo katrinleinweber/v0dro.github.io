@@ -134,13 +134,13 @@
 <a href="#n6" name="n6">6</a>
 <a href="#n7" name="n7">7</a>
 </pre></td>
-  <td class="code"><pre>require <span class="string"><span class="delimiter">'</span><span class="content">distribution</span><span class="delimiter">'</span></span>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+  <td class="code"><pre>require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">distribution</span><span style="color:#710">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-rng = <span class="constant">Distribution</span>::<span class="constant">Normal</span>.rng
+rng = <span style="color:#036;font-weight:bold">Distribution</span>::<span style="color:#036;font-weight:bold">Normal</span>.rng
 
-index  = <span class="constant">Daru</span>::<span class="constant">DateTimeIndex</span>.date_range(<span class="symbol">:start</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">2012-4-2</span><span class="delimiter">'</span></span>, <span class="symbol">:periods</span> =&gt; <span class="integer">1000</span>, <span class="symbol">:freq</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">D</span><span class="delimiter">'</span></span>)
-vector = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new(<span class="integer">1000</span>.times.map {rng.call}, <span class="key">index</span>: index)
+index  = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DateTimeIndex</span>.date_range(<span style="color:#A60">:start</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">2012-4-2</span><span style="color:#710">'</span></span>, <span style="color:#A60">:periods</span> =&gt; <span style="color:#00D">1000</span>, <span style="color:#A60">:freq</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">D</span><span style="color:#710">'</span></span>)
+vector = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new(<span style="color:#00D">1000</span>.times.map {rng.call}, <span style="color:#606">index</span>: index)
 </pre></td>
 </tr></table>
 </div>
@@ -233,18 +233,18 @@ vector = <span class="constant">Daru</span>::<span class="constant">Vector</span
 <a href="#n15" name="n15">15</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
-require <span class="string"><span class="delimiter">'</span><span class="content">distribution</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">distribution</span><span style="color:#710">'</span></span>
 
-rng    = <span class="constant">Distribution</span>::<span class="constant">Normal</span>.rng
-vector = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new(
-  <span class="integer">1000</span>.times.map { rng.call }, 
-  <span class="key">index</span>: <span class="constant">Daru</span>::<span class="constant">DateTimeIndex</span>.date_range(
-    <span class="symbol">:start</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">2012-4-2</span><span class="delimiter">'</span></span>, <span class="symbol">:periods</span> =&gt; <span class="integer">1000</span>, <span class="symbol">:freq</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">D</span><span class="delimiter">'</span></span>)
+rng    = <span style="color:#036;font-weight:bold">Distribution</span>::<span style="color:#036;font-weight:bold">Normal</span>.rng
+vector = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new(
+  <span style="color:#00D">1000</span>.times.map { rng.call }, 
+  <span style="color:#606">index</span>: <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DateTimeIndex</span>.date_range(
+    <span style="color:#A60">:start</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">2012-4-2</span><span style="color:#710">'</span></span>, <span style="color:#A60">:periods</span> =&gt; <span style="color:#00D">1000</span>, <span style="color:#A60">:freq</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">D</span><span style="color:#710">'</span></span>)
 )
-<span class="comment"># Compute the cumulative sum</span>
+<span style="color:#777"># Compute the cumulative sum</span>
 vector = vector.cumsum
-rolling = vector.rolling_mean <span class="integer">60</span>
+rolling = vector.rolling_mean <span style="color:#00D">60</span>
 
 rolling.tail
 </pre></td>
@@ -263,11 +263,11 @@ rolling.tail
 <a href="#n6" name="n6">6</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">gnuplotrb</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">gnuplotrb</span><span style="color:#710">'</span></span>
 
-<span class="constant">GnuplotRB</span>::<span class="constant">Plot</span>.new(
-  [vector , <span class="key">with</span>: <span class="string"><span class="delimiter">'</span><span class="content">lines</span><span class="delimiter">'</span></span>, <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">Vector</span><span class="delimiter">'</span></span>],
-  [rolling, <span class="key">with</span>: <span class="string"><span class="delimiter">'</span><span class="content">lines</span><span class="delimiter">'</span></span>, <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">Rolling Mean</span><span class="delimiter">'</span></span>])
+<span style="color:#036;font-weight:bold">GnuplotRB</span>::<span style="color:#036;font-weight:bold">Plot</span>.new(
+  [vector , <span style="color:#606">with</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">lines</span><span style="color:#710">'</span></span>, <span style="color:#606">title</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Vector</span><span style="color:#710">'</span></span>],
+  [rolling, <span style="color:#606">with</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">lines</span><span style="color:#710">'</span></span>, <span style="color:#606">title</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Rolling Mean</span><span style="color:#710">'</span></span>])
 </pre></td>
 </tr></table>
 </div>
@@ -290,16 +290,16 @@ require <span class="string"><span class="delimiter">'</span><span class="conten
 <a href="#n11" name="n11">11</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
-require <span class="string"><span class="delimiter">'</span><span class="content">distribution</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">distribution</span><span style="color:#710">'</span></span>
 
-rng    = <span class="constant">Distribution</span>::<span class="constant">Normal</span>.rng
-index  = <span class="constant">Daru</span>::<span class="constant">DateTimeIndex</span>.date_range(<span class="symbol">:start</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">2012-4-2</span><span class="delimiter">'</span></span>, <span class="symbol">:periods</span> =&gt; <span class="integer">1000</span>, <span class="symbol">:freq</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">D</span><span class="delimiter">'</span></span>)
-df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({
-  <span class="key">a</span>: <span class="integer">1000</span>.times.map { rng.call },
-  <span class="key">b</span>: <span class="integer">1000</span>.times.map { rng.call },
-  <span class="key">c</span>: <span class="integer">1000</span>.times.map { rng.call }
-}, <span class="key">index</span>: index)
+rng    = <span style="color:#036;font-weight:bold">Distribution</span>::<span style="color:#036;font-weight:bold">Normal</span>.rng
+index  = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DateTimeIndex</span>.date_range(<span style="color:#A60">:start</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">2012-4-2</span><span style="color:#710">'</span></span>, <span style="color:#A60">:periods</span> =&gt; <span style="color:#00D">1000</span>, <span style="color:#A60">:freq</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">D</span><span style="color:#710">'</span></span>)
+df = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({
+  <span style="color:#606">a</span>: <span style="color:#00D">1000</span>.times.map { rng.call },
+  <span style="color:#606">b</span>: <span style="color:#00D">1000</span>.times.map { rng.call },
+  <span style="color:#606">c</span>: <span style="color:#00D">1000</span>.times.map { rng.call }
+}, <span style="color:#606">index</span>: index)
 </pre></td>
 </tr></table>
 </div>
@@ -324,19 +324,19 @@ df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>
 <a href="#n14" name="n14">14</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">gnuplotrb</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">gnuplotrb</span><span style="color:#710">'</span></span>
 
-<span class="comment"># Calculate cumulative sum of each Vector</span>
+<span style="color:#777"># Calculate cumulative sum of each Vector</span>
 df = df.cumsum
 
-<span class="comment"># Compute rolling sum of each Vector with a loopback length of 60.</span>
-r_sum = df.rolling_sum(<span class="integer">60</span>)
+<span style="color:#777"># Compute rolling sum of each Vector with a loopback length of 60.</span>
+r_sum = df.rolling_sum(<span style="color:#00D">60</span>)
 
 plots = []
-r_sum.each_vector_with_index <span class="keyword">do</span> |vec,n|
-  plots &lt;&lt; <span class="constant">GnuplotRB</span>::<span class="constant">Plot</span>.new([vec, <span class="key">with</span>: <span class="string"><span class="delimiter">'</span><span class="content">lines</span><span class="delimiter">'</span></span>, <span class="key">title</span>: n])
-<span class="keyword">end</span>
-<span class="constant">GnuplotRB</span>::<span class="constant">Multiplot</span>.new(*plots, <span class="key">layout</span>: [<span class="integer">3</span>,<span class="integer">1</span>], <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">Rolling sums</span><span class="delimiter">'</span></span>)
+r_sum.each_vector_with_index <span style="color:#080;font-weight:bold">do</span> |vec,n|
+  plots &lt;&lt; <span style="color:#036;font-weight:bold">GnuplotRB</span>::<span style="color:#036;font-weight:bold">Plot</span>.new([vec, <span style="color:#606">with</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">lines</span><span style="color:#710">'</span></span>, <span style="color:#606">title</span>: n])
+<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#036;font-weight:bold">GnuplotRB</span>::<span style="color:#036;font-weight:bold">Multiplot</span>.new(*plots, <span style="color:#606">layout</span>: [<span style="color:#00D">3</span>,<span style="color:#00D">1</span>], <span style="color:#606">title</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Rolling sums</span><span style="color:#710">'</span></span>)
 </pre></td>
 </tr></table>
 </div>

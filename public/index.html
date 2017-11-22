@@ -178,13 +178,13 @@ The body is represented as the Ruby class <code>Body</code>:</p>
 <a href="#n6" name="n6">6</a>
 <a href="#n7" name="n7">7</a>
 </pre></td>
-  <td class="code"><pre><span class="keyword">class</span> <span class="class">Body</span>
-  attr_reader <span class="symbol">:x</span>
+  <td class="code"><pre><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Body</span>
+  attr_reader <span style="color:#A60">:x</span>
 
-  <span class="keyword">def</span> <span class="function">initialize</span>
-    <span class="instance-variable">@x</span> = [<span class="float">0.0</span>, <span class="float">0.0</span>]
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
+  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">initialize</span>
+    <span style="color:#33B">@x</span> = [<span style="color:#60E">0.0</span>, <span style="color:#60E">0.0</span>]
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
@@ -195,9 +195,9 @@ The body is represented as the Ruby class <code>Body</code>:</p>
 <a href="#n2" name="n2">2</a>
 <a href="#n3" name="n3">3</a>
 </pre></td>
-  <td class="code"><pre>a = body.x[<span class="integer">0</span>] &gt; x0[<span class="integer">0</span>] ? <span class="integer">1</span> : <span class="integer">0</span>
-b = body.x[<span class="integer">1</span>] &gt; x0[<span class="integer">1</span>] ? <span class="integer">1</span> : <span class="integer">0</span>
-quadrant = a + (b &lt;&lt; <span class="integer">1</span>)
+  <td class="code"><pre>a = body.x[<span style="color:#00D">0</span>] &gt; x0[<span style="color:#00D">0</span>] ? <span style="color:#00D">1</span> : <span style="color:#00D">0</span>
+b = body.x[<span style="color:#00D">1</span>] &gt; x0[<span style="color:#00D">1</span>] ? <span style="color:#00D">1</span> : <span style="color:#00D">0</span>
+quadrant = a + (b &lt;&lt; <span style="color:#00D">1</span>)
 </pre></td>
 </tr></table>
 </div>
@@ -211,7 +211,7 @@ quadrant = a + (b &lt;&lt; <span class="integer">1</span>)
 <ul>
   <li>Count the bodies in each quadrant and store the count in an array. The <code>size</code> array in case of the Ruby implementation.</li>
   <li>In the next step we successively add the number of elements in each quadrant so that it gives us the offset value at which elements from a new quadrant will start in the <code>bodies</code> Array (of course, after it is sorted).</li>
-  <li>We then sort the bodies according to the quadrant that they belong to. Something peculiar that I notice about this part is that counter[quadrant] also gets incremented after each iteration for sorting. Why is this the case even though the counters have been set to the correct offsets previously?</li>
+  <li>We then sort the bodies according to the quadrant that they belong to. Something peculiar that I notice about this part is that <code>counter[quadrant]</code> also gets incremented after each iteration for sorting. Why is this the case even though the counters have been set to the correct offsets previously?</li>
 </ul>
 
 <h2 id="step3cxx">step3.cxx</h2>
@@ -230,8 +230,8 @@ quadrant = a + (b &lt;&lt; <span class="integer">1</span>)
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 <a href="#n2" name="n2">2</a>
 </pre></td>
-  <td class="code"><pre> <span class="comment"># i is quadrant number</span>
-center[d] = x0[d] + radius * (((i &amp; <span class="integer">1</span> &lt;&lt; d) &gt;&gt; d) * <span class="integer">2</span> - <span class="integer">1</span>)
+  <td class="code"><pre> <span style="color:#777"># i is quadrant number</span>
+center[d] = x0[d] + radius * (((i &amp; <span style="color:#00D">1</span> &lt;&lt; d) &gt;&gt; d) * <span style="color:#00D">2</span> - <span style="color:#00D">1</span>)
 </pre></td>
 </tr></table>
 </div>
@@ -253,18 +253,18 @@ center[d] = x0[d] + radius * (((i &amp; <span class="integer">1</span> &lt;&lt; 
 <a href="#n11" name="n11">11</a>
 <a href="#n12" name="n12">12</a>
 </pre></td>
-  <td class="code"><pre>counter = <span class="constant">Array</span>.new <span class="integer">4</span>, start
-<span class="integer">1</span>.upto(<span class="integer">3</span>) <span class="keyword">do</span> |i|
-  counter[i] = size[i-<span class="integer">1</span>] + counter[i-<span class="integer">1</span>]
-<span class="keyword">end</span>
+  <td class="code"><pre>counter = <span style="color:#036;font-weight:bold">Array</span>.new <span style="color:#00D">4</span>, start
+<span style="color:#00D">1</span>.upto(<span style="color:#00D">3</span>) <span style="color:#080;font-weight:bold">do</span> |i|
+  counter[i] = size[i-<span style="color:#00D">1</span>] + counter[i-<span style="color:#00D">1</span>]
+<span style="color:#080;font-weight:bold">end</span>
 
-<span class="comment"># sort bodies and store them in buffer</span>
+<span style="color:#777"># sort bodies and store them in buffer</span>
 buffer = bodies.dup
-start.upto(finish-<span class="integer">1</span>) <span class="keyword">do</span> |n|
+start.upto(finish-<span style="color:#00D">1</span>) <span style="color:#080;font-weight:bold">do</span> |n|
   quadrant = quadrant_of x0, buffer[n]
   bodies[counter[quadrant]] = buffer[n]
-  counter[quadrant] += <span class="integer">1</span>
-<span class="keyword">end</span>
+  counter[quadrant] += <span style="color:#00D">1</span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
@@ -373,8 +373,8 @@ about the location of the first child of this cell, and the second <code>first_b
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 <a href="#n2" name="n2">2</a>
 </pre></td>
-  <td class="code"><pre>npn = m * m + <span class="integer">2</span> * m <span class="comment"># case Y n  n</span>
-nmn = m * m         <span class="comment"># case Y n -n</span>
+  <td class="code"><pre>npn = m * m + <span style="color:#00D">2</span> * m <span style="color:#777"># case Y n  n</span>
+nmn = m * m         <span style="color:#777"># case Y n -n</span>
 </pre></td>
 </tr></table>
 </div>
@@ -384,8 +384,8 @@ nmn = m * m         <span class="comment"># case Y n -n</span>
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 <a href="#n2" name="n2">2</a>
 </pre></td>
-  <td class="code"><pre>npm = n * n + n + m <span class="comment"># case Y n  m</span>
-nmm = n * n + n - m <span class="comment"># case Y n -m</span>
+  <td class="code"><pre>npm = n * n + n + m <span style="color:#777"># case Y n  m</span>
+nmm = n * n + n - m <span style="color:#777"># case Y n -m</span>
 </pre></td>
 </tr></table>
 </div>
@@ -411,7 +411,7 @@ V        0
 <div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 </pre></td>
-  <td class="code"><pre>p = (x * (<span class="integer">2</span> * n + <span class="integer">1</span>) * p1 - (n + m) * p2) / (n - m + <span class="integer">1</span>)
+  <td class="code"><pre>p = (x * (<span style="color:#00D">2</span> * n + <span style="color:#00D">1</span>) * p1 - (n + m) * p2) / (n - m + <span style="color:#00D">1</span>)
 </pre></td>
 </tr></table>
 </div>
@@ -424,7 +424,7 @@ V        0
 <div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 </pre></td>
-  <td class="code"><pre>p = x * (<span class="integer">2</span> * m + <span class="integer">1</span>) * p1
+  <td class="code"><pre>p = x * (<span style="color:#00D">2</span> * m + <span style="color:#00D">1</span>) * p1
 </pre></td>
 </tr></table>
 </div>
@@ -661,15 +661,15 @@ First round every mentor rates their <em>own</em> student only. In the next roun
 <a href="#n8" name="n8">8</a>
 <a href="#n9" name="n9">9</a>
 </pre></td>
-  <td class="code"><pre><span class="keyword">class</span> <span class="class">AddLexer</span>
+  <td class="code"><pre><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">AddLexer</span>
 macro
-  <span class="constant">DIGIT</span>         <span class="regexp"><span class="delimiter">/</span><span class="char">\d</span><span class="content">+</span><span class="delimiter">/</span></span>
+  <span style="color:#036;font-weight:bold">DIGIT</span>         <span style="background-color:hsla(300,100%,50%,0.06)"><span style="color:#404">/</span><span style="color:#D20">\d</span><span style="color:#808">+</span><span style="color:#404">/</span></span>
 rule
-  <span class="regexp"><span class="delimiter">/</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">DIGIT</span><span class="inline-delimiter">}</span></span><span class="delimiter">/</span></span>    { [<span class="symbol">:DIGIT</span>, text.to_i] }
-  <span class="regexp"><span class="delimiter">/</span><span class="content">.|</span><span class="char">\n</span><span class="delimiter">/</span></span>        { [text, text] }
+  <span style="background-color:hsla(300,100%,50%,0.06)"><span style="color:#404">/</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">DIGIT</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#404">/</span></span>    { [<span style="color:#A60">:DIGIT</span>, text.to_i] }
+  <span style="background-color:hsla(300,100%,50%,0.06)"><span style="color:#404">/</span><span style="color:#808">.|</span><span style="color:#D20">\n</span><span style="color:#404">/</span></span>        { [text, text] }
 inner
-  <span class="keyword">def</span> <span class="function">do_parse</span>; <span class="keyword">end</span> <span class="comment"># this is a stub.</span>
-<span class="keyword">end</span> <span class="comment"># AddLexer</span>
+  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">do_parse</span>; <span style="color:#080;font-weight:bold">end</span> <span style="color:#777"># this is a stub.</span>
+<span style="color:#080;font-weight:bold">end</span> <span style="color:#777"># AddLexer</span>
 </pre></td>
 </tr></table>
 </div>
@@ -717,26 +717,26 @@ that you might need to write repeatedly. In the above lexer, the macro <code>DIG
 <a href="#n19" name="n19">19</a>
 <strong><a href="#n20" name="n20">20</a></strong>
 </pre></td>
-  <td class="code"><pre><span class="keyword">class</span> <span class="class">AddParser</span>
+  <td class="code"><pre><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">AddParser</span>
 rule
-  <span class="key">target</span>: exp { result = <span class="integer">0</span> }
+  <span style="color:#606">target</span>: exp { result = <span style="color:#00D">0</span> }
   
-  <span class="key">exp</span>: exp <span class="string"><span class="delimiter">'</span><span class="content">+</span><span class="delimiter">'</span></span> exp { result += val[<span class="integer">2</span>]; puts result }
-     | <span class="constant">DIGIT</span>
-<span class="keyword">end</span>
+  <span style="color:#606">exp</span>: exp <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">+</span><span style="color:#710">'</span></span> exp { result += val[<span style="color:#00D">2</span>]; puts result }
+     | <span style="color:#036;font-weight:bold">DIGIT</span>
+<span style="color:#080;font-weight:bold">end</span>
 
 ---- header
-require_relative <span class="string"><span class="delimiter">'</span><span class="content">lexer.rex.rb</span><span class="delimiter">'</span></span>
+require_relative <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">lexer.rex.rb</span><span style="color:#710">'</span></span>
 
 ---- inner
-<span class="keyword">def</span> <span class="function">next_token</span>
-  <span class="instance-variable">@lexer</span>.next_token
-<span class="keyword">end</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">next_token</span>
+  <span style="color:#33B">@lexer</span>.next_token
+<span style="color:#080;font-weight:bold">end</span>
 
-<span class="keyword">def</span> <span class="function">prepare_parser</span> file_name
-  <span class="instance-variable">@lexer</span> = <span class="constant">AddLexer</span>.new
-  <span class="instance-variable">@lexer</span>.parse_file file_name
-<span class="keyword">end</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">prepare_parser</span> file_name
+  <span style="color:#33B">@lexer</span> = <span style="color:#036;font-weight:bold">AddLexer</span>.new
+  <span style="color:#33B">@lexer</span>.parse_file file_name
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
@@ -769,10 +769,10 @@ require_relative <span class="string"><span class="delimiter">'</span><span clas
 <a href="#n5" name="n5">5</a>
 <a href="#n6" name="n6">6</a>
 </pre></td>
-  <td class="code"><pre>require_relative <span class="string"><span class="delimiter">'</span><span class="content">parser.racc.rb</span><span class="delimiter">'</span></span>
+  <td class="code"><pre>require_relative <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">parser.racc.rb</span><span style="color:#710">'</span></span>
 
-file_name = <span class="predefined-constant">ARGV</span>[<span class="integer">0</span>]
-parser = <span class="constant">AddParser</span>.new
+file_name = <span style="color:#069">ARGV</span>[<span style="color:#00D">0</span>]
+parser = <span style="color:#036;font-weight:bold">AddParser</span>.new
 parser.prepare_parser(file_name)
 parser.do_parse
 </pre></td>
@@ -802,17 +802,17 @@ So now create a <code>Rakefile</code> in the same folder and put this code insid
 <strong><a href="#n10" name="n10">10</a></strong>
 <a href="#n11" name="n11">11</a>
 </pre></td>
-  <td class="code"><pre>require <span class="string"><span class="delimiter">'</span><span class="content">oedipus_lex</span><span class="delimiter">'</span></span>
+  <td class="code"><pre>require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">oedipus_lex</span><span style="color:#710">'</span></span>
 
-<span class="constant">Rake</span>.application.rake_require <span class="string"><span class="delimiter">&quot;</span><span class="content">oedipus_lex</span><span class="delimiter">&quot;</span></span>
+<span style="color:#036;font-weight:bold">Rake</span>.application.rake_require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">oedipus_lex</span><span style="color:#710">&quot;</span></span>
 
-desc <span class="string"><span class="delimiter">&quot;</span><span class="content">Generate Lexer</span><span class="delimiter">&quot;</span></span>
-task <span class="symbol">:lexer</span>  =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">lexer.rex.rb</span><span class="delimiter">&quot;</span></span>
+desc <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Generate Lexer</span><span style="color:#710">&quot;</span></span>
+task <span style="color:#A60">:lexer</span>  =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">lexer.rex.rb</span><span style="color:#710">&quot;</span></span>
 
-desc <span class="string"><span class="delimiter">&quot;</span><span class="content">Generate Parser</span><span class="delimiter">&quot;</span></span>
-task <span class="symbol">:parser</span> =&gt; <span class="symbol">:lexer</span> <span class="keyword">do</span>
-  <span class="shell"><span class="delimiter">`</span><span class="content">racc parser.racc -o parser.racc.rb</span><span class="delimiter">`</span></span>
-<span class="keyword">end</span>
+desc <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Generate Parser</span><span style="color:#710">&quot;</span></span>
+task <span style="color:#A60">:parser</span> =&gt; <span style="color:#A60">:lexer</span> <span style="color:#080;font-weight:bold">do</span>
+  <span style="background-color:hsla(120,100%,50%,0.06)"><span style="color:#161">`</span><span style="color:#2B2">racc parser.racc -o parser.racc.rb</span><span style="color:#161">`</span></span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
@@ -1342,25 +1342,25 @@ Minor sevenths (C-Bb) and major seconds (C-D) are called mild dissonances. Minor
 <strong><a href="#n20" name="n20">20</a></strong>
 </pre></td>
   <td class="code"><pre>
-<span class="keyword">class</span> <span class="class">Daru::Index</span>
-  <span class="comment"># some stuff...</span>
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Daru::Index</span>
+  <span style="color:#777"># some stuff...</span>
 
-  <span class="keyword">def</span> <span class="predefined-constant">self</span>.<span class="function">new</span> *args, &amp;block
-    source = args[<span class="integer">0</span>]
+  <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">new</span> *args, &amp;block
+    source = args[<span style="color:#00D">0</span>]
 
-    <span class="keyword">if</span> source_looks_like_a_multi_index
+    <span style="color:#080;font-weight:bold">if</span> source_looks_like_a_multi_index
       create_multi_index_and_return
-    <span class="keyword">elsif</span> source_looks_like_date_time_index
+    <span style="color:#080;font-weight:bold">elsif</span> source_looks_like_date_time_index
       create_date_time_index_and_return
-    <span class="keyword">else</span> <span class="comment"># Create the Daru::Index by calling initialize</span>
-      i = <span class="predefined-constant">self</span>.allocate
-      i.send <span class="symbol">:initialize</span>, *args, &amp;block
+    <span style="color:#080;font-weight:bold">else</span> <span style="color:#777"># Create the Daru::Index by calling initialize</span>
+      i = <span style="color:#069">self</span>.allocate
+      i.send <span style="color:#A60">:initialize</span>, *args, &amp;block
       i
-    <span class="keyword">end</span>
-  <span class="keyword">end</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
 
-  <span class="comment"># more stuff...</span>
-<span class="keyword">end</span>
+  <span style="color:#777"># more stuff...</span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
@@ -1389,16 +1389,16 @@ Minor sevenths (C-Bb) and major seconds (C-D) are called mild dissonances. Minor
 <a href="#n11" name="n11">11</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-a = <span class="constant">Daru</span>::<span class="constant">Core</span>::<span class="constant">Query</span>::<span class="constant">BoolArray</span>.new([<span class="predefined-constant">true</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>])
-<span class="comment">#=&gt; (Daru::Core::Query::BoolArray:84314110 bool_arry=[true, false, false, true, false, true])</span>
-b = <span class="constant">Daru</span>::<span class="constant">Core</span>::<span class="constant">Query</span>::<span class="constant">BoolArray</span>.new([<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>])
-<span class="comment">#=&gt; (Daru::Core::Query::BoolArray:84143650 bool_arry=[false, true, false, true, false, true])</span>
+a = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Query</span>::<span style="color:#036;font-weight:bold">BoolArray</span>.new([<span style="color:#069">true</span>,<span style="color:#069">false</span>,<span style="color:#069">false</span>,<span style="color:#069">true</span>,<span style="color:#069">false</span>,<span style="color:#069">true</span>])
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:84314110 bool_arry=[true, false, false, true, false, true])</span>
+b = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Query</span>::<span style="color:#036;font-weight:bold">BoolArray</span>.new([<span style="color:#069">false</span>,<span style="color:#069">true</span>,<span style="color:#069">false</span>,<span style="color:#069">true</span>,<span style="color:#069">false</span>,<span style="color:#069">true</span>])
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:84143650 bool_arry=[false, true, false, true, false, true])</span>
 a &amp; b
-<span class="comment">#=&gt; (Daru::Core::Query::BoolArray:83917880 bool_arry=[false, false, false, true, false, true])</span>
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:83917880 bool_arry=[false, false, false, true, false, true])</span>
 a | b
-<span class="comment">#=&gt; (Daru::Core::Query::BoolArray:83871560 bool_arry=[true, true, false, true, false, true])</span>
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:83871560 bool_arry=[true, true, false, true, false, true])</span>
 </pre></td>
 </tr></table>
 </div>

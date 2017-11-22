@@ -4,7 +4,7 @@
   <title><![CDATA[Travel &lt;code&gt; Music]]></title>
   <link href="http://v0dro.github.io/atom.xml" rel="self"/>
   <link href="http://v0dro.github.io/"/>
-  <updated>2017-11-21T22:28:29+09:00</updated>
+  <updated>2017-11-22T14:24:04+09:00</updated>
   <id>http://v0dro.github.io/</id>
   <author>
     <name><![CDATA[Sameer Deshmukh]]></name>
@@ -78,13 +78,13 @@ The body is represented as the Ruby class <code>Body</code>:</p>
 <a href="#n6" name="n6">6</a>
 <a href="#n7" name="n7">7</a>
 </pre></td>
-  <td class="code"><pre><span class="keyword">class</span> <span class="class">Body</span>
-  attr_reader <span class="symbol">:x</span>
+  <td class="code"><pre><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Body</span>
+  attr_reader <span style="color:#A60">:x</span>
 
-  <span class="keyword">def</span> <span class="function">initialize</span>
-    <span class="instance-variable">@x</span> = [<span class="float">0.0</span>, <span class="float">0.0</span>]
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
+  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">initialize</span>
+    <span style="color:#33B">@x</span> = [<span style="color:#60E">0.0</span>, <span style="color:#60E">0.0</span>]
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
@@ -95,9 +95,9 @@ The body is represented as the Ruby class <code>Body</code>:</p>
 <a href="#n2" name="n2">2</a>
 <a href="#n3" name="n3">3</a>
 </pre></td>
-  <td class="code"><pre>a = body.x[<span class="integer">0</span>] &gt; x0[<span class="integer">0</span>] ? <span class="integer">1</span> : <span class="integer">0</span>
-b = body.x[<span class="integer">1</span>] &gt; x0[<span class="integer">1</span>] ? <span class="integer">1</span> : <span class="integer">0</span>
-quadrant = a + (b &lt;&lt; <span class="integer">1</span>)
+  <td class="code"><pre>a = body.x[<span style="color:#00D">0</span>] &gt; x0[<span style="color:#00D">0</span>] ? <span style="color:#00D">1</span> : <span style="color:#00D">0</span>
+b = body.x[<span style="color:#00D">1</span>] &gt; x0[<span style="color:#00D">1</span>] ? <span style="color:#00D">1</span> : <span style="color:#00D">0</span>
+quadrant = a + (b &lt;&lt; <span style="color:#00D">1</span>)
 </pre></td>
 </tr></table>
 </div>
@@ -111,7 +111,7 @@ quadrant = a + (b &lt;&lt; <span class="integer">1</span>)
 <ul>
   <li>Count the bodies in each quadrant and store the count in an array. The <code>size</code> array in case of the Ruby implementation.</li>
   <li>In the next step we successively add the number of elements in each quadrant so that it gives us the offset value at which elements from a new quadrant will start in the <code>bodies</code> Array (of course, after it is sorted).</li>
-  <li>We then sort the bodies according to the quadrant that they belong to. Something peculiar that I notice about this part is that counter[quadrant] also gets incremented after each iteration for sorting. Why is this the case even though the counters have been set to the correct offsets previously?</li>
+  <li>We then sort the bodies according to the quadrant that they belong to. Something peculiar that I notice about this part is that <code>counter[quadrant]</code> also gets incremented after each iteration for sorting. Why is this the case even though the counters have been set to the correct offsets previously?</li>
 </ul>
 
 <h2 id="step3cxx">step3.cxx</h2>
@@ -130,8 +130,8 @@ quadrant = a + (b &lt;&lt; <span class="integer">1</span>)
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 <a href="#n2" name="n2">2</a>
 </pre></td>
-  <td class="code"><pre> <span class="comment"># i is quadrant number</span>
-center[d] = x0[d] + radius * (((i &amp; <span class="integer">1</span> &lt;&lt; d) &gt;&gt; d) * <span class="integer">2</span> - <span class="integer">1</span>)
+  <td class="code"><pre> <span style="color:#777"># i is quadrant number</span>
+center[d] = x0[d] + radius * (((i &amp; <span style="color:#00D">1</span> &lt;&lt; d) &gt;&gt; d) * <span style="color:#00D">2</span> - <span style="color:#00D">1</span>)
 </pre></td>
 </tr></table>
 </div>
@@ -153,18 +153,18 @@ center[d] = x0[d] + radius * (((i &amp; <span class="integer">1</span> &lt;&lt; 
 <a href="#n11" name="n11">11</a>
 <a href="#n12" name="n12">12</a>
 </pre></td>
-  <td class="code"><pre>counter = <span class="constant">Array</span>.new <span class="integer">4</span>, start
-<span class="integer">1</span>.upto(<span class="integer">3</span>) <span class="keyword">do</span> |i|
-  counter[i] = size[i-<span class="integer">1</span>] + counter[i-<span class="integer">1</span>]
-<span class="keyword">end</span>
+  <td class="code"><pre>counter = <span style="color:#036;font-weight:bold">Array</span>.new <span style="color:#00D">4</span>, start
+<span style="color:#00D">1</span>.upto(<span style="color:#00D">3</span>) <span style="color:#080;font-weight:bold">do</span> |i|
+  counter[i] = size[i-<span style="color:#00D">1</span>] + counter[i-<span style="color:#00D">1</span>]
+<span style="color:#080;font-weight:bold">end</span>
 
-<span class="comment"># sort bodies and store them in buffer</span>
+<span style="color:#777"># sort bodies and store them in buffer</span>
 buffer = bodies.dup
-start.upto(finish-<span class="integer">1</span>) <span class="keyword">do</span> |n|
+start.upto(finish-<span style="color:#00D">1</span>) <span style="color:#080;font-weight:bold">do</span> |n|
   quadrant = quadrant_of x0, buffer[n]
   bodies[counter[quadrant]] = buffer[n]
-  counter[quadrant] += <span class="integer">1</span>
-<span class="keyword">end</span>
+  counter[quadrant] += <span style="color:#00D">1</span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
@@ -273,8 +273,8 @@ about the location of the first child of this cell, and the second <code>first_b
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 <a href="#n2" name="n2">2</a>
 </pre></td>
-  <td class="code"><pre>npn = m * m + <span class="integer">2</span> * m <span class="comment"># case Y n  n</span>
-nmn = m * m         <span class="comment"># case Y n -n</span>
+  <td class="code"><pre>npn = m * m + <span style="color:#00D">2</span> * m <span style="color:#777"># case Y n  n</span>
+nmn = m * m         <span style="color:#777"># case Y n -n</span>
 </pre></td>
 </tr></table>
 </div>
@@ -284,8 +284,8 @@ nmn = m * m         <span class="comment"># case Y n -n</span>
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 <a href="#n2" name="n2">2</a>
 </pre></td>
-  <td class="code"><pre>npm = n * n + n + m <span class="comment"># case Y n  m</span>
-nmm = n * n + n - m <span class="comment"># case Y n -m</span>
+  <td class="code"><pre>npm = n * n + n + m <span style="color:#777"># case Y n  m</span>
+nmm = n * n + n - m <span style="color:#777"># case Y n -m</span>
 </pre></td>
 </tr></table>
 </div>
@@ -311,7 +311,7 @@ V        0
 <div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 </pre></td>
-  <td class="code"><pre>p = (x * (<span class="integer">2</span> * n + <span class="integer">1</span>) * p1 - (n + m) * p2) / (n - m + <span class="integer">1</span>)
+  <td class="code"><pre>p = (x * (<span style="color:#00D">2</span> * n + <span style="color:#00D">1</span>) * p1 - (n + m) * p2) / (n - m + <span style="color:#00D">1</span>)
 </pre></td>
 </tr></table>
 </div>
@@ -324,7 +324,7 @@ V        0
 <div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
 </pre></td>
-  <td class="code"><pre>p = x * (<span class="integer">2</span> * m + <span class="integer">1</span>) * p1
+  <td class="code"><pre>p = x * (<span style="color:#00D">2</span> * m + <span style="color:#00D">1</span>) * p1
 </pre></td>
 </tr></table>
 </div>
@@ -501,15 +501,15 @@ First round every mentor rates their <em>own</em> student only. In the next roun
 <a href="#n8" name="n8">8</a>
 <a href="#n9" name="n9">9</a>
 </pre></td>
-  <td class="code"><pre><span class="keyword">class</span> <span class="class">AddLexer</span>
+  <td class="code"><pre><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">AddLexer</span>
 macro
-  <span class="constant">DIGIT</span>         <span class="regexp"><span class="delimiter">/</span><span class="char">\d</span><span class="content">+</span><span class="delimiter">/</span></span>
+  <span style="color:#036;font-weight:bold">DIGIT</span>         <span style="background-color:hsla(300,100%,50%,0.06)"><span style="color:#404">/</span><span style="color:#D20">\d</span><span style="color:#808">+</span><span style="color:#404">/</span></span>
 rule
-  <span class="regexp"><span class="delimiter">/</span><span class="inline"><span class="inline-delimiter">#{</span><span class="constant">DIGIT</span><span class="inline-delimiter">}</span></span><span class="delimiter">/</span></span>    { [<span class="symbol">:DIGIT</span>, text.to_i] }
-  <span class="regexp"><span class="delimiter">/</span><span class="content">.|</span><span class="char">\n</span><span class="delimiter">/</span></span>        { [text, text] }
+  <span style="background-color:hsla(300,100%,50%,0.06)"><span style="color:#404">/</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">DIGIT</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#404">/</span></span>    { [<span style="color:#A60">:DIGIT</span>, text.to_i] }
+  <span style="background-color:hsla(300,100%,50%,0.06)"><span style="color:#404">/</span><span style="color:#808">.|</span><span style="color:#D20">\n</span><span style="color:#404">/</span></span>        { [text, text] }
 inner
-  <span class="keyword">def</span> <span class="function">do_parse</span>; <span class="keyword">end</span> <span class="comment"># this is a stub.</span>
-<span class="keyword">end</span> <span class="comment"># AddLexer</span>
+  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">do_parse</span>; <span style="color:#080;font-weight:bold">end</span> <span style="color:#777"># this is a stub.</span>
+<span style="color:#080;font-weight:bold">end</span> <span style="color:#777"># AddLexer</span>
 </pre></td>
 </tr></table>
 </div>
@@ -557,26 +557,26 @@ that you might need to write repeatedly. In the above lexer, the macro <code>DIG
 <a href="#n19" name="n19">19</a>
 <strong><a href="#n20" name="n20">20</a></strong>
 </pre></td>
-  <td class="code"><pre><span class="keyword">class</span> <span class="class">AddParser</span>
+  <td class="code"><pre><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">AddParser</span>
 rule
-  <span class="key">target</span>: exp { result = <span class="integer">0</span> }
+  <span style="color:#606">target</span>: exp { result = <span style="color:#00D">0</span> }
   
-  <span class="key">exp</span>: exp <span class="string"><span class="delimiter">'</span><span class="content">+</span><span class="delimiter">'</span></span> exp { result += val[<span class="integer">2</span>]; puts result }
-     | <span class="constant">DIGIT</span>
-<span class="keyword">end</span>
+  <span style="color:#606">exp</span>: exp <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">+</span><span style="color:#710">'</span></span> exp { result += val[<span style="color:#00D">2</span>]; puts result }
+     | <span style="color:#036;font-weight:bold">DIGIT</span>
+<span style="color:#080;font-weight:bold">end</span>
 
 ---- header
-require_relative <span class="string"><span class="delimiter">'</span><span class="content">lexer.rex.rb</span><span class="delimiter">'</span></span>
+require_relative <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">lexer.rex.rb</span><span style="color:#710">'</span></span>
 
 ---- inner
-<span class="keyword">def</span> <span class="function">next_token</span>
-  <span class="instance-variable">@lexer</span>.next_token
-<span class="keyword">end</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">next_token</span>
+  <span style="color:#33B">@lexer</span>.next_token
+<span style="color:#080;font-weight:bold">end</span>
 
-<span class="keyword">def</span> <span class="function">prepare_parser</span> file_name
-  <span class="instance-variable">@lexer</span> = <span class="constant">AddLexer</span>.new
-  <span class="instance-variable">@lexer</span>.parse_file file_name
-<span class="keyword">end</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">prepare_parser</span> file_name
+  <span style="color:#33B">@lexer</span> = <span style="color:#036;font-weight:bold">AddLexer</span>.new
+  <span style="color:#33B">@lexer</span>.parse_file file_name
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
@@ -609,10 +609,10 @@ require_relative <span class="string"><span class="delimiter">'</span><span clas
 <a href="#n5" name="n5">5</a>
 <a href="#n6" name="n6">6</a>
 </pre></td>
-  <td class="code"><pre>require_relative <span class="string"><span class="delimiter">'</span><span class="content">parser.racc.rb</span><span class="delimiter">'</span></span>
+  <td class="code"><pre>require_relative <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">parser.racc.rb</span><span style="color:#710">'</span></span>
 
-file_name = <span class="predefined-constant">ARGV</span>[<span class="integer">0</span>]
-parser = <span class="constant">AddParser</span>.new
+file_name = <span style="color:#069">ARGV</span>[<span style="color:#00D">0</span>]
+parser = <span style="color:#036;font-weight:bold">AddParser</span>.new
 parser.prepare_parser(file_name)
 parser.do_parse
 </pre></td>
@@ -642,17 +642,17 @@ So now create a <code>Rakefile</code> in the same folder and put this code insid
 <strong><a href="#n10" name="n10">10</a></strong>
 <a href="#n11" name="n11">11</a>
 </pre></td>
-  <td class="code"><pre>require <span class="string"><span class="delimiter">'</span><span class="content">oedipus_lex</span><span class="delimiter">'</span></span>
+  <td class="code"><pre>require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">oedipus_lex</span><span style="color:#710">'</span></span>
 
-<span class="constant">Rake</span>.application.rake_require <span class="string"><span class="delimiter">&quot;</span><span class="content">oedipus_lex</span><span class="delimiter">&quot;</span></span>
+<span style="color:#036;font-weight:bold">Rake</span>.application.rake_require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">oedipus_lex</span><span style="color:#710">&quot;</span></span>
 
-desc <span class="string"><span class="delimiter">&quot;</span><span class="content">Generate Lexer</span><span class="delimiter">&quot;</span></span>
-task <span class="symbol">:lexer</span>  =&gt; <span class="string"><span class="delimiter">&quot;</span><span class="content">lexer.rex.rb</span><span class="delimiter">&quot;</span></span>
+desc <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Generate Lexer</span><span style="color:#710">&quot;</span></span>
+task <span style="color:#A60">:lexer</span>  =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">lexer.rex.rb</span><span style="color:#710">&quot;</span></span>
 
-desc <span class="string"><span class="delimiter">&quot;</span><span class="content">Generate Parser</span><span class="delimiter">&quot;</span></span>
-task <span class="symbol">:parser</span> =&gt; <span class="symbol">:lexer</span> <span class="keyword">do</span>
-  <span class="shell"><span class="delimiter">`</span><span class="content">racc parser.racc -o parser.racc.rb</span><span class="delimiter">`</span></span>
-<span class="keyword">end</span>
+desc <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Generate Parser</span><span style="color:#710">&quot;</span></span>
+task <span style="color:#A60">:parser</span> =&gt; <span style="color:#A60">:lexer</span> <span style="color:#080;font-weight:bold">do</span>
+  <span style="background-color:hsla(120,100%,50%,0.06)"><span style="color:#161">`</span><span style="color:#2B2">racc parser.racc -o parser.racc.rb</span><span style="color:#161">`</span></span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
@@ -1062,25 +1062,25 @@ Minor sevenths (C-Bb) and major seconds (C-D) are called mild dissonances. Minor
 <strong><a href="#n20" name="n20">20</a></strong>
 </pre></td>
   <td class="code"><pre>
-<span class="keyword">class</span> <span class="class">Daru::Index</span>
-  <span class="comment"># some stuff...</span>
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Daru::Index</span>
+  <span style="color:#777"># some stuff...</span>
 
-  <span class="keyword">def</span> <span class="predefined-constant">self</span>.<span class="function">new</span> *args, &amp;block
-    source = args[<span class="integer">0</span>]
+  <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">new</span> *args, &amp;block
+    source = args[<span style="color:#00D">0</span>]
 
-    <span class="keyword">if</span> source_looks_like_a_multi_index
+    <span style="color:#080;font-weight:bold">if</span> source_looks_like_a_multi_index
       create_multi_index_and_return
-    <span class="keyword">elsif</span> source_looks_like_date_time_index
+    <span style="color:#080;font-weight:bold">elsif</span> source_looks_like_date_time_index
       create_date_time_index_and_return
-    <span class="keyword">else</span> <span class="comment"># Create the Daru::Index by calling initialize</span>
-      i = <span class="predefined-constant">self</span>.allocate
-      i.send <span class="symbol">:initialize</span>, *args, &amp;block
+    <span style="color:#080;font-weight:bold">else</span> <span style="color:#777"># Create the Daru::Index by calling initialize</span>
+      i = <span style="color:#069">self</span>.allocate
+      i.send <span style="color:#A60">:initialize</span>, *args, &amp;block
       i
-    <span class="keyword">end</span>
-  <span class="keyword">end</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
 
-  <span class="comment"># more stuff...</span>
-<span class="keyword">end</span>
+  <span style="color:#777"># more stuff...</span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
@@ -1109,16 +1109,16 @@ Minor sevenths (C-Bb) and major seconds (C-D) are called mild dissonances. Minor
 <a href="#n11" name="n11">11</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-a = <span class="constant">Daru</span>::<span class="constant">Core</span>::<span class="constant">Query</span>::<span class="constant">BoolArray</span>.new([<span class="predefined-constant">true</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>])
-<span class="comment">#=&gt; (Daru::Core::Query::BoolArray:84314110 bool_arry=[true, false, false, true, false, true])</span>
-b = <span class="constant">Daru</span>::<span class="constant">Core</span>::<span class="constant">Query</span>::<span class="constant">BoolArray</span>.new([<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>,<span class="predefined-constant">false</span>,<span class="predefined-constant">true</span>])
-<span class="comment">#=&gt; (Daru::Core::Query::BoolArray:84143650 bool_arry=[false, true, false, true, false, true])</span>
+a = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Query</span>::<span style="color:#036;font-weight:bold">BoolArray</span>.new([<span style="color:#069">true</span>,<span style="color:#069">false</span>,<span style="color:#069">false</span>,<span style="color:#069">true</span>,<span style="color:#069">false</span>,<span style="color:#069">true</span>])
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:84314110 bool_arry=[true, false, false, true, false, true])</span>
+b = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Query</span>::<span style="color:#036;font-weight:bold">BoolArray</span>.new([<span style="color:#069">false</span>,<span style="color:#069">true</span>,<span style="color:#069">false</span>,<span style="color:#069">true</span>,<span style="color:#069">false</span>,<span style="color:#069">true</span>])
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:84143650 bool_arry=[false, true, false, true, false, true])</span>
 a &amp; b
-<span class="comment">#=&gt; (Daru::Core::Query::BoolArray:83917880 bool_arry=[false, false, false, true, false, true])</span>
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:83917880 bool_arry=[false, false, false, true, false, true])</span>
 a | b
-<span class="comment">#=&gt; (Daru::Core::Query::BoolArray:83871560 bool_arry=[true, true, false, true, false, true])</span>
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:83871560 bool_arry=[true, true, false, true, false, true])</span>
 </pre></td>
 </tr></table>
 </div>
@@ -1159,23 +1159,23 @@ a | b
 <a href="#n18" name="n18">18</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({
-  <span class="key">a</span>: [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">5</span>,<span class="integer">6</span>]*<span class="integer">100</span>,
-  <span class="key">b</span>: [<span class="string"><span class="delimiter">'</span><span class="content">a</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">b</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">c</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">d</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">e</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">f</span><span class="delimiter">'</span></span>]*<span class="integer">100</span>,
-  <span class="key">c</span>: [<span class="integer">11</span>,<span class="integer">22</span>,<span class="integer">33</span>,<span class="integer">44</span>,<span class="integer">55</span>,<span class="integer">66</span>]*<span class="integer">100</span>
-}, <span class="key">index</span>: (<span class="integer">1</span>..<span class="integer">600</span>).to_a.shuffle)
-df.head(<span class="integer">5</span>)
+df = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({
+  <span style="color:#606">a</span>: [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>,<span style="color:#00D">6</span>]*<span style="color:#00D">100</span>,
+  <span style="color:#606">b</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">a</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">b</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">c</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">d</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">e</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">f</span><span style="color:#710">'</span></span>]*<span style="color:#00D">100</span>,
+  <span style="color:#606">c</span>: [<span style="color:#00D">11</span>,<span style="color:#00D">22</span>,<span style="color:#00D">33</span>,<span style="color:#00D">44</span>,<span style="color:#00D">55</span>,<span style="color:#00D">66</span>]*<span style="color:#00D">100</span>
+}, <span style="color:#606">index</span>: (<span style="color:#00D">1</span>..<span style="color:#00D">600</span>).to_a.shuffle)
+df.head(<span style="color:#00D">5</span>)
 
-<span class="comment">#=&gt; </span>
-<span class="comment">##&lt;Daru::DataFrame:80543480 @name = 3fc642f2-bd9a-4f6f-b4a8-0779253720f5 @size = 5&gt;</span>
-<span class="comment">#                    a          b          c </span>
-<span class="comment">#       109          1          a         11 </span>
-<span class="comment">#       381          2          b         22 </span>
-<span class="comment">#       598          3          c         33 </span>
-<span class="comment">#       390          4          d         44 </span>
-<span class="comment">#       344          5          e         55</span>
+<span style="color:#777">#=&gt; </span>
+<span style="color:#777">##&lt;Daru::DataFrame:80543480 @name = 3fc642f2-bd9a-4f6f-b4a8-0779253720f5 @size = 5&gt;</span>
+<span style="color:#777">#                    a          b          c </span>
+<span style="color:#777">#       109          1          a         11 </span>
+<span style="color:#777">#       381          2          b         22 </span>
+<span style="color:#777">#       598          3          c         33 </span>
+<span style="color:#777">#       390          4          d         44 </span>
+<span style="color:#777">#       344          5          e         55</span>
 </pre></td>
 </tr></table>
 </div>
@@ -1197,17 +1197,17 @@ df.head(<span class="integer">5</span>)
 <a href="#n12" name="n12">12</a>
 </pre></td>
   <td class="code"><pre>
-selected = df.where(df[<span class="symbol">:a</span>].eq(<span class="integer">2</span>) | df[<span class="symbol">:c</span>].eq(<span class="integer">55</span>))
-selected.head(<span class="integer">5</span>)
+selected = df.where(df[<span style="color:#A60">:a</span>].eq(<span style="color:#00D">2</span>) | df[<span style="color:#A60">:c</span>].eq(<span style="color:#00D">55</span>))
+selected.head(<span style="color:#00D">5</span>)
 
-<span class="comment"># =&gt; </span>
-<span class="comment">##&lt;Daru::DataFrame:79941980 @name = 74175f76-9dce-4b5d-b85b-bdfbb650953e @size = 5&gt;</span>
-<span class="comment">#                    a          b          c </span>
-<span class="comment">#       381          2          b         22 </span>
-<span class="comment">#       344          5          e         55 </span>
-<span class="comment">#       135          2          b         22 </span>
-<span class="comment">#       524          5          e         55 </span>
-<span class="comment">#       266          2          b         22 </span>
+<span style="color:#777"># =&gt; </span>
+<span style="color:#777">##&lt;Daru::DataFrame:79941980 @name = 74175f76-9dce-4b5d-b85b-bdfbb650953e @size = 5&gt;</span>
+<span style="color:#777">#                    a          b          c </span>
+<span style="color:#777">#       381          2          b         22 </span>
+<span style="color:#777">#       344          5          e         55 </span>
+<span style="color:#777">#       135          2          b         22 </span>
+<span style="color:#777">#       524          5          e         55 </span>
+<span style="color:#777">#       266          2          b         22 </span>
 </pre></td>
 </tr></table>
 </div>
@@ -1231,11 +1231,11 @@ selected.head(<span class="integer">5</span>)
 <a href="#n6" name="n6">6</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-vector = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new([<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">5</span>,<span class="integer">6</span>,<span class="integer">7</span>,<span class="integer">8</span>,<span class="integer">2</span>,<span class="integer">3</span>])
-vector.eq(<span class="integer">3</span>)
-<span class="comment">#=&gt;(Daru::Core::Query::BoolArray:82379030 bool_arry=[false, false, true, false, false, false, false, false, false, true])</span>
+vector = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new([<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>,<span style="color:#00D">6</span>,<span style="color:#00D">7</span>,<span style="color:#00D">8</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>])
+vector.eq(<span style="color:#00D">3</span>)
+<span style="color:#777">#=&gt;(Daru::Core::Query::BoolArray:82379030 bool_arry=[false, false, true, false, false, false, false, false, false, true])</span>
 </pre></td>
 </tr></table>
 </div>
@@ -1251,11 +1251,11 @@ vector.eq(<span class="integer">3</span>)
 <a href="#n6" name="n6">6</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-vector = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new([<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">5</span>,<span class="integer">6</span>,<span class="integer">7</span>,<span class="integer">7</span>,<span class="integer">8</span>,<span class="integer">9</span>,<span class="integer">9</span>,<span class="integer">9</span>,<span class="integer">7</span>,<span class="integer">5</span>,<span class="integer">4</span>,<span class="integer">3</span>,<span class="integer">4</span>])
-vector.eq(<span class="integer">4</span>).or(vector.mt(<span class="integer">8</span>))
-<span class="comment">#=&gt; (Daru::Core::Query::BoolArray:82294620 bool_arry=[false, false, false, true, false, false, false, false, false, true, true, true, false, false, true, false, true]) </span>
+vector = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new([<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>,<span style="color:#00D">6</span>,<span style="color:#00D">7</span>,<span style="color:#00D">7</span>,<span style="color:#00D">8</span>,<span style="color:#00D">9</span>,<span style="color:#00D">9</span>,<span style="color:#00D">9</span>,<span style="color:#00D">7</span>,<span style="color:#00D">5</span>,<span style="color:#00D">4</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>])
+vector.eq(<span style="color:#00D">4</span>).or(vector.mt(<span style="color:#00D">8</span>))
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:82294620 bool_arry=[false, false, false, true, false, false, false, false, false, true, true, true, false, false, true, false, true]) </span>
 </pre></td>
 </tr></table>
 </div>
@@ -1321,18 +1321,18 @@ vector.eq(<span class="integer">4</span>).or(vector.mt(<span class="integer">8</
 <a href="#n13" name="n13">13</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-vec = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new([<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">5</span>,<span class="integer">6</span>,<span class="integer">3</span>,<span class="integer">336</span>,<span class="integer">3</span>,<span class="integer">6</span>,<span class="integer">2</span>,<span class="integer">6</span>,<span class="integer">2</span>,<span class="integer">35</span>,<span class="integer">346</span>,<span class="integer">7</span>,<span class="integer">3</span>,<span class="integer">45</span>,<span class="integer">23</span>,<span class="integer">26</span>,<span class="integer">7</span>,<span class="integer">345</span>,<span class="integer">2525</span>,<span class="integer">22</span>,<span class="integer">66</span>,<span class="integer">2</span>])
-vec.where((vec.eq(<span class="integer">4</span>) | vec.eq(<span class="integer">1</span>) | vec.mt(<span class="integer">300</span>)) &amp; vec.lt(<span class="integer">2000</span>))
-<span class="comment"># =&gt; </span>
-<span class="comment"># #&lt;Daru::Vector:70585830 @name = nil @size = 5 &gt;</span>
-<span class="comment">#     nil</span>
-<span class="comment">#   0   1</span>
-<span class="comment">#   3   4</span>
-<span class="comment">#   7 336</span>
-<span class="comment">#  14 346</span>
-<span class="comment">#  21 345</span>
+vec = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new([<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>,<span style="color:#00D">6</span>,<span style="color:#00D">3</span>,<span style="color:#00D">336</span>,<span style="color:#00D">3</span>,<span style="color:#00D">6</span>,<span style="color:#00D">2</span>,<span style="color:#00D">6</span>,<span style="color:#00D">2</span>,<span style="color:#00D">35</span>,<span style="color:#00D">346</span>,<span style="color:#00D">7</span>,<span style="color:#00D">3</span>,<span style="color:#00D">45</span>,<span style="color:#00D">23</span>,<span style="color:#00D">26</span>,<span style="color:#00D">7</span>,<span style="color:#00D">345</span>,<span style="color:#00D">2525</span>,<span style="color:#00D">22</span>,<span style="color:#00D">66</span>,<span style="color:#00D">2</span>])
+vec.where((vec.eq(<span style="color:#00D">4</span>) | vec.eq(<span style="color:#00D">1</span>) | vec.mt(<span style="color:#00D">300</span>)) &amp; vec.lt(<span style="color:#00D">2000</span>))
+<span style="color:#777"># =&gt; </span>
+<span style="color:#777"># #&lt;Daru::Vector:70585830 @name = nil @size = 5 &gt;</span>
+<span style="color:#777">#     nil</span>
+<span style="color:#777">#   0   1</span>
+<span style="color:#777">#   3   4</span>
+<span style="color:#777">#   7 336</span>
+<span style="color:#777">#  14 346</span>
+<span style="color:#777">#  21 345</span>
 </pre></td>
 </tr></table>
 </div>
@@ -1365,23 +1365,23 @@ vec.where((vec.eq(<span class="integer">4</span>) | vec.eq(<span class="integer"
 <a href="#n18" name="n18">18</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-left = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({
-  <span class="symbol">:id</span>   =&gt; [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>],
-  <span class="symbol">:name</span> =&gt; [<span class="string"><span class="delimiter">'</span><span class="content">Pirate</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Monkey</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Ninja</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Spaghetti</span><span class="delimiter">'</span></span>]
+left = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({
+  <span style="color:#A60">:id</span>   =&gt; [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>],
+  <span style="color:#A60">:name</span> =&gt; [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Pirate</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Monkey</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Ninja</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Spaghetti</span><span style="color:#710">'</span></span>]
 })
-right = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({
-  <span class="symbol">:id</span> =&gt; [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>],
-  <span class="symbol">:name</span> =&gt; [<span class="string"><span class="delimiter">'</span><span class="content">Rutabaga</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Pirate</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Darth Vader</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">Ninja</span><span class="delimiter">'</span></span>]
+right = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({
+  <span style="color:#A60">:id</span> =&gt; [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>],
+  <span style="color:#A60">:name</span> =&gt; [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Rutabaga</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Pirate</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Darth Vader</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Ninja</span><span style="color:#710">'</span></span>]
 })
-left.join(right, <span class="key">on</span>: [<span class="symbol">:name</span>], <span class="key">how</span>: <span class="symbol">:inner</span>)
+left.join(right, <span style="color:#606">on</span>: [<span style="color:#A60">:name</span>], <span style="color:#606">how</span>: <span style="color:#A60">:inner</span>)
 
-<span class="comment">#=&gt; </span>
-<span class="comment">##&lt;Daru::DataFrame:73134350 @name = 7cc250a9-108c-4ea3-99ab-dcb828ff2b88 @size = 2&gt;</span>
-<span class="comment">#                 id_1       name       id_2 </span>
-<span class="comment">#         0          1     Pirate          2 </span>
-<span class="comment">#         1          3      Ninja          4 </span>
+<span style="color:#777">#=&gt; </span>
+<span style="color:#777">##&lt;Daru::DataFrame:73134350 @name = 7cc250a9-108c-4ea3-99ab-dcb828ff2b88 @size = 2&gt;</span>
+<span style="color:#777">#                 id_1       name       id_2 </span>
+<span style="color:#777">#         0          1     Pirate          2 </span>
+<span style="color:#777">#         1          3      Ninja          4 </span>
 </pre></td>
 </tr></table>
 </div>
@@ -1414,13 +1414,13 @@ left.join(right, <span class="key">on</span>: [<span class="symbol">:name</span>
 <a href="#n6" name="n6">6</a>
 <a href="#n7" name="n7">7</a>
 </pre></td>
-  <td class="code"><pre>require <span class="string"><span class="delimiter">'</span><span class="content">distribution</span><span class="delimiter">'</span></span>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+  <td class="code"><pre>require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">distribution</span><span style="color:#710">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-rng = <span class="constant">Distribution</span>::<span class="constant">Normal</span>.rng
+rng = <span style="color:#036;font-weight:bold">Distribution</span>::<span style="color:#036;font-weight:bold">Normal</span>.rng
 
-index  = <span class="constant">Daru</span>::<span class="constant">DateTimeIndex</span>.date_range(<span class="symbol">:start</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">2012-4-2</span><span class="delimiter">'</span></span>, <span class="symbol">:periods</span> =&gt; <span class="integer">1000</span>, <span class="symbol">:freq</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">D</span><span class="delimiter">'</span></span>)
-vector = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new(<span class="integer">1000</span>.times.map {rng.call}, <span class="key">index</span>: index)
+index  = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DateTimeIndex</span>.date_range(<span style="color:#A60">:start</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">2012-4-2</span><span style="color:#710">'</span></span>, <span style="color:#A60">:periods</span> =&gt; <span style="color:#00D">1000</span>, <span style="color:#A60">:freq</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">D</span><span style="color:#710">'</span></span>)
+vector = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new(<span style="color:#00D">1000</span>.times.map {rng.call}, <span style="color:#606">index</span>: index)
 </pre></td>
 </tr></table>
 </div>
@@ -1513,18 +1513,18 @@ vector = <span class="constant">Daru</span>::<span class="constant">Vector</span
 <a href="#n15" name="n15">15</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
-require <span class="string"><span class="delimiter">'</span><span class="content">distribution</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">distribution</span><span style="color:#710">'</span></span>
 
-rng    = <span class="constant">Distribution</span>::<span class="constant">Normal</span>.rng
-vector = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new(
-  <span class="integer">1000</span>.times.map { rng.call }, 
-  <span class="key">index</span>: <span class="constant">Daru</span>::<span class="constant">DateTimeIndex</span>.date_range(
-    <span class="symbol">:start</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">2012-4-2</span><span class="delimiter">'</span></span>, <span class="symbol">:periods</span> =&gt; <span class="integer">1000</span>, <span class="symbol">:freq</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">D</span><span class="delimiter">'</span></span>)
+rng    = <span style="color:#036;font-weight:bold">Distribution</span>::<span style="color:#036;font-weight:bold">Normal</span>.rng
+vector = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new(
+  <span style="color:#00D">1000</span>.times.map { rng.call }, 
+  <span style="color:#606">index</span>: <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DateTimeIndex</span>.date_range(
+    <span style="color:#A60">:start</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">2012-4-2</span><span style="color:#710">'</span></span>, <span style="color:#A60">:periods</span> =&gt; <span style="color:#00D">1000</span>, <span style="color:#A60">:freq</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">D</span><span style="color:#710">'</span></span>)
 )
-<span class="comment"># Compute the cumulative sum</span>
+<span style="color:#777"># Compute the cumulative sum</span>
 vector = vector.cumsum
-rolling = vector.rolling_mean <span class="integer">60</span>
+rolling = vector.rolling_mean <span style="color:#00D">60</span>
 
 rolling.tail
 </pre></td>
@@ -1543,11 +1543,11 @@ rolling.tail
 <a href="#n6" name="n6">6</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">gnuplotrb</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">gnuplotrb</span><span style="color:#710">'</span></span>
 
-<span class="constant">GnuplotRB</span>::<span class="constant">Plot</span>.new(
-  [vector , <span class="key">with</span>: <span class="string"><span class="delimiter">'</span><span class="content">lines</span><span class="delimiter">'</span></span>, <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">Vector</span><span class="delimiter">'</span></span>],
-  [rolling, <span class="key">with</span>: <span class="string"><span class="delimiter">'</span><span class="content">lines</span><span class="delimiter">'</span></span>, <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">Rolling Mean</span><span class="delimiter">'</span></span>])
+<span style="color:#036;font-weight:bold">GnuplotRB</span>::<span style="color:#036;font-weight:bold">Plot</span>.new(
+  [vector , <span style="color:#606">with</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">lines</span><span style="color:#710">'</span></span>, <span style="color:#606">title</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Vector</span><span style="color:#710">'</span></span>],
+  [rolling, <span style="color:#606">with</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">lines</span><span style="color:#710">'</span></span>, <span style="color:#606">title</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Rolling Mean</span><span style="color:#710">'</span></span>])
 </pre></td>
 </tr></table>
 </div>
@@ -1570,16 +1570,16 @@ require <span class="string"><span class="delimiter">'</span><span class="conten
 <a href="#n11" name="n11">11</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
-require <span class="string"><span class="delimiter">'</span><span class="content">distribution</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">distribution</span><span style="color:#710">'</span></span>
 
-rng    = <span class="constant">Distribution</span>::<span class="constant">Normal</span>.rng
-index  = <span class="constant">Daru</span>::<span class="constant">DateTimeIndex</span>.date_range(<span class="symbol">:start</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">2012-4-2</span><span class="delimiter">'</span></span>, <span class="symbol">:periods</span> =&gt; <span class="integer">1000</span>, <span class="symbol">:freq</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">D</span><span class="delimiter">'</span></span>)
-df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({
-  <span class="key">a</span>: <span class="integer">1000</span>.times.map { rng.call },
-  <span class="key">b</span>: <span class="integer">1000</span>.times.map { rng.call },
-  <span class="key">c</span>: <span class="integer">1000</span>.times.map { rng.call }
-}, <span class="key">index</span>: index)
+rng    = <span style="color:#036;font-weight:bold">Distribution</span>::<span style="color:#036;font-weight:bold">Normal</span>.rng
+index  = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DateTimeIndex</span>.date_range(<span style="color:#A60">:start</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">2012-4-2</span><span style="color:#710">'</span></span>, <span style="color:#A60">:periods</span> =&gt; <span style="color:#00D">1000</span>, <span style="color:#A60">:freq</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">D</span><span style="color:#710">'</span></span>)
+df = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({
+  <span style="color:#606">a</span>: <span style="color:#00D">1000</span>.times.map { rng.call },
+  <span style="color:#606">b</span>: <span style="color:#00D">1000</span>.times.map { rng.call },
+  <span style="color:#606">c</span>: <span style="color:#00D">1000</span>.times.map { rng.call }
+}, <span style="color:#606">index</span>: index)
 </pre></td>
 </tr></table>
 </div>
@@ -1604,19 +1604,19 @@ df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>
 <a href="#n14" name="n14">14</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">gnuplotrb</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">gnuplotrb</span><span style="color:#710">'</span></span>
 
-<span class="comment"># Calculate cumulative sum of each Vector</span>
+<span style="color:#777"># Calculate cumulative sum of each Vector</span>
 df = df.cumsum
 
-<span class="comment"># Compute rolling sum of each Vector with a loopback length of 60.</span>
-r_sum = df.rolling_sum(<span class="integer">60</span>)
+<span style="color:#777"># Compute rolling sum of each Vector with a loopback length of 60.</span>
+r_sum = df.rolling_sum(<span style="color:#00D">60</span>)
 
 plots = []
-r_sum.each_vector_with_index <span class="keyword">do</span> |vec,n|
-  plots &lt;&lt; <span class="constant">GnuplotRB</span>::<span class="constant">Plot</span>.new([vec, <span class="key">with</span>: <span class="string"><span class="delimiter">'</span><span class="content">lines</span><span class="delimiter">'</span></span>, <span class="key">title</span>: n])
-<span class="keyword">end</span>
-<span class="constant">GnuplotRB</span>::<span class="constant">Multiplot</span>.new(*plots, <span class="key">layout</span>: [<span class="integer">3</span>,<span class="integer">1</span>], <span class="key">title</span>: <span class="string"><span class="delimiter">'</span><span class="content">Rolling sums</span><span class="delimiter">'</span></span>)
+r_sum.each_vector_with_index <span style="color:#080;font-weight:bold">do</span> |vec,n|
+  plots &lt;&lt; <span style="color:#036;font-weight:bold">GnuplotRB</span>::<span style="color:#036;font-weight:bold">Plot</span>.new([vec, <span style="color:#606">with</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">lines</span><span style="color:#710">'</span></span>, <span style="color:#606">title</span>: n])
+<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#036;font-weight:bold">GnuplotRB</span>::<span style="color:#036;font-weight:bold">Multiplot</span>.new(*plots, <span style="color:#606">layout</span>: [<span style="color:#00D">3</span>,<span style="color:#00D">1</span>], <span style="color:#606">title</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Rolling sums</span><span style="color:#710">'</span></span>)
 </pre></td>
 </tr></table>
 </div>
@@ -1654,11 +1654,11 @@ r_sum.each_vector_with_index <span class="keyword">do</span> |vec,n|
 <a href="#n6" name="n6">6</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-offset = <span class="constant">Daru</span>::<span class="constant">Offsets</span>::<span class="constant">Hour</span>.new
-offset + <span class="constant">DateTime</span>.new(<span class="integer">2012</span>,<span class="integer">4</span>,<span class="integer">5</span>,<span class="integer">4</span>)
-<span class="comment">#=&gt; #&lt;DateTime: 2012-04-05T05:00:00+00:00 ((2456023j,18000s,0n),+0s,2299161j)&gt;</span>
+offset = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Offsets</span>::<span style="color:#036;font-weight:bold">Hour</span>.new
+offset + <span style="color:#036;font-weight:bold">DateTime</span>.new(<span style="color:#00D">2012</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>,<span style="color:#00D">4</span>)
+<span style="color:#777">#=&gt; #&lt;DateTime: 2012-04-05T05:00:00+00:00 ((2456023j,18000s,0n),+0s,2299161j)&gt;</span>
 </pre></td>
 </tr></table>
 </div>
@@ -1735,11 +1735,11 @@ offset + <span class="constant">DateTime</span>.new(<span class="integer">2012</
 <a href="#n6" name="n6">6</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-offset = <span class="constant">Daru</span>::<span class="constant">DateOffset</span>.new(<span class="key">days</span>: <span class="integer">3</span>)
-offset + <span class="constant">DateTime</span>.new(<span class="integer">2012</span>,<span class="integer">4</span>,<span class="integer">5</span>,<span class="integer">2</span>)
-<span class="comment">#=&gt; #&lt;DateTime: 2012-04-08T02:00:00+00:00 ((2456026j,7200s,0n),+0s,2299161j)&gt;</span>
+offset = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DateOffset</span>.new(<span style="color:#606">days</span>: <span style="color:#00D">3</span>)
+offset + <span style="color:#036;font-weight:bold">DateTime</span>.new(<span style="color:#00D">2012</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>,<span style="color:#00D">2</span>)
+<span style="color:#777">#=&gt; #&lt;DateTime: 2012-04-08T02:00:00+00:00 ((2456026j,7200s,0n),+0s,2299161j)&gt;</span>
 </pre></td>
 </tr></table>
 </div>
@@ -1755,11 +1755,11 @@ offset + <span class="constant">DateTime</span>.new(<span class="integer">2012</
 <a href="#n6" name="n6">6</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-offset = <span class="constant">Daru</span>::<span class="constant">DateOffset</span>.new(<span class="key">months</span>: <span class="integer">2</span>, <span class="key">n</span>: <span class="integer">4</span>)
-offset + <span class="constant">DateTime</span>.new(<span class="integer">2011</span>,<span class="integer">5</span>,<span class="integer">2</span>)
-<span class="comment">#=&gt; #&lt;DateTime: 2012-01-02T00:00:00+00:00 ((2455929j,0s,0n),+0s,2299161j)&gt;</span>
+offset = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DateOffset</span>.new(<span style="color:#606">months</span>: <span style="color:#00D">2</span>, <span style="color:#606">n</span>: <span style="color:#00D">4</span>)
+offset + <span style="color:#036;font-weight:bold">DateTime</span>.new(<span style="color:#00D">2011</span>,<span style="color:#00D">5</span>,<span style="color:#00D">2</span>)
+<span style="color:#777">#=&gt; #&lt;DateTime: 2012-01-02T00:00:00+00:00 ((2455929j,0s,0n),+0s,2299161j)&gt;</span>
 </pre></td>
 </tr></table>
 </div>
@@ -1783,17 +1783,17 @@ offset + <span class="constant">DateTime</span>.new(<span class="integer">2011</
 <a href="#n12" name="n12">12</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-offset = <span class="constant">Daru</span>::<span class="constant">Offsets</span>::<span class="constant">YearEnd</span>.new
-offset + <span class="constant">DateTime</span>.new(<span class="integer">2012</span>,<span class="integer">5</span>,<span class="integer">1</span>,<span class="integer">5</span>,<span class="integer">2</span>,<span class="integer">1</span>)
-<span class="comment">#=&gt; #&lt;DateTime: 2012-12-31T05:02:01+00:00 ((2456293j,18121s,0n),+0s,2299161j)&gt;</span>
+offset = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Offsets</span>::<span style="color:#036;font-weight:bold">YearEnd</span>.new
+offset + <span style="color:#036;font-weight:bold">DateTime</span>.new(<span style="color:#00D">2012</span>,<span style="color:#00D">5</span>,<span style="color:#00D">1</span>,<span style="color:#00D">5</span>,<span style="color:#00D">2</span>,<span style="color:#00D">1</span>)
+<span style="color:#777">#=&gt; #&lt;DateTime: 2012-12-31T05:02:01+00:00 ((2456293j,18121s,0n),+0s,2299161j)&gt;</span>
 
-<span class="comment"># Passing an Integer into an Offsets object will apply the offset that many times:</span>
+<span style="color:#777"># Passing an Integer into an Offsets object will apply the offset that many times:</span>
 
-offset = <span class="constant">Daru</span>::<span class="constant">Offsets</span>::<span class="constant">MonthBegin</span>.new(<span class="integer">3</span>)
-offset + <span class="constant">DateTime</span>.new(<span class="integer">2015</span>,<span class="integer">3</span>,<span class="integer">5</span>)
-<span class="comment">#=&gt; #&lt;DateTime: 2015-06-01T00:00:00+00:00 ((2457175j,0s,0n),+0s,2299161j)&gt;</span>
+offset = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Offsets</span>::<span style="color:#036;font-weight:bold">MonthBegin</span>.new(<span style="color:#00D">3</span>)
+offset + <span style="color:#036;font-weight:bold">DateTime</span>.new(<span style="color:#00D">2015</span>,<span style="color:#00D">3</span>,<span style="color:#00D">5</span>)
+<span style="color:#777">#=&gt; #&lt;DateTime: 2015-06-01T00:00:00+00:00 ((2457175j,0s,0n),+0s,2299161j)&gt;</span>
 </pre></td>
 </tr></table>
 </div>
@@ -1815,15 +1815,15 @@ offset + <span class="constant">DateTime</span>.new(<span class="integer">2015</
 <strong><a href="#n10" name="n10">10</a></strong>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-offset = <span class="constant">Daru</span>::<span class="constant">Offsets</span>::<span class="constant">Week</span>.new(<span class="key">weekday</span>: <span class="integer">3</span>)
-date   = <span class="constant">DateTime</span>.new(<span class="integer">2012</span>,<span class="integer">1</span>,<span class="integer">6</span>)
-date.wday <span class="comment">#=&gt; 5</span>
+offset = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Offsets</span>::<span style="color:#036;font-weight:bold">Week</span>.new(<span style="color:#606">weekday</span>: <span style="color:#00D">3</span>)
+date   = <span style="color:#036;font-weight:bold">DateTime</span>.new(<span style="color:#00D">2012</span>,<span style="color:#00D">1</span>,<span style="color:#00D">6</span>)
+date.wday <span style="color:#777">#=&gt; 5</span>
 
 o = offset + date
-<span class="comment">#=&gt; #&lt;DateTime: 2012-01-11T00:00:00+00:00 ((2455938j,0s,0n),+0s,2299161j)&gt;</span>
-o.wday <span class="comment">#=&gt; 3</span>
+<span style="color:#777">#=&gt; #&lt;DateTime: 2012-01-11T00:00:00+00:00 ((2455938j,0s,0n),+0s,2299161j)&gt;</span>
+o.wday <span style="color:#777">#=&gt; 3</span>
 </pre></td>
 </tr></table>
 </div>
@@ -1845,11 +1845,11 @@ o.wday <span class="comment">#=&gt; 3</span>
 <a href="#n6" name="n6">6</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-offset = <span class="constant">Daru</span>::<span class="constant">DateTimeIndex</span>.date_range(
-  <span class="symbol">:start</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">2015-4-4</span><span class="delimiter">'</span></span>, <span class="symbol">:periods</span> =&gt; <span class="integer">100</span>, <span class="symbol">:freq</span> =&gt; <span class="string"><span class="delimiter">'</span><span class="content">H</span><span class="delimiter">'</span></span>)
-<span class="comment">#=&gt; #&lt;DateTimeIndex:86417320 offset=H periods=100 data=[2015-04-04T00:00:00+00:00...2015-04-08T03:00:00+00:00]&gt;</span>
+offset = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DateTimeIndex</span>.date_range(
+  <span style="color:#A60">:start</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">2015-4-4</span><span style="color:#710">'</span></span>, <span style="color:#A60">:periods</span> =&gt; <span style="color:#00D">100</span>, <span style="color:#A60">:freq</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">H</span><span style="color:#710">'</span></span>)
+<span style="color:#777">#=&gt; #&lt;DateTimeIndex:86417320 offset=H periods=100 data=[2015-04-04T00:00:00+00:00...2015-04-08T03:00:00+00:00]&gt;</span>
 </pre></td>
 </tr></table>
 </div>
@@ -2010,24 +2010,24 @@ offset = <span class="constant">Daru</span>::<span class="constant">DateTimeInde
 <a href="#n19" name="n19">19</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">benchmark</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">benchmark</span><span style="color:#710">'</span></span>
 
-<span class="constant">Benchmark</span>.bm <span class="keyword">do</span> |x|
-  x.report <span class="keyword">do</span>
-    <span class="integer">10000</span>.times <span class="keyword">do</span>
-      a = <span class="constant">NMatrix</span>.new([<span class="integer">3</span>,<span class="integer">3</span>], [<span class="integer">76</span>, <span class="integer">25</span>, <span class="integer">11</span>,
-                              <span class="integer">27</span>, <span class="integer">89</span>, <span class="integer">51</span>,
-                              <span class="integer">18</span>, <span class="integer">60</span>, <span class="integer">32</span>], <span class="key">dtype</span>: <span class="symbol">:float64</span>)
-      b = <span class="constant">NMatrix</span>.new([<span class="integer">3</span>,<span class="integer">1</span>], [<span class="integer">10</span>,
-                               <span class="integer">7</span>,
-                              <span class="integer">43</span>], <span class="key">dtype</span>: <span class="symbol">:float64</span>)
-      <span class="constant">NMatrix</span>::<span class="constant">CLAPACK</span>.solve_gesv(a,b)
-      <span class="comment"># The `NMatrix::CLAPACK` is replaced with NMatrix::LAPACKE </span>
-      <span class="comment"># or NMatrix::LAPACKE_ATLAS as per the underlying binding. Read the</span>
-      <span class="comment"># source code for more details.</span>
-    <span class="keyword">end</span>
-  <span class="keyword">end</span>
-<span class="keyword">end</span>
+<span style="color:#036;font-weight:bold">Benchmark</span>.bm <span style="color:#080;font-weight:bold">do</span> |x|
+  x.report <span style="color:#080;font-weight:bold">do</span>
+    <span style="color:#00D">10000</span>.times <span style="color:#080;font-weight:bold">do</span>
+      a = <span style="color:#036;font-weight:bold">NMatrix</span>.new([<span style="color:#00D">3</span>,<span style="color:#00D">3</span>], [<span style="color:#00D">76</span>, <span style="color:#00D">25</span>, <span style="color:#00D">11</span>,
+                              <span style="color:#00D">27</span>, <span style="color:#00D">89</span>, <span style="color:#00D">51</span>,
+                              <span style="color:#00D">18</span>, <span style="color:#00D">60</span>, <span style="color:#00D">32</span>], <span style="color:#606">dtype</span>: <span style="color:#A60">:float64</span>)
+      b = <span style="color:#036;font-weight:bold">NMatrix</span>.new([<span style="color:#00D">3</span>,<span style="color:#00D">1</span>], [<span style="color:#00D">10</span>,
+                               <span style="color:#00D">7</span>,
+                              <span style="color:#00D">43</span>], <span style="color:#606">dtype</span>: <span style="color:#A60">:float64</span>)
+      <span style="color:#036;font-weight:bold">NMatrix</span>::<span style="color:#036;font-weight:bold">CLAPACK</span>.solve_gesv(a,b)
+      <span style="color:#777"># The `NMatrix::CLAPACK` is replaced with NMatrix::LAPACKE </span>
+      <span style="color:#777"># or NMatrix::LAPACKE_ATLAS as per the underlying binding. Read the</span>
+      <span style="color:#777"># source code for more details.</span>
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
@@ -2173,14 +2173,14 @@ require <span class="string"><span class="delimiter">'</span><span class="conten
 <a href="#n9" name="n9">9</a>
 </pre></td>
   <td class="code"><pre>
-v = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new([<span class="float">1.44</span>,<span class="float">55.54</span>,<span class="float">33.2</span>,<span class="float">5.6</span>],<span class="key">dtype</span>: <span class="symbol">:nmatrix</span>, <span class="key">nm_dtype</span>: <span class="symbol">:float64</span>)
-<span class="comment">#        nil</span>
-<span class="comment">#    0  1.44</span>
-<span class="comment">#    1 55.54</span>
-<span class="comment">#    2  33.2</span>
-<span class="comment">#    3   5.6</span>
-v.dtype <span class="comment">#=&gt; :nmatrix</span>
-v.type  <span class="comment">#=&gt; :float64</span>
+v = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new([<span style="color:#60E">1.44</span>,<span style="color:#60E">55.54</span>,<span style="color:#60E">33.2</span>,<span style="color:#60E">5.6</span>],<span style="color:#606">dtype</span>: <span style="color:#A60">:nmatrix</span>, <span style="color:#606">nm_dtype</span>: <span style="color:#A60">:float64</span>)
+<span style="color:#777">#        nil</span>
+<span style="color:#777">#    0  1.44</span>
+<span style="color:#777">#    1 55.54</span>
+<span style="color:#777">#    2  33.2</span>
+<span style="color:#777">#    3   5.6</span>
+v.dtype <span style="color:#777">#=&gt; :nmatrix</span>
+v.type  <span style="color:#777">#=&gt; :float64</span>
 </pre></td>
 </tr></table>
 </div>
@@ -2195,8 +2195,8 @@ v.type  <span class="comment">#=&gt; :float64</span>
 <a href="#n3" name="n3">3</a>
 </pre></td>
   <td class="code"><pre>
-v = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new([<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>], <span class="key">dtype</span>: <span class="symbol">:array</span>)
-v.type <span class="comment">#=&gt; :numeric</span>
+v = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new([<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>], <span style="color:#606">dtype</span>: <span style="color:#A60">:array</span>)
+v.type <span style="color:#777">#=&gt; :numeric</span>
 </pre></td>
 </tr></table>
 </div>
@@ -2229,17 +2229,17 @@ This functionality is still in its infancy but should be up to speed soon.</p>
 <a href="#n12" name="n12">12</a>
 </pre></td>
   <td class="code"><pre>
-v = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new([<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="predefined-constant">nil</span>,<span class="predefined-constant">nil</span>,<span class="integer">4</span>], <span class="key">index</span>: [<span class="symbol">:a</span>, <span class="symbol">:b</span>, <span class="symbol">:c</span>, <span class="symbol">:d</span>, <span class="symbol">:e</span>, <span class="symbol">:f</span>])
+v = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new([<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#069">nil</span>,<span style="color:#069">nil</span>,<span style="color:#00D">4</span>], <span style="color:#606">index</span>: [<span style="color:#A60">:a</span>, <span style="color:#A60">:b</span>, <span style="color:#A60">:c</span>, <span style="color:#A60">:d</span>, <span style="color:#A60">:e</span>, <span style="color:#A60">:f</span>])
 v.is_nil?
-<span class="comment">#=&gt; </span>
-<span class="comment">##&lt;Daru::Vector:93025420 @name = nil @size = 6 &gt;</span>
-<span class="comment">#        nil</span>
-<span class="comment">#    a   nil</span>
-<span class="comment">#    b   nil</span>
-<span class="comment">#    c   nil</span>
-<span class="comment">#    d  true</span>
-<span class="comment">#    e  true</span>
-<span class="comment">#    f   nil</span>
+<span style="color:#777">#=&gt; </span>
+<span style="color:#777">##&lt;Daru::Vector:93025420 @name = nil @size = 6 &gt;</span>
+<span style="color:#777">#        nil</span>
+<span style="color:#777">#    a   nil</span>
+<span style="color:#777">#    b   nil</span>
+<span style="color:#777">#    c   nil</span>
+<span style="color:#777">#    d  true</span>
+<span style="color:#777">#    e  true</span>
+<span style="color:#777">#    f   nil</span>
 </pre></td>
 </tr></table>
 </div>
@@ -2251,7 +2251,7 @@ v.is_nil?
 <a href="#n2" name="n2">2</a>
 </pre></td>
   <td class="code"><pre>
-v.nil_positions <span class="comment">#=&gt; [:d, :e]</span>
+v.nil_positions <span style="color:#777">#=&gt; [:d, :e]</span>
 </pre></td>
 </tr></table>
 </div>
@@ -2272,16 +2272,16 @@ v.nil_positions <span class="comment">#=&gt; [:d, :e]</span>
 <a href="#n11" name="n11">11</a>
 </pre></td>
   <td class="code"><pre>
-v.replace_nils <span class="integer">69</span>
-<span class="comment">#=&gt; </span>
-<span class="comment">##&lt;Daru::Vector:92796730 @name = nil @size = 6 &gt;</span>
-<span class="comment">#    nil</span>
-<span class="comment">#  a   1</span>
-<span class="comment">#  b   2</span>
-<span class="comment">#  c   3</span>
-<span class="comment">#  d  69</span>
-<span class="comment">#  e  69</span>
-<span class="comment">#  f   4</span>
+v.replace_nils <span style="color:#00D">69</span>
+<span style="color:#777">#=&gt; </span>
+<span style="color:#777">##&lt;Daru::Vector:92796730 @name = nil @size = 6 &gt;</span>
+<span style="color:#777">#    nil</span>
+<span style="color:#777">#  a   1</span>
+<span style="color:#777">#  b   2</span>
+<span style="color:#777">#  c   3</span>
+<span style="color:#777">#  d  69</span>
+<span style="color:#777">#  e  69</span>
+<span style="color:#777">#  f   4</span>
 </pre></td>
 </tr></table>
 </div>
@@ -2315,20 +2315,20 @@ v.replace_nils <span class="integer">69</span>
 <a href="#n16" name="n16">16</a>
 </pre></td>
   <td class="code"><pre>
-df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({
-  <span class="key">a</span>: [<span class="string"><span class="delimiter">'</span><span class="content">ff</span><span class="delimiter">'</span></span>  ,  <span class="string"><span class="delimiter">'</span><span class="content">fwwq</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">efe</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">a</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">efef</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">zzzz</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">efgg</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">q</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">ggf</span><span class="delimiter">'</span></span>], 
-  <span class="key">b</span>: [<span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>  ,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>],
-  <span class="key">c</span>: [<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>],
-  <span class="key">d</span>: [<span class="integer">-1</span>,<span class="integer">2</span>,<span class="integer">-2</span>,<span class="integer">3</span>,<span class="integer">-3</span>,<span class="integer">4</span>,<span class="integer">-5</span>,<span class="integer">6</span>,<span class="integer">7</span>],
-  <span class="key">e</span>: [<span class="integer">2</span>,<span class="integer">4</span>,<span class="integer">4</span>,<span class="integer">6</span>,<span class="integer">6</span>,<span class="integer">8</span>,<span class="integer">10</span>,<span class="integer">12</span>,<span class="integer">14</span>]
+df = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({
+  <span style="color:#606">a</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">ff</span><span style="color:#710">'</span></span>  ,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">fwwq</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">efe</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">a</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">efef</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">zzzz</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">efgg</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">q</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">ggf</span><span style="color:#710">'</span></span>], 
+  <span style="color:#606">b</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>  ,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">two</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">two</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">two</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">two</span><span style="color:#710">'</span></span>],
+  <span style="color:#606">c</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">large</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">large</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">large</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">large</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>],
+  <span style="color:#606">d</span>: [<span style="color:#00D">-1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">-2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">-3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">-5</span>,<span style="color:#00D">6</span>,<span style="color:#00D">7</span>],
+  <span style="color:#606">e</span>: [<span style="color:#00D">2</span>,<span style="color:#00D">4</span>,<span style="color:#00D">4</span>,<span style="color:#00D">6</span>,<span style="color:#00D">6</span>,<span style="color:#00D">8</span>,<span style="color:#00D">10</span>,<span style="color:#00D">12</span>,<span style="color:#00D">14</span>]
   })
 
-df.sort([<span class="symbol">:a</span>,<span class="symbol">:d</span>], 
-  <span class="key">by</span>: {
-    <span class="key">a</span>: lambda { |a,b| a.length &lt;=&gt; b.length }, 
-    <span class="key">b</span>: lambda { |a,b| a.abs &lt;=&gt; b.abs } 
+df.sort([<span style="color:#A60">:a</span>,<span style="color:#A60">:d</span>], 
+  <span style="color:#606">by</span>: {
+    <span style="color:#606">a</span>: lambda { |a,b| a.length &lt;=&gt; b.length }, 
+    <span style="color:#606">b</span>: lambda { |a,b| a.abs &lt;=&gt; b.abs } 
   }, 
-  <span class="key">ascending</span>: [<span class="predefined-constant">false</span>, <span class="predefined-constant">true</span>]
+  <span style="color:#606">ascending</span>: [<span style="color:#069">false</span>, <span style="color:#069">true</span>]
 )
 </pre></td>
 </tr></table>
@@ -2354,12 +2354,12 @@ df.sort([<span class="symbol">:a</span>,<span class="symbol">:d</span>],
 <a href="#n7" name="n7">7</a>
 </pre></td>
   <td class="code"><pre>
-df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({<span class="key">a</span>: [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">5</span>], <span class="key">b</span>: [<span class="integer">10</span>,<span class="integer">14</span>,<span class="integer">15</span>,<span class="integer">17</span>,<span class="integer">44</span>]})
-df.plot <span class="key">type</span>: <span class="symbol">:line</span>, <span class="key">x</span>: <span class="symbol">:a</span>, <span class="key">y</span>: <span class="symbol">:b</span> <span class="keyword">do</span> |p,d|
-  p.yrange [<span class="integer">0</span>,<span class="integer">100</span>]
-  p.legend <span class="predefined-constant">true</span>
-  d.color <span class="string"><span class="delimiter">&quot;</span><span class="content">green</span><span class="delimiter">&quot;</span></span>
-<span class="keyword">end</span>
+df = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({<span style="color:#606">a</span>: [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>], <span style="color:#606">b</span>: [<span style="color:#00D">10</span>,<span style="color:#00D">14</span>,<span style="color:#00D">15</span>,<span style="color:#00D">17</span>,<span style="color:#00D">44</span>]})
+df.plot <span style="color:#606">type</span>: <span style="color:#A60">:line</span>, <span style="color:#606">x</span>: <span style="color:#A60">:a</span>, <span style="color:#606">y</span>: <span style="color:#A60">:b</span> <span style="color:#080;font-weight:bold">do</span> |p,d|
+  p.yrange [<span style="color:#00D">0</span>,<span style="color:#00D">100</span>]
+  p.legend <span style="color:#069">true</span>
+  d.color <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">green</span><span style="color:#710">&quot;</span></span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
@@ -2387,13 +2387,13 @@ df.plot <span class="key">type</span>: <span class="symbol">:line</span>, <span 
 <a href="#n9" name="n9">9</a>
 </pre></td>
   <td class="code"><pre>
-df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({
-  <span class="key">a</span>: [<span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>  ,  <span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">foo</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">bar</span><span class="delimiter">'</span></span>], 
-  <span class="key">b</span>: [<span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>  ,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">one</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>,  <span class="string"><span class="delimiter">'</span><span class="content">two</span><span class="delimiter">'</span></span>],
-  <span class="key">c</span>: [<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">large</span><span class="delimiter">'</span></span>,<span class="string"><span class="delimiter">'</span><span class="content">small</span><span class="delimiter">'</span></span>],
-  <span class="key">d</span>: [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">5</span>,<span class="integer">6</span>,<span class="integer">7</span>],
-  <span class="key">e</span>: [<span class="integer">2</span>,<span class="integer">4</span>,<span class="integer">4</span>,<span class="integer">6</span>,<span class="integer">6</span>,<span class="integer">8</span>,<span class="integer">10</span>,<span class="integer">12</span>,<span class="integer">14</span>],
-  <span class="key">f</span>: [<span class="integer">10</span>,<span class="integer">20</span>,<span class="integer">20</span>,<span class="integer">30</span>,<span class="integer">30</span>,<span class="integer">40</span>,<span class="integer">50</span>,<span class="integer">60</span>,<span class="integer">70</span>]
+df = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({
+  <span style="color:#606">a</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">foo</span><span style="color:#710">'</span></span>  ,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">foo</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">foo</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">foo</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">foo</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">bar</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">bar</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">bar</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">bar</span><span style="color:#710">'</span></span>], 
+  <span style="color:#606">b</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>  ,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">two</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">two</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">two</span><span style="color:#710">'</span></span>,  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">two</span><span style="color:#710">'</span></span>],
+  <span style="color:#606">c</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">large</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">large</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">large</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">large</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">small</span><span style="color:#710">'</span></span>],
+  <span style="color:#606">d</span>: [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>,<span style="color:#00D">6</span>,<span style="color:#00D">7</span>],
+  <span style="color:#606">e</span>: [<span style="color:#00D">2</span>,<span style="color:#00D">4</span>,<span style="color:#00D">4</span>,<span style="color:#00D">6</span>,<span style="color:#00D">6</span>,<span style="color:#00D">8</span>,<span style="color:#00D">10</span>,<span style="color:#00D">12</span>,<span style="color:#00D">14</span>],
+  <span style="color:#606">f</span>: [<span style="color:#00D">10</span>,<span style="color:#00D">20</span>,<span style="color:#00D">20</span>,<span style="color:#00D">30</span>,<span style="color:#00D">30</span>,<span style="color:#00D">40</span>,<span style="color:#00D">50</span>,<span style="color:#00D">60</span>,<span style="color:#00D">70</span>]
 })
 </pre></td>
 </tr></table>
@@ -2441,12 +2441,12 @@ df.describe
 </pre></td>
   <td class="code"><pre>
 df.cov
-<span class="comment"># =&gt; </span>
-<span class="comment"># #&lt;Daru::DataFrame:91700830 @name = f5ae5d7e-9fcb-46c8-90ac-a6420c9dc27f @size # = 3&gt;</span>
-<span class="comment">#                     d          e          f </span>
-<span class="comment">#          d          4          8         40 </span>
-<span class="comment">#          e          8         16         80 </span>
-<span class="comment">#          f         40         80        400 </span>
+<span style="color:#777"># =&gt; </span>
+<span style="color:#777"># #&lt;Daru::DataFrame:91700830 @name = f5ae5d7e-9fcb-46c8-90ac-a6420c9dc27f @size # = 3&gt;</span>
+<span style="color:#777">#                     d          e          f </span>
+<span style="color:#777">#          d          4          8         40 </span>
+<span style="color:#777">#          e          8         16         80 </span>
+<span style="color:#777">#          f         40         80        400 </span>
 </pre></td>
 </tr></table>
 </div>
@@ -2493,36 +2493,36 @@ df.cov
 </pre></td>
   <td class="code"><pre>
 tuples = [
-  [<span class="symbol">:a</span>,<span class="symbol">:one</span>,<span class="symbol">:bar</span>],
-  [<span class="symbol">:a</span>,<span class="symbol">:one</span>,<span class="symbol">:baz</span>],
-  [<span class="symbol">:a</span>,<span class="symbol">:two</span>,<span class="symbol">:bar</span>],
-  [<span class="symbol">:a</span>,<span class="symbol">:two</span>,<span class="symbol">:baz</span>],
-  [<span class="symbol">:b</span>,<span class="symbol">:one</span>,<span class="symbol">:bar</span>],
-  [<span class="symbol">:b</span>,<span class="symbol">:two</span>,<span class="symbol">:bar</span>],
-  [<span class="symbol">:b</span>,<span class="symbol">:two</span>,<span class="symbol">:baz</span>],
-  [<span class="symbol">:b</span>,<span class="symbol">:one</span>,<span class="symbol">:foo</span>],
-  [<span class="symbol">:c</span>,<span class="symbol">:one</span>,<span class="symbol">:bar</span>],
-  [<span class="symbol">:c</span>,<span class="symbol">:one</span>,<span class="symbol">:baz</span>],
-  [<span class="symbol">:c</span>,<span class="symbol">:two</span>,<span class="symbol">:foo</span>],
-  [<span class="symbol">:c</span>,<span class="symbol">:two</span>,<span class="symbol">:bar</span>]
+  [<span style="color:#A60">:a</span>,<span style="color:#A60">:one</span>,<span style="color:#A60">:bar</span>],
+  [<span style="color:#A60">:a</span>,<span style="color:#A60">:one</span>,<span style="color:#A60">:baz</span>],
+  [<span style="color:#A60">:a</span>,<span style="color:#A60">:two</span>,<span style="color:#A60">:bar</span>],
+  [<span style="color:#A60">:a</span>,<span style="color:#A60">:two</span>,<span style="color:#A60">:baz</span>],
+  [<span style="color:#A60">:b</span>,<span style="color:#A60">:one</span>,<span style="color:#A60">:bar</span>],
+  [<span style="color:#A60">:b</span>,<span style="color:#A60">:two</span>,<span style="color:#A60">:bar</span>],
+  [<span style="color:#A60">:b</span>,<span style="color:#A60">:two</span>,<span style="color:#A60">:baz</span>],
+  [<span style="color:#A60">:b</span>,<span style="color:#A60">:one</span>,<span style="color:#A60">:foo</span>],
+  [<span style="color:#A60">:c</span>,<span style="color:#A60">:one</span>,<span style="color:#A60">:bar</span>],
+  [<span style="color:#A60">:c</span>,<span style="color:#A60">:one</span>,<span style="color:#A60">:baz</span>],
+  [<span style="color:#A60">:c</span>,<span style="color:#A60">:two</span>,<span style="color:#A60">:foo</span>],
+  [<span style="color:#A60">:c</span>,<span style="color:#A60">:two</span>,<span style="color:#A60">:bar</span>]
 ]
 
-multi_index = <span class="constant">Daru</span>::<span class="constant">MultiIndex</span>.new(tuples)
+multi_index = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">MultiIndex</span>.new(tuples)
 
-vector_arry1 = [<span class="integer">11</span>,<span class="integer">12</span>,<span class="integer">13</span>,<span class="integer">14</span>,<span class="integer">11</span>,<span class="integer">12</span>,<span class="integer">13</span>,<span class="integer">14</span>,<span class="integer">11</span>,<span class="integer">12</span>,<span class="integer">13</span>,<span class="integer">14</span>]
-vector_arry2 = [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>]
+vector_arry1 = [<span style="color:#00D">11</span>,<span style="color:#00D">12</span>,<span style="color:#00D">13</span>,<span style="color:#00D">14</span>,<span style="color:#00D">11</span>,<span style="color:#00D">12</span>,<span style="color:#00D">13</span>,<span style="color:#00D">14</span>,<span style="color:#00D">11</span>,<span style="color:#00D">12</span>,<span style="color:#00D">13</span>,<span style="color:#00D">14</span>]
+vector_arry2 = [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>]
 
-order_mi = <span class="constant">Daru</span>::<span class="constant">MultiIndex</span>.new([
-    [<span class="symbol">:a</span>,<span class="symbol">:one</span>,<span class="symbol">:bar</span>],
-    [<span class="symbol">:a</span>,<span class="symbol">:two</span>,<span class="symbol">:baz</span>],
-    [<span class="symbol">:b</span>,<span class="symbol">:two</span>,<span class="symbol">:foo</span>],
-    [<span class="symbol">:b</span>,<span class="symbol">:one</span>,<span class="symbol">:foo</span>]])
+order_mi = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">MultiIndex</span>.new([
+    [<span style="color:#A60">:a</span>,<span style="color:#A60">:one</span>,<span style="color:#A60">:bar</span>],
+    [<span style="color:#A60">:a</span>,<span style="color:#A60">:two</span>,<span style="color:#A60">:baz</span>],
+    [<span style="color:#A60">:b</span>,<span style="color:#A60">:two</span>,<span style="color:#A60">:foo</span>],
+    [<span style="color:#A60">:b</span>,<span style="color:#A60">:one</span>,<span style="color:#A60">:foo</span>]])
 
-df_mi = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new([
+df_mi = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new([
     vector_arry1, 
     vector_arry2, 
     vector_arry1, 
-    vector_arry2], <span class="key">order</span>: order_mi, <span class="key">index</span>: multi_index)
+    vector_arry2], <span style="color:#606">order</span>: order_mi, <span style="color:#606">index</span>: multi_index)
 </pre></td>
 </tr></table>
 </div>
@@ -2536,7 +2536,7 @@ df_mi = <span class="constant">Daru</span>::<span class="constant">DataFrame</sp
 <a href="#n2" name="n2">2</a>
 </pre></td>
   <td class="code"><pre>
-df_mi.row[<span class="symbol">:a</span>]
+df_mi.row[<span style="color:#A60">:a</span>]
 </pre></td>
 </tr></table>
 </div>
@@ -2550,7 +2550,7 @@ df_mi.row[<span class="symbol">:a</span>]
 <a href="#n2" name="n2">2</a>
 </pre></td>
   <td class="code"><pre>
-df_mi.row[<span class="symbol">:a</span>, <span class="symbol">:one</span>,<span class="symbol">:bar</span>]
+df_mi.row[<span style="color:#A60">:a</span>, <span style="color:#A60">:one</span>,<span style="color:#A60">:bar</span>]
 </pre></td>
 </tr></table>
 </div>
@@ -2588,22 +2588,22 @@ df_mi.row[<span class="symbol">:a</span>, <span class="symbol">:one</span>,<span
 <a href="#n17" name="n17">17</a>
 </pre></td>
   <td class="code"><pre>
-df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({
-  <span class="key">a</span>: <span class="string"><span class="delimiter">%w{</span><span class="content">foo bar foo bar   foo bar foo foo</span><span class="delimiter">}</span></span>,
-  <span class="key">b</span>: <span class="string"><span class="delimiter">%w{</span><span class="content">one one two three two two one three</span><span class="delimiter">}</span></span>,
-  <span class="key">c</span>:   [<span class="integer">1</span>  ,<span class="integer">2</span>  ,<span class="integer">3</span>  ,<span class="integer">1</span>    ,<span class="integer">3</span>  ,<span class="integer">6</span>  ,<span class="integer">3</span>  ,<span class="integer">8</span>],
-  <span class="key">d</span>:   [<span class="integer">11</span> ,<span class="integer">22</span> ,<span class="integer">33</span> ,<span class="integer">44</span>   ,<span class="integer">55</span> ,<span class="integer">66</span> ,<span class="integer">77</span> ,<span class="integer">88</span>]
+df = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({
+  <span style="color:#606">a</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">%w{</span><span style="color:#D20">foo bar foo bar   foo bar foo foo</span><span style="color:#710">}</span></span>,
+  <span style="color:#606">b</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">%w{</span><span style="color:#D20">one one two three two two one three</span><span style="color:#710">}</span></span>,
+  <span style="color:#606">c</span>:   [<span style="color:#00D">1</span>  ,<span style="color:#00D">2</span>  ,<span style="color:#00D">3</span>  ,<span style="color:#00D">1</span>    ,<span style="color:#00D">3</span>  ,<span style="color:#00D">6</span>  ,<span style="color:#00D">3</span>  ,<span style="color:#00D">8</span>],
+  <span style="color:#606">d</span>:   [<span style="color:#00D">11</span> ,<span style="color:#00D">22</span> ,<span style="color:#00D">33</span> ,<span style="color:#00D">44</span>   ,<span style="color:#00D">55</span> ,<span style="color:#00D">66</span> ,<span style="color:#00D">77</span> ,<span style="color:#00D">88</span>]
 })
-<span class="comment">#&lt;Daru::DataFrame:88462950 @name = 0dbc2869-9a82-4044-b72d-a4ef963401fc @size = 8&gt;</span>
-<span class="comment">#            a          b          c          d </span>
-<span class="comment"># 0        foo        one          1         11 </span>
-<span class="comment"># 1        bar        one          2         22 </span>
-<span class="comment"># 2        foo        two          3         33 </span>
-<span class="comment"># 3        bar      three          1         44 </span>
-<span class="comment"># 4        foo        two          3         55 </span>
-<span class="comment"># 5        bar        two          6         66 </span>
-<span class="comment"># 6        foo        one          3         77 </span>
-<span class="comment"># 7        foo      three          8         88 </span>
+<span style="color:#777">#&lt;Daru::DataFrame:88462950 @name = 0dbc2869-9a82-4044-b72d-a4ef963401fc @size = 8&gt;</span>
+<span style="color:#777">#            a          b          c          d </span>
+<span style="color:#777"># 0        foo        one          1         11 </span>
+<span style="color:#777"># 1        bar        one          2         22 </span>
+<span style="color:#777"># 2        foo        two          3         33 </span>
+<span style="color:#777"># 3        bar      three          1         44 </span>
+<span style="color:#777"># 4        foo        two          3         55 </span>
+<span style="color:#777"># 5        bar        two          6         66 </span>
+<span style="color:#777"># 6        foo        one          3         77 </span>
+<span style="color:#777"># 7        foo      three          8         88 </span>
 </pre></td>
 </tr></table>
 </div>
@@ -2625,15 +2625,15 @@ df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>
 <strong><a href="#n10" name="n10">10</a></strong>
 </pre></td>
   <td class="code"><pre>
-grouped = df.group_by([<span class="symbol">:a</span>, <span class="symbol">:b</span>])
+grouped = df.group_by([<span style="color:#A60">:a</span>, <span style="color:#A60">:b</span>])
 grouped.groups
-<span class="comment"># =&gt; {</span>
-<span class="comment">#  [&quot;bar&quot;, &quot;one&quot;]=&gt;[1],</span>
-<span class="comment">#  [&quot;bar&quot;, &quot;three&quot;]=&gt;[3],</span>
-<span class="comment">#  [&quot;bar&quot;, &quot;two&quot;]=&gt;[5],</span>
-<span class="comment">#  [&quot;foo&quot;, &quot;one&quot;]=&gt;[0, 6],</span>
-<span class="comment">#  [&quot;foo&quot;, &quot;three&quot;]=&gt;[7],</span>
-<span class="comment">#  [&quot;foo&quot;, &quot;two&quot;]=&gt;[2, 4]}</span>
+<span style="color:#777"># =&gt; {</span>
+<span style="color:#777">#  [&quot;bar&quot;, &quot;one&quot;]=&gt;[1],</span>
+<span style="color:#777">#  [&quot;bar&quot;, &quot;three&quot;]=&gt;[3],</span>
+<span style="color:#777">#  [&quot;bar&quot;, &quot;two&quot;]=&gt;[5],</span>
+<span style="color:#777">#  [&quot;foo&quot;, &quot;one&quot;]=&gt;[0, 6],</span>
+<span style="color:#777">#  [&quot;foo&quot;, &quot;three&quot;]=&gt;[7],</span>
+<span style="color:#777">#  [&quot;foo&quot;, &quot;two&quot;]=&gt;[2, 4]}</span>
 </pre></td>
 </tr></table>
 </div>
@@ -2655,13 +2655,13 @@ grouped.groups
   <td class="code"><pre>
 grouped.first
 
-<span class="comment">#=&gt;           a          b          c          d </span>
-<span class="comment">#  1        bar        one          2         22 </span>
-<span class="comment">#  3        bar      three          1         44 </span>
-<span class="comment">#  5        bar        two          6         66 </span>
-<span class="comment">#  0        foo        one          1         11 </span>
-<span class="comment">#  7        foo      three          8         88 </span>
-<span class="comment">#  2        foo        two          3         33 </span>
+<span style="color:#777">#=&gt;           a          b          c          d </span>
+<span style="color:#777">#  1        bar        one          2         22 </span>
+<span style="color:#777">#  3        bar      three          1         44 </span>
+<span style="color:#777">#  5        bar        two          6         66 </span>
+<span style="color:#777">#  0        foo        one          1         11 </span>
+<span style="color:#777">#  7        foo      three          8         88 </span>
+<span style="color:#777">#  2        foo        two          3         33 </span>
 </pre></td>
 </tr></table>
 </div>
@@ -2680,12 +2680,12 @@ grouped.first
 <a href="#n7" name="n7">7</a>
 </pre></td>
   <td class="code"><pre>
-grouped.get_group([<span class="string"><span class="delimiter">&quot;</span><span class="content">foo</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">one</span><span class="delimiter">&quot;</span></span>])
-<span class="comment"># =&gt; </span>
-<span class="comment"># #&lt;Daru::DataFrame:90777050 @name = cdd0afa8-252d-4d07-ad0f-76c7581a492a @size # = 2&gt;</span>
-<span class="comment">#                     a          b          c          d </span>
-<span class="comment">#          0        foo        one          1         11 </span>
-<span class="comment">#          6        foo        one          3         77 </span>
+grouped.get_group([<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">foo</span><span style="color:#710">&quot;</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">one</span><span style="color:#710">&quot;</span></span>])
+<span style="color:#777"># =&gt; </span>
+<span style="color:#777"># #&lt;Daru::DataFrame:90777050 @name = cdd0afa8-252d-4d07-ad0f-76c7581a492a @size # = 2&gt;</span>
+<span style="color:#777">#                     a          b          c          d </span>
+<span style="color:#777">#          0        foo        one          1         11 </span>
+<span style="color:#777">#          6        foo        one          3         77 </span>
 </pre></td>
 </tr></table>
 </div>
@@ -2720,7 +2720,7 @@ grouped.mean
 <a href="#n2" name="n2">2</a>
 </pre></td>
   <td class="code"><pre>
-sales.pivot_table <span class="key">index</span>: [<span class="symbol">:manager</span>, <span class="symbol">:rep</span>]
+sales.pivot_table <span style="color:#606">index</span>: [<span style="color:#A60">:manager</span>, <span style="color:#A60">:rep</span>]
 </pre></td>
 </tr></table>
 </div>
@@ -2736,7 +2736,7 @@ sales.pivot_table <span class="key">index</span>: [<span class="symbol">:manager
 <a href="#n2" name="n2">2</a>
 </pre></td>
   <td class="code"><pre>
-sales.pivot_table(<span class="key">index</span>: [<span class="symbol">:manager</span>,<span class="symbol">:rep</span>], <span class="key">values</span>: <span class="symbol">:price</span>, <span class="key">vectors</span>: [<span class="symbol">:product</span>], <span class="key">agg</span>: <span class="symbol">:sum</span>)
+sales.pivot_table(<span style="color:#606">index</span>: [<span style="color:#A60">:manager</span>,<span style="color:#A60">:rep</span>], <span style="color:#606">values</span>: <span style="color:#A60">:price</span>, <span style="color:#606">vectors</span>: [<span style="color:#A60">:product</span>], <span style="color:#606">agg</span>: <span style="color:#A60">:sum</span>)
 </pre></td>
 </tr></table>
 </div>
@@ -2790,40 +2790,40 @@ sales.pivot_table(<span class="key">index</span>: [<span class="symbol">:manager
 <a href="#n36" name="n36">36</a>
 </pre></td>
   <td class="code"><pre>
-df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({<span class="key">a</span>: [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">5</span>,<span class="integer">6</span>,<span class="integer">7</span>], <span class="key">b</span>: [<span class="integer">11</span>,<span class="integer">22</span>,<span class="integer">33</span>,<span class="integer">44</span>,<span class="integer">55</span>,<span class="integer">66</span>,<span class="integer">77</span>]})
+df = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({<span style="color:#606">a</span>: [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>,<span style="color:#00D">6</span>,<span style="color:#00D">7</span>], <span style="color:#606">b</span>: [<span style="color:#00D">11</span>,<span style="color:#00D">22</span>,<span style="color:#00D">33</span>,<span style="color:#00D">44</span>,<span style="color:#00D">55</span>,<span style="color:#00D">66</span>,<span style="color:#00D">77</span>]})
 
-<span class="constant">Statsample</span>::<span class="constant">Analysis</span>.store(<span class="constant">Statsample</span>::<span class="constant">Test</span>::<span class="constant">T</span>) <span class="keyword">do</span>
-  t_2 = <span class="constant">Statsample</span>::<span class="constant">Test</span>.t_two_samples_independent(df[<span class="symbol">:a</span>], df[<span class="symbol">:b</span>])
+<span style="color:#036;font-weight:bold">Statsample</span>::<span style="color:#036;font-weight:bold">Analysis</span>.store(<span style="color:#036;font-weight:bold">Statsample</span>::<span style="color:#036;font-weight:bold">Test</span>::<span style="color:#036;font-weight:bold">T</span>) <span style="color:#080;font-weight:bold">do</span>
+  t_2 = <span style="color:#036;font-weight:bold">Statsample</span>::<span style="color:#036;font-weight:bold">Test</span>.t_two_samples_independent(df[<span style="color:#A60">:a</span>], df[<span style="color:#A60">:b</span>])
   summary t_2
-<span class="keyword">end</span>
+<span style="color:#080;font-weight:bold">end</span>
 
-<span class="constant">Statsample</span>::<span class="constant">Analysis</span>.run_batch
+<span style="color:#036;font-weight:bold">Statsample</span>::<span style="color:#036;font-weight:bold">Analysis</span>.run_batch
 
-<span class="comment"># Analysis 2015-02-25 13:34:32 +0530</span>
-<span class="comment"># = Statsample::Test::T</span>
-<span class="comment">#   == Two Sample T Test</span>
-<span class="comment">#     Mean and standard deviation</span>
-<span class="comment"># +----------+---------+---------+---+</span>
-<span class="comment"># | Variable |  mean   |   sd    | n |</span>
-<span class="comment"># +----------+---------+---------+---+</span>
-<span class="comment"># | a        | 4.0000  | 2.1602  | 7 |</span>
-<span class="comment"># | b        | 44.0000 | 23.7627 | 7 |</span>
-<span class="comment"># +----------+---------+---------+---+</span>
-<span class="comment"># </span>
-<span class="comment">#     Levene test for equality of variances : F(1, 12) = 13.6192 , p = 0.0031</span>
-<span class="comment">#     T statistics</span>
-<span class="comment"># +--------------------+---------+--------+----------------+</span>
-<span class="comment"># |        Type        |    t    |   df   | p (both tails) |</span>
-<span class="comment"># +--------------------+---------+--------+----------------+</span>
-<span class="comment"># | Equal variance     | -4.4353 | 12     | 0.0008         |</span>
-<span class="comment"># | Non equal variance | -4.4353 | 6.0992 | 0.0042         |</span>
-<span class="comment"># +--------------------+---------+--------+----------------+</span>
-<span class="comment"># </span>
-<span class="comment">#     Effect size</span>
-<span class="comment"># +-------+----------+</span>
-<span class="comment"># | x1-x2 | -40.0000 |</span>
-<span class="comment"># | d     | -12.0007 |</span>
-<span class="comment"># +-------+----------+</span>
+<span style="color:#777"># Analysis 2015-02-25 13:34:32 +0530</span>
+<span style="color:#777"># = Statsample::Test::T</span>
+<span style="color:#777">#   == Two Sample T Test</span>
+<span style="color:#777">#     Mean and standard deviation</span>
+<span style="color:#777"># +----------+---------+---------+---+</span>
+<span style="color:#777"># | Variable |  mean   |   sd    | n |</span>
+<span style="color:#777"># +----------+---------+---------+---+</span>
+<span style="color:#777"># | a        | 4.0000  | 2.1602  | 7 |</span>
+<span style="color:#777"># | b        | 44.0000 | 23.7627 | 7 |</span>
+<span style="color:#777"># +----------+---------+---------+---+</span>
+<span style="color:#777"># </span>
+<span style="color:#777">#     Levene test for equality of variances : F(1, 12) = 13.6192 , p = 0.0031</span>
+<span style="color:#777">#     T statistics</span>
+<span style="color:#777"># +--------------------+---------+--------+----------------+</span>
+<span style="color:#777"># |        Type        |    t    |   df   | p (both tails) |</span>
+<span style="color:#777"># +--------------------+---------+--------+----------------+</span>
+<span style="color:#777"># | Equal variance     | -4.4353 | 12     | 0.0008         |</span>
+<span style="color:#777"># | Non equal variance | -4.4353 | 6.0992 | 0.0042         |</span>
+<span style="color:#777"># +--------------------+---------+--------+----------------+</span>
+<span style="color:#777"># </span>
+<span style="color:#777">#     Effect size</span>
+<span style="color:#777"># +-------+----------+</span>
+<span style="color:#777"># | x1-x2 | -40.0000 |</span>
+<span style="color:#777"># | d     | -12.0007 |</span>
+<span style="color:#777"># +-------+----------+</span>
 
 </pre></td>
 </tr></table>
@@ -3008,19 +3008,19 @@ Thus by equation (4), each of them can be calculated with the following sets of 
 <a href="#n14" name="n14">14</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">nmatrix</span><span class="delimiter">'</span></span>
-coeffs = <span class="constant">NMatrix</span>.new([<span class="integer">3</span>,<span class="integer">3</span>],
-  [<span class="integer">1</span>, <span class="integer">1</span>,<span class="integer">-1</span>,
-   <span class="integer">1</span>,<span class="integer">-2</span>, <span class="integer">3</span>,
-   <span class="integer">2</span>, <span class="integer">3</span>, <span class="integer">1</span>], <span class="key">dtype</span>: <span class="symbol">:float32</span>)
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">nmatrix</span><span style="color:#710">'</span></span>
+coeffs = <span style="color:#036;font-weight:bold">NMatrix</span>.new([<span style="color:#00D">3</span>,<span style="color:#00D">3</span>],
+  [<span style="color:#00D">1</span>, <span style="color:#00D">1</span>,<span style="color:#00D">-1</span>,
+   <span style="color:#00D">1</span>,<span style="color:#00D">-2</span>, <span style="color:#00D">3</span>,
+   <span style="color:#00D">2</span>, <span style="color:#00D">3</span>, <span style="color:#00D">1</span>], <span style="color:#606">dtype</span>: <span style="color:#A60">:float32</span>)
 
-rhs = <span class="constant">NMatrix</span>.new([<span class="integer">3</span>,<span class="integer">1</span>],
-  [<span class="integer">4</span>,
-  <span class="integer">-6</span>,
-   <span class="integer">7</span>], <span class="key">dtype</span>: <span class="symbol">:float32</span>)
+rhs = <span style="color:#036;font-weight:bold">NMatrix</span>.new([<span style="color:#00D">3</span>,<span style="color:#00D">1</span>],
+  [<span style="color:#00D">4</span>,
+  <span style="color:#00D">-6</span>,
+   <span style="color:#00D">7</span>], <span style="color:#606">dtype</span>: <span style="color:#A60">:float32</span>)
 
 solution = coeffs.solve(rhs)
-<span class="comment">#=&gt; [1.0, 2.0, -1.0]</span>
+<span style="color:#777">#=&gt; [1.0, 2.0, -1.0]</span>
 </pre></td>
 </tr></table>
 </div>
@@ -3070,14 +3070,14 @@ solution = coeffs.solve(rhs)
 <a href="#n9" name="n9">9</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">interpolation</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">interpolation</span><span style="color:#710">'</span></span>
 
-x = (<span class="integer">0</span>..<span class="integer">100</span>).step(<span class="integer">3</span>).to_a
-y = x.map { |a| <span class="constant">Math</span>.sin(a) }
+x = (<span style="color:#00D">0</span>..<span style="color:#00D">100</span>).step(<span style="color:#00D">3</span>).to_a
+y = x.map { |a| <span style="color:#036;font-weight:bold">Math</span>.sin(a) }
 
-int = <span class="constant">Interpolation</span>::<span class="constant">OneDimensional</span>.new x, y, <span class="key">type</span>: <span class="symbol">:linear</span>
-int.interpolate <span class="integer">35</span>
-<span class="comment"># =&gt; -0.328</span>
+int = <span style="color:#036;font-weight:bold">Interpolation</span>::<span style="color:#036;font-weight:bold">OneDimensional</span>.new x, y, <span style="color:#606">type</span>: <span style="color:#A60">:linear</span>
+int.interpolate <span style="color:#00D">35</span>
+<span style="color:#777"># =&gt; -0.328</span>
 </pre></td>
 </tr></table>
 </div>
@@ -3112,14 +3112,14 @@ int.interpolate <span class="integer">35</span>
 <a href="#n9" name="n9">9</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">interpolation</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">interpolation</span><span style="color:#710">'</span></span>
 
-x = (<span class="integer">0</span>..<span class="integer">9</span>).step(<span class="integer">1</span>).to_a
-y = x.map { |e| <span class="constant">Math</span>.exp(e) }
+x = (<span style="color:#00D">0</span>..<span style="color:#00D">9</span>).step(<span style="color:#00D">1</span>).to_a
+y = x.map { |e| <span style="color:#036;font-weight:bold">Math</span>.exp(e) }
 
-f = <span class="constant">Interpolation</span>::<span class="constant">OneDimensional</span>.new(<span class="instance-variable">@x</span>, <span class="instance-variable">@y</span>, <span class="key">type</span>: <span class="symbol">:cubic</span>, <span class="key">sorted</span>: <span class="predefined-constant">true</span>)
-f.interpolate(<span class="float">2.5</span>)
-<span class="comment"># =&gt; 12.287</span>
+f = <span style="color:#036;font-weight:bold">Interpolation</span>::<span style="color:#036;font-weight:bold">OneDimensional</span>.new(<span style="color:#33B">@x</span>, <span style="color:#33B">@y</span>, <span style="color:#606">type</span>: <span style="color:#A60">:cubic</span>, <span style="color:#606">sorted</span>: <span style="color:#069">true</span>)
+f.interpolate(<span style="color:#60E">2.5</span>)
+<span style="color:#777"># =&gt; 12.287</span>
 </pre></td>
 </tr></table>
 </div>
@@ -3168,18 +3168,18 @@ f.interpolate(<span class="float">2.5</span>)
 <a href="#n13" name="n13">13</a>
 </pre></td>
   <td class="code"><pre>
-v = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new [<span class="integer">23</span>,<span class="integer">44</span>,<span class="integer">66</span>,<span class="integer">22</span>,<span class="integer">11</span>]
+v = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new [<span style="color:#00D">23</span>,<span style="color:#00D">44</span>,<span style="color:#00D">66</span>,<span style="color:#00D">22</span>,<span style="color:#00D">11</span>]
 
-<span class="comment"># This will create a Vector object v</span>
+<span style="color:#777"># This will create a Vector object v</span>
 
-<span class="comment"># =&gt; </span>
-<span class="comment">##&lt;Daru::Vector:78168790 @name = nil @size = 5 &gt;</span>
-<span class="comment">#   ni</span>
-<span class="comment"># 0 23</span>
-<span class="comment"># 1 44</span>
-<span class="comment"># 2 66</span>
-<span class="comment"># 3 22</span>
-<span class="comment"># 4 11</span>
+<span style="color:#777"># =&gt; </span>
+<span style="color:#777">##&lt;Daru::Vector:78168790 @name = nil @size = 5 &gt;</span>
+<span style="color:#777">#   ni</span>
+<span style="color:#777"># 0 23</span>
+<span style="color:#777"># 1 44</span>
+<span style="color:#777"># 2 66</span>
+<span style="color:#777"># 3 22</span>
+<span style="color:#777"># 4 11</span>
 </pre></td>
 </tr></table>
 </div>
@@ -3202,16 +3202,16 @@ v = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new
 <a href="#n11" name="n11">11</a>
 </pre></td>
   <td class="code"><pre>
-sherlock = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new [<span class="integer">3</span>,<span class="integer">2</span>,<span class="integer">1</span>,<span class="integer">1</span>,<span class="integer">2</span>], <span class="key">name</span>: <span class="symbol">:sherlock</span>, <span class="key">index</span>: [<span class="symbol">:pipe</span>, <span class="symbol">:hat</span>, <span class="symbol">:violin</span>, <span class="symbol">:cloak</span>, <span class="symbol">:shoes</span>]
+sherlock = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new [<span style="color:#00D">3</span>,<span style="color:#00D">2</span>,<span style="color:#00D">1</span>,<span style="color:#00D">1</span>,<span style="color:#00D">2</span>], <span style="color:#606">name</span>: <span style="color:#A60">:sherlock</span>, <span style="color:#606">index</span>: [<span style="color:#A60">:pipe</span>, <span style="color:#A60">:hat</span>, <span style="color:#A60">:violin</span>, <span style="color:#A60">:cloak</span>, <span style="color:#A60">:shoes</span>]
 
-<span class="comment">#=&gt; </span>
-<span class="comment">#&lt;Daru::Vector:78061610 @name = sherlock @size = 5 &gt;</span>
-<span class="comment">#         sherlock</span>
-<span class="comment">#    pipe       3</span>
-<span class="comment">#     hat       2</span>
-<span class="comment">#  violin       1</span>
-<span class="comment">#   cloak       1</span>
-<span class="comment">#   shoes       2</span>
+<span style="color:#777">#=&gt; </span>
+<span style="color:#777">#&lt;Daru::Vector:78061610 @name = sherlock @size = 5 &gt;</span>
+<span style="color:#777">#         sherlock</span>
+<span style="color:#777">#    pipe       3</span>
+<span style="color:#777">#     hat       2</span>
+<span style="color:#777">#  violin       1</span>
+<span style="color:#777">#   cloak       1</span>
+<span style="color:#777">#   shoes       2</span>
 </pre></td>
 </tr></table>
 </div>
@@ -3225,7 +3225,7 @@ sherlock = <span class="constant">Daru</span>::<span class="constant">Vector</sp
 <a href="#n2" name="n2">2</a>
 </pre></td>
   <td class="code"><pre>
-sherlock[<span class="symbol">:pipe</span>] <span class="comment">#=&gt; 3</span>
+sherlock[<span style="color:#A60">:pipe</span>] <span style="color:#777">#=&gt; 3</span>
 </pre></td>
 </tr></table>
 </div>
@@ -3248,16 +3248,16 @@ sherlock[<span class="symbol">:pipe</span>] <span class="comment">#=&gt; 3</span
 <a href="#n11" name="n11">11</a>
 </pre></td>
   <td class="code"><pre>
-df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({<span class="key">a</span>: [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">5</span>], <span class="key">b</span>: [<span class="integer">10</span>,<span class="integer">20</span>,<span class="integer">30</span>,<span class="integer">40</span>,<span class="integer">50</span>]}, <span class="key">name</span>: <span class="symbol">:normal</span>)
+df = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({<span style="color:#606">a</span>: [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>], <span style="color:#606">b</span>: [<span style="color:#00D">10</span>,<span style="color:#00D">20</span>,<span style="color:#00D">30</span>,<span style="color:#00D">40</span>,<span style="color:#00D">50</span>]}, <span style="color:#606">name</span>: <span style="color:#A60">:normal</span>)
 
-<span class="comment"># =&gt; </span>
-<span class="comment">##&lt;Daru::DataFrame:77782370 @name = normal @size = 5&gt;</span>
-<span class="comment">#            a      b </span>
-<span class="comment">#     0      1     10 </span>
-<span class="comment">#     1      2     20 </span>
-<span class="comment">#     2      3     30 </span>
-<span class="comment">#     3      4     40 </span>
-<span class="comment">#     4      5     50 </span>
+<span style="color:#777"># =&gt; </span>
+<span style="color:#777">##&lt;Daru::DataFrame:77782370 @name = normal @size = 5&gt;</span>
+<span style="color:#777">#            a      b </span>
+<span style="color:#777">#     0      1     10 </span>
+<span style="color:#777">#     1      2     20 </span>
+<span style="color:#777">#     2      3     30 </span>
+<span style="color:#777">#     3      4     40 </span>
+<span style="color:#777">#     4      5     50 </span>
 </pre></td>
 </tr></table>
 </div>
@@ -3276,16 +3276,16 @@ df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>
 <a href="#n9" name="n9">9</a>
 <strong><a href="#n10" name="n10">10</a></strong>
 </pre></td>
-  <td class="code"><pre>plus_one = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({<span class="key">a</span>: [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">5</span>], <span class="key">b</span>: [<span class="integer">10</span>,<span class="integer">20</span>,<span class="integer">30</span>,<span class="integer">40</span>,<span class="integer">50</span>], <span class="key">c</span>: [<span class="integer">11</span>,<span class="integer">22</span>,<span class="integer">33</span>,<span class="integer">44</span>,<span class="integer">55</span>]}, <span class="key">name</span>: <span class="symbol">:plus_one</span>, <span class="key">index</span>: [<span class="symbol">:a</span>, <span class="symbol">:e</span>, <span class="symbol">:i</span>, <span class="symbol">:o</span>, <span class="symbol">:u</span>], <span class="key">order</span>: [<span class="symbol">:c</span>, <span class="symbol">:a</span>, <span class="symbol">:b</span>])
+  <td class="code"><pre>plus_one = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({<span style="color:#606">a</span>: [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>], <span style="color:#606">b</span>: [<span style="color:#00D">10</span>,<span style="color:#00D">20</span>,<span style="color:#00D">30</span>,<span style="color:#00D">40</span>,<span style="color:#00D">50</span>], <span style="color:#606">c</span>: [<span style="color:#00D">11</span>,<span style="color:#00D">22</span>,<span style="color:#00D">33</span>,<span style="color:#00D">44</span>,<span style="color:#00D">55</span>]}, <span style="color:#606">name</span>: <span style="color:#A60">:plus_one</span>, <span style="color:#606">index</span>: [<span style="color:#A60">:a</span>, <span style="color:#A60">:e</span>, <span style="color:#A60">:i</span>, <span style="color:#A60">:o</span>, <span style="color:#A60">:u</span>], <span style="color:#606">order</span>: [<span style="color:#A60">:c</span>, <span style="color:#A60">:a</span>, <span style="color:#A60">:b</span>])
 
-<span class="comment"># =&gt; </span>
-<span class="comment">##&lt;Daru::DataFrame:77605450 @name = plus_one @size = 5&gt;</span>
-<span class="comment">#                c        a        b </span>
-<span class="comment">#       a       11        1       10 </span>
-<span class="comment">#       e       22        2       20 </span>
-<span class="comment">#       i       33        3       30 </span>
-<span class="comment">#       o       44        4       40 </span>
-<span class="comment">#       u       55        5       50</span>
+<span style="color:#777"># =&gt; </span>
+<span style="color:#777">##&lt;Daru::DataFrame:77605450 @name = plus_one @size = 5&gt;</span>
+<span style="color:#777">#                c        a        b </span>
+<span style="color:#777">#       a       11        1       10 </span>
+<span style="color:#777">#       e       22        2       20 </span>
+<span style="color:#777">#       i       33        3       30 </span>
+<span style="color:#777">#       o       44        4       40 </span>
+<span style="color:#777">#       u       55        5       50</span>
 </pre></td>
 </tr></table>
 </div>
@@ -3303,13 +3303,13 @@ df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>
 <a href="#n8" name="n8">8</a>
 </pre></td>
   <td class="code"><pre>
-missing =  <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({<span class="key">a</span>: [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>], <span class="key">b</span>: [<span class="integer">1</span>]}, <span class="key">name</span>: <span class="symbol">:missing</span>)
-<span class="comment">#=&gt; </span>
-<span class="comment">#&lt;Daru::DataFrame:76043900 @name = missing @size = 3&gt;</span>
-<span class="comment">#                    a          b </span>
-<span class="comment">#         0          1          1 </span>
-<span class="comment">#         1          2        nil </span>
-<span class="comment">#         2          3        nil </span>
+missing =  <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({<span style="color:#606">a</span>: [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>], <span style="color:#606">b</span>: [<span style="color:#00D">1</span>]}, <span style="color:#606">name</span>: <span style="color:#A60">:missing</span>)
+<span style="color:#777">#=&gt; </span>
+<span style="color:#777">#&lt;Daru::DataFrame:76043900 @name = missing @size = 3&gt;</span>
+<span style="color:#777">#                    a          b </span>
+<span style="color:#777">#         0          1          1 </span>
+<span style="color:#777">#         1          2        nil </span>
+<span style="color:#777">#         2          3        nil </span>
 </pre></td>
 </tr></table>
 </div>
@@ -3333,18 +3333,18 @@ missing =  <span class="constant">Daru</span>::<span class="constant">DataFrame<
 <a href="#n14" name="n14">14</a>
 </pre></td>
   <td class="code"><pre>
-a = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new [<span class="integer">1</span>,<span class="integer">2</span>,<span class="integer">3</span>,<span class="integer">4</span>,<span class="integer">5</span>], <span class="key">index</span>: [<span class="symbol">:a</span>, <span class="symbol">:e</span>, <span class="symbol">:i</span>, <span class="symbol">:o</span>, <span class="symbol">:u</span>]
-b = <span class="constant">Daru</span>::<span class="constant">Vector</span>.new [<span class="integer">43</span>,<span class="integer">22</span>,<span class="integer">13</span>], <span class="key">index</span>: [<span class="symbol">:i</span>, <span class="symbol">:a</span>, <span class="symbol">:queen</span>]
-on_steroids = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.new({<span class="key">a</span>: a, <span class="key">b</span>: b}, <span class="key">name</span>: <span class="symbol">:on_steroids</span>)
-<span class="comment">#=&gt; </span>
-<span class="comment">#&lt;Daru::DataFrame:75841450 @name = on_steroids @size = 6&gt;</span>
-<span class="comment">#                    a          b </span>
-<span class="comment">#         a          1         22 </span>
-<span class="comment">#         e          2        nil </span>
-<span class="comment">#         i          3         43 </span>
-<span class="comment">#         o          4        nil </span>
-<span class="comment">#     queen        nil         13 </span>
-<span class="comment">#         u          5        nil </span>
+a = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>], <span style="color:#606">index</span>: [<span style="color:#A60">:a</span>, <span style="color:#A60">:e</span>, <span style="color:#A60">:i</span>, <span style="color:#A60">:o</span>, <span style="color:#A60">:u</span>]
+b = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new [<span style="color:#00D">43</span>,<span style="color:#00D">22</span>,<span style="color:#00D">13</span>], <span style="color:#606">index</span>: [<span style="color:#A60">:i</span>, <span style="color:#A60">:a</span>, <span style="color:#A60">:queen</span>]
+on_steroids = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({<span style="color:#606">a</span>: a, <span style="color:#606">b</span>: b}, <span style="color:#606">name</span>: <span style="color:#A60">:on_steroids</span>)
+<span style="color:#777">#=&gt; </span>
+<span style="color:#777">#&lt;Daru::DataFrame:75841450 @name = on_steroids @size = 6&gt;</span>
+<span style="color:#777">#                    a          b </span>
+<span style="color:#777">#         a          1         22 </span>
+<span style="color:#777">#         e          2        nil </span>
+<span style="color:#777">#         i          3         43 </span>
+<span style="color:#777">#         o          4        nil </span>
+<span style="color:#777">#     queen        nil         13 </span>
+<span style="color:#777">#         u          5        nil </span>
 
 </pre></td>
 </tr></table>
@@ -3387,9 +3387,9 @@ on_steroids = <span class="constant">Daru</span>::<span class="constant">DataFra
 <a href="#n5" name="n5">5</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">daru</span><span class="delimiter">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
 
-df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>.from_csv <span class="string"><span class="delimiter">'</span><span class="content">music_data.tsv</span><span class="delimiter">'</span></span>, <span class="key">col_sep</span>: <span class="string"><span class="delimiter">&quot;</span><span class="char">\t</span><span class="delimiter">&quot;</span></span>
+df = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.from_csv <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">music_data.tsv</span><span style="color:#710">'</span></span>, <span style="color:#606">col_sep</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#b0b">\t</span><span style="color:#710">&quot;</span></span>
 
 </pre></td>
 </tr></table>
@@ -3407,7 +3407,7 @@ df = <span class="constant">Daru</span>::<span class="constant">DataFrame</span>
 <a href="#n3" name="n3">3</a>
 </pre></td>
   <td class="code"><pre>
-df.timestamp.recode! { |ts| ts += <span class="string"><span class="delimiter">&quot;</span><span class="content">+5:30</span><span class="delimiter">&quot;</span></span>}
+df.timestamp.recode! { |ts| ts += <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">+5:30</span><span style="color:#710">&quot;</span></span>}
 
 </pre></td>
 </tr></table>
@@ -3424,11 +3424,11 @@ df.timestamp.recode! { |ts| ts += <span class="string"><span class="delimiter">&
 <a href="#n7" name="n7">7</a>
 </pre></td>
   <td class="code"><pre>
-require <span class="string"><span class="delimiter">'</span><span class="content">date</span><span class="delimiter">'</span></span>
-df = df.recode(<span class="symbol">:row</span>) <span class="keyword">do</span> |row|
-  row[<span class="symbol">:timestamp</span>] = <span class="constant">DateTime</span>.strptime(row[<span class="symbol">:timestamp</span>], <span class="string"><span class="delimiter">'</span><span class="content">%Y-%m-%dT%H:%M:%SZ%z</span><span class="delimiter">'</span></span>).to_time
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">date</span><span style="color:#710">'</span></span>
+df = df.recode(<span style="color:#A60">:row</span>) <span style="color:#080;font-weight:bold">do</span> |row|
+  row[<span style="color:#A60">:timestamp</span>] = <span style="color:#036;font-weight:bold">DateTime</span>.strptime(row[<span style="color:#A60">:timestamp</span>], <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">%Y-%m-%dT%H:%M:%SZ%z</span><span style="color:#710">'</span></span>).to_time
   row
-<span class="keyword">end</span>
+<span style="color:#080;font-weight:bold">end</span>
 
 </pre></td>
 </tr></table>
@@ -3454,8 +3454,8 @@ df = df.recode(<span class="symbol">:row</span>) <span class="keyword">do</span>
 <a href="#n3" name="n3">3</a>
 </pre></td>
   <td class="code"><pre>
-<span class="comment"># Group by artist name and call 'size' to see the number of rows each artist populates.</span>
-artists = df.group_by(<span class="symbol">:artname</span>).size
+<span style="color:#777"># Group by artist name and call 'size' to see the number of rows each artist populates.</span>
+artists = df.group_by(<span style="color:#A60">:artname</span>).size
 </pre></td>
 </tr></table>
 </div>
@@ -3485,13 +3485,13 @@ artists = df.group_by(<span class="symbol">:artname</span>).size
 <a href="#n8" name="n8">8</a>
 </pre></td>
   <td class="code"><pre>
-top_ten = artists.sort(<span class="key">ascending</span>: <span class="predefined-constant">false</span>)[<span class="integer">0</span>..<span class="integer">10</span>]
+top_ten = artists.sort(<span style="color:#606">ascending</span>: <span style="color:#069">false</span>)[<span style="color:#00D">0</span>..<span style="color:#00D">10</span>]
 
-top_ten.plot <span class="key">type</span>: <span class="symbol">:bar</span> <span class="keyword">do</span> |plt| 
-  plt.width <span class="integer">1120</span> 
-  plt.height <span class="integer">500</span>
-  plt.legend <span class="predefined-constant">true</span>
-<span class="keyword">end</span>
+top_ten.plot <span style="color:#606">type</span>: <span style="color:#A60">:bar</span> <span style="color:#080;font-weight:bold">do</span> |plt| 
+  plt.width <span style="color:#00D">1120</span> 
+  plt.height <span style="color:#00D">500</span>
+  plt.legend <span style="color:#069">true</span>
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
@@ -3539,11 +3539,11 @@ top_ten.plot <span class="key">type</span>: <span class="symbol">:bar</span> <sp
 <a href="#n6" name="n6">6</a>
 </pre></td>
   <td class="code"><pre>
-<span class="keyword">for</span> (k = <span class="integer">0</span>; k &lt; M; ++k) {
-    cout &lt;&lt; A[k * (M + <span class="integer">1</span>)];
+<span style="color:#080;font-weight:bold">for</span> (k = <span style="color:#00D">0</span>; k &lt; M; ++k) {
+    cout &lt;&lt; A[k * (M + <span style="color:#00D">1</span>)];
 }
 
-<span class="comment">// This will print all the diagonal elements of a square matrix.</span>
+<span style="color:#777">// This will print all the diagonal elements of a square matrix.</span>
 </pre></td>
 </tr></table>
 </div>
