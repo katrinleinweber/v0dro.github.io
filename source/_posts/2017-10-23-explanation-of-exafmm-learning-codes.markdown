@@ -272,22 +272,33 @@ Now that a background of the basic implementation of `evalMultipole` has been es
 
 In this code, most of the stuff relating to indexing and calculation of the powers of `rho` is pretty much the same. However, there are some important changes with regards to the computation of the values that go inside the `Ynm` array. This change is also reflected in the subsequent kernels.
 
-For instance, this new function uses a new term $$ O^{m}_{n} $$ from [Epton's paper](http://epubs.siam.org/doi/abs/10.1137/0916051) (equation `2.20`). This term simplifies the computation of the mutlipole for the M2M kernel and does not require the use of $$ A^{m}_{n} $$ terms that are used in the `laplace.h` file in case of M2M.This term is combined with eq. 13 in Cheng's paper. From the two equations, we can now say that the value being stored inside `Ynm` is this:
-$$
-
-$$
-
-The simplication in computation is basically based on the notion that a P2M kernel will eventually be expanded to M2M and therefore it does make sense to compute some terms that are required for M2M inside P2M itself. In order to see how exactly this will work, consider the line in laplace.h that is used for computing the M2M:
+The simplication in computation is basically based on the notion that a P2M kernel will eventually be expanded to M2M and therefore it makes sense to compute some terms that are required for M2M inside P2M itself. In order to see how exactly this will work, consider the line in laplace.h that is used for computing the M2M:
 ```
 M += Cj->M[jnkms] * std::pow(I,real_t(m-abs(m))) * Ynm[nm] * real_t(oddOrEven(n) * Anm[nm] * Anm[jnkm] / Anm[jk]);
 ```
 The above line computes the M2M as given by eq.13 in [Cheng's paper](https://ac.els-cdn.com/S0021999199963556/1-s2.0-S0021999199963556-main.pdf?_tid=262a8f4c-d58d-11e7-82f6-00000aacb360&acdnat=1512018967_7cd88d8da2a5a747344fe9c0619e5563). Now, division and multiplication of such large numbers makes the M2M calculation very unstable if the order and/or degree of the equations is large. Therefore, the new `evalMultipole` simplifies this computation by computing some terms in the P2M stage itself.
 
-In order to understand this, let us see the equation given by Cheng:
+In order to understand this, let us see the equation given by Cheng. Let us call this equation `1`:
 
 $$
-M^{k}_{j}=\sum_{n=0}^{j}\sum_{m=-n}^{m=n} \frac{O_{j-n}^{k-m}}{A_{j}^{k}}
+M^{k}_{j}=\sum_{n=0}^{j}\sum_{m=-n}^{m=n} \frac{O_{j-n}^{k-m}\cdot i^{|k-m|-|k|-|m|}\cdot A^{m}_{n}\cdot A^{k-m}_{j-n}\cdot \rho^{n}\cdot Y^{-m}_{n}(\alpha,\beta)}{A_{j}^{k}}
 $$
+
+In the new M2M kernel, the _A_ terms are clubbed together with other terms such that no actual division or multiplication involving these terms takes place the way it does in the laplace.h code. In this regard, we club together $$ O^{k-m}_{j-n} $$ and $$ A^{k-m}_{j-n} $$. You will notice that _O_ is the actually the multipole that is computed in the P2M stage (the `Cj->M[jnkms]` term in the code sample above). Therefore, the actual equation of the P2M kernel using the new evalMultipole method becomes like this:
+
+$$
+M^{m}_{n}=\sum^{P-1}_{n=0}\sum^{n}_{m=-n} q_{j}\cdot \rho^{n} \cdot Y^{-m}_{n}(\alpha, \beta)\cdot A^{m}_{n}
+$$
+
+The $$ A^{m}_{n} $$ part in eq. (1) will be clubbed with the spherical harmonic _Y_ and will be calculated inside the `evalMultipole` method for every particle in case of P2M and every multipole in case of M2M. Thus since the P2M and M2M have similar behaviour (i.e. grouping of many particles to lesser particles) we can use the same function for both.
+
+In retrospect, inside the evalMultipole method, the part of the above P2M equation after the _q_ is calculated. This equation, upon expansion of spherical harmonics into its consitituents and cancellation of terms with $$ A^{m}_{n} $$, can be simplified as the following equation. Note that the computed value of this equation is what gets stored inside the `Ynm` array.
+
+$$
+array^{n}_{m}=\sum^{P-1}_{m=0}\sum^{P-1}_{n=m+1} \frac{\rho^{n} \cdot P^{n}_{m}(x) \cdot e^{im\beta}}{-(n+m)!}
+$$
+
+The implementation of this equation inside evalMultipole is a little funny. 
 
 The Ruby implementation is [here]().
 
