@@ -272,22 +272,24 @@ Now that a background of the basic implementation of `evalMultipole` has been es
 
 In this code, most of the stuff relating to indexing and calculation of the powers of `rho` is pretty much the same. However, there are some important changes with regards to the computation of the values that go inside the `Ynm` array. This change is also reflected in the subsequent kernels.
 
-For instance, this new function derives an important term $$ O^{m}_{n} $$ from [Epton's paper](http://epubs.siam.org/doi/abs/10.1137/0916051) (equation `2.20`). 
+For instance, this new function uses a new term $$ O^{m}_{n} $$ from [Epton's paper](http://epubs.siam.org/doi/abs/10.1137/0916051) (equation `2.20`). This term simplifies the computation of the mutlipole for the M2M kernel and does not require the use of $$ A^{m}_{n} $$ terms that are used in the `laplace.h` file in case of M2M.This term is combined with eq. 13 in Cheng's paper. From the two equations, we can now say that the value being stored inside `Ynm` is this:
+$$
+
+$$
+
+The simplication in computation is basically based on the notion that a P2M kernel will eventually be expanded to M2M and therefore it does make sense to compute some terms that are required for M2M inside P2M itself. In order to see how exactly this will work, consider the line in laplace.h that is used for computing the M2M:
+```
+M += Cj->M[jnkms] * std::pow(I,real_t(m-abs(m))) * Ynm[nm] * real_t(oddOrEven(n) * Anm[nm] * Anm[jnkm] / Anm[jk]);
+```
+The above line computes the M2M as given by eq.13 in [Cheng's paper](https://ac.els-cdn.com/S0021999199963556/1-s2.0-S0021999199963556-main.pdf?_tid=262a8f4c-d58d-11e7-82f6-00000aacb360&acdnat=1512018967_7cd88d8da2a5a747344fe9c0619e5563). Now, division and multiplication of such large numbers makes the M2M calculation very unstable if the order and/or degree of the equations is large. Therefore, the new `evalMultipole` simplifies this computation by computing some terms in the P2M stage itself.
+
+In order to understand this, let us see the equation given by Cheng:
+
+$$
+M^{k}_{j}=\sum_{n=0}^{j}\sum_{m=-n}^{m=n} \frac{O_{j-n}^{k-m}}{A_{j}^{k}}
+$$
 
 The Ruby implementation is [here]().
-
-#### P2M
-
-#### M2M
-
-A major difference exists between computation of M2M in the `kernel.h` and `laplace.h` files. 
-#### M2L
-
-#### L2L
-
-#### L2P
-
-#### P2P
 
 ## vector.h
 
