@@ -469,9 +469,75 @@ V        0
 
 <script type="math/tex; mode=display">array^{n}_{m}=\sum^{P-1}_{m=0}\sum^{P-1}_{n=m+1} \frac{\rho^{n} \cdot P^{n}_{m}(x) \cdot e^{im\beta}}{-(n+m)!}</script>
 
-<p>The implementation of this equation inside evalMultipole is a little funny.</p>
+<p>The implementation of this equation inside evalMultipole is a little funny. It has been optimized in such a way that the division operations never happen between numbers that are too big. The factorials are calculated on the fly while the loop is in progress. This can get a little confusing at first since it is not very obvious. The factorial is mainly calculated in two lines of code, <a href="https://github.com/exafmm/exafmm/blob/learning/2_kernels/kernel.h#L56">here</a> and <a href="https://github.com/exafmm/exafmm/blob/learning/2_kernels/kernel.h#L65">here</a>.</p>
 
-<p>The Ruby implementation is <a href="">here</a>.</p>
+<p>The first line of code reads <code>rhon /= -(n + m)</code>. The origin of this is obvious as can be seen from the above equation that is being calculated inside evalMultipole. The division happens after each iteration and there is no stored factorial that is used the way it was in <code>laplace.h</code> for reducing the number that needs to be used in the division.</p>
+
+<p>The second line of code reads like <code>rhom /= -(2 * m + 2) * (2 * m + 1)</code>. In this case, notice that the LHS has the variable <code>rhom</code>. This variable is used only in the outer loop for computation of Ynm (i.e. the case of <code>n=m</code>). In order to explain this, consider that the inner loop starts from <code>n=m+1</code> and can be rewritten as <code>rhon /= -(2*m+1)</code> (at least for the first iteration). When the Ynm value needs to be calculated for the outer loop, we must have the current value of <code>m</code> and the value for the next iteration in the <code>rhom</code>, therefore we use <code>2*m+2</code> as well.</p>
+
+<p>To understand in somewhat more detail, see the following Ruby code that recreates the values of the above indices:</p>
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+</pre></td>
+  <td class="code"><pre><span style="color:#036;font-weight:bold">P</span> = <span style="color:#00D">5</span>
+m = <span style="color:#00D">0</span>
+n = m+<span style="color:#00D">1</span>
+
+prod1 = <span style="color:#00D">1</span>
+<span style="color:#00D">0</span>.upto(<span style="color:#036;font-weight:bold">P</span>-<span style="color:#00D">1</span>) <span style="color:#080;font-weight:bold">do</span> |m|
+  prod = prod1
+  (m+<span style="color:#00D">1</span>).upto(<span style="color:#036;font-weight:bold">P</span>-<span style="color:#00D">1</span>) <span style="color:#080;font-weight:bold">do</span> |n|
+    puts <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">m: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>m<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> n: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>n<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> 2m+1: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>m+n<span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
+    prod *= (m + n)
+  <span style="color:#080;font-weight:bold">end</span>
+  prod1 *= (<span style="color:#00D">2</span>*m + <span style="color:#00D">1</span>)*(<span style="color:#00D">2</span>*m + <span style="color:#00D">2</span>)
+  puts <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">P1: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span>prod1<span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> 2m+1: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#00D">2</span>*m+<span style="color:#00D">1</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#D20"> 2m+2: </span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#00D">2</span>*m+<span style="color:#00D">2</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#710">&quot;</span></span>
+<span style="color:#080;font-weight:bold">end</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>The above code produces the follwoing output:</p>
+<pre><code>m: 0 n: 1 2m+1: 1
+P: 1
+m: 0 n: 2 2m+1: 2
+P: 2
+m: 0 n: 3 2m+1: 3
+P: 6
+m: 0 n: 4 2m+1: 4
+P: 24
+P1: 2 2m+1: 1 2m+2: 2
+m: 1 n: 2 2m+1: 3
+P: 6
+m: 1 n: 3 2m+1: 4
+P: 24
+m: 1 n: 4 2m+1: 5
+P: 120
+P1: 24 2m+1: 3 2m+2: 4
+m: 2 n: 3 2m+1: 5
+P: 120
+m: 2 n: 4 2m+1: 6
+P: 720
+P1: 720 2m+1: 5 2m+2: 6
+m: 3 n: 4 2m+1: 7
+P: 5040
+P1: 40320 2m+1: 7 2m+2: 8
+P1: 3628800 2m+1: 9 2m+2: 10
+</code></pre>
+<p>If you observe the output of code, you can see that the indices being calculated during P1 phase are exactly one greater than the previous phase, which indicates that the factorial value is being calculated properly, incrementally.</p>
 
 <h2 id="vectorh">vector.h</h2>
 

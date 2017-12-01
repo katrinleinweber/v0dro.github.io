@@ -298,9 +298,59 @@ $$
 array^{n}_{m}=\sum^{P-1}_{m=0}\sum^{P-1}_{n=m+1} \frac{\rho^{n} \cdot P^{n}_{m}(x) \cdot e^{im\beta}}{-(n+m)!}
 $$
 
-The implementation of this equation inside evalMultipole is a little funny. 
+The implementation of this equation inside evalMultipole is a little funny. It has been optimized in such a way that the division operations never happen between numbers that are too big. The factorials are calculated on the fly while the loop is in progress. This can get a little confusing at first since it is not very obvious. The factorial is mainly calculated in two lines of code, [here](https://github.com/exafmm/exafmm/blob/learning/2_kernels/kernel.h#L56) and [here](https://github.com/exafmm/exafmm/blob/learning/2_kernels/kernel.h#L65).
 
-The Ruby implementation is [here]().
+The first line of code reads `rhon /= -(n + m)`. The origin of this is obvious as can be seen from the above equation that is being calculated inside evalMultipole. The division happens after each iteration and there is no stored factorial that is used the way it was in `laplace.h` for reducing the number that needs to be used in the division.
+
+The second line of code reads like `rhom /= -(2 * m + 2) * (2 * m + 1)`. In this case, notice that the LHS has the variable `rhom`. This variable is used only in the outer loop for computation of Ynm (i.e. the case of `n=m`). In order to explain this, consider that the inner loop starts from `n=m+1` and can be rewritten as `rhon /= -(2*m+1)` (at least for the first iteration). When the Ynm value needs to be calculated for the outer loop, we must have the current value of `m` and the value for the next iteration in the `rhom`, therefore we use `2*m+2` as well.
+
+To understand in somewhat more detail, see the following Ruby code that recreates the values of the above indices:
+``` ruby
+P = 5
+m = 0
+n = m+1
+
+prod1 = 1
+0.upto(P-1) do |m|
+  prod = prod1
+  (m+1).upto(P-1) do |n|
+    puts "m: #{m} n: #{n} 2m+1: #{m+n}"
+    prod *= (m + n)
+  end
+  prod1 *= (2*m + 1)*(2*m + 2)
+  puts "P1: #{prod1} 2m+1: #{2*m+1} 2m+2: #{2*m+2}"
+end
+```
+
+The above code produces the follwoing output:
+```
+m: 0 n: 1 2m+1: 1
+P: 1
+m: 0 n: 2 2m+1: 2
+P: 2
+m: 0 n: 3 2m+1: 3
+P: 6
+m: 0 n: 4 2m+1: 4
+P: 24
+P1: 2 2m+1: 1 2m+2: 2
+m: 1 n: 2 2m+1: 3
+P: 6
+m: 1 n: 3 2m+1: 4
+P: 24
+m: 1 n: 4 2m+1: 5
+P: 120
+P1: 24 2m+1: 3 2m+2: 4
+m: 2 n: 3 2m+1: 5
+P: 120
+m: 2 n: 4 2m+1: 6
+P: 720
+P1: 720 2m+1: 5 2m+2: 6
+m: 3 n: 4 2m+1: 7
+P: 5040
+P1: 40320 2m+1: 7 2m+2: 8
+P1: 3628800 2m+1: 9 2m+2: 10
+```
+If you observe the output of code, you can see that the indices being calculated during P1 phase are exactly one greater than the previous phase, which indicates that the factorial value is being calculated properly, incrementally.
 
 ## vector.h
 
