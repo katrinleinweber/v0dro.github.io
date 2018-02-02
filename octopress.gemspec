@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "jekyll", ">= 2.0"
   spec.add_runtime_dependency "titlecase"
   spec.add_runtime_dependency "octopress-deploy"
+  spec.add_runtime_dependency "octopress-hooks"
   spec.add_runtime_dependency "octopress-image-tag"
   spec.add_runtime_dependency "octopress-escape-code", "~> 2.0"
   spec.add_runtime_dependency "rack"
