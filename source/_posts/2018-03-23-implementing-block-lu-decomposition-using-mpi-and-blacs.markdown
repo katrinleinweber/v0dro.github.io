@@ -3,11 +3,28 @@ title: Implementing block LU decomposition using MPI and BLACS
 date: 2018-03-23T18:42:53+09:00
 ---
 
-Recently I was tasked with implemented a block LU decomposition in parallel using a block cyclic process distribution using BLACS and MPI.
+Recently I was tasked with implemented a block LU decomposition in parallel using a block cyclic process distribution using BLACS and MPI. This decomposition would then be extended to hierarchical matrices and would eventually work with dense matrices instead of hierarchical. Thus we cannot use already implemented distributed LU factorization methods like scalapack for this purpose.
 
-In this post I would like to document my learnings about desinging the parallel algorithm and installing the various libraries that are required for this purpose. Hopefully, the reader will find something useful in this post too.
+In this post I would like to document my learnings about desinging the parallel algorithm and installing the various libraries that are required for this purpose. Hopefully, the reader will find something useful in this post too. This post will cover only LU factorization of dense matrices. Hierarchical matrices will be covered in another post.
 
-The blog post is divided into the following parts:
+I have written about using the scalapack C++ interface for a simple block LU decomposition in [this](URL) post. 
+
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [Installing libraries](#installing-libraries)
+- [Designing the algorithm](#designing-the-algorithm)
+    - [Asynchronous block LU](#asynchronous-block-lu)
+    - [Synchronous block LU](#synchronous-block-lu)
+    - [Resources](#resources)
+- [Implementation with MPI](#implementation-with-mpi)
+- [Implementation with BLACS](#implementation-with-blacs)
+    - [Block cyclic data distribution](#block-cyclic-data-distribution)
+    - [BLACS protips](#blacs-protips)
+    - [Asynchronous block LU](#asynchronous-block-lu-1)
+    - [Synchronous block LU](#synchronous-block-lu-1)
+
+<!-- markdown-toc end -->
 
 # Installing libraries
 
@@ -44,6 +61,33 @@ A major problem is synchronization of successive diagonal matrix blocks. The com
 
 ## Synchronous block LU
 
+The main thing to take care of in synchronous block LU is that of the indexing of the data array
+and the subsequent generation of the matrix. To demonstrate, here is what the matrix structure of
+the synchronous block LU looks like:
+
+<!-- insert that hand drawn image of sync block LU here -->
+
+We can know the actual row and col number of the global matrix through the process ID and the
+block number. The following lines of code are useful for this purpose:
+``` cpp
+// bcounter_i is a counter identifying the block row within a process
+// bcounter_j is a counter identifying the block col within a process
+// num_blocks_per_process is the number of blocks in a process
+// myrow is the BLACS process row number
+// mycol is the BLACS process col number
+// block_size_per_process_r is the row size of each block within the process
+// block_size_per_process_c is the col size of each block within the process
+
+row_i = bcounter_i*num_blocks_per_process + myrow*block_size_per_process_r + i;
+col_j = bcounter_j*num_blocks_per_process + mycol*block_size_per_process_c + j;
+```
+
+We can get the index number of the data array in the following manner:
+``` cpp
+int index = (bcounter_i*block_size_per_process_r + bcounter_j)*
+    num_blocks_per_process +  i*process_block_size + j;
+```
+
 ## Resources
 
 Some resources that I found during this phase are as follows:
@@ -74,7 +118,9 @@ Documentation for BLACS and PBLAS is sparse, so I used the following resources:
 
 ## Block cyclic data distribution
 
-The block cyclic distribution is a central idea in the case of PBLAS and BLACS.
+The block cyclic distribution is a central idea in the case of PBLAS and BLACS. It is important to store the matrix in this configuration since it is the most efficient in terms of load balancing for most applications.
+
+If you're reading a matrix from an external file it can get cumbersome to read into in a block cyclic manner manually. You do this with little effort using MPI IO. Refer [this blog post](URL ) that describes this in detail along with C code.
 
 ## BLACS protips
 
@@ -146,4 +192,4 @@ In the asynchronous LU, it is assumed that the block size is equal to the proces
 
 For synchronous LU decomposition, we take blocks which are spread out over multiple processors. To illustrate, see the below figure:
 
-Four of the above colors represent a single block and each color represents a process.
+Four of the above colors represent a single block and each color represents a process. This means that each block is spread out over 4 processes. This ensures that the processes are always kept busy no matter the operation.
