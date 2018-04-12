@@ -5,6 +5,20 @@ date: 2018-03-30T12:50:57+09:00
 
 I've been trying to understand the distributed [block LU code written in ScaLAPACK](http://people.eecs.berkeley.edu/~demmel/cs267/lecture12/pdgetrf.f), which is written in FORTRAN. In order to understand the algorithms properly I took a 30 min crash course in FORTRAN. In this blog post I'll write some details about the language that are relevant to understanding the ScaLAPACK code.
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [Learning resources](#learning-resources)
+- [Salient FORTRAN features](#salient-fortran-features)
+- [FORTRAN w.r.t ScaLAPACK](#fortran-wrt-scalapack)
+    - [Subroutines and functions](#subroutines-and-functions)
+    - [Arrays](#arrays)
+    - [Logical and comparison expressions](#logical-and-comparison-expressions)
+    - [Loops](#loops)
+
+<!-- markdown-toc end -->
+
+
 # Learning resources
 
 * [Fortran tutorial on tutorialspoint](https://www.tutorialspoint.com/fortran/index.htm).
@@ -90,21 +104,31 @@ By default, arrays in fortran begin from index `1`.
 
 ## Logical and comparison expressions
 
-Logical and comparison operators are written enclosed in dots. So `&&` in C is `.AND.` in fortran. Similarly, `!=` is `.NE.`.
+Logical and comparison operators are written enclosed in dots. So `&&` in C is
+`.AND.` in fortran. Similarly, `!=` is `.NE.`.
 
 ## Loops
 
-Fortran has a curious way of writing loops, given that I'm coming from the C world. Loops are written using the `do-continue` syntax. Each loop statement in a program requires a statement label. Any label number can be used but the `do` and `continue` of a single block must have the same label.
+Fortran has a curious way of writing loops, given that I'm coming from the C world. 
+Loops are written using the `do-continue` syntax. Each loop statement in a program 
+requires a statement label. Any label number can be used but the `do` and `continue`
+of a single block must have the same label.
 
-The variable that is defined in the line of the `do` block is the counter variable. Its default step is `1` but you can change that as you want.
+The variable that is defined in the line of the `do` block is the counter variable.
+Its default step is `1` but you can change that as you want.
 
 The general form is:
 ``` fortran
 do label var =  expr1, expr2, expr3
-  statements
+  ! statements
 label continue
 ```
 
-In the above loop, `var` is the loop variable (this must be an integer). `expr1` specifies the initial value of `var`, `expr2` is the terminating bound, and `expr3` is the increment (step).
+In the above loop, `var` is the loop variable (this must be an integer). `expr1`
+specifies the initial value of `var`, `expr2` is the terminating bound, and 
+`expr3` is the increment (step).
 
-Many Fortran 77 compilers allow `do`-loops to be closed by the `enddo` statement. The advantage of this is that the statement label can then be omitted since it is assumed that an `enddo` closes the nearest previous do statement. The `enddo` construct is widely used, but it is not a part of ANSI Fortran 77.
+Many Fortran 77 compilers allow `do`-loops to be closed by the `enddo` 
+statement. The advantage of this is that the statement label can then be omitted
+since it is assumed that an `enddo` closes the nearest previous do statement. 
+The `enddo` construct is widely used, but it is not a part of ANSI Fortran 77.

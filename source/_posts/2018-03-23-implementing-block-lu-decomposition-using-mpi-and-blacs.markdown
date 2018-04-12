@@ -88,6 +88,9 @@ int index = (bcounter_i*block_size_per_process_r + bcounter_j)*
     num_blocks_per_process +  i*process_block_size + j;
 ```
 
+Before creating a full-fledged version of this code, I first made a simple code that would calculate the LU
+decomposition in the case where there is only one matrix block per process.
+
 ## Resources
 
 Some resources that I found during this phase are as follows:
@@ -193,3 +196,5 @@ In the asynchronous LU, it is assumed that the block size is equal to the proces
 For synchronous LU decomposition, we take blocks which are spread out over multiple processors. To illustrate, see the below figure:
 
 Four of the above colors represent a single block and each color represents a process. This means that each block is spread out over 4 processes. This ensures that the processes are always kept busy no matter the operation.
+
+It should be remembered that scalapack expects the data to be in column-major format. Therefore, it must be stored that way.

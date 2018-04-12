@@ -7,6 +7,16 @@ ScaLAPACK is the distributed version of LAPACK. The interface of most functions 
 
 This post is part of a larger post where I've implemented and benchmarked synchronous and asynchronous block LU deocomposition. That post can be found [here](URL). [This](https://software.intel.com/en-us/mkl-developer-reference-c-p-getrf) intel resource is also helpful for this purpose.
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [Scalapack protips](#scalapack-protips)
+- [Function usage protips](#function-usage-protips)
+- [Source code](#source-code)
+- [Resources](#resources)
+
+<!-- markdown-toc end -->
+
 # Scalapack protips
 
 There are certain terminologies that are pretty widely used in scalapack. They are as follows:
@@ -47,6 +57,9 @@ void pdgetrf_(
     int *info // information about execution.
 );
 ```
+
+In the above prototype, `m` signifies the number of rows of the submatrix, meaning
+the matrix that is present in the current process. Similarly for `n` in case of cols.
 
 # Source code
 
