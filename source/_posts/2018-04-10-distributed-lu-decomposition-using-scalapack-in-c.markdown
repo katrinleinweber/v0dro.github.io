@@ -61,6 +61,14 @@ void pdgetrf_(
 In the above prototype, `m` signifies the number of rows of the submatrix, meaning
 the matrix that is present in the current process. Similarly for `n` in case of cols.
 
+A function `descinit_` can be used for initializing the descriptor array. Its prototype is as
+follows:
+``` cpp
+void descinit_(int *desc, const int *m,  const int *n, const int *mb, 
+    const int *nb, const int *irsrc, const int *icsrc, const int *ictxt, 
+    const int *lld, int *info);
+```
+
 # Source code
 
 Here's a full source implementing a simple LU decomposition using ScaLAPACK:

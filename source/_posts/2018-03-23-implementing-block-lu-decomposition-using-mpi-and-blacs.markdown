@@ -51,13 +51,23 @@ It can be expressed with this line of code:
 p2p_recv(recv_block, blocksize, rows[index] % N, rows[index] % N);
 ```
 
-The source row and source col arguments (last two) are computed by keeping in mind that we can compute the diagonal block of a particular block if we know the absolute row number of the block. 
+The source row and source col arguments (last two) are computed by keeping in mind
+that we can compute the diagonal block of a particular block if we know the absolute
+row number of the block. 
 
-If is a block in the right lower block of the matrix (the A^ block), it waits for the broadcast from the row and column elements, multiplies the received data with the stored data and over writes the stored data.
+If is a block in the right lower block of the matrix (the A^ block), it waits for 
+the broadcast from the row and column elements, multiplies the received data with
+the stored data and over writes the stored data.
 
-The computation and communication is mostly asynchronous. This means that there needs to be some kind of a trigger to launch the computation or communication tasks in a given process. 
+The computation and communication is mostly asynchronous. This means that there
+needs to be some kind of a trigger to launch the computation or communication
+tasks in a given process. 
 
-A major problem is synchronization of successive diagonal matrix blocks. The computation must proceed from the top left corner of the matrix until the lower right corner. For this to work properly it is important that the diagonal blocks do not compute and send their data unless the diagonal block to the upper left of the block has finished computing.
+A major problem is synchronization of successive diagonal matrix blocks. The
+computation must proceed from the top left corner of the matrix until the lower
+right corner. For this to work properly it is important that the diagonal blocks
+do not compute and send their data unless the diagonal block to the upper left 
+of the block has finished computing.
 
 ## Synchronous block LU
 
@@ -88,8 +98,9 @@ int index = (bcounter_i*block_size_per_process_r + bcounter_j)*
     num_blocks_per_process +  i*process_block_size + j;
 ```
 
-Before creating a full-fledged version of this code, I first made a simple code that would calculate the LU
-decomposition in the case where there is only one matrix block per process.
+Before creating a full-fledged version of this code, I first made a simple code
+that would calculate the LU decomposition in the case where there is only one
+matrix block per process.
 
 ## Resources
 
@@ -121,9 +132,41 @@ Documentation for BLACS and PBLAS is sparse, so I used the following resources:
 
 ## Block cyclic data distribution
 
-The block cyclic distribution is a central idea in the case of PBLAS and BLACS. It is important to store the matrix in this configuration since it is the most efficient in terms of load balancing for most applications.
+The block cyclic distribution is a central idea in the case of PBLAS and BLACS.
+It is important to store the matrix in this configuration since it is the most 
+efficient in terms of load balancing for most applications.
 
-If you're reading a matrix from an external file it can get cumbersome to read into in a block cyclic manner manually. You do this with little effort using MPI IO. Refer [this blog post](URL ) that describes this in detail along with C code.
+If you're reading a matrix from an external file it can get cumbersome to read 
+into in a block cyclic manner manually. You do this with little effort using MPI IO.
+Refer [this blog post](URL ) that describes this in detail along with C code.
+
+For this code we generate the data on a per process basis.
+
+### Block cyclic nomenclature
+
+Its somewhat confusing how exactly the blocks are named. So here's the nomenclature
+I'm using when talking about certain kinds of blocks:
+* Process blocks :: blocks inside a process.
+* Matrix blocks :: blocks of the global matrix.
+* Matrix sub-blocks :: Each matrix block is divided into sub-blocks that are scattered
+over processes. Each of these sub-blocks corresponds to a single process block.
+
+## ScaLAPACK protips
+
+### Use of M and N in routines
+
+ScaLAPACK operates on a block cyclic data distribution. Most of the routines accept
+two parameters: `M` and `N` that are described as the number of rows and cols of the
+distributed submatrix sub(A). Its easy to get confused by thinking of these variables
+as the dimensions of the _global_ matrix. However, since scalapack relies on a block
+cyclic data distribution, the 'world' for all processes at _one_ time is basically one
+matrix block which is spread over all the processes. Therefore, when calling scalapack
+routines care must be taken to specify the dimensions of the matrix block in `M` and `N`
+and not those of the global matrix.
+
+If you see other code that does not rely on multiple sub-matrix blocks inside processes, 
+they will usually pass the dimensions of the global matrix to the routine, which is correct
+for that case since there is only one sub-matrix block per process.
 
 ## BLACS protips
 
@@ -141,7 +184,8 @@ void Cdgesd2d(
 );
 ```
 * `trsd2d`: This routine is used for point-to-point sending of trapezoidal matrices.
-* `gerv2d`: This routine is used for point-to-point receiving of general rectangular matrices. This routine will block until the message is received. Its prototype looks like so:
+* `gerv2d`: This routine is used for point-to-point receiving of general rectangular
+matrices. This routine will block until the message is received. Its prototype looks like so:
 ``` cpp
 void Cdgerv2d(
     int CBLACS_CONTEXT, // CBLACS context
@@ -154,7 +198,10 @@ void Cdgerv2d(
 );
 ```
 
-For broadcast receive, there is the `gebr2d` routine. This routine is particularly useful since it can broadcast over all processes, or a specific row or column. This can be helpful over using MPI directly since it allows us to easily broadcast over rows or columns without having to define separate communicators.
+For broadcast receive, there is the `gebr2d` routine. This routine is particularly 
+useful since it can broadcast over all processes, or a specific row or column. 
+This can be helpful over using MPI directly since it allows us to easily broadcast
+over rows or columns without having to define separate communicators.
 
 The prototype of this routine is as follows:
 ``` cpp
@@ -174,7 +221,8 @@ Cdgebr2d(
 );
 ```
 
-For broadcast send, there is the `gebs2d` routine. This is helpful for receiving broadcasts. The prototype of this function is as follows:
+For broadcast send, there is the `gebs2d` routine. This is helpful for receiving broadcasts.
+The prototype of this function is as follows:
 ``` cpp
 Cdgebs2d(
     int CBLACS_CONTEXT, // CBLACS context.
@@ -191,10 +239,14 @@ Cdgebs2d(
 
 ## Synchronous block LU
 
-In the asynchronous LU, it is assumed that the block size is equal to the processor size, i.e each block of the matrix is limited to only a single processor.
+In the asynchronous LU, it is assumed that the block size is equal to the processor size,
+i.e each block of the matrix is limited to only a single processor. For synchronous LU 
+decomposition, we take blocks which are spread out over multiple processors. To illustrate, 
+see the below figure:
 
-For synchronous LU decomposition, we take blocks which are spread out over multiple processors. To illustrate, see the below figure:
+Four of the above colors represent a single block and each color represents a process. This
+means that each block is spread out over 4 processes. This ensures that the processes are
+always kept busy no matter the operation.
 
-Four of the above colors represent a single block and each color represents a process. This means that each block is spread out over 4 processes. This ensures that the processes are always kept busy no matter the operation.
-
-It should be remembered that scalapack expects the data to be in column-major format. Therefore, it must be stored that way.
+It should be remembered that scalapack expects the data to be in column-major format.
+Therefore, it must be stored that way.
