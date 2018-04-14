@@ -43,3 +43,13 @@ takes a while to complete since it downloads and compiles many sources.
 # Scala syntax protips
 
 # Course work assignments
+
+## Assignment 1: traversal and broadcast
+
+The assignment can be found [here](http://www.coord.c.titech.ac.jp/c/distribalgo/hw/HW01_traversal.pdf).
+
+This one requires us to modify the algorithm for broadcast/convergecast and allow
+for upto _n_ parallel instances of the algorithm such that instance _k_ has process
+_pk_ as the root of the instance.
+
+
