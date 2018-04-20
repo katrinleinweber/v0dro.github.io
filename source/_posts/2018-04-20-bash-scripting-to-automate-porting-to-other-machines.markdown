@@ -7,6 +7,18 @@ I need to log into multiple machines every now and then and its really annoying 
 set everything up from scratch. Here's some simple things I did with bash scripting
 for automating most of my workflow.
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [Bash basics](#bash-basics)
+    - [If statements](#if-statements)
+- [Scripting protips](#scripting-protips)
+    - [Checking env variables](#checking-env-variables)
+    - [Checking for programs](#checking-for-programs)
+- [Resources](#resources)
+
+<!-- markdown-toc end -->
+
 # Bash basics
 
 A bash must have the line `#!/bin/bash` on the 1st line to let the OS know that this
@@ -39,3 +51,25 @@ You can just check whether env variables exist or not with `if $VAR_NAME`. You n
 specify a call to `test` inside square brackets and specify `-z` if you want to check
 whether the variables does not exist and `-n` if you want to check if the variable
 exists.
+
+For example, cheking if `$SERVER_ENV` variable exists or not will look like this:
+```
+if [-n "$SERVER_ENV"]; then
+    echo "SERVER_ENV exists"
+fi
+```
+## Checking for programs
+
+If you want to check whether a particular program exists or not, use `hash <command_name>`.
+
+For example, to see if git exists and print an error if not:
+```
+if ! hash git 2>/dev/null; then
+    echo "Please install git before proceeding."
+    exit 1
+fi
+```
+
+# Resources
+
+* [Checking whether program exists.](https://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script) 
