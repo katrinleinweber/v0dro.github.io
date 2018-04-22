@@ -76,7 +76,9 @@ A value can be bound to a local variable using `let`. This command can also be u
 
 ## Quote
 
-`quote` is a special form in elisp that returns its single argument, without evaluating it. This provides a way to include constants and lists, which are not self-evaluating objects, in a program. This [link](https://www.gnu.org/software/emacs/manual/html_node/elisp/Quoting.html) talks about it in detail.
+`quote` is a special form in elisp that returns its single argument, without 
+evaluating it. This provides a way to include constants and lists, which are not 
+self-evaluating objects, in a program. This [link](https://www.gnu.org/software/emacs/manual/html_node/elisp/Quoting.html) talks about it in detail.
 
 Its used so often that a short form of using a single quote is often used instead (`'`). This [answer](https://emacs.stackexchange.com/questions/715/how-to-know-when-or-when-not-to-use-the-single-quote-before-variable-names) talks in detail about when to and when not to use it.
 
@@ -95,13 +97,21 @@ Use the `car` function for getting the first element of the list and `cdr` for g
 
 ### Cons cells
 
-Lists are composed of cons cells. Each cons cell is a tuple of two lisp objects, the `car` and `cdr`. In the case of a list, the first slot of a cons cell holds the element of the list and the next part chains to the next element of the list. The cdr of the last cell of the list is `nil`. This helps in detecting the end of a list.
+Lists are composed of cons cells. Each cons cell is a tuple of two lisp objects,
+the `car` and `cdr`. In the case of a list, the first slot of a cons cell holds 
+the element of the list and the next part chains to the next element of the list. 
+The cdr of the last cell of the list is `nil`. This helps in detecting the end 
+of a list.
 
 ## Dotted pair notation
 
-A dotted pair notation is a general syntax for creating cons cells that represents the car and cdr explicitly.  In this syntax, `(a . b)` stands for a cons cell whose `car` is the object `a` and whose `cdr` is the object `b`. Dotted pair notation is more general than list syntax because the `cdr` does not have to be a list.
+A dotted pair notation is a general syntax for creating cons cells that represents
+the car and cdr explicitly.  In this syntax, `(a . b)` stands for a cons cell whose 
+`car` is the object `a` and whose `cdr` is the object `b`. Dotted pair notation is 
+more general than list syntax because the `cdr` does not have to be a list.
 
-Dotted pairs can be chained together to form a list. For example, `(1 2 3)` is written as `(1 . (2 . (3 . nil)))`.
+Dotted pairs can be chained together to form a list. For example, `(1 2 3)` is written 
+as `(1 . (2 . (3 . nil)))`.
 
 # Writing an emacs major mode
 
