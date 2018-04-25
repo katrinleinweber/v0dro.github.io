@@ -91,13 +91,102 @@ and set the width to the width of the text in the document. Like this:
 ```
 \includegraphics[width=\textwidth]{image}
 ```
-See the [refererence guide](https://www.sharelatex.com/learn/Inserting_Images#Reference_guide) for
+See the [reference guide](https://www.sharelatex.com/learn/Inserting_Images#Reference_guide) for
 a more detailed description of the lengths and units that can be specified.
 
 ## Useful commands
 
 * New page - `\newpage`.
 * Make a title page - `\maketitle`.
+
+### Text formatting
+
+Use `\textbf{text}` for bold text, `\underline{text}` for underlined text and
+`\textit{text}` for italics.
+
+### Symbols
+
+* Empty set: `\emptyset` is a 0 with a back slash through it.
+* Uptack or falsum: `\bot` looks like Japanese 上 but without the upper dash.
+* Is a member of: `\in`, for denoting that something is a part of a set.
+
+## Writing algorithms
+
+### Setup of environment
+
+I'm using the `algorithmicx` package for writing algorithms. This package will be installed
+with the `texlive-full` package on the Ubuntu repos. Put the following lines in the preamble
+to use:
+```
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+```
+This is because algorithmicx pacakage is just a bundle of style files with macros that build
+on top of `algorithm` and `algorithmic`. It does not define a package of itself.
+
+The algorithms should lie inside the `algorithm` environment. You can use `\caption` and
+`\label` to define those properties respectively. For example:
+```
+\begin{algorithm}
+  \caption{Leader election in arbitrary graph}
+  \label{leader_election}
+\end{algorithm}
+```
+
+### Writing algorithms
+
+The actual algorithm should be written inside the `algorithmic` block. An optional numerical
+argument can specify in how many lines do you want the lines to be numbered. Example:
+```
+\begin{algorithmic}[1]
+    \State \textbf{when} {START} \textbf{is received do}
+\end{algorithmic}
+```
+
+### Basic commands for algorithms
+
+Variables and program statements in general should be written inside `$` signs so that they
+will be italicized. Here's a list of basic commands for writing various tasks:
+
+* `\gets`: Assignment using a left pointing arrow like `<-`.
+* For loop: `\For{<condition>} <text> \EndFor`
+* Comments: Use `\Comment` for comments.
+
+## Checking for installed latex packages
+
+Use the `kpsewhich` command to see if a package is installed (alongwith its path). Example:
+```
+kpsewhich algorithm.sty 
+```
+
+## Writing custom latex commands
+
+If you want to create certain kinds of custom blocks or more crazy things, you can create
+your own custom commands that make such tasks easier. Below is the code for a custom `When`
+command that will insert a `When` block into the code for denoting certain events.
+```
+\algrenewcommand\algorithmicindent{3.0em}
+\algnewcommand{\IIf}[1]{\State\algorithmicif\ #1 \algorithmicthen}
+\algnewcommand{\EndIIf}{\unskip\ \algorithmicend\ \algorithmicif}
+\newcommand*\Let[2]{\State #1 $\gets$ #2}
+\algdef{SN}[when]{When}{EndWhen}
+[3][\null]{
+  \ifthenelse{\equal{#1}{\null}}{
+    \ifthenelse{\equal{#3}{}}{
+      {\bf when} \Call{#2}{\null} {\bf is received do}
+    }{
+      {\bf when} \Call{#2}{#3} {\bf is received do}
+    }
+  }{
+    \ifthenelse{\equal{#3}{}}{
+      {\bf when} \Call{#2}{\null} {\bf is received from #1 do}
+    }{
+      {\bf when} \Call{#2}{#3} {\bf is received from #1 do}
+    }
+  }
+}
+\renewcommand{\thealgorithm}{}
+```
 
 # Emacs latex setup
 
@@ -144,3 +233,7 @@ scroll through PDFs seamlessly.
 * [Preview Latex symbols without preview-latex.](https://piotrkazmierczak.com/2012/previewing-latex-symbols-without-preview-latex/)
 * [DocView navigation.](https://www.gnu.org/software/emacs/manual/html_node/emacs/DocView-Navigation.html) 
 * [Inserting images in latex.](https://www.sharelatex.com/learn/Inserting_Images) 
+* [Algorithmicx package tutorial.](http://tug.ctan.org/macros/latex/contrib/algorithmicx/algorithmicx.pdf)
+* [algorithmicx package with latex.](https://tex.stackexchange.com/questions/29429/how-to-use-algorithmicx-package)
+* [Comparison between various algorithm environments.](https://tex.stackexchange.com/questions/229355/algorithm-algorithmic-algorithmicx-algorithm2e-algpseudocode-confused)
+* [Nice looking empty set.](https://tex.stackexchange.com/questions/22798/nice-looking-empty-set)

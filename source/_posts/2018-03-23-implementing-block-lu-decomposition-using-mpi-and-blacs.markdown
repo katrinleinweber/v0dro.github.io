@@ -115,20 +115,6 @@ Some resources that I found during this phase are as follows:
 
 Each process should hold only the part of the matrix that it is working upon.
 
-# Implementation with BLACS
-
-Documentation for BLACS and PBLAS is sparse, so I used the following resources:
-* [Intel MKL BLACS resources](https://software.intel.com/en-us/mkl-developer-reference-c-blacs-routines).
-* [Blog post detailing use of BLACS for scatter operations.](https://andyspiros.wordpress.com/2011/07/08/an-example-of-blacs-with-c/)
-* [Netlib BLACS reference](http://www.netlib.org/blacs/BLACS/QRef.html#BS).
-* [BLACS array-based communication](http://www.netlib.org/blacs/BLACS/Array.html).
-* [BLACS user manual](http://www.netlib.org/lapack/lawnspdf/lawn94.pdf). 
-* [BLACS communication topologies](http://www.netlib.org/blacs/BLACS/Top.html).
-* [Using PBLAS for matrix multiplication.](https://scicomp.stackexchange.com/questions/1688/how-do-i-use-scalapack-pblas-for-matrix-vector-multiplication) 
-* [PBLAS rountines overview from Intel.](https://software.intel.com/en-us/mkl-developer-reference-c-pblas-routines-overview)
-* [ScaLAPACK pdgemm matrix multiplication example.](http://www.nersc.gov/users/software/programming-libraries/math-libraries/libsci/libsci-example/) 
-* [Presentation about Scalapack/PBLAS/BLACS with good details on usage.](http://www.training.prace-ri.eu/uploads/tx_pracetmo/scalable_linear_algebra.pdf) 
-* [Block cyclic data distribution (netlib).](http://www.netlib.org/utk/papers/scalapack/node8.html)
 
 ## Block cyclic data distribution
 
@@ -169,6 +155,12 @@ they will usually pass the dimensions of the global matrix to the routine, which
 for that case since there is only one sub-matrix block per process.
 
 ## BLACS protips
+
+### BLACS topologies
+
+
+
+### BLACS general APIs
 
 Similar to MPI, BLACS contains some routines for sending and receiving data in a point-to-point manner. They are as below:
 * `gesd2d`: This routine is for point-to-point sending of data from one process to another. This routine is non-blocking by default (unlike `MPI_Send` which is blocking). It's prototype for the C interface is as follows:
@@ -250,3 +242,20 @@ always kept busy no matter the operation.
 
 It should be remembered that scalapack expects the data to be in column-major format.
 Therefore, it must be stored that way.
+
+# Resources
+
+## BLACS
+
+* [Intel MKL BLACS resources](https://software.intel.com/en-us/mkl-developer-reference-c-blacs-routines).
+* [Blog post detailing use of BLACS for scatter operations.](https://andyspiros.wordpress.com/2011/07/08/an-example-of-blacs-with-c/)
+* [Netlib BLACS reference](http://www.netlib.org/blacs/BLACS/QRef.html#BS).
+* [BLACS array-based communication](http://www.netlib.org/blacs/BLACS/Array.html).
+* [BLACS user manual](http://www.netlib.org/lapack/lawnspdf/lawn94.pdf). 
+* [BLACS communication topologies](http://www.netlib.org/blacs/BLACS/Top.html).
+* [Using PBLAS for matrix multiplication.](https://scicomp.stackexchange.com/questions/1688/how-do-i-use-scalapack-pblas-for-matrix-vector-multiplication) 
+* [PBLAS rountines overview from Intel.](https://software.intel.com/en-us/mkl-developer-reference-c-pblas-routines-overview)
+* [ScaLAPACK pdgemm matrix multiplication example.](http://www.nersc.gov/users/software/programming-libraries/math-libraries/libsci/libsci-example/) 
+* [Presentation about Scalapack/PBLAS/BLACS with good details on usage.](http://www.training.prace-ri.eu/uploads/tx_pracetmo/scalable_linear_algebra.pdf) 
+* [Block cyclic data distribution (netlib).](http://www.netlib.org/utk/papers/scalapack/node8.html)
+* [BLACS Topology.](http://www.netlib.org/blacs/BLACS/Top.html) 
