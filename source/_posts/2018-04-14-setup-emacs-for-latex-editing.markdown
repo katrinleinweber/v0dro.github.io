@@ -109,8 +109,11 @@ Use `\textbf{text}` for bold text, `\underline{text}` for underlined text and
 * Empty set: `\emptyset` is a 0 with a back slash through it.
 * Uptack or falsum: `\bot` looks like Japanese 上 but without the upper dash.
 * Is a member of: `\in`, for denoting that something is a part of a set.
+* Not equal to: `\neq`.
+* Set union: `\cup`
 
 ## Writing algorithms
+
 
 ### Setup of environment
 
@@ -139,7 +142,7 @@ The actual algorithm should be written inside the `algorithmic` block. An option
 argument can specify in how many lines do you want the lines to be numbered. Example:
 ```
 \begin{algorithmic}[1]
-    \State \textbf{when} {START} \textbf{is received do}
+  \State \textbf{when} {START} \textbf{is received do}
 \end{algorithmic}
 ```
 
