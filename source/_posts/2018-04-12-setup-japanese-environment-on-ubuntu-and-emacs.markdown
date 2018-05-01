@@ -30,6 +30,11 @@ export GTK_IM_MODULE=fcitx
 You can go the text entry setting and set the keyboard change button to 'pause',
 which I did.
 
+# Debian setup
+
+You can't install mozc on Debian GUI so you should first install the `ibus-mozc` package
+and then use the ibus GUI for selecting mozc.
+
 # Emacs setup
 
 You can then proceed to setup your emacs with the mozc keyboard. For this purpose,
@@ -52,5 +57,6 @@ You should now be able to change between Japanese and English keyboards using th
 * [Ubuntu setup instructions for mozc.](https://moritzmolch.com/2287) 
 * [Writing Japanese in emacs](https://www.emacswiki.org/emacs/WritingJapanese) 
 * [Archlinux mozc emacs.](https://wiki.archlinux.org/index.php/mozc#Mozc_for_Emacs) 
+
 
 
