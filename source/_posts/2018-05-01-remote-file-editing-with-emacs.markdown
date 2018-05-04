@@ -21,3 +21,12 @@ file on computer `a2` in the following manner:
 /ssh:a2:/home/sameer/a.cpp
 ```
 This is so incredibly intuitive and simple!
+
+# Note about fancy shells
+
+If you're using some kind of fancy shell on your remote machine, it might cause tramp
+to hang when accessing the machine via `C-x C-f`. For example, I was using oh-my-zsh
+on a machine and tramp refused to work as a result. It started working fine after
+reverting to bash.
+
+Here's a [resource](https://stackoverflow.com/questions/6954479/emacs-tramp-doesnt-work) elaborating on that.

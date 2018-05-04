@@ -86,7 +86,81 @@ N = 1000. time: 4.3823 s. Gflops: 0.456381
 ```
 That's much faster than the original, but there's still much more scope for improvment.
 
+# Loop interchange
+
+It so happens that when we write a simple 3-level loop for matmul where the result is obtained
+one element at a time, we need to access the elements in a manner that does not produce the
+same stride and is not therefore easily vectorizable. If the loops are interchanged they
+will all become stride-1.
+
+The new loop structure would look like this:
+```
+for i = 0:N
+  for k = 0:N
+    for j = 0:N
+      C(i,j) = A(i,k)*B(k,j)
+```
+This simple optimization gives somewhat faster results:
+```
+N = 1000. time: 51.6079 s. Gflops: 0.0387538
+```
+
+This mainly happens because now most elements are accessed in order of memory and there are
+less cache misses. The cache loading/unloading is done by the OS and compiler until this
+step and we have not intervened with these things at all.
+
 # Multithreading optimization
+
+Using the `for` loop openmp threading directive led to a pretty massive speedup. Here's the
+results with a `#pragma openmp parallel for` for the above stride-oriented code:
+```
+N = 1000. time: 0.815704 s. Gflops: 2.45187
+```
+This is faster than gemm! Wonder what does dgemm do internally that causes it to not
+fully exploit the resources of the CPU.
+
+How exactly does the omp for loop parallelization work?
+
+# Blocking
+
+In general, it is helpful to compute the matrix in blocks rather than individually so that
+we can take advantage of various vector operations and cache blocking.
+
+# Using pointers
+
+When you call something like `C[i*N + j]` for getting the value in memory of an element in C,
+you are wasting time in calculating the address of the element in C where it resides. Instead,
+you directly use pointers to advance the pointer value in memory rather than such explicit
+calculation.
+
+For example, to set the value of all elements of an array C to 0:
+```
+double *cp;
+for ( j = 0; j < n; j ++ ) { 
+  cp = &C[ j * ldc ];
+  for ( i = 0; i < m; i ++ ) { 
+    *cp++ = 0.0;
+  }
+}
+```
+
+Using pointers with the above implementation produces the following result:
+
+# Loop unrolling
+
+Slight modifications to the loops which involves unrolling some part of the loop and advancing
+at a faster pace than one increment per loop iteration can reduce the overhead of updating the
+variables associated with looping. Also, there is a special advantage to advancing the loop
+counter by a factor of 4 (for double numbers). The data is brought into the cache line 64 bytes
+at a time. This means that accessing data in chunks of 64 bytes reduces the cost of memory
+movement between the memory layers.
+
+# BLISlab
+
+BLISlab provides a framework for efficiently implementing your own version of BLAS. This is
+particularly handy for people who want to implement a BLAS of their own on any machine.
+
+
 
 # Results on TSUBAME
 
@@ -94,3 +168,17 @@ That's much faster than the original, but there's still much more scope for impr
 
 * BLISlab paper: sandbox for optimizing BLAS.
 * Anatomy of high performance matrix multiplication.
+* Anatomy of high-performance many-threaded matrix multiplication.
+
+## Brief paper summaries
+
+### Anatomy of high performance matrix multiplication
+
+This paper describes what is currently accepted as the most effective approach,
+to implementation, also known as the GotoBLAS approach.
+
+# Resources
+
+* http://jguillaumes.dyndns.org/doc_intel/f_ug/vect_int.htm
+* [sgemm does not multithread sometimes.](https://stackoverflow.com/questions/25475186/sgemm-does-not-multithread-when-dgemm-does-intel-mkl) 
+* [Structure packing in C.](http://www.catb.org/esr/structure-packing/) 
