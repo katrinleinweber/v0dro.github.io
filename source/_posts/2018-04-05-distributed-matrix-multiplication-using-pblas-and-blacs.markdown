@@ -3,7 +3,11 @@ title: Distributed matrix multiplication using PBLAS and BLACS.
 date: 2018-04-05T13:50:59+09:00
 ---
 
-PBLAS (or Parallel BLAS) is a parallel version of BLAS that use BLACS internally for parallel computing. It expects the matrix to be already distributed among processors before it starts computing. You first create the data in each process and then provide PBLAS with information that will help it determine how exactly the matrix is distributed. Each process can access only its local data.
+PBLAS (or Parallel BLAS) is a parallel version of BLAS that use BLACS internally for
+parallel computing. It expects the matrix to be already distributed among processors
+before it starts computing. You first create the data in each process and then provide 
+PBLAS with information that will help it determine how exactly the matrix is distributed.
+Each process can access only its local data.
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
@@ -17,7 +21,8 @@ PBLAS (or Parallel BLAS) is a parallel version of BLAS that use BLACS internally
 
 # Array descriptor
 
-You also need to define an 'array descriptor' for the matrix that you are working on. The array descriptor is an integer array of length 9 that contains the following data:
+You also need to define an 'array descriptor' for the matrix that you are working on. 
+The array descriptor is an integer array of length 9 that contains the following data:
 ``` cpp
 int array_desc[9] = {
     dtype,   // descriptor type (=1 for dense matrix)
@@ -50,9 +55,14 @@ void descinit_ (
 
 # Multiplication function description
 
-According to PBLAS conventions, the global matrix can be denoted by `A` and the block of matrix possessed by the particlar process as `sub(A)`. The number of rows and columns of a global dense matrix that a particular process in a grid receives after data distributing is denoted by `LOCr()` and `LOCc()`, respectively. To compute these numbers, you can use the ScaLAPACK tool routine `numroc`.
+According to PBLAS conventions, the global matrix can be denoted by `A` and the 
+block of matrix possessed by the particlar process as `sub(A)`. The number of
+rows and columns of a global dense matrix that a particular process in a grid
+receives after data distributing is denoted by `LOCr()` and `LOCc()`, respectively.
+To compute these numbers, you can use the ScaLAPACK tool routine `numroc`.
 
-To explain with example, see the prototype of the `pdgemm` routine ([intel](https://software.intel.com/en-us/mkl-developer-reference-c-p-gemm#5258C6E6-D85C-4E79-A64C-A45F300B0C3C) resource):
+To explain with example, see the prototype of the `pdgemm` routine 
+([intel](https://software.intel.com/en-us/mkl-developer-reference-c-p-gemm#5258C6E6-D85C-4E79-A64C-A45F300B0C3C) resource):
 ``` cpp
 void pdgemm_(
     const char *transa ,  // (g) form of sub(A)
@@ -80,9 +90,14 @@ void pdgemm_(
     const int *descc      // (g & l) array of dim 9. Array desc of C.
 )
 ```
-The above function looks very similar to non-parallel `dgemm` from BLAS, with additions for making it easy to find elements in a parallel scenario. Keep in mind that there are some arguments that refer to the global array properties and some that refer to the local array properties.
+The above function looks very similar to non-parallel `dgemm` from BLAS, with
+additions for making it easy to find elements in a parallel scenario. Keep in
+mind that there are some arguments that refer to the global array properties
+and some that refer to the local array properties.
 
-A function called `numroc` from ScaLAPACK is useful for determining how many rows or cols of the global matrix are present in a particular process. The prototype looks as follows:
+A function called `numroc` from ScaLAPACK is useful for determining how many
+rows or cols of the global matrix are present in a particular process. The 
+prototype looks as follows:
 ``` cpp
 int numroc_(
     const int *n,       // (g) number of rows/cols in dist matrix (global matrix).
@@ -240,4 +255,5 @@ int main(int argc, char ** argv)
 # Resources
 
 * [Use of PBLAS from netlib.](http://www.netlib.org/utk/papers/pblas/node20.html)
+* [numroc IBM explanation.](https://www.ibm.com/support/knowledgecenter/en/SSNR5K_5.1.0/com.ibm.cluster.pessl.v5r1.pssl100.doc/am6gr_lnumroc.htm) 
 

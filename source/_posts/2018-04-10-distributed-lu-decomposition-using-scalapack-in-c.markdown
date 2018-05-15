@@ -37,6 +37,13 @@ int numroc_(
 );
 ```
 
+## Errors
+
+Scalapack reports errors using the XERBLA error handler. Here's some resources for this:
+* [Invalid arguments and XERBLA.](http://www.netlib.org/scalapack/slug/node151.html#SECTION04751000000000000000)
+* [Common errors in calling ScaLAPACK routines.](http://www.netlib.org/scalapack/slug/node149.html#seccommonerrors) 
+
+
 # Function usage protips
 
 As with other PBLAS or ScaLAPACK functions, this function expects the matrix to be already distributed over the BLACS process grid (and of course the BLACS process grid should be initialized).

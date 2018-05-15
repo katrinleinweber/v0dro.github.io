@@ -182,6 +182,21 @@ All attributes of case classes are public and are immutable.
 Pattern matching is a powerful tool in Scala for matching an input vs. a set of possible
 outcomes. It similar in nature to other FP languages like OCaml.
 
+At its simplest, it can be thought of as a switch-case statement in Java, but with more
+power. A simple example would be:
+``` scala
+import scala.util.Random
+
+val x: Int = Random.nextInt(10)
+
+x match {
+  case 0 => "zero"
+  case 1 => "one"
+  case 2 => "two"
+  case _ => "many"
+}
+```
+
 ### List pattern matching
 
 
@@ -210,7 +225,11 @@ def answerToLifeAndEverything() = ???
 
 ### Option types
 
+### Importing package inside classes
 
+If you write some case classes (or anything for that matter) inside an `object`, you need to
+declare `import ObjectName._` inside any class where you want to use members defined inside
+that object. This is because the symbols get namespaced.
 
 # Distributed algorithms in scala
 
@@ -258,6 +277,13 @@ particular type before you can receive them.
 You can also override the `ActiveProtocol.onReceive` method to process messages reactively.
 Those that are not caught by `onReceive` are sent into a receive queue and must be handled using
 `Receive`.
+
+The `SEND` function in `ActiveProtocol` has the type:
+```
+def SEND(m: Event): Unit 
+```
+The `Event` in the argument can be an object of type that inherits from `Unicastmessage` or
+`Broadcastmessage`.
 
 ### Process initialization
 
