@@ -314,6 +314,27 @@ Represented by a subclass of `neko.Message`.
 Messages can be multicast (`neko.MulticastMessage`), unicast (`neko.UnicastMessage`) or
 a wrapper (`neko.Wrapper`) that wraps an existing message.
 
+### Message sending methoology
+
+The `SEND` and `DELIVER` functions are used for sending messages. Both of them work with
+objects of type Event. Thugh they sound the same they have some important differences.
+```
+         application
+  |                      ^
+  V                      |
++----------------------------+
+| onSend        DELIVER(...) |
+|                            | Reactive protocol
+| SEND(...)        onReceive |
++----------------------------+
+  |                      ^
+  V                      |
+          network
+```
+Having a look at Professor Xavier's Tarry traversal codes, I think that SEND is more
+useful for communicating from one process to another and DELIVER for communicating
+to the App class that send the initiator message and stuff like that.
+
 # Resources
 
 * [Scala crash course.](http://uclmr.github.io/stat-nlp-book-scala/05_tutorial/01_intro_to_scala_part1.html)

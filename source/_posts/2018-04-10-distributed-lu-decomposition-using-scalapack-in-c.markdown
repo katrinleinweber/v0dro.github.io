@@ -79,14 +79,17 @@ void descinit_(int *desc, const int *m,  const int *n, const int *mb,
 # Source code
 
 Here's a full source implementing a simple LU decomposition using ScaLAPACK:
+
 ``` cpp
 // Implement simple distributed LU decomposition using scalapack.
+// This code uses a simple block distribution of data. Not block cyclic.
 // author: Sameer Deshmukh (@v0dro)
 
 #include "mpi.h"
 #include <cstdlib>
 #include <cmath>
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 extern "C" {
@@ -98,12 +101,33 @@ extern "C" {
   void Cblacs_gridexit(int);
   void Cblacs_barrier(int, const char*);
  
+  int numroc_(int*, int*, int*, int*, int*);
+
   void descinit_(int *desc, const int *m,  const int *n, const int *mb, 
     const int *nb, const int *irsrc, const int *icsrc, const int *ictxt, 
     const int *lld, int *info);
   void pdgetrf_(
                 int *m, int *n, double *a, int *ia, int *ja, int *desca,
                 int *ipiv,int *info);
+}
+
+void print_arr(double *A, int size, string desc, ostream &o)
+{
+  o << desc << endl;
+  for (int i = 0; i < size; ++i) {
+    o << A[i] << " ";
+  }
+  o << endl;
+}
+
+void print_files(double *A, int nrows, int ncols, int myrow, int mycol)
+{
+  string n = to_string(myrow*2 + mycol); 
+  std::ofstream file;
+
+  file.open(n + ".txt");
+  print_arr(A, nrows*ncols, n, file);
+  file.close();
 }
 
 int main(int argc, char ** argv)
@@ -132,10 +156,10 @@ int main(int argc, char ** argv)
   // generate matrix data
   for (int j = 0; j < nb; ++j) {
     for (int i = 0; i < nb; ++i) {
-      int index = i*nb + j;
+      int index = i + j*nb;
       int row_i = myrow*nb + i;
       int col_j = mycol*nb + j;
-      a[index] = row_i + col_j;
+      a[index] = row_i + col_j*N;
     }
     cout << endl;
   }
@@ -155,6 +179,12 @@ int main(int argc, char ** argv)
   pdgetrf_(&N, &N, a, &ia, &ja, desca, ipiv, &info);
   // end LU decomposition
 
+  print_files(a, nb, nb, myrow, mycol);
+  if (myrow == 0 && mycol == 0) {
+    for(int i = 0; i < N; ++i) {
+      cout << ipiv[i] << " ";
+    }
+  }
   MPI_Finalize();
 }
 ```
