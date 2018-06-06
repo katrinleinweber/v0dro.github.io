@@ -3,9 +3,13 @@ title: Distributed LU decomposition using scalapack in C++
 date: 2018-04-10T15:53:31+09:00
 ---
 
-ScaLAPACK is the distributed version of LAPACK. The interface of most functions is almost similar. However, not much documentation and example code is available for scalapack in C++, which is why I'm writing this blog post to document my learnings. Hopefully this will be useful for others too.
+ScaLAPACK is the distributed version of LAPACK. The interface of most functions is 
+almost similar. However, not much documentation and example code is available for 
+scalapack in C++, which is why I'm writing this blog post to document my learnings.
+Hopefully this will be useful for others too.
 
-This post is part of a larger post where I've implemented and benchmarked synchronous and asynchronous block LU deocomposition. That post can be found [here](URL). [This](https://software.intel.com/en-us/mkl-developer-reference-c-p-getrf) intel resource is also helpful for this purpose.
+This post is part of a larger post where I've implemented and benchmarked synchronous 
+and asynchronous block LU deocomposition. That post can be found [here](URL). [This](https://software.intel.com/en-us/mkl-developer-reference-c-p-getrf) intel resource is also helpful for this purpose.
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
@@ -21,12 +25,18 @@ This post is part of a larger post where I've implemented and benchmarked synchr
 
 There are certain terminologies that are pretty widely used in scalapack. They are as follows:
 * Scalapack docs assume that a matrix of `K` rows or columns is distributed over a process grid of dimensions p x q.
-* `LOCr` :: `LOCr(K)` denotes the number of elements of K that a process would receive if K were distributed over the p processes of its process column.
-* `LOCc` :: `LOCc(K)` denotes the number of elements of K that a process would receive if K were distributed over the q processes of its process row.
+* `LOCr` :: `LOCr(K)` denotes the number of elements of K that a process would receive if K were
+distributed over the p processes of its process column.
+* `LOCc` :: `LOCc(K)` denotes the number of elements of K that a process would receive if K were 
+distributed over the q processes of its process row.
 * The values of `LOCc` and `LOCr` can be determined using a call to the `numroc` function.
-* **IMPORTANT** :: None of these functions have C interfaces the way there are for LAPACK via LAPACKE. Therefore, you must take care to pass all variables by address, not by value and store all your data in FORTRAN-style, i.e. column-major format not row-major.
+* **IMPORTANT** :: None of these functions have C interfaces the way there are for LAPACK via LAPACKE. 
+Therefore, you must take care to pass all variables by address, not by value and store all your data 
+in FORTRAN-style, i.e. column-major format not row-major.
 
-The `numroc` function is useful in almost every scalapack function. It computes the number of rows and columns of a distributed matrix ownded by the process (the return value). Here's an explanation alongwith the prototype:
+The `numroc` function is useful in almost every scalapack function. It computes the number of rows 
+and columns of a distributed matrix ownded by the process (the return value). Here's an explanation 
+alongwith the prototype:
 ``` cpp
 int numroc_(
     const int *n, // (global) the number of rows/cols in dist matrix
@@ -75,6 +85,18 @@ void descinit_(int *desc, const int *m,  const int *n, const int *mb,
     const int *nb, const int *irsrc, const int *icsrc, const int *ictxt, 
     const int *lld, int *info);
 ```
+
+The `ipiv` array is not a synchronized data struture - it will be different for each process.
+According to the docs, `ipiv(i)` is the global row local row i was swapped with. This array 
+is tied to the distributed matrix A.
+
+## Storage in the arrays
+
+Each local array of a process should store a part of the global matrix. The global matrix is stored
+in a block cyclic manner and scalapack reads each local array expecting it in a particular format.
+It is important to be aware of this.
+
+See [this](http://netlib.org/scalapack/slug/node28.html) explanation on the scalapack site to get a complete understanding.
 
 # Source code
 

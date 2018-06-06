@@ -348,4 +348,4 @@ to implementation, also known as the GotoBLAS approach.
 * [Advanced Vector Instructions (AVX)](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions)
 * [The significance of SSE and AVX.](https://www.polyhedron.com/web_images/intel/productbriefs/3a_SIMD.pdf) 
 * [Crunching numbers with AVX2](https://www.codeproject.com/Articles/874396/Crunching-Numbers-with-AVX-and-AVX) 
-
+* [Cache and multithreading](https://austingwalters.com/the-cache-and-multithreading/)

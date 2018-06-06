@@ -3,9 +3,16 @@ title: Implementing block LU decomposition using MPI and BLACS
 date: 2018-03-23T18:42:53+09:00
 ---
 
-Recently I was tasked with implemented a block LU decomposition in parallel using a block cyclic process distribution using BLACS and MPI. This decomposition would then be extended to hierarchical matrices and would eventually work with dense matrices instead of hierarchical. Thus we cannot use already implemented distributed LU factorization methods like scalapack for this purpose.
+Recently I was tasked with implemented a block LU decomposition in parallel using
+a block cyclic process distribution using BLACS and MPI. This decomposition would
+then be extended to hierarchical matrices and would eventually work with dense matrices
+instead of hierarchical. Thus we cannot use already implemented distributed LU factorization
+methods like scalapack for this purpose.
 
-In this post I would like to document my learnings about desinging the parallel algorithm and installing the various libraries that are required for this purpose. Hopefully, the reader will find something useful in this post too. This post will cover only LU factorization of dense matrices. Hierarchical matrices will be covered in another post.
+In this post I would like to document my learnings about desinging the parallel algorithm
+and installing the various libraries that are required for this purpose. Hopefully, the reader
+will find something useful in this post too. This post will cover only LU factorization of dense
+matrices. Hierarchical matrices will be covered in another post.
 
 I have written about using the scalapack C++ interface for a simple block LU decomposition in [this](URL) post. 
 
@@ -28,9 +35,16 @@ I have written about using the scalapack C++ interface for a simple block LU dec
 
 # Installing libraries
 
-For this computation, we use MPICH and [BLACS](). While MPICH is easily installable on most GNU/Linux distributions, the same cannot be said for BLACS.
+For this computation, we use MPICH and [BLACS](). While MPICH is easily installable on most
+GNU/Linux distributions, the same cannot be said for BLACS.
 
-I first tried downloading [BLACS sources]() and compiling the library, however it gave too many compilation errors and was taking a long time to debug. Therefore, I resorted to using the [ScaLAPACK installer](), which is a Python script that downloads the sources of BLACS, LAPACK and ScaLAPACK, compiles all these libraries on your system and produces a single shared object file `libscalapack.a` which you can use for linking with your program. Since BLACS is included in the ScaLAPACK distribution, you can use the scalapack binary directly for linking.
+I first tried downloading [BLACS sources]() and compiling the library, however it gave too
+many compilation errors and was taking a long time to debug. Therefore, I resorted to using
+the [ScaLAPACK installer](), which is a Python script that downloads the sources of BLACS,
+LAPACK and ScaLAPACK, compiles all these libraries on your system and produces a single 
+shared object file `libscalapack.a` which you can use for linking with your program. 
+Since BLACS is included in the ScaLAPACK distribution, you can use the scalapack binary
+directly for linking.
 
 Just download the ScaLAPACK installer from the website and follow the instructions in the README for quick and easy installation.
 
@@ -38,11 +52,16 @@ Just download the ScaLAPACK installer from the website and follow the instructio
 
 ## Asynchronous block LU
 
-One problem that I faced when designing the algorithm is that when writing a CBLACS program, you are basically writing the same code that is being run on multiple processes, however the data that is stored in variables is not the same for each process.
+One problem that I faced when designing the algorithm is that when writing a CBLACS
+program, you are basically writing the same code that is being run on multiple processes, 
+however the data that is stored in variables is not the same for each process.
 
-So it becomes important to write the program in such a way that maximum data is shared between the processes but there is minimmum communication of things like the block that is currently under process.
+So it becomes important to write the program in such a way that maximum data is shared
+between the processes but there is minimmum communication of things like the block
+that is currently under process.
 
-If it is a diagonal block, it simply factorizes the block into L & U parts and broadcasts it to rows and columns.
+If it is a diagonal block, it simply factorizes the block into L & U parts and broadcasts
+it to rows and columns.
 
 If it is a row or column block, it listens for the broadcast from the diagonal block and mutliplies the contents that it receives with the data it posseses. It then broadcasts the multiplied matrix block accross the lower right block so that the block can be reduced.
 
