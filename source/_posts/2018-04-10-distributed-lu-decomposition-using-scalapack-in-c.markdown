@@ -51,8 +51,7 @@ int numroc_(
 
 Scalapack reports errors using the XERBLA error handler. Here's some resources for this:
 * [Invalid arguments and XERBLA.](http://www.netlib.org/scalapack/slug/node151.html#SECTION04751000000000000000)
-* [Common errors in calling ScaLAPACK routines.](http://www.netlib.org/scalapack/slug/node149.html#seccommonerrors) 
-
+* [Common errors in calling ScaLAPACK routines.](http://www.netlib.org/scalapack/slug/node149.html#seccommonerrors)
 
 # Function usage protips
 
@@ -85,6 +84,9 @@ void descinit_(int *desc, const int *m,  const int *n, const int *mb,
     const int *nb, const int *irsrc, const int *icsrc, const int *ictxt, 
     const int *lld, int *info);
 ```
+In the `descinit_`, the `MB` and `NB` parameters signify the size of the block into which the
+matrix is divided. Not the size of the block that each process will receive. See the `sync_lu`
+code for an [example](https://github.com/v0dro/scratch/tree/master/c_shizzle/parallel/sync_lu) of block cyclic LU decomposition.
 
 The `ipiv` array is not a synchronized data struture - it will be different for each process.
 According to the docs, `ipiv(i)` is the global row local row i was swapped with. This array 
