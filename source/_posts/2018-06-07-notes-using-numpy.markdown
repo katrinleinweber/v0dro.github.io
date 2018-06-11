@@ -28,4 +28,12 @@ See https://docs.scipy.org/doc/numpy-1.10.0/glossary.html
 The `numpy.printoptions` function can be used for setting various global print options like
 linewidth and precision during printing to console. Useful for debugging and viewing.
 
+# Debugging
+
+The `pdb` module is useful for debugging python. Place `pdb.set_trace()` in some place
+in the code where you want the code to break. It will then provide you with a python
+REPL.
+
+Here's a link to it: https://pythonconquerstheuniverse.wordpress.com/2009/09/10/debugging-in-python/
+
 # Resources

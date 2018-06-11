@@ -56,6 +56,11 @@ SwapCached:         4144 kB
 
 The CPU details for this chip can be found here: https://en.wikichip.org/wiki/intel/xeon_e5/e5-2637_v4
 
+The cache values for this processor are as follows:
+* L1 cache - 32 KB per chip per core (x4).
+* L2 cache - 256 KB per chip per core (x4).
+* L3 cache - 10 MB per chip per chip (shared).
+
 # Matrix parameters
 
 For this experiment, I'm using a 1000x1000 matrix of doubles, each matrix generated 
@@ -222,6 +227,96 @@ In order to use these instructions, you need to include the `xmmintrin.h` header
 your code. Data that is to be used using SIMD needs to be packed using the `__m256d` if
 using the YMM registers useful for AVX instructions. 
 
+### SIMD with gcc
+
+GCC -O0 is no optimization at all and when using with SIMD uses up about 7-8 instructions
+per load of YMM registers.
+
+GCC -O3 optimizations create some blazingly fast and highly optmized SIMD code. In this
+section I will document some of the low level instructions that are used by SIMD
+and which can be directly used from C++ code in order to produce highly optimized
+matrix multiplication.
+
+#### GCC inline assembly
+
+There's two kinds of inline assembly - intel assembly and AT&T assembly. GCC uses AT&T
+and all examples below will stick with that convention. It is important to note that
+AT&T assembly has the source operand as the first operand of the instruction and the
+destination as the second operand.
+
+All instructions must end with a `\n\t` for breaking the line and moving to the next
+instruction field.
+
+Link : https://www.codeproject.com/Articles/15971/Using-Inline-Assembly-in-C-C
+
+#### GCC extended assembly
+
+GCC has a special extended assembly instruction syntax that allows you to freely pass
+C variables to and from assembly code. It allows you to specify variables and use
+them within the assembly instructions.
+
+It has the following format:
+```
+asm [volatile] ( AssemblerTemplate 
+                 : OutputOperands 
+                 [ : InputOperands
+                 [ : Clobbers ] ])
+```
+This allows you to specify an 'assembler template' inside which you can specify the
+kind of assembly instructions that you want along with a template for input and output
+operands. The compiler will read this template along with the specified parameters
+and replace the parameters in the template before outputting the assembly code.
+
+The output and input operands have to specified in a given format for correct processing:
+```
+[ [asmSymbolicName] ] constraint (cvariablename)
+```
+The first `[ [asmSymbolicName] ]` is usually expressed in the assembler template. The
+`constraint` is a literal string that specifies certain constraints on the placement of 
+the operand. Output constraints _must_ begin with either `=` (a variable overwriting an
+existing value) or `+` (when reading and writing). After this prefix, specify another
+constraint where the value resides. Use `r` for register and `m` for memory or `rm` for
+register or memory (compiler will choose).
+
+After specifying input and output variables, if your asm modifies any of the system
+registers as a side effect, they should be specified in the `Clobbers` field.
+
+Link : https://gcc.gnu.org/onlinedocs/gcc/Extended-Asm.html
+
+
+#### Register naming and conventions
+
+Registers names being with a `%`. So register `rdx` is named as `%rdx`. The special purpose
+ymm registers are used with a suffix of the number of the register. So you can refer to the
+3rd YMM register using `%ymm3`.
+
+#### Immediate operands
+
+Immediate operands (or literals) are marked using a `$`. So to add `5`, register 
+`eax` would be `add $5, %eax`.
+
+#### Indexing
+
+Indexing or indirection is done by enclosing the index register or indirection 
+memory cell address in parentheses. For example `mov %edx, (%eax)` will move the
+data pointed to by `%eax` to `%edx`. Specifying a number before the bracket will
+
+#### mov instructions
+
+`movq` is used for moving 64-bit words from source to destination and `movl` is used for 32-bit.
+
+Link : https://www.quora.com/What-is-the-difference-between-movq-and-movl-assembly-instruction
+
+#### Instruction vmovapd
+
+This is the assembly equivalent of `_mm256_load_pd(double*)`. It accepts two instructions,
+source (second operand) and destination (first operand).
+
+Link : https://www.felixcloutier.com/x86/MOVAPD.htmlx
+
+A sample `vmovapd` from gcc looks like `vmovapd	(%rdx), %ymm13`. This is assigning
+the contents in the pointer
+
 
 # Packing data into caches
 
@@ -295,6 +390,72 @@ In original BLISlab framework it is important to remember that the A matrix is s
 in row-major and B in column-major.
 
 # Results on TSUBAME
+
+## Notes on TSUBAME
+
+The TSUBAME users guide can be found [here](http://www.t3.gsic.titech.ac.jp/docs/TSUBAME3.0_Users_Guide_en.html).
+
+The `qsub` command is used for submitting a jobs. A 'job script' is used for this
+purpose. A sample job script looks like so:
+```
+#!/bin/sh
+#$ -cwd
+#$ -l f_node=1
+#$ -l h_rt=0:02:00
+./a.out 1024
+```
+In the above program the lines that begin with `#$` specify various parameters that specify
+the kind of node and number of such nodes (`f_node` in this case) and the time for which 
+we want to reserve the node (2 min in the above case). At the end of the file we specify
+the executable name and the parameters that are to be passed to it.
+
+You can check the status of your job with the `qstat` command. A sample execution looks like so:
+```
+17M38101@login0:~/> qstat
+job-ID     prior   name       user         state submit/start at     queue                          jclass                         slots ja-task-ID 
+------------------------------------------------------------------------------------------------------------------------------------------------
+   2627115 0.00000 job.sh     17M38101     qw    06/10/2018 18:23:45  
+```
+
+Once the job is done, it will deposit the error and output in separate files in your pwd.
+
+## CPU information on f-node
+
+On an f-node of TSUBAME, the CPU information is as follows:
+```
+processor	: 55
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 79
+model name	: Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz
+stepping	: 1
+microcode	: 0xb00001f
+cpu MHz		: 2899.022
+cache size	: 35840 KB
+physical id	: 1
+siblings	: 28
+core id		: 14
+cpu cores	: 14
+apicid		: 61
+initial apicid	: 61
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 20
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch ida arat epb invpcid_single pln pts dtherm intel_pt kaiser tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm cqm rdseed adx smap xsaveopt cqm_llc cqm_occup_llc
+bugs		:
+bogomips	: 4801.76
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 46 bits physical, 48 bits virtual
+power management:
+```
+More detailed information about the processor can be found [here](http://www.spec.org/cpu2006/results/res2016q3/cpu2006-20160725-43026.pdfx).
+
+The cache levels are as follows:
+* L1 cache - 32 kb per chip per core.
+* L2 cache - 256 kb per chip per core.
+* L3 cache - 35 MB per chip per chip.
 
 # Notes on computer architecture
 
