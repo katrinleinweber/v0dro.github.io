@@ -317,6 +317,19 @@ Link : https://www.felixcloutier.com/x86/MOVAPD.htmlx
 A sample `vmovapd` from gcc looks like `vmovapd	(%rdx), %ymm13`. This is assigning
 the contents in the pointer
 
+#### Instruction vbroadcastsd
+
+Broadcasts a value kept at a pointer to a YMM register.
+
+#### Instruction vfmadd231pd
+
+Performs a set of SIMD multiply-add computation on packed double-precision 
+floating-point values using three source operands and writes the multiply-add
+results in the destination operand. The destination operand is also the first
+source operand. The second operand must be a SIMD register. The third source
+operand can be a SIMD register or a memory location.
+
+Link : https://www.felixcloutier.com/x86/VFMADD132PD:VFMADD213PD:VFMADD231PD.html
 
 # Packing data into caches
 

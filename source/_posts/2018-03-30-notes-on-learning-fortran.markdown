@@ -5,11 +5,13 @@ date: 2018-03-30T12:50:57+09:00
 
 I've been trying to understand the distributed [block LU code written in ScaLAPACK](http://people.eecs.berkeley.edu/~demmel/cs267/lecture12/pdgetrf.f), which is written in FORTRAN. In order to understand the algorithms properly I took a 30 min crash course in FORTRAN. In this blog post I'll write some details about the language that are relevant to understanding the ScaLAPACK code.
 
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-generate-toc again -->
 **Table of Contents**
 
 - [Learning resources](#learning-resources)
 - [Salient FORTRAN features](#salient-fortran-features)
+    - [Program structure](#program-structure)
+    - [Printing](#printing)
 - [FORTRAN w.r.t ScaLAPACK](#fortran-wrt-scalapack)
     - [Subroutines and functions](#subroutines-and-functions)
     - [Arrays](#arrays)
@@ -17,7 +19,6 @@ I've been trying to understand the distributed [block LU code written in ScaLAPA
     - [Loops](#loops)
 
 <!-- markdown-toc end -->
-
 
 # Learning resources
 
@@ -52,6 +53,35 @@ end program addNumbers
 Each program begins with keyword `program <prog_name>` and ends with `end program <prog_name>`.
 
 A statement `implicit none` allows the compiler to check whether all variable types are declared correctly. This statement must be there to check if types have been declared correctly.
+
+## Program structure
+
+A full program should be kept inside a `program` statement. A simple 'hello world!' program
+looks like so:
+```
+program hello
+  implicit none
+
+  print*,"Hello"
+  print*,"World!"
+end program
+```
+
+## Printing
+
+Write to standard output using the `print` statement.
+
+Link: https://en.wikibooks.org/wiki/Fortran/Fortran_simple_input_and_output
+
+Printing multi-dimensional arrays can be tricky since the `print` statement by
+default outputs newlines after each printing. Here's a link that explains how
+to print 2d arrays in fortran using `write`:
+
+Link: https://jblevins.org/log/array-write
+
+If you want to use format specifiers with floating point numbers, read below link:
+
+Link: https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap05/format.html
 
 # FORTRAN w.r.t ScaLAPACK
 
@@ -101,6 +131,16 @@ ICTXT = DESCA( 7 )
 ```
 
 By default, arrays in fortran begin from index `1`.
+
+One can also specify the `kind` parameter in the array to tell the compiler which of its suppported
+kinds it should use.
+
+Multi-dimensional arrays are referenced in their indexing the same way as C arrays `(row, col)` but
+the internal storage is of course column major. See the second link below.
+
+Link:
+* https://stackoverflow.com/questions/838310/fortran-90-kind-parameter
+* https://www.obliquity.com/computer/fortran/array.html
 
 ## Logical and comparison expressions
 

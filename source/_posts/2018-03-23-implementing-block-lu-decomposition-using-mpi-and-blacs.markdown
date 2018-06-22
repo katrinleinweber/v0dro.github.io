@@ -181,7 +181,8 @@ for that case since there is only one sub-matrix block per process.
 
 ### BLACS general APIs
 
-Similar to MPI, BLACS contains some routines for sending and receiving data in a point-to-point manner. They are as below:
+Similar to MPI, BLACS contains some routines for sending and receiving data in 
+a point-to-point manner. They are as below:
 * `gesd2d`: This routine is for point-to-point sending of data from one process to another. This routine is non-blocking by default (unlike `MPI_Send` which is blocking). It's prototype for the C interface is as follows:
 ``` cpp
 void Cdgesd2d(

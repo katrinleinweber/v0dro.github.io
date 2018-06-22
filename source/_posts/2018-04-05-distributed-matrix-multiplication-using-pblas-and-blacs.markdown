@@ -159,7 +159,7 @@ int main(int argc, char ** argv)
   int BLACS_CONTEXT, proc_nrows, proc_ncols, myrow, mycol;
   int proc_id, num_procs;
   proc_nrows = 2; proc_ncols = 2;
-  //int proc_dims[2] = {proc_nrows, proc_ncols};
+n  //int proc_dims[2] = {proc_nrows, proc_ncols};
   Cblacs_pinfo(&proc_id, &num_procs);
   Cblacs_get( -1, 0, &BLACS_CONTEXT );
   Cblacs_gridinit( &BLACS_CONTEXT, "Row", proc_nrows, proc_ncols );
