@@ -9,9 +9,30 @@ categories:
 
 A particular course in college called Computational Problem Solving required me to learn Python and use it as a demo language for all sorts of computer science problems involving sorting, searching, types of algorithms and different types of data structures. I'm a Rubyist at heart and not at all a fan of Python and will not use the language unless I have to. This rather lengthy blog post is for documenting whatever I did with Python for this particular course.
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-generate-toc again -->
+**Table of Contents**
+
+- [Sorting](#sorting)
+    - [-](#-)
+    - [Insertion sort](#insertion-sort)
+    - [Selection Sort](#selection-sort)
+    - [Quick sort](#quick-sort)
+    - [Heap sort](#heap-sort)
+- [Printing directory contents](#printing-directory-contents)
+    - [Lessons learnt](#lessons-learnt)
+- [Zipping in Python](#zipping-in-python)
+- [Weird python keywords](#weird-python-keywords)
+    - [in keyword](#in-keyword)
+        - [Inside if statements](#inside-if-statements)
+        - [Inside for statements](#inside-for-statements)
+
+<!-- markdown-toc end -->
+
+
 # Sorting
 
-I have implemented quite a few sorting algorithms in Python. I will document each of them and my interpretation of these and also post sample code.
+I have implemented quite a few sorting algorithms in Python. I will document each of them 
+and my interpretation of these and also post sample code.
 
 #### Bubble sort
 
@@ -65,17 +86,148 @@ while i < len(arr):
 print(arr)
 ```
 
-Worst case time complexity of this algorithm is O(n^2). The best case performance is O(n). This algorithm is better than selection sort since it is adapative and does not necessarily need to swap elements if they are already in sorted order.
-
+Worst case time complexity of this algorithm is O(n^2). The best case performance is O(n). 
+This algorithm is better than selection sort since it is adapative and does not necessarily 
+need to swap elements if they are already in sorted order.
 
 #### Selection Sort
 
-Worst case time complexity of this algorithm is O(n^2). It differs from insertion sort in a way that insertion sort picks up the first element after the sorted sublist (in the unsorted sublist) and finds a place for it in the sorted sublist, while selection sort selects the smallest element in the unsorted sublist and adds it to the end of the sorted sublist.
+Worst case time complexity of this algorithm is O(n^2). It differs from insertion sort
+in a way that insertion sort picks up the first element after the sorted sublist (in the 
+unsorted sublist) and finds a place for it in the sorted sublist, while selection sort 
+selects the smallest element in the unsorted sublist and adds it to the end of the sorted sublist.
 
 #### Quick sort
 
-This has worst case time complexity of O(n^2) if swapping needs to be done for every element, but this behaviour is rare. Average case time complexity is O(nlog(n)).
+This has worst case time complexity of O(n^2) if swapping needs to be done for every element, 
+but this behaviour is rare. Average case time complexity is O(nlog(n)).
 
 #### Heap sort
 
 This is similar to insertion sort, but the difference is that a heap data structure is used for getting the largest element from the unsorted list. For this reason, it has a worst case complexity of O(nlog(n)). Best case time complexity is O(n) or O(nlog(n)).
+
+# Printing directory contents
+
+A sample problem given is this:
+``` python
+def print_directory_contents(sPath):
+    """
+    This function takes the name of a directory 
+    and prints out the paths files within that 
+    directory as well as any files contained in 
+    contained directories. 
+
+    This function is similar to os.walk. Please don't
+    use os.walk in your answer. We are interested in your 
+    ability to work with nested structures. 
+    """
+   pass
+```
+
+I wrote the following function to demonstrate my usage of nested structures in Python.
+```
+import os
+from os import listdir
+
+def really_get_contents(s, indent, path):
+    contents = listdir(path)
+    
+    for content in contents:
+        s += "-"*indent + str(content) + "\n"
+        if os.path.isdir(path + content):
+            s = really_get_contents(s, indent+2, path + content + "/")
+            
+    return s
+
+"""
+Print the directory contents recursively of every directory specified in path.
+"""
+def print_directory_contents(path):
+    s = ""
+    indent = 0
+    return really_get_contents(s, indent, path)
+
+s = print_directory_contents("/home/1/17M38101/gitrepos/hpc_lecture/")
+print(s)
+```
+
+## Lessons learnt
+
+* Python strings are immutable.
+* Use `os.path.join` for joining two strings that represent paths. This makes it cross-platform.
+
+# Zipping in Python
+
+For zipping together two arrays in Ruby, one can simply call `[1,2,3].zip ["a", "b", "c"]` and
+it will return an Array like `[[1, "a"], [2, "b"], [3, "c"]]`.
+
+However in Python, the built-in `zip` function returns an iterable object using which you
+can iterate over the zipped values. For example:
+```
+In [6]: zip([1,2,3], ["a", "b", "c"])
+Out[6]: <zip at 0x7f582adc1888>
+```
+The iterator contains pairs of tuples. You can then create a list out of these tuples using
+`list(zip([1,2,3], ["a", "b", "c"]))`, or even a `dict` if you use the `dict()` function.
+
+# Weird python keywords
+
+## in keyword
+
+### Inside if statements
+
+This keyword is usually used in `if` statements to check if some elements exists in a list:
+``` python
+a = [1,2,3]
+if 1 in a:
+    print("yes!")
+```
+
+However, when it is used with a dict like so:
+``` python
+a = {1 : "a", 2 : "b", 3 : "c"}
+if "a" in a:
+    print("yes!")
+else:
+    print("no!")
+```
+It checks whether a particular key is present in the dict or not.
+
+Link: https://pycruft.wordpress.com/2010/06/10/pythons-in-keyword/
+
+### Inside for statements
+
+Used for iterating over the elements of a list or keys of a dict.
+
+# Mutable (saved) function arguments
+
+Consider the following code:
+``` python
+def f(x,l=[]):
+    for i in range(x):
+        l.append(i*i)
+    print(l) 
+
+f(2)
+f(3,[3,2,1])
+f(3)
+```
+The output of the third line is `[0, 1, 0, 1, 4]`(!!!!!).
+
+This is because when the subsequent function call that uses the default argument is 
+called, it uses the same memory block as the previous call. This is weird because
+a function is supposed to a self-contained unit that is not affected by code outside
+its scope.
+
+List default arguments are better used by specifying `None` as the default and then
+checking if the argument is actually `None` as assigning it to a `list` if yes.
+
+Link: http://docs.python-guide.org/en/latest/writing/gotchas/
+
+# Decorators
+
+A decorator is a special kind of function that either takes a function and returns a
+function, or takes a class and returns a class. The `@` behind it is just syntactic
+sugar that allows you to decorate something in a way that's easy to read.
+
+Link: https://www.codementor.io/sheena/advanced-use-python-decorators-class-function-du107nxsv
