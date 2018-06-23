@@ -156,6 +156,16 @@ print(s)
 * Python strings are immutable.
 * Use `os.path.join` for joining two strings that represent paths. This makes it cross-platform.
 
+# Strings
+
+Strings are immutable in python in all cases. You can't even duplicate a string without taking
+extreme measures. If you want to perform string operations like swapping characters you need
+to store the chars in a list and swap things in the list instead.
+
+Link:
+* https://stackoverflow.com/questions/4605439/what-is-the-simplest-way-to-swap-char-in-a-string-with-python
+* https://asoldatenko.com/can-i-copy-string-in-python-and-how.html
+
 # Zipping in Python
 
 For zipping together two arrays in Ruby, one can simply call `[1,2,3].zip ["a", "b", "c"]` and
