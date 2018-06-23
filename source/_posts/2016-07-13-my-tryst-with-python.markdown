@@ -230,4 +230,107 @@ A decorator is a special kind of function that either takes a function and retur
 function, or takes a class and returns a class. The `@` behind it is just syntactic
 sugar that allows you to decorate something in a way that's easy to read.
 
-Link: https://www.codementor.io/sheena/advanced-use-python-decorators-class-function-du107nxsv
+The idea is based on the fact that functions are first-class objects in Python (unlike
+Ruby). Thus we can return functions or assign them variables like any other value. This
+is the propery that allows defining functions inside other functions. Compared to Ruby,
+this property is like passing a block to the method by defining a function and passing
+the function instead of a closure.
+
+A decorator allows you to create a function call that calls the decorated function with
+the name that is specified in the decorator, so that you can call the function by its name
+rather than passing it into a call to some other function. So for example:
+``` python
+@time_this
+def func_a(stuff):
+    do_important_thing()
+```
+...is exactly equal to:
+``` python
+def func_a(stuff):
+    do_important_thing()
+func_a = time_this(func_a)
+```
+
+It is also possible to pass arguments to decorators depending on what context you
+want a particular function to be called. So you can define functions inside decorator
+functions that get called based on some argument that you pass to the decorator when
+defining it above a method/class. For example:
+``` python
+@requires_permission('administrator')
+def delete_user(iUserId):
+   """
+   delete the user with the given Id. 
+   This function is only accessible to users with administrator permissions
+   """
+```
+An example of implementing such 'nested decorators' can be the following code:
+``` python
+def outer_decorator(*outer_args,**outer_kwargs):
+    def decorator(fn):
+        def decorated(*args,**kwargs):
+            do_something(*outer_args,**outer_kwargs)
+            return fn(*args,**kwargs)
+        return decorated
+    return decorator
+    
+@outer_decorator(1,2,3)
+def foo(a,b,c):
+    print a
+    print b
+    print c
+
+foo()
+```
+You can imagine the `outer_decorator` as being 'created' during the `@` call and the
+`decorator` being placed in its place with the arguments `1,2,3` saved in the function
+call. So now you can call the `decorator` decorator with whatever arguments you want
+placed above the function call.
+
+My personal take on decorators is that they feel a little jugaadu (Hindi for hack-y) and
+can lead to problems if you don't read the decorator above a function and it does something
+unexpected after you call it.
+
+Link: 
+* https://www.codementor.io/sheena/advanced-use-python-decorators-class-function-du107nxsv
+* https://www.codementor.io/sheena/introduction-to-decorators-du107vo5c
+
+# The super method
+
+Unlike Ruby, the `super` keyword in Python returns a proxy object to delegate method calls
+to a class. Its not just a method that calls the method of the same name in the super class.
+Also, since Python supports multiple inheritance (ability for a single class to inherit from
+multiple classes), this functionality allows users to specify the class from which they want
+to call a particular method.
+
+Link: http://www.pythonforbeginners.com/super/working-python-super-function
+
+# The Garbage Collector
+
+The Python interpreter maintains a count of references to each object in memory.
+If a reference count goes to zero then the associated object is no longer alive 
+and the memory allocated to that object can be freed. This is a different mechanism
+from the Ruby GC, which scans the stack space for unused objects.
+
+CPython uses a generational garbage collector alongwith the reference counting. This
+is due to the presence of reference cycles. If an object contains references to other
+objects, then their reference count is decremented too. Thus other objects may be
+deallocated in turn.
+
+Variables, which are defined inside blocks (e.g., in a function or class) have a 
+local scope (i.e., they are local to its block). If Python interpreter exits from 
+the block, it destroys all references created inside the block. The reference counting 
+algorithm has a lot of issues, such as circular references, thread locking and memory 
+and performance overhead.
+
+The generational GC classifies objects into three generations. Every new object starts 
+in the first generation. If an object survives a garbage collection round, it moves 
+to the older (higher) generation. Lower generations are collected more often than 
+higher. Because most of the newly created objects die young, it improves GC performance
+and reduces the GC pause time.
+
+I think this mechanism is both good and bad for C extension writers. Good because
+you can explicitly maintain control on which objects get freed and which don't (using
+references). Bad because it increases the complexity of C extensions (but there's 
+Cython for that).
+
+Link: https://rushter.com/blog/python-garbage-collector/
