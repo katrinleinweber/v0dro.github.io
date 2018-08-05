@@ -9,7 +9,7 @@
   <meta name="author" content="Sameer Deshmukh">
 
   
-  <meta name="description" content="Speech is the fundamental method of communication between human beings. Everyone within Human civilization, whether literate or illiterate, can &hellip;">
+  <meta name="description" content="This year I was the admin for the GSOC projects of the SciRuby foundation. It’s also the first time I mentored a student, having been a student &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -102,7 +102,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/10/01/an-overview-of-automatic-speech-recognition/">An Overview of Automatic Speech Recognition</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/08/27/advice-for-future-gsoc-students-and-mentors-based-on-my-experience/">Advice for Future GSOC Students and Mentors Based on My Experience.</a></h1>
     
     
       <p class="meta">
@@ -118,114 +118,48 @@
   </header>
 
 
-  <div class="entry-content"><p>Speech is the fundamental method of communication between human beings. Everyone within Human civilization, whether literate or illiterate, can communicate with the people around them through speech.</p>
+  <div class="entry-content"><p>This year I was the admin for the GSOC projects of the <a href="http://sciruby.com/">SciRuby foundation</a>. It’s also the first time I mentored a student, having been a student myself last year. Being a mentor is pretty tough task, and for some reason is underestimated by many. I was lucky to have the experience and support of co-admins <a href="https://github.com/mohawkjohn">@mohawkjohn</a> and <a href="https://github.com/pjotrp">@pjotrp</a> throughout the GSOC period.</p>
 
-<p>Using a computer can be a scary proposition for most people. It involves GUIs, text, images, video; intangible entities that many first time users are unable to relate to.</p>
+<p>GSOC has now come to a close. I have learned a great deal myself in the past 3 months, and thought I would share some of my learnings in this blog post in the interest of future GSOC students and mentors.</p>
 
-<p>In contrast to the rapid evolution of computing, development of modes of communication between human and computer has been painfully slow and has been primarily restricted to text, images, videos and the like.</p>
+<h2 id="advice-for-future-students">Advice for future students</h2>
 
-<p>This is where the idea of Automatic Speech Recognition comes in. It aims to bridge the communication gap between humans and computers and bring it as close as possible to a human-human interaction. In aims to teach a computer the primary method of communication between humans: speech.</p>
+<p><strong>Writing a proposal</strong></p>
 
-<p>To cite Wikipedia, Automatic Speech Recognition is the translation of spoken words into text. Once we have text (which is the most portable method of information transfer), we can do absolutely anything with it.</p>
+<p>Research your ideas at least for a day before asking your first question. Mentors are volunteers and it’s important to respect the time and effort that they’re putting into FOSS. When you do propose an idea, you should also have a good knowledge of why you’re working on that idea in the first place and what kind of long term impact the realization of that idea can have. Putting this across through your proposal can have a positive on your selection. Know how to ask questions on mailing lists. A properly researched question should show that you have first taken an effort to understand the topic and are asking the question only because you got stuck somewhere.</p>
 
-<p>In this article, we will be gaining a brief overview of Automatic Speech Recognition (ASR), and take a look at a few algorithms that are used for the same. Most of the methods listed here are language neutral, unless explicitly stated. Let us start with how speech is actually produced by a normal Human being.</p>
+<p><strong>Community bonding</strong></p>
 
-<p>The primary organ of speech production is the Vocal Tract. The lungs push out the air, which passes through the vocal tract and mouth and then is released into the atmosphere. On its way out of the mouth, the air is manipulated by a series of obstacles present in the vocal tract, nose and mouth. These manipulations in the raw air pushed through the lungs manifest as speech.</p>
+<p>Make sure you figure out what exactly you have to research and learn during the community bonding phase. There’s a lot of things out there that can be learned, but only a few specific things will helpful for your project. Focus on them only. Ask specific questions to your mentor.</p>
 
-<p>Air first passes through the glottis, which is the combination of the vocal folds (vocal cords) and the space in between the folds. It then passes through the mouth, where the tongue plays a major role in overall speech modulation. Factors like constriction of the vocal tract (for /g/ in ‘ghost’), aspirated stops and nasal tones play a major role in modulating the overall sound wave.</p>
+<p><strong>Coding</strong></p>
 
-<p><img class="center" src="/images/speech_recognition/glottis.jpg" alt="An Diagram Of The Human Glottis" /></p>
+<p>Setup a daily schedule for coding and stick to it. Constantly keep in touch with your mentor and make sure they know your progress as well as you do. If you run into previously unseen problems (frequent in programming), tell mentor about this ASAP and work out a solution together.</p>
 
-<p>The primary organ of speech production is the Vocal Tract. The lungs push out the air, which passes through the vocal tract and mouth and then is released into the atmosphere. On its way out of the mouth, the air is manipulated by a series of obstacles present in the vocal tract, nose and mouth. These manipulations in the raw air pushed through the lungs manifest as speech.</p>
+<p>Don’t burn yourself out in your enthusiasm. Take regular breaks. Overworking does more harm than good.</p>
 
-<p>Air first passes through the glottis, which is the combination of the vocal folds (vocal cords) and the space in between the folds. It then passes through the mouth, where the tongue plays a major role in overall speech modulation. Factors like constriction of the vocal tract (for /g/ in ‘ghost’), aspirated stops and nasal tones play a major role in modulating the overall sound wave.</p>
+<h2 id="advice-for-future-mentors">Advice for future mentors</h2>
 
-<p>For the purpose of processing speech using computers, there is a need to digitize the signal. When we receive a speech signal in a computer, we first sample the analog signal at a frequency such that the original waveform is completely preserved. We then perform some basic pre-filtering; for example, observations indicate that human speech is the range of 0-4 kHz, so we pass the sampled signal through a low-pass filter to remove any frequecies above 4 kHz.</p>
+<p><strong>Student selection</strong></p>
 
-<p>Before proceeding with the working of an ASR, we make some fundamental assumptions:</p>
-<ul>
-  <li>Vocal tract changes shape rather slowly in continuos speech and it can be assumed that the vocal tract has fixed shape and characterestics for 10 ms. Thus on an average, the shape of the vocal tract changes every 10 ms.</li>
-  <li>Source of excitation (lungs) and vocal tract are independent of each other.</li>
-</ul>
+<p>Short story:
+If you’re unsure about a student, <em>don’t select him</em>. It’s better to have a more quality than quantity.</p>
 
-<p>To extract any meaning from sound, we need to make certain measurements from the sampled wave. Let us explore these one by one:</p>
+<p>Long story:
+First and foremost, it is very important to establish some organization-wide procedure that will be followed when selecting a student. As a start, consider making a proposal template that contains all the information and details that the student needs to fill up when submitting the proposal. Have a look at the <a href="https://github.com/SciRuby/sciruby/wiki/GSoC-2016-Student-Application">SciRuby application template</a> as an example.</p>
 
-<ul>
-  <li>Zero Crossing Count - This is number of times the signal crosses the zero-line per unit time. This gives an idea of the frequency of the wave per unit time.</li>
-  <li>Energy - Energy of a signal is represented by the square of each sample of the signal, over the entire duration of the signal.</li>
-</ul>
+<p>When students start asking questions on the mailing list, it is important for the org admins to keep a watch on students and get a rough idea of who asks the better questions and who don’t. Community participation is a great measure of understanding whether a student will live upto your expectations or not. A proposal with a bad first draft might just turn out to be great simply because the student is open to feedback and is willing to put it in the effort to work on it.</p>
 
-<p><img class="center" src="/images/speech_recognition/energy_equation.jpg" alt="Energy Equation" /></p>
+<p>We have 3 rounds:
+First round every mentor rates their <em>own</em> student only. In the next round all mentors rate <em>all</em> students (students without a mentor and bad proposals drop off).</p>
 
-<ul>
-  <li>Pitch period of utterances - It is found that most utterances have a certain ‘pseudo periodicity’ associated with them. This is called the pitch period.</li>
-</ul>
+<p>In each case when rating a student. mentors put in a comment, making sure to tell how a student has interacted in the proposal phase, what his current coding looks like, how responsive he is. Mentors can still push their students to do stuff. We like it when students keep responsive in this phase.</p>
 
-<p>Speech can be classified into two broad categories - VOICED speech(top) and UNVOICED speech(bottom).</p>
+<p>In the 3rd round the <em>org admins</em> make the final ranking to set the number of slots. By this stage we are pretty clear about the individuals involved (and note that mentor activity counts).  When Google  allocates the slots the top-ranked students get in.</p>
 
-<p><img class="center" src="/images/speech_recognition/voiced_speech.jpg" alt="Waveform of voiced speech" />
-<img class="center" src="/images/speech_recognition/unvoiced_speech.jpg" alt="Waveform of unvoiced speech" /></p>
+<p><strong>Coding period</strong></p>
 
-<p>Voiced speech is characterized in a signal with many undulations (ups and downs). Voiced signals tend to be louder like the vowels /<em>a</em>/, /<em>e</em>/, /<em>i</em>/, /<em>u</em>/, /<em>o</em>/. Unvoiced speech is more of a high frequency, low energy signal, which makes it difficult to interpret since it is difficult to distinguish it from noise. Unvoiced signals, by contrast, do not entail the use of the vocal cords, for example, /<em>s</em>/, /<em>z</em>/, /<em>f</em>/ and /<em>v</em>/.</p>
-
-<p>A basic ASR will consist of three basic steps -</p>
-
-<ul>
-  <li>End Point Detection - Marking the beginning and ending points of the actual utterance of the word in the given speech signal is called End Point Detection.</li>
-  <li>Phoneme<sup id="fnref:3"><a href="#fn:3" class="footnote">1</a></sup> Segmentation - Segregating individual phonemes from a speech signal is called Phoneme Segmentation.</li>
-  <li>Phoneme Identification - Recognizing the phoneme present in each phoneme segment of the waveform is called Phoneme Identification.</li>
-</ul>
-
-<p>Every step in the speech recognition process is an intricate algorithm in itself, and over the years, numerous approaches have been suggested by many people. Let us look at a few simple ones:</p>
-
-<ul>
-  <li>End Point Detection:
-    <ul>
-      <li>We make use of the Zero Crossing Count and Energy parameters of a sound wave for calculating the end points of an utterance in an input sound wave.- It assumes that the first 100 ms of the speech waveform are noise. Based on this assumption, it comes up with the ZCC and energy of the noise signal, through which it computes the points where the speech segment begins and ends. A detailed discussion would be out of the scope of this article, but those interested can always go through the paper written by Rabiner and Sambur<sup id="fnref:1"><a href="#fn:1" class="footnote">2</a></sup>.</li>
-    </ul>
-  </li>
-</ul>
-
-<p><img class="center" src="/images/speech_recognition/waveform_and_end_points.jpg" alt="A speech waveform (top) and the detected End Points (bottom)" /></p>
-
-<ul>
-  <li>Phoneme Segmentation
-    <ul>
-      <li>This step in the process is the most important step because what Phoneme gets detected from a particular speech waveform is completely dependent on what wave we pass to the Phoneme Recognition algorithm.</li>
-      <li>The algorithm proposed by Bapat and Nagalkar<sup id="fnref:2"><a href="#fn:2" class="footnote">3</a></sup> functions based on the fact that each phoneme will have a different energy and amplitude, and whenever a variation drastic deviation in these parameters is detected in the sound wave, it is marked as a different phoneme.</li>
-    </ul>
-  </li>
-  <li>Phoneme Recognition
-    <ul>
-      <li>This is by far the most intriguing and researched. Extensive work has been done in this domain, ranging from simple spectral energy analysis of signals, to more complicated Neural Network algorithms. One can find several hypotheses all over the internet regarding this domain. A discussion on these algorithms would get too large, but we will discuss a very simple algorithm which utilises the frequency domain representation of a signal to segregate ‘varnas’ or classes of Phonemes found in the Devnagiri script:
-        <ul>
-          <li>Each class of phonemes in Devnagiri is generated using the same organ but with different air pressure and time of touch for each individual alphabet. This property of Devangiri can be used for detecting only the class of a particular phoneme.</li>
-          <li>If we divide the entire frequency axis of 4 kHz into 17 bands of ~ 235 Hz each, and observe some sample utterances through this grid, we find that the phonemes of a particular class show peak frequencies in the same band or a very predictable set of 2-3 bands. Taking note of these peaks, one can identify the phoneme class by observing which bands the peaks fall into.</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<p>We have discussed some major characterestics and components of an Automatic Speech Recognition engine, and have also seen some interesting facets of digital signals along the way.</p>
-
-<p>It is interesting to note how some basic principles of Digital Signal Processing can be applied to the real world for useful applications.</p>
-
-<hr />
-
-<div class="footnotes">
-  <ol>
-    <li id="fn:3">
-      <p>Phoneme - A phoneme is a basic unit of a language’s phonology, which is combined with other phonemes to form meaningful units such as words. Alternatively, a phoneme is a set of phones or a set of sound features that are thought of as the same element within the phonology of a particular language. <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:1">
-      <p><a href="http://web.cs.wpi.edu/~cs529/f04/slides/RS75.pdf">An Algorithm For Determining The Endpoints For Isolated Utterances ; L.R. Rabiner and M.R. Sambur</a> <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
-    </li>
-    <li id="fn:2">
-      <p><a href="http://ieeexplore.ieee.org/xpl/login.jsp?tp=&amp;arnumber=4798390&amp;url=http%3A%2F%2Fieeexplore.ieee.org%2Fiel5%2F4796894%2F4798312%2F04798390.pdf%3Farnumber%3D4798390">Phonetic Speech Analysis for Speech to Text; A. V. Bapat, L. K. Nagalkar</a> <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
-    </li>
-  </ol>
-</div>
+<p>Make sure you communicate with your student that they are supposed to send you <em>daily</em> updates of their progress. One paragraph about their work that particular day should suffice.</p>
 </div>
   
   
@@ -238,7 +172,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/09/28/travel-hampi-bengaluru-allepy-part-2/">[Travel] Hampi-Bengaluru-Allepy Part 2</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/08/21/setting-up-a-lexical-analyser-and-parser-in-ruby/">Setting Up a Lexical Analyser and Parser in Ruby</a></h1>
     
     
       <p class="meta">
@@ -254,213 +188,58 @@
   </header>
 
 
-  <div class="entry-content"><h2 id="hampi---day-2">Hampi - Day 2</h2>
+  <div class="entry-content"><p>I wrote this post as I was setting up the lexer and parser for Rubex, a new superset of Ruby that I’m developing.</p>
 
-<p>The day started at 5 am, and we proceeded to Matanga Hill to watch the sunrise, reaching the foot after a 15 min walk. Matanga Hill has special significance in Hindu mythology, this was the place where <a href="http://en.wikipedia.org/wiki/Hanuman">Hanuman</a> and <a href="http://en.wikipedia.org/wiki/Sugriva">Sugreeva</a> took shelter after being chased by <a href="http://en.wikipedia.org/wiki/Vali_(Ramayana)">Vali</a>, who was ultimately killed by <a href="http://en.wikipedia.org/wiki/Rama">Rama</a>.</p>
+<p>Let’s demonstrate the basic working of a lexical analyser and parser in action with a demonstration of a very simple addition program. Before you start, please make sure <a href="https://github.com/ruby/rake">rake</a>, <a href="https://github.com/seattlerb/oedipus_lex">oedipus_lex</a> and <a href="https://github.com/tenderlove/racc">racc</a> are installed on your computer.</p>
 
-<p>As we started climbing the hill, a Naga Yogi waiting at the bottom of the hill asked us to register with the police station before going up the hill. We told him the station was closed, so he guided us up the hill. Along the way he told us that he had converted to a Naga Yogi after a stint at a multinational bank and now lived in a cave up the hill (wow), performing his sadhu duties in the temple town (which blew us away). The climb turned out to be pretty trecherous, with steep cliffs and a very narrow path leading uphill. He guided us to the rooftop of the Veerbhadra Temple present at the top of Matanga Hill, where the sunrise can be experienced best, and set off on his own after inviting us to his cave for tea once we we were done seeing the sunrise.</p>
+<h3 id="configuring-the-lexical-analyser">Configuring the lexical analyser</h3>
 
-<p><img class="center" src="/images/hampi-bengaluru-allepy/matanga_sunrise.JPG" width="600" height="600" alt="'Sunrise from Matanga Hill'" /></p>
+<p>The most fundamental need of any parser is that it needs string tokens to work with, which we will provide by way of lexical analysis by using the <a href="https://github.com/seattlerb/oedipus_lex">oedipus_lex</a> gem (the logical successor of <a href="https://github.com/tenderlove/rexical">rexical</a>). Go ahead and create a file <code>lexer.rex</code> with the following code:</p>
 
-<p><img class="center" src="/images/hampi-bengaluru-allepy/matanga_view.JPG" width="600" height="600" alt="'View of Achutarya Temple from Matanga Hill'" /></p>
-
-<p>After seeing the sunrise and having some great black tea in our guide’s cave, we started our descent, which took around 40 mins, mainly because of the jagged structure of the rocks. A fantastic breakfast of idli and tea awaited us at the bottom. Breakfast food carts are spread thorughout Hampi and serve cheap, tasty and filling food.</p>
-
-<p>We then proceeded to our cycle tour, which would take us through the outer parts of Hampi; first stopping at the <a href="http://hampi.in/kadalekalu-ganesha">Kadalekalu Ganesha</a> (Kadalekalu because the statue’s belly resembles a Bengal Gram) temple, which houses a massive statue of Ganpati, the Hindu god of wisdom. The statue is now in ruins, after being destroyed by the Deccan Muslim rulers, who thought there was a hidden treasure inside the stomach of the statue, because of its size.</p>
-
-<p><img class="center" src="/images/hampi-bengaluru-allepy/ganpati_kk.JPG" width="500" height="400" alt="'Kadalekalu Ganesha statue'" /></p>
-
-<p>Then we proceeded to the statue of Narsimha and Laxmi. This was a huge monolith of a statue once upon a time, but it was destroyed by the invading army. A lot of it has been restored but it appears nowhere near its former glory. Right next to this is the partially submerged Shivalinga, which happens to be the 2nd largest in the country.</p>
-
-<p><img class="center" src="/images/hampi-bengaluru-allepy/narsimha.JPG" width="500" height="400" alt="'The partially restored statue of Narsimha and Laxmi'" /></p>
-
-<p>We then cycled towards the underground Shiva temple, which was pretty mind-blowing. The temple’s roof is on ground level and the rest of the structure underground, the inner mantapas are kept full of water. Then cycling towards the Lotus Palace we came across the Mohammedan Watch Tower, which was a structure made for the Muslim troops in King Krishnadevaraya’s army. This structure sports typical Persian architecture, the only structure of its kind in Hampi.</p>
-
-<p>The Lotus Palace is where the two Queens of King Krishnadevaraya stayed. The main palace has a state-of-the-art water cooling system, with pipes of water circulating around the entire palace to keep the occupants cool during the summer.</p>
-
-<p><img class="center" src="/images/hampi-bengaluru-allepy/lotus_mahal.JPG" width="600" height="600" alt="'The Lotus Mahal!!'" /></p>
-
-<p>Behind this was a massive stable for the royal elephants, which housed all 11 of them. The Lotus Mahal (palace) consisted of two palaces, called Water Palace and the Queen’s Palace, both of which are now in ruins.</p>
-
-<p><img class="center" src="/images/hampi-bengaluru-allepy/elephant_house.JPG" width="600" height="600" alt="'Elephant Stable'" /></p>
-
-<p>We cycled to the King’s enclosure, which had a whole lot of podiums and open spaces for conducting festivities. Dusshera was celebrated with great pomp here. There was an especially large podium for the King to be seated on so that he could watch all the proceedings from a vantage point.</p>
-
-<p><img class="left" src="/images/hampi-bengaluru-allepy/enclosure.JPG" width="360" height="350" alt="'The King's Enclosure and his podium'" /></p>
-
-<p><img class="right" src="/images/hampi-bengaluru-allepy/bath.JPG" width="360" height="350" alt="'The Queens Bath'" /></p>
-
-<p>The Queen’s bath was just a few minutes cycle ride from here and that is where we went next. This was a huge tank for the Queen to take a bath in, made in Indo-Arabic architecture.</p>
-
-<p>The cycle ride back to the center of Hampi (and our hotel) was long but extremely plesant. The route was lush green with many streams and small waterfalls.</p>
-
-<p><img class="center" src="/images/hampi-bengaluru-allepy/cycle_ride.JPG" width="500" height="500" alt="'The cycle ride back to Hampi'" /></p>
-
-<p>Upon returning we had some late lunch at a South Indian restaurant (Venkateshwara Restaurant), and left for Hospet to catch our bus to Bangalore, which left from there at night.</p>
-
-<p>The bus stop at Hospet is pretty horrible and since we were forced to book our tickets through some petty shop in Hampi, the bus came 3 hours late and the driver stopped at the particular bus stop only because we were calling him repeatedly and telling him and that we’re waiting. Go for government transport whenever possible!</p>
-
-<p>Stay tuned for day 3!</p>
-
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+</pre></td>
+  <td class="code"><pre><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">AddLexer</span>
+macro
+  <span style="color:#036;font-weight:bold">DIGIT</span>         <span style="background-color:hsla(300,100%,50%,0.06)"><span style="color:#404">/</span><span style="color:#D20">\d</span><span style="color:#808">+</span><span style="color:#404">/</span></span>
+rule
+  <span style="background-color:hsla(300,100%,50%,0.06)"><span style="color:#404">/</span><span style="background-color:hsla(0,0%,0%,0.07);color:black"><span style="font-weight:bold;color:#666">#{</span><span style="color:#036;font-weight:bold">DIGIT</span><span style="font-weight:bold;color:#666">}</span></span><span style="color:#404">/</span></span>    { [<span style="color:#A60">:DIGIT</span>, text.to_i] }
+  <span style="background-color:hsla(300,100%,50%,0.06)"><span style="color:#404">/</span><span style="color:#808">.|</span><span style="color:#D20">\n</span><span style="color:#404">/</span></span>        { [text, text] }
+inner
+  <span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">do_parse</span>; <span style="color:#080;font-weight:bold">end</span> <span style="color:#777"># this is a stub.</span>
+<span style="color:#080;font-weight:bold">end</span> <span style="color:#777"># AddLexer</span>
+</pre></td>
+</tr></table>
 </div>
-  
-  
 
+<p>In the above code, we have defined the lexical analyser using Oedipus Lex’s syntax inside the <code>AddLexer</code> class. Let’s go over each element of the lexer one by one:</p>
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/21/code-generalized-linear-models-introduction-and-implementation-in-ruby/">[code]Generalized Linear Models: Introduction and Implementation in Ruby.</a></h1>
-    
-    
-      <p class="meta">
-        
+<p><strong>macro</strong></p>
 
+<p>The macro keyword lets you define macros for certain regular expressions
+that you might need to write repeatedly. In the above lexer, the macro <code>DIGIT</code> is a regular expression (<code>\d+</code>) for detecting one or more integers. We place the regular expression inside forward slashes (<code>/../</code>) because oedipus_lex requires it that way. The lexer can handle any valid Ruby regular expression. See the Ruby docs for details on Ruby regexps.</p>
 
+<p><strong>rule</strong></p>
 
+<p>The section under the <code>rule</code> keyword defines your rules for the lexical analysis. Now it so happens that we’ve defined a macro for detecting digits, and in order to use that macro in the rules, it must be inside a Ruby string interpolation (<code>#{..}</code>). The line to the right of the <code>/#{DIGIT}/</code> states the action that must be taken if such a regular expression is encountered. Thus the lexer will return a Ruby Array that contains the first element as <code>:DIGIT</code>. The second element uses the <code>text</code> variable. This is a reserved variable in lex that holds the text that the lexer has matched. Similar the second rule will match any character (<code>.</code>) or a newline (<code>/n</code>) and return an <code>Array</code> with <code>[text, text]</code> inside it.</p>
 
+<p><strong>inner</strong></p>
 
-        
-      </p>
-    
-  </header>
+<p>Under the <code>inner</code> keyword you can specify any code that you want to occur inside your lexer class. This can be any logic that you want your lexer to execute. The Ruby code under the <code>inner</code> section is copied as-is into the final lexer class. In the above example, we’ve written an empty method called <code>do_parse</code> inside this section. This method is mandatory if you want your lexer to sucessfully execute. We’ll be coupling the lexer with <code>racc</code> shortly, so unless you want to write your own parsing logic, you should leave this method empty.</p>
 
+<h3 id="configuring-the-parser">Configuring the parser</h3>
 
-  <div class="entry-content"><h2 id="overview">Overview</h2>
+<p>In order for our addition program to be successful, it needs to know what to do with the tokens that are generated by the lexer. For this purpose, we need <a href="">racc</a>, an LALR(1) parser generator for Ruby. It is similar to yacc or bison and let’s you specify grammars easily.</p>
 
-<p>Most of us are well acquainted with linear regression and its use in analysig the relationship of one dataset with another. Linear regression basically shows the (possibly) linear relationship between one or more independent variables and a single dependent variable. But what if this relationship is not linear and the dependent and independent variables are associated with one another through some special function? This is where Generalized Linear Models (or GLMs) come in. This article will explain some core <a href="http://en.wikipedia.org/wiki/Generalized_linear_model">GLM</a> concepts and their implementation in Ruby using the <a href="https://github.com/sciruby/statsample-glm">statsample-glm</a> gem.</p>
-
-<h2 id="generalized-linear-models-basics">Generalized Linear Models Basics</h2>
-
-<p>The basic linear regression equation relating the dependent varible <em>y</em> with the independent variable <em>x</em> looks something like 
-<script type="math/tex">\begin{align}
-    y = \beta_{0} + x_{1}*\beta_{1} + x_{2}*\beta_{2}...
-\end{align}</script>
-This is the equation of a straight line, with <script type="math/tex">\beta_{0}</script> denoting the intercept of the line with the Y axis and <script type="math/tex">\beta_{1}</script> denoting the slope of the line. GLMs take this a step further. They try to establish a relationship between <em>x</em> and <em>y</em> through <em>another function</em> <strong>g(x)</strong>, which is called the <em>link function</em>. This function depends on the probability distribution displayed by the independent variables and their corresponding y values. In its simplest form, it can be denoted as <em>y = g(x)</em>.</p>
-
-<p>GLM can be used to model numerous relations, depending on the distribution of the dependent conditional on the independent variables. We will first explore the various kinds of GLMs and their defining parameters and then understand the different methods employed in finding the co-efficients. The most common GLMs are:</p>
-
-<ul>
-  <li>Logistic (or logit) regression.</li>
-  <li>Normal regression.</li>
-  <li>Poisson regression.</li>
-  <li>Probit regression.</li>
-</ul>
-
-<p>Let’s see all of the above one by one.</p>
-
-<h4 id="logisitic-regression">Logisitic Regression</h4>
-<p>Logistic, or Logit can be said to be one of the most fundamental of the GLMs. It is mainly used in cases where the independent variables show a binomial distribution (conditional on the dependent). In case of the binomial distribution, the number of successes are modelled on a fixed number of tries. The Bernoulli distribution is a special case of binomial where the outcome is either 0 or 1 (which is the case in the example at the bottom of this post). By using logit link function, one can determine the maximum probability of the occurence of each independent random variable. The values so obtained can be used to plot a sigmoid graph of <em>x</em> vs <em>y</em>, using which one can predict the probability of occurence of any random varible not already in the dataset. The defining parameter of the logistic is the probability <em>y</em>.</p>
-
-<p>The logit link function looks something like 
-<script type="math/tex">\begin{align}
-    y = \frac{e^{(\beta_{0} + x*\beta_{1})}}{1 + e^{(\beta_{0} + x*\beta_{1})}}
-\end{align}</script>
-, where y is the probability for the given value of x.</p>
-
-<p>Of special interest is the meaning of the values of the coefficients. In case on linear regression, <script type="math/tex">\beta_{0}</script> merely denotes the intercept while <script type="math/tex">\beta_{1}</script> is the slope of the line. However, here, because of the nature of the link function, the coefficient <script type="math/tex">\beta_{1}</script> of the independent variable is interpreted as “for every 1 increase in <em>x</em> the odds of <em>y</em> increase by <script type="math/tex">e^{\beta_{1}}</script> times”.</p>
-
-<p>One thing that puzzled me when I started off with regression was the purpose of having several variables <script type="math/tex">(x_{1}, x_{2}...)</script> in the same regression model at times. The purpose of multiple independent variables against a single dependent is so that we can compare the odds of <script type="math/tex">x_{1}</script> against <script type="math/tex">x_{2}</script>.  So basically, if you have multiple variables, it is to compare the effect on the dependent of one variable, when the others are constant. To compare the effect of one variable without considering the others, one could use an  independent regression for each one.</p>
-
-<p>The logistic graph generally looks like this:</p>
-
-<p><img class="center" src="/images/glm/logistic.gif" alt="Generic Graph of Logistic Regression." /></p>
-
-<h4 id="normal-regression">Normal Regression</h4>
-
-<p>Normal regression is used when the DEPENDENT variable exhibits a normal probability distribution, CONDITIONAL ON THE independent variables. The independents are assumed to be normal even in a simple linear or multiple regression, and the coefficients of a normal are more easily calculated using simple linear regression methods. But since this is another very important and commonly found data set, we will look into it.</p>
-
-<p>Normally distributed data is symmetric about the center and its mean is equal to its median. Commonly found normal distributions are heights of people and errors in measurement. The defining parameters of a normal distribution are the mean <script type="math/tex">\mu</script> and variance <script type="math/tex">\sigma^2</script>. The link function is simply <script type="math/tex">y = x*\beta_{1}</script> if no constant is present. The coefficient of the independent variable is interpreted in exactly the same manner as it is for linear regression.</p>
-
-<p>A normal regression graph generally looks like this:</p>
-
-<p><img class="center" src="/images/glm/normal.png" alt="Generic Graph of Normal Regression" /></p>
-
-<h4 id="poisson-regression">Poisson Regression</h4>
-
-<p>A dataset often posseses a Poisson distribution when the data is measured by taking a very large number of trials, each with a small probability of success. For example, the number of earthquakes taking place in a region per year. It is mainly used in case of count data and contingency tables. Binomial distributions often converge into Poisson when the number of cases(n) is large and probability of success(p) small.</p>
-
-<p>The poisson is completely defined by the rate parameter <script type="math/tex">\lambda</script>. The link function is <script type="math/tex">ln(y) = x*\beta_{1}</script>, which can be written as <script type="math/tex">y = e^{x*\beta_{1}}</script>. Because the link function is logarithmic, it is also referred to as log-linear regression.</p>
-
-<p>The meaning of the co-efficient in the case of poisson is “for increase 1 of <em>x</em>, <em>y</em> changes <script type="math/tex">y = e^\beta_{1}</script> times.”.</p>
-
-<p>A poisson graph looks something like this:</p>
-
-<p><img class="center" src="/images/glm/poisson.png" alt="Graph of Poisson Regression" /></p>
-
-<h4 id="probit-regression">Probit Regression</h4>
-
-<p>Probit is used for modeling binary outcome varialbles. Probit is similar to  logit, the choice between the two largely being a matter of personal preference.</p>
-
-<p>In the probit model, the inverse standard normal distribution of the probability is modeled as a linear combination of the predictors (in simple terms, something like <script type="math/tex">y = \Phi(\beta_{0} + x_{1}*\beta_{1}...)</script> , where <script type="math/tex">\Phi</script> is the CDF of the standard normal). Therefore, the link function can be written as <script type="math/tex">z = \Phi^{-1}(p)</script> where <script type="math/tex">\Phi(z)</script> is the standard normal cumulative density function (here <em>p</em> is probability of the occurence of a random variable <em>x</em> and <em>z</em> is the z-score of the y value).</p>
-
-<p>The fitted mean values of the probit are calculated by setting the upper limit of the normal CDF integral as <script type="math/tex">x*\beta_{1}</script>, and lower limit as <script type="math/tex">-\infty</script>. This is so because evaluating any normally distributed random number over its CDF will yield the probability of its occurence, which is what we expect from the fitted values of a probit.</p>
-
-<p>The coefficient of <em>x</em> is interpreted as “one unit change in <em>x</em> leads to a change <script type="math/tex">\beta_{1}</script> in the z-score of <em>y</em>”.</p>
-
-<p>Looking at the graph of probit, one can see the similarities between logit and probit:</p>
-
-<p><img class="center" src="/images/glm/probit.png" /></p>
-
-<h2 id="finding-the-coefficients-of-a-glm">Finding the coefficients of a GLM</h2>
-
-<p>There are two major methods of finding the coefficients of a GLM:</p>
-
-<ul>
-  <li>Maximum Likelihood Estimation (MLE).</li>
-  <li>Iteratively Reweighed Least Squares (IRLS).</li>
-</ul>
-
-<h4 id="maximum-likelihood-estimation">Maximum Likelihood Estimation</h4>
-
-<p>The most obvious way of finding the coefficients of the given regression analysis is by maximizing the likelihood function of the distribution that the independent variables belong to. This becomes much easier when we take the natural logarithm of the likelihood function. Hence, the name ‘Maximum Likelihood Estimation’. The Newton-Raphson method is used to this effect for maximizing the beta values (coefficients) of the log likelihood function.</p>
-
-<p>The first derivative of the log likelihood wrt to <script type="math/tex">\beta</script> is calculated for all the <script type="math/tex">x_{i}</script> terms (this is the jacobian matrix), and so is the second derivative (this is the hessian matrix). The coefficient is estimated by first choosing an initial estimate for <script type="math/tex">x_{old}</script>, and then iteratively correcting this initial estimate by trying to bring the equation</p>
-
-<script type="math/tex; mode=display">\begin{align}
-x_{new} = x_{old} - inverse(hessian)*jacobian   ..(1) 
-\end{align}</script>
-
-<p>to equality (with a pre-set tolerance level). A good implementation of MLE can be found <a href="http://petertessin.com/MaxLik.pdf">here</a>.</p>
-
-<h4 id="iteratively-reweighed-least-squares">Iteratively Reweighed Least Squares</h4>
-
-<p>Another useful but somewhat slower method of estimating the regression coefficients of a dataset is Iteratively Reweighed Least Squares. It is slower mainly because of the number of co-efficients involved and the somewhat extra memory that is taken up by the various matrices used by this method. The upside of IRLS is that it is very easy to implement as is easily extensible to any kind of GLM.</p>
-
-<p>The IRLS method also ultimately boils to the equation of the Newton Raphson (1), but the key difference between the two is that in MLE we try to maximize the likelihood but in IRLS we try to minimize the errors. Therefore, the manner in which the hessian and jacobian matrices are calculated is quite different. The IRLS equation is written as:</p>
-
-<script type="math/tex; mode=display">\begin{align}
-    b_{new} = b_{old} - inverse(X'*W*X)*(X'*(y - \mu))
-\end{align}</script>
-
-<p>Here, the hessian matrix is <script type="math/tex">-(X'*W*X)</script> and the jacobian is <script type="math/tex">(X'*(y - \mu))</script>. Let’s see the significance of each term in each of these matrices:</p>
-
-<ul>
-  <li><em>X</em> - The matrix of independent variables  <script type="math/tex">x_{1}, x_{2},...</script> alongwith the constant vector.</li>
-  <li><em>X’</em> - Transpose of X.</li>
-  <li><em>W</em> - The weight matrix. This is the most important entity in the equation and understanding it completely is paramount to gaining an understanding of the IRLS as whole.
-    <ul>
-      <li>The <em>weight</em> matrix is present to reduce favorism of the best fit curve towards larger values of x. Hence, the weight matrix acts as a mediator of sorts between the very small and very large values of x (if any). It is a diagonal matrix with each non-zero value representing the weight for each vector <script type="math/tex">x_{i}</script> in the sample data.</li>
-      <li>Calculation of the weight matrix is dependent on the probability distribution shown by the independent random variables. The weight expression can be calculated by taking a look at the equation of the hessian matrix. So in the case of logistic regression, the weight matrix is a diagonal matrix with the ith entry as <script type="math/tex">p(x_{i}, \beta_{old})*(1 - p(x_{i}, \beta_{old}))</script>.</li>
-      <li>The W matrix is (the inverse?) of the variance/covariance matrix. On logistic and Poisson regression, the variance on each case depend on the mean, so that is the meaning of <script type="math/tex">p(x_{i}, \beta_{old})*(1 - p(x_{i}, \beta_{old}))</script>.</li>
-    </ul>
-  </li>
-  <li><script type="math/tex">(y - \mu)</script> - This is a matrix whose ith value the is difference between the actual corresponding value on the y-axis minus <script type="math/tex">\mu = x*b_{old}</script>. The value of this term is crucial in determining the error with which the coefficients have been calculated. Frequently an error of 10e-4 is acceptable.</li>
-</ul>
-
-<h2 id="generalized-linear-models-in-ruby">Generalized Linear Models in Ruby</h2>
-
-<p>Calculating the co-efficients and a host of other properties of a GLM is extremely simple and intuitive in Ruby. Let us see some examples of GLM by using the <code>daru</code> and <code>statsample-glm</code> gems:</p>
-
-<p>First install <code>statsample-glm</code> by running <code>gem install statsample-glm</code>, statsample will be downloaded alongwith it if it is not installed directly. Then download the CSV files from <a href="https://github.com/SciRuby/statsample-glm/blob/master/spec/data/logistic_mle.csv">here</a>.</p>
-
-<p>Statsample-glm supports a variety of GLM methods, giving the choice of both, IRLS and MLE algorithms to the user for almost every distribution, and all this through a simple and intutive API. The primary calling function for all distribtions and algorithms is <code>Statsample::GLM.compute(data_set, dependent, method, options)</code>. We specify the data set, dependent variable, type of regression and finally an options hash in which one can specify a variety of customization options for the computation.</p>
-
-<p>To compute the co-efficients of a logistic regression, try this code:</p>
+<p>Go ahead and create a file called <code>parser.racc</code> in the same folder as the previous <code>lexer.rex</code> and <code>Rakefile</code>, and put the following code inside it:</p>
 
 <div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
   <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
@@ -480,42 +259,190 @@ x_{new} = x_{old} - inverse(hessian)*jacobian   ..(1)
 <a href="#n15" name="n15">15</a>
 <a href="#n16" name="n16">16</a>
 <a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+<a href="#n19" name="n19">19</a>
+<strong><a href="#n20" name="n20">20</a></strong>
 </pre></td>
-  <td class="code"><pre>require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
-require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">statsample-glm</span><span style="color:#710">'</span></span>
-<span style="color:#777"># Code for computing coefficients and related attributes of a logistic regression.</span>
+  <td class="code"><pre><span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">AddParser</span>
+rule
+  <span style="color:#606">target</span>: exp { result = <span style="color:#00D">0</span> }
+  
+  <span style="color:#606">exp</span>: exp <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">+</span><span style="color:#710">'</span></span> exp { result += val[<span style="color:#00D">2</span>]; puts result }
+     | <span style="color:#036;font-weight:bold">DIGIT</span>
+<span style="color:#080;font-weight:bold">end</span>
 
-data_set = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.from_csv <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">logistic_mle.csv</span><span style="color:#710">&quot;</span></span>
-glm = <span style="color:#036;font-weight:bold">Statsample</span>::<span style="color:#036;font-weight:bold">GLM</span>.compute data_set, <span style="color:#A60">:y</span>, <span style="color:#A60">:logistic</span>, {<span style="color:#606">constant</span>: <span style="color:#00D">1</span>, <span style="color:#606">algorithm</span>: <span style="color:#A60">:mle</span>} 
+---- header
+require_relative <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">lexer.rex.rb</span><span style="color:#710">'</span></span>
 
-<span style="color:#777"># Options hash specifying addition of an extra constants </span>
-<span style="color:#777"># vector all of whose values is '1' and also specifying </span>
-<span style="color:#777"># that the MLE algorithm is to be used.</span>
+---- inner
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">next_token</span>
+  <span style="color:#33B">@lexer</span>.next_token
+<span style="color:#080;font-weight:bold">end</span>
 
-puts glm.coefficients   
-  <span style="color:#777">#=&gt; [0.3270, 0.8147, -0.4031,-5.3658]</span>
-puts glm.standard_error
-  <span style="color:#777">#=&gt; [0.4390, 0.4270, 0.3819,1.9045]</span>
-puts glm.log_likelihood 
-  <span style="color:#777">#=&gt; -38.8669</span>
+<span style="color:#080;font-weight:bold">def</span> <span style="color:#06B;font-weight:bold">prepare_parser</span> file_name
+  <span style="color:#33B">@lexer</span> = <span style="color:#036;font-weight:bold">AddLexer</span>.new
+  <span style="color:#33B">@lexer</span>.parse_file file_name
+<span style="color:#080;font-weight:bold">end</span>
 </pre></td>
 </tr></table>
 </div>
 
-<p>Similar to the above code, you can try implementing poisson, normal or probit regression models and use the data files from the link above as sample data. Just go through the tests in the source code on GitHub or read the documentation for further details and feel free to drop me a mail in case you have any doubts/suggestions for improvements.</p>
+<p>As you can see, we’ve put the logic for the parser inside the <code>AddParser</code> class. Yacc’s <code>$$</code> is the <code>result</code>; <code>$0</code>, <code>$1</code>… is an array called <code>val</code>, and <code>$-1</code>, <code>$-2</code>… is an array called <code>_values</code>. Notice that in racc, only the parsing logic exists inside the class and everything else (i.e under <code>header</code> and <code>inner</code>) exists <em>outside</em> the class. Let’s go over each part of the parser one by one:</p>
 
-<p>Cheers!</p>
+<p><strong>class AddParser</strong></p>
 
-<hr />
+<p>This is the core class that contains the parsing logic for the addition parser. Similar to <code>oedipus_lex</code>, it contains a <code>rule</code> section that specifies the grammar. The parser expects tokens in the form of <code>[:TOKEN_NAME, matched_text]</code>. The <code>:TOKEN_NAME</code> must be a symbol. This token name is matched to literal characters in the grammar (<code>DIGIT</code> in the above case). <code>token</code> and <code>expr</code> are varibles. Have a look at <a href="https://en.wikipedia.org/wiki/LALR_parser">this introduction to LALR(1) grammars</a> for further information.</p>
 
-<h6 id="further-reading">Further Reading</h6>
+<p><strong>header</strong></p>
+
+<p>The <code>header</code> keyword tells racc what code should be put at the top of the parser that it generates. You usually put your <code>require</code> statements here. In this case, we load the lexer class so that the parser can use it for accessing the tokens generated by the lexer. Notice that <code>header</code> has 4 hyphens (<code>-</code>) and a space before it. This is mandatory if your program is to not malfunction.</p>
+
+<p><strong>inner</strong></p>
+
+<p>The <code>inner</code> keyword tells racc what should be put <em>inside</em> the generated parser class. As you can see there are two methods in the above example - <code>next_token</code> and <code>prepare_parser</code>. The <code>next_token</code> method is mandatory for the parser to function and you must include it in your code. It should contain logic that will return the next token for the parser to consider. Moving on the <code>prepare_parser</code> method, it takes a file name that is to be parsed as an argument (how we pass that argument in will be seen later), and initialzes the lexer. It then calls the <code>parse_file</code> method, which is present in the lexer class by default.</p>
+
+<p>The <code>next_token</code> method in turn uses the <code>@lexer</code> object’s <code>next_token</code> method to get a token generated by the lexer so that it can be used by the parser.</p>
+
+<h3 id="putting-it-all-together">Putting it all together</h3>
+
+<p>Our lexical analyser and parser are now coupled to work with each other, and we now use them in a Ruby program to parse a file. Create a new file called <code>adder.rb</code> and put the following code in it:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+</pre></td>
+  <td class="code"><pre>require_relative <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">parser.racc.rb</span><span style="color:#710">'</span></span>
+
+file_name = <span style="color:#069">ARGV</span>[<span style="color:#00D">0</span>]
+parser = <span style="color:#036;font-weight:bold">AddParser</span>.new
+parser.prepare_parser(file_name)
+parser.do_parse
+</pre></td>
+</tr></table>
+</div>
+
+<p>The <code>prepare_parser</code> is the same one that was defined in the <code>inner</code> section of the <code>parser.racc</code> above. The <code>do_parse</code> method called on the parser will signal the parser to start doing it’s job.</p>
+
+<p>In a separate file called <code>text.txt</code> put the following text:</p>
+
+<pre><code>2+2
+</code></pre>
+
+<p>Oedipus Lex does not have a command line tool like rexical for generating a lexer from the logic specified, but rather has a bunch of rake tasks defined for doing this job.
+So now create a <code>Rakefile</code> in the same folder and put this code inside it:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+</pre></td>
+  <td class="code"><pre>require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">oedipus_lex</span><span style="color:#710">'</span></span>
+
+<span style="color:#036;font-weight:bold">Rake</span>.application.rake_require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">oedipus_lex</span><span style="color:#710">&quot;</span></span>
+
+desc <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Generate Lexer</span><span style="color:#710">&quot;</span></span>
+task <span style="color:#A60">:lexer</span>  =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">lexer.rex.rb</span><span style="color:#710">&quot;</span></span>
+
+desc <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Generate Parser</span><span style="color:#710">&quot;</span></span>
+task <span style="color:#A60">:parser</span> =&gt; <span style="color:#A60">:lexer</span> <span style="color:#080;font-weight:bold">do</span>
+  <span style="background-color:hsla(120,100%,50%,0.06)"><span style="color:#161">`</span><span style="color:#2B2">racc parser.racc -o parser.racc.rb</span><span style="color:#161">`</span></span>
+<span style="color:#080;font-weight:bold">end</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>Running <code>rake parser</code> will generate a two new files - <code>lexer.rex.rb</code> and <code>parser.racc.rb</code> - which will house the classes and logic for the lexer and parser, respectively. You can use your newly written lexer + parser with a <code>ruby adder.rb text.txt</code> command. It should output <code>4</code> as the answer.</p>
+
+<p>You can find all the code in this blogpost <a href="https://github.com/v0dro/scratch/tree/master/lexer_parser">here</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/08/16/random-thoughts-on-music-theory/">Random Thoughts on Music Theory.</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Title explains what this is about.</p>
+
+<h3 id="16-august-2016">16 August 2016</h3>
+
+<p>Was checking out <a href="https://www.youtube.com/watch?v=0qIP3_YLKpk">this</a> video (Contortionist - Language 1) and learned about standard C# tuning on a 6 string bass guitar today. He’s used tuning G# C# F# B E A. Killer bass tone. <a href="https://en.wikipedia.org/wiki/D%E2%99%AD_tuning">This wiki</a> says something different about C# standard, though.</p>
+
+<h3 id="30-november-2016">30 November 2016</h3>
+
+<p>Trying out some interval training with <a href="https://www.youtube.com/watch?v=rPSRH3tf5B8">this video</a> today. Supposd to be really good.</p>
+
+<p>So there are two types of intervals: harmonic and melodic. Harmonic is when is two or more notes are played at a time and melodic is when two or more notes are played separately.</p>
+
+<p>Intervals are described by some properties:</p>
 <ul>
-  <li><a href="https://cise.ufl.edu/class/cis6930sp10esl/downloads/LogisticRegression.pdf">A good explanation of IRLS</a>.</li>
-  <li><a href="http://www.stat.cmu.edu/~cshalizi/402/lectures/14-logistic-regression/lecture-14.pdf">Logistic Regression and Newtons Method</a>.</li>
-  <li><a href="https://files.nyu.edu/mrg217/public/mle_introduction1.pdf">A good resource on the how and why behind the calculation of standard errors</a>.</li>
-  <li><a href="http://www.columbia.edu/~so33/SusDev/Lecture_9.pdf">Logit and Probit</a>.</li>
-  <li><a href="http://www.nesug.org/Proceedings/nesug10/sa/sa04.pdf">A very good explanation of the Poisson regression</a>.</li>
+  <li>Quality: Whether it is perfect, major, minor, augmented or diminished. Perfect intervals, if they’re raised by half step become augmented, if they are lowered by half step they become diminished. If perfect intervals are inverted, they remain perfect intervals. So a perfect fifth interved becomes a perfect fourth, and vice versa a perfect fourth interved becomes a perfect fifth. Minor or major intervals can become augmented or diminshed but never perfect.</li>
+  <li>Number: Unison, 2nd, 3rd, 4th, 5th,6th,7th, 8th, etc. Number of the interval is the number of letter names that the letter name spans. For example, C to G is a fifth because it spans 5 letter names C-D-E-F-G.</li>
 </ul>
+
+<p>A dyad is a two note chord.</p>
+
+<p>Aural characterestics of intervals:
+Consonance category: 
+Perfect fifth and octaves are open consonances. Major and minor thirds and sixths are called soft consonances.</p>
+
+<p>Dissonant category:
+Minor sevenths (C-Bb) and major seconds (C-D) are called mild dissonances. Minor seconds (like C-Db) and major sevenths (C-B) are called sharp dissonances.</p>
+
+<p>The perfect fourth is characterized as a consonant or distant interval depending on its used in context. If a perfect 4th is part of a second inversion major triad</p>
+
+<p>The major 6th interval can be remebered with ‘My Bonnie Lies…’.</p>
+
+<p>To identify a minor 6th interval, play the first inversion of the triad and then play the 1st and 3rd of the inversion.</p>
+
+<p>To identify a major 6th, play the second inversion of the triad so you get the 1st and 3rd notes at a major 6th interval.</p>
+
+<h3 id="11-decemeber-2016">11 Decemeber 2016</h3>
+
+<p>Songs for remembering ascending invtervals:</p>
+
+<ul>
+  <li>Major 2nd   - Happy Birthday to You.</li>
+  <li>Major 3rd   - Oh when the saints go marching.</li>
+  <li>Perfect 4th - Star Trek Theme (TNG).</li>
+  <li>Perfect 5th - Scarborough Fair. (are we ^going….)</li>
+  <li>Major 6th   - My Bonnie Lies Over…</li>
+  <li>Major 7th   - Superman theme</li>
+  <li>Octave      - The Christmas Song</li>
+</ul>
+
 </div>
   
   
@@ -528,7 +455,7 @@ puts glm.log_likelihood
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/08/27/code-managing-large-open-source-projects-for-beginners/">[code]Managing Large Open Source Projects: For Beginners.</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/08/05/searching-for-graduate-degree-courses-in-usa-and-japan/">Searching for Graduate Degree Courses in USA and Japan.</a></h1>
     
     
       <p class="meta">
@@ -544,41 +471,104 @@ puts glm.log_likelihood
   </header>
 
 
-  <div class="entry-content"><p>I had just started writing some meaningful code in college and gaining an interest in scientific computation, and really wanted to apply my knowledge somewhere and create a real impact. That is when I read about the ruby <a href="https://github.com/sciruby/nmatrix">NMatrix</a> gem and thought maybe I’d contribute some code, both for experience in dealing with non-trivial software and the personal satifaction derived from the feeling of my work being used by people around the world.</p>
+  <div class="entry-content"><p>I’m currently searching for master’s degree courses in various colleges in Japan and USA. I want to pursue a Computer Science degree specializing in distributed systems. Searching for the right graduate degree courses can get depressing. Here I’m posting various links and leads that I came across through the course of my search.</p>
 
-<p>I cloned and installed the source code like any other programmer would, and just as I first open the Issue tracker to find a project to work on, I was hit by an avalanche of information ranging from bugs, documentation appeals, and new feature requests. And this was nothing compared to my first reaction upon going through the source code. Having never worked with more than a few files of source in college, I was dwarfed by the scores of source files and hundreds of method definitions that hung above me like a mountain. I quickly discovered that software is no small thing and that to make real, non-trivial, production grade software requires a certain discipline, focus and patience.</p>
+<h3 id="5-august-2016">5 August 2016</h3>
 
-<p>I had never dealt with something like this before, and set out to discover books/courses that would enlighten me on the topic. Most of the blog posts that I came across told me to keep looking through the code and that eventually I would become good at it. While this is true, none spoke of any specific methods to use to get out of this dilemma. It was then that I came across the course <a href="https://www.coursera.org/course/learning">Learning How To Learn</a>, and after enrolling and seeing it through, I must say I have gained quite an insight into managing large software and even my day to day activities, the course having encompassed a large variety of practtical scenarios.</p>
+<p>Searching for options in Japan and started with University of Tokyo. Most of their courses seem to be in Japanese but there are a few in English as well. <a href="http://www.i.u-tokyo.ac.jp/ist_en/en-course/prg.shtml">This page</a> has some starting info about the English courses. Also found a collection of colleges <a href="http://www.mastersportal.eu/study-options/270286872/computer-science-it-japan.html">here</a>.</p>
 
-<p>I have written this blog post for the final assignment of the course, which asks me to share the insights I have gained with people who might be in the same dilemma that I was in. I hope you find it helpful.</p>
+<p>So apparently the process for getting into a Japanese college for Master’s can take two paths. The first is like so:</p>
 
-<p>When first faced with something that you are not trained to handle, you tend to get overwhelhmed and try to avoid it, even dislike it. But this takes you nowhere close to the goal that you might want to accomplish. You just stagnate in the exact same spot that you initially were in and you never really move ahead.</p>
+<ol>
+  <li>Talk to a professor and gain a research assistantship with him/her.</li>
+  <li>Give an exam and enroll for a 2 year master’s course if you pass that exam.</li>
+</ol>
 
-<p>To move ahead, it is important to focus your energies and force yourself to work on a particular problem for a length of time. But how does one do this? And for what length of time? After taking the course, I learned that the mind, at any time, is basically in two modes of thinking, the focused mode and the diffused mode.</p>
+<p>The second is directly give the exam, but I’m not sure how that can be done since they all appear to be written examinations that are conducted in Japan.</p>
 
-<p>Your mind is in the focused mode when you are intently focusing on, say implementing a tree travelsal algorithm that your professor might have told you to implement. Focused mode is required in situations where you know <em>exactly</em> what you’re looking for and want to devise a method of getting there.</p>
+<h3 id="16-august-2016">16 August 2016</h3>
 
-<p>The focused mode, however, is not much use when first faced with a large software project. Focusing on just one aspect of the system the first time will leave you more confused than before and more often than not, any changes that you make will create more problems that you’d want to care about.</p>
+<p>Having a look at the graudate schools of <a href="http://www.u-tokyo.ac.jp/en/academics/grad_ist.html">University of Tokyo</a>, <a href="http://educ.titech.ac.jp/eng/">Tokyo Insitute of Technology</a> and Kyoto University today.</p>
 
-<p>Scenarios like these are where the diffused mode comes to the rescue. In the diffused mode, the mind is capable of thinking about many things at a time, maybe not making sense of them all, but creating connections between them nonetheless. It is a phase of light concentration that your mind goes through, with the problem you want to solve lightly running in the background. The diffused mode is what helps in making sense of a large project.</p>
+<p><strong>University of Tokyo</strong></p>
 
-<p>You must first learn to relax, sit back and take stock of the entire project and at the same time keep in mind the new functionality that you want to implement or the bug that you want to quash. Try to simply read the names of the files and folders and try to connect them with your problem. Most Open Source projects use very strict conventions and upon lightly thinking for a while you will stumble upon a particular file or folder that will be relevant to what you are looking for.</p>
+<p>UoT seems to have some special selection process for international applicants (<a href="http://www.i.u-tokyo.ac.jp/ist_en/howto_apply/special.shtml">link</a>), though it’s not useful for me. There’s a decent contact page <a href="http://www.i.u-tokyo.ac.jp/edu/entra/index_e.shtml">here</a>. They’ve also put up a check list for applications <a href="http://www.i.u-tokyo.ac.jp/edu/entra/pdf/check_list_m_e_revised.pdf">here</a>.</p>
 
-<p>The diffused mode will only help you in getting a larger picture of things. Once you have a tentative idea of where you might find the problem area, then it is time to switch to the focused mode and dive into ONLY that particular file/function that you think is the right one. Do not think of anything else while searching in the place your diffused mode has taken you to.</p>
+<p><strong>Tokyo Inst. of Technology</strong></p>
 
-<p>You first think in the diffused mode, and then the focused mode. Keep repeating this procedure until you solve the problem, and you will find that eventually, you can intuitively figure out where a particular line of code might reside.</p>
+<p>This also has a good <a href="http://www.titech.ac.jp/english/graduate_school/">graduate program</a>.Tokyo Inst. of Technology has an <a href="http://www.titech.ac.jp/english/graduate_school/international/international_graduate/">international graduate program for overseas applicants</a>. The courses seems to be in English mostly. The school of computer science has also <a href="http://www.titech.ac.jp/english/graduate_school/international/international_graduate/participating.html">participated</a> in the IGP and accept the IGP(A), IGP(B)3 and IGP(C) types of applicants. I seem to be most qualified for the <a href="http://www.titech.ac.jp/english/graduate_school/international/graduate_program_a/index.html">IGP(A)</a> and <a href="http://www.titech.ac.jp/english/graduate_school/international/graduate_program_c/overseas.html">IGP(C)</a> applications.</p>
 
-<p>Thinking in the focused mode requires practice, and you will soon realize that you tend to feel distracted after some focused thinking. This is where certain techniques for focused mode thinking come into play. One of the best and easiest to practice is the ‘Pomodoro’ technique, which advocates being focused for 25 min. and then taking a short break for 5 min., then keep repeating this cycle until you think you’ve had enough.</p>
+<p>The ‘Education Program of Advanced Information Technology Leaders’ seems to be most relevant to my case. <a href="http://www.titech.ac.jp/guide/guide_28/English/index.html">This</a> looks like a good PDF to brief about the program.</p>
 
-<p>While focusing it is extremely important to focus ONLY on the problem at hand and nowhere else. You should typically sit in a quiet environment and away from distractions if you want pomodoro to work for you. While taking a break, do some light activity, like taking a walk around your work area or watching a small TED talk. Pomodoro has worked wonders for me and I highly recommend using it. You can use one of the scores of mobile apps available for setting a pomodoro timer.</p>
+<p>All the courses require students to arrange for a Tokyo Tech faculty member to serve as their academic supervisor. <a href="http://search.star.titech.ac.jp/titech-ss/lang.act?forward=search.act&amp;lang=en&amp;">This handy web application</a> allows you to do that. They also have the MEXT scholarship for outstanding students.</p>
 
-<p>One of the most dangerous things to be absolutely careful about is procrastination. It is very easy to get carried away by some fancy code that you come across for the first time while tracing method calls  and completely forget about the problem that you are trying to tackle. Procrastination happens when you allow yourself to get carried away. It leads you to think that you’ve done a lot of work, when in reality you have done nothing.</p>
+<p><strong>University of Kyoto</strong></p>
 
-<p>If faced by a somewhat difficult problem, write it down on a Post-It note and stick it in a place that is always within your field of view, like in my case, my desk or the palm rest of my laptop. Keep looking at what’s written on this note and periodically ask yourself, “Am I closer to solving the problem than I was before?”, “Will the particular line of code that I am reading right now be of any use in solving this problem?”. If your answers to these questions are negative, you need to realign yourself and remind yourself to get back to work.</p>
+<p><a href="http://www.kuis.kyoto-u.ac.jp/kuis/">Page of dept. of information science</a>.</p>
 
-<p>Over and above the techniques mentioned above, also remember to break your problem down into small, manageable chunks, and go after one chunk at a time. Also, be sure to mentally go over these chunks once you’re done with your current session so that things will be more clear next time.If you’re having problems in visualizing an algorithm or the flow of a program, take a piece of paper and write down whatever you understand, and you will find that the rest will become clear once you ponder over what you have written. Theres only so much that your memory can store.</p>
+<h3 id="17-august-2016">17 August 2016</h3>
 
-<p>Over and above, have fun programming. Its a great thing to do, really.</p>
+<p>Continuing my research on Tokyo Inst. of Technology. The PDF I pointed to yesterday brought out an interesting observation - IGP(A) students and IGP(C) students seem to have different course work.</p>
+
+<h3 id="18-august-2016">18 August 2016</h3>
+
+<p>It seems the IGP C program at Tokyo Tech. is best for me. I will research that further today. Most probably I’ll need to do a 6 month research assistantship first. <a href="http://www.cs.titech.ac.jp/labs-e.html">Here’s a list</a> of the research groups of the Computer Sci. deptartment at Tokyo Tech.</p>
+
+<h3 id="20-august-2016">20 August 2016</h3>
+
+<p><strong>Tokyo Inst. of Technology</strong></p>
+
+<p>Found a list of faculties under the IGP(C) program <a href="http://www.titech.ac.jp/english/graduate_school/international/graduate_program_c/pdf/listoffaculties_1609c.pdf">here</a>.</p>
+
+<h3 id="23-august-2016">23 August 2016</h3>
+
+<p>Had a look at Kyushu Inst. of Technology today. The <a href="http://www.kyutech.ac.jp/english/admissions/guidelines/iizuka_master.html">program for international students</a> looks good.</p>
+
+<p>Also check out scholarship opportunities at Tokyo Inst. of Technology. Links - <a href="http://www.titech.ac.jp/english/graduate_school/international/scholarships/">1</a>, <a href="http://www.titech.ac.jp/english/graduate_school/international/scholarships/before_enrollment.html">2</a>, <a href="http://www.mastersportal.eu/universities/scholarships/13128/tokyo-institute-of-technology.html">3</a>. There are a bunch of scholarships that can be applied to before you enrol in university. Have a look <a href="http://www.titech.ac.jp/english/graduate_school/international/scholarships/before_enrollment.html">here</a>.</p>
+
+<p>There’s also the <a href="http://www.titech.ac.jp/english/graduate_school/international/scholarships/mext_scholarship.html">MEXT scholarship</a>from the Japanese government.</p>
+
+<h3 id="24-august-2016">24 August 2016</h3>
+
+<p>Found an interesting <a href="http://www.ic.u-tokyo.ac.jp/ic/guidance/guide05_e.html">FAQ on the UoT website</a>.</p>
+
+<p>Also having a look at <a href="http://www.jasso.go.jp/en/study_j/scholarships/brochure.html">JASSO scholarships</a>. Found some great scholarships <a href="http://www.jasso.go.jp/en/study_j/scholarships/__icsFiles/afieldfile/2016/03/29/scholarshipse_private.pdf">here</a>.</p>
+
+<h3 id="25-august-2016">25 August 2016</h3>
+
+<p>Found some scholarships. Also, I can also enrol as a <a href="http://www.titech.ac.jp/english/graduate_school/international/research_students/privately_funded.html">privately funded research student</a> at Tokyo Tech.</p>
+
+<p><a href="http://www.titech.ac.jp/english/graduate_school/international/research_students/syutugan/data/applicationoutline.pdf">This</a> is a PDF that talks about privately funded research students.</p>
+
+<p>Also checking out <a href="http://www.global.keio.ac.jp/en/education/admissions/graduate.html">Keio University</a> today. They have a program for internation graduate students. Have a look <a href="http://www.st.keio.ac.jp/english/admissions/masters_program/index.html">here</a>.</p>
+
+<p>I also had a look at the <a href="http://www.kyoto-u.ac.jp/en/education-campus/international/students1">Kyoto University IGP</a>. Here’s a <a href="http://www.shanghairanking.com/World-University-Rankings-2014/Japan.html">listing of Japanese universities</a>.</p>
+
+<h3 id="28-august-2016">28 August 2016</h3>
+
+<p>Found a <a href="http://www.g30.i.kyoto-u.ac.jp/en/course">Computer Engineering IGP at Kyoto University</a>, though I still cant find anything related to HPC. This is a link that has <a href="http://www.g30.i.kyoto-u.ac.jp/en/admission">some details on admissions</a>.</p>
+
+<p>More details on Tokyo Tech.’s IGP(A) can be found <a href="http://www.ise.titech.ac.jp/english/igpa/detail_114.html">here</a>. <a href="http://www.titech.ac.jp/guide/guide_27/English/index.html">This</a> looks like a good resource for curriculum. <a href="http://www.titech.ac.jp/english/graduate_school/international/scholarships/without_university.html">This</a> has resources for scholarships without recommendation.</p>
+
+<h3 id="29-august-2016">29 August 2016</h3>
+
+<p>Found a good resource on IGP programs at Tokyo Tech <a href="http://www.ai.cs.titech.ac.jp/IGP_PR_Program_Final.pdf">here</a>. <a href="http://www.ise.titech.ac.jp/english/igpa/IGPAprogram.pdf">Here’s a PPT</a> about IGP(A) in particular. IGP(A) coursework can be found <a href="http://www.titech.ac.jp/guide/guide_28/English/pdf/A-05.pdf#page=1">here</a>.</p>
+
+<h4 id="4-november-2016">4 November 2016</h4>
+
+<p>Posting after quite a while!</p>
+
+<p>I’m currently having a look at <a href="http://www.jku.at/content/e262/e256786">Linz University, Austria</a>. I came to know one of the research groups there is really good and are making some solid progress in high performant software.</p>
+
+<p>Here’s the <a href="http://informatik.jku.at/teaching/prospective/en/admissions.html">admissions page of the dept. of computer science</a>. Here’s <a href="http://www.jku.at/content/e262/e244/e167855/e167857">more info</a> on admissions. <a href="http://informatik.jku.at/teaching/curricula/2013/CS_Master_Guide.pdf">This is a PDF</a> on the Computer Science degree.</p>
+
+<p>The <a href="http://www.ssw.uni-linz.ac.at/">System Software group</a> looks nice.</p>
+
+<h4 id="25-december-2016">25 December 2016</h4>
+
+<p>Checking out the <a href="http://catalog.uic.edu/gcat/colleges-schools/engineering/cs/">Computer Science</a> program at UIC and that at <a href="http://www.uh.edu/nsm/computer-science/graduate/programs/">University of Houston</a>.</p>
+
+<p>This is <a href="https://www.cs.uic.edu/">UICs website</a>. This is the <a href="https://www.cs.uic.edu/~grad/2015_Graduate_Program_Requirements.pdf">detailed PDF</a> of the MS in CS requirements.</p>
 </div>
   
   
@@ -591,7 +581,7 @@ puts glm.log_likelihood
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/07/31/travel-hampi-bengaluru-allepy-part-1/">[Travel] Hampi-Bengaluru-Allepy Part 1</a></h1>
+      <h1 class="entry-title"><a href="/blog/2016/07/12/random-thoughts-on-bass-tone/">Random Thoughts on Bass Tone</a></h1>
     
     
       <p class="meta">
@@ -607,46 +597,902 @@ puts glm.log_likelihood
   </header>
 
 
-  <div class="entry-content"><h2 id="hampi---day-1">Hampi - Day 1</h2>
+  <div class="entry-content"><p>This post is about my learnings about bass tone. I’m currently using the following rig:</p>
 
-<p>Our Engineering exams were just over, and we decided to get out of the rut by going backpacking, and chose South India as an ideal destination. Since we had only one week to spare due to family commitments, we chose a route that would take us down south and give us a dose of both heritage and leisure.</p>
+<ul>
+  <li>Laney RB2 amplifier</li>
+  <li>Tech 21 Sansamp Bass Driver Programmable DI</li>
+  <li>Fender Mexican Standard Jazz Bass (4 string)</li>
+</ul>
 
-<p>We refered to some posts on the internet, and concluded that Hampi would be an ideal starting point. The erstwhile capital of the mighty Vijaynagar empire, Hampi saw a period of power and growth under the tutelage of King Krishnadevaraya, who was a fantastic strategist, administrator and a patron of the arts.</p>
+<p>I will updating this post as and when I learn something new that I’d like to document or share. Suggestions are welcome. You can email me (see the ‘about’ section) or post a comment below.</p>
 
-<p>Althogh destroyed due to invasions of the Deccan Sultanate, the remains of Hampi still bear testament to the craftsmanship of Indian artists during the middle ages and the foresight and economic might of their patrons.</p>
+<h4 id="26-july-2016">26 July 2016</h4>
 
-<p>We took one of the regular buses that ply between Pune and Hospet, and reached Hospet at 8 am, after which a ride in a rickshaw took us to Hampi. The first thing  one notices while riding into Hampi is the massive, ornately decorated <a href="http://en.wikipedia.org/wiki/Gopuram">gopuram</a> of the <a href="http://en.wikipedia.org/wiki/Virupaksha_Temple">Virupaksha Temple</a>. This is also one of the few temples in Hampi that is still actively used in worship.</p>
+<p>As of now I’m tweaking the sansamp and trying to achieve good tone that will compliment the post/prog rock sound of my band <a href="">Cat Kamikazee</a>. I’m also reading up on different terminologies and use cases on the internet. For instance I found <a href="http://www.premierguitar.com/articles/solving-the-bass-di-dilemma-1">this explanation</a> on DI boxes quite useful. For instance I learned that the ‘XLR Out Pad’ button on the sansamp actually provides a 20 db cut to the soundboard if your signal is too hot.</p>
 
-<p><img src="/images/hampi-bengaluru-allepy/virupaksha.JPG" alt="'The Virupaksha Temple'" /></p>
+<p>I am trying to couple the sansamp with a basic overdrive pedal I picked up from a friend. <a href="https://www.talkbass.com/threads/sansamp-bddi-pedal-placement.843750/">This thread on talkbass</a> is pretty useful for that. The guy who answered the question states that it’s better to place the sansamp last in the chain so that the DI can deliver the output of the sound chain.</p>
 
-<p>We checked into a hotel which was a 5 minute walk from the Virupaksha temple, which charged us Rs. 800 per night. Since Hampi is a favorite for foreign tourists, one can find many cafes and restaurants here which cater to their needs. We had a  pot of tea at the German Bakery in the market area in morning, and planned for the day’s sightseeing.</p>
+<p>So the BLEND knob on the sansamp modulates how much of the dry signal is mixed with the sansamp tube amplifier emulation circutry. Can be useful when chaining effects pedals with the sansamp by reducing the blend and letting more of the dry signal pass through. Btw the <em>bass</em>, <em>treble</em> and <em>level</em> controls remain active irrespective of the position of BLEND.</p>
 
-<p>We started out toward the Vitthal temple, taking the huge road that was once the Hampi Bazaar. Along the way, we saw the monolithic Nandi statue on the left, and <a href="http://hampi.in/matunga-hill">Matanga hill</a> on the right.</p>
+<p>One thing that was a little confusing was the whole thing about ‘harmonic partials’. I found a pretty informative thread about the same on <a href="https://www.talkbass.com/threads/what-are-upper-harmonics-or-harmonic-partials.471553/">this TalkBass thread</a>.</p>
 
-<p><img class="left" src="/images/hampi-bengaluru-allepy/nandi.JPG" width="365" height="300" alt="'The Nandi Statue'" /> <img class="right" src="/images/hampi-bengaluru-allepy/entrance.JPG" width="365" height="300" alt="'Entrance At The Far End Of Hapmi Bazaar.'" /></p>
+<p><a href="http://www.studybass.com/gear/bass-effects/bass-compressor-settings/">Here’s</a> an interesting piece on compressors.</p>
 
-<p>A flight of steps lead to a grand entrance which opens at the Achyutraya Temple. This temple was build by the successor of King Krishnadevaraya, Achyuta Deva Raya, and is a temple to Lord Venkateshwara, but its ruins are popularly reffered to by the name of its patron.</p>
+<p>Some more useful links I came across over the course of the past few days:</p>
 
-<p><img src="/images/hampi-bengaluru-allepy/achyutraya_temple.JPG" alt="'Achyutraya Temple'" /></p>
+<ul>
+  <li>https://theproaudiofiles.com/amp-overdrive-vs-pedal-overdrive/</li>
+  <li>http://www.offbeatband.com/2009/08/the-difference-between-gain-volume-level-and-loudness/</li>
+</ul>
 
-<p>After walking over some huge rocks by the river, we reached the King’s Balance, a stone weighing scale where the King would be weighed against gold, which would then be given away to the priests. We then (finally) reached the Vitthal Temple.</p>
+<h4 id="28-july-2016">28 July 2016</h4>
 
-<p><img src="/images/hampi-bengaluru-allepy/vitthal_front.JPG" alt="'The Sun Chariot With The Vitthal Temple In The Background'" /></p>
+<p>Found an interesting and informative piece on bass pedals <a href="http://www.premierguitar.com/articles/Bass_Pedals_Basic_to_Playhouse">here</a>. It’s a good walkthrough of different pedal types and their functionality and purpose.</p>
 
-<p>The Vithhal Temple is probably one of the grandest in Hampi and possibly in all of India. It is housed inside a massive complex with ornately carved walls, entrances and pillars. The complex houses five mantapas, 4 in corners and 1 in the centre. The Sun Chariot from the <a href="http://en.wikipedia.org/wiki/Konark_Sun_Temple">Konark temple</a> has been replicated here. The vehicle of Vitthal, Garuda (eagle) can be seen inside the chariot. The central mantap houses the famous singing pillars. These stone pillars have been designed in such a way as to create sounds of different musical instruments when hit by a stick or any  other object. The Queen would dance for the King in this mantap to the sound of music from the pillars. The roof of the central mantap was blown up by invaders in 1565 A.D., so the sound is fairly diminished now.</p>
+<p>I wanted to check out some overdrive pedals today but was soon sinking in a sea of terminologies. One thing that intrigued me is the difference between an overdrive, distortion and fuzz. I found a <a href="http://www.gibson.com/News-Lifestyle/Features/en-us/effects-explained-overdrive-di.aspx">pretty informative article</a> on this topic. The author has the following to say about these 3 different but seemingly similar things.</p>
 
-<p>The central mantap houses an inner temple, where the actual idols were kept and worshipped. The original idols of Vitthal and Rukumai were taken to Pandharpur in Maharashtra during the invasion of Vijaynagar. One unique feature  of the Vitthal temple is that the place where one performs <a href="http://en.wikipedia.org/wiki/Parikrama">‘pradakshina’</a> is underground.</p>
+<p>I had a look at the Darkglass b3k and b7k pedals too. They look like promising overdrive pedals. I’ll explore the b3k more since the only difference between the 3 and the 7 is that the 7 also functions as a DI box and has an EQ, while the 3 doesn’t. I already have a DI with a 2 band EQ in the sansamp.</p>
 
-<p><img class="right" src="/images/hampi-bengaluru-allepy/underground_parikrama.JPG" width="300" height="500" alt="'The Underground Pradakshina Path'" /></p>
+<h4 id="29-july-2016">29 July 2016</h4>
 
-<p>There are tiny inlets for light in the roof, which reflects off a stream of water on the floor, which in turn provides illumination for the entire chamber.</p>
+<p>One thing that I noticed when tweaking my sansamp is the level of ‘distortion’ in my tone varies a LOT when you change the bass or treble keeping the drive at the same level. Why does this happen?</p>
 
-<p>We then proceeded towards the river, where the local people offer to take you downstream in a <a href="http://en.wikipedia.org/wiki/Coracle">Coracle</a> (locallly reffered to as ‘joutty’) boat. We were sitting in this kind of a boat for the first time and this turned out to be one hell of a boat ride, with our guide taking the boat under overhanging rocks and letting it spin wildly every now and then. The river is also lined with ruins of temples and everything is quite a pleasure to watch. We disembarked at the Varana temple, which is a big white temple and is still functional. Terribly hungry, we walked to the main temple and ate delicious cheese tomato omelletes at Cafe Chillout.</p>
+<h4 id="2-august-2016">2 August 2016</h4>
 
-<p>We rested for a while and then decided to pay a visit to the Virupaksha temple. This is a <em>massive</em> temple. It is mostly functional and the inner complex is mostly intact. One interesting facet of this temple is that one can see the inverse image of the main gopuram in a pond behind the Shivling.</p>
+<p>Trying to dive further into distortion today. Found <a href="http://www.tyquinn.com/2009/lead-tone-part-3-distortion/">this</a> article kind of useful. It relates mostly to lead guitar tones, but I think it applies in a general case too. I learned about symmetric and asymmetric clipping in that article.</p>
 
-<p>We then proceeded to our hotel for a good night’s sleep.</p>
+<p>According to the article, symmetric clipping is more focused and clear, because it is only generating one set of harmonic overtones. Since asymmetric clipping can be hard-clipped on one side, and soft-clipped on the other, it has the potential to create very thick complex sounds. This means that if you want plenty of overtones, but do not want a lot of gain, asymmetric clipping can be useful. For full-blown distortion symmetric clipping is usually more suitable, since high-gain tones are already very harmonically complex. <em>Typically asymmetric clipping will have a predominant first harmonic, which the symmetric clipping will not</em> (that’s probably why in <a href="https://www.youtube.com/watch?v=pzua3-xZKHM">this</a> video, the SD1 sounds brigther than than the TS-9). High gain distortion tones sound best with most of the distortion coming from the pre-amp, so try to use a fairly neutral pickup or even a slightly ‘bright’ pickup.</p>
 
+<p>The follow up to the above post <a href="http://www.tyquinn.com/2009/lead-tone-part-4-eq-for-distortion-voicing/">talks about EQ in relation with distortion</a>. It has stuff on pre and post EQ distortion and how it can affect the overall tone. If you place the EQ before the distortion, you can actually shape which frequencies will be clipped. However if you place it after the distortion then the EQ will only act for shaping the already distorted tone. Pre-dist EQ is more useful in most cases since it let’s you control the frequencies for clipping.</p>
+
+<p>It also says that humbucking pickups have a mid-boost that is more focused by the lower part of the frequency range. Single coil pickups on the other hand have a mid-boost focused by the upper part of the frequency range. Single coils generally have clearer, more articulate bass end.</p>
+
+<h4 id="3-august-2016">3 August 2016</h4>
+
+<p>Read something about bass DI in <a href="http://www.bestbassgear.com/ebass/gear/electronics/pedals/why-is-di-so-important-to-bass-players.html">this</a> article today.</p>
+
+<h4 id="10-october-2016">10 October 2016</h4>
+
+<p>Posting after quite a while!</p>
+
+<p>Reading about the use of compression for bass guitars. Found <a href="http://www.studybass.com/gear/bass-effects/bass-compressors/">this article</a> which explains why we need compression in the first place.</p>
+
+<p>Also, my band’s installation of Main Stage 3 has started giving some really weird problems. More about that soon.</p>
+
+<h4 id="11-october-2016">11 October 2016</h4>
+
+<p>Coming back to Main Stage. For some reason, pressing Space Bar for play/pause reduces the default sampling rate and makes the tracks sound weird. We need to go to preferences and increase the sampling rate to 48 kHz again (that’s what our backing tracks are recorded at). I think its something to do with the key mappings, but I’m not sure. Will need to check it out.</p>
+
+<p>It also so happens that after the space bar has been pressed and the issue with the sampling rate is resolved, the samples (which come from a M-Audio M-Track) start emitting a strange crackling sound. This sounds persists only if the headphones are connected into the audio jack (we use the onboard Mac sound card too). The sound goes away if the headphones are unplugged. Restarting the Mac resolves the issue. I suspect there might be a way without having to restart. Will investigate.</p>
+
+<p>Turns out you just restart and it solves the problem (and be careful about what keys you press when on stage!). Not worth scratching your head too much.</p>
+
+<h4 id="9-november-2016">9 November 2016</h4>
+
+<p>I just got a new EHX Micro POG octaver pedal and a TC electronic booster pedal. Also got a TC electronics Polytune. Finally on my way to creating a pedal chain :)</p>
+
+<p>So for now I’m using the pedals in this order:</p>
+
+<p>Tuner -&gt; Octaver -&gt; Booster -&gt; Sansamp</p>
+
+<p>I think this works fine for me for now, though I might change something later on.</p>
+
+<p>I read in <a href="https://www.talkbass.com/threads/good-uses-for-an-octave-pedal.603423/">this thread</a> that using one octave down with an overdrive (on the sansamp) works wonders. Gonna try that now!</p>
+
+<p>I am also having a look at <a href="http://smartbassguitar.com/how-to-set-up-a-pedal-board-for-bassists/#.WCNfwfpvbeQ">this guide</a> on setting up a pedal board.</p>
+
+<h4 id="18-november-2016">18 November 2016</h4>
+
+<p>Also found an <a href="https://www.youtube.com/watch?v=JsgUqLdgQ1U">interesting rig rundown</a> by Tim Commerford (RATM).</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/07/05/making-screencasts-in-debian/">Making Screencasts in Debian</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1 id="overview">Overview</h1>
+
+<p>I thought I’ll try something new by recording screencasts for some of my <a href="https://github.com/v0dro">work on Ruby</a> open source libraries.</p>
+
+<p>This is quite a change for me since I’m primarily focused on the programming and designing side of things. Creating documentation is something I’ve not ventured into a lot except the usual <a href="http://yardoc.org/">YARD markup</a> for Ruby methods and classes.</p>
+
+<p>In this blog post (which I will keep updating as time progresses) I hope to document my efforts in creating screencasts. Mind you this is the first time I’m creating a screencast so if you find any potential improvements in my methods please point them out in the comments.</p>
+
+<h1 id="creating-the-video">Creating the video</h1>
+
+<p>My first ever screencast will be for my <a href="https://github.com/v0dro/benchmark-plot">benchmark-plot</a> gem. For creating the video I’m mainly using two tools - <a href="https://kdenlive.org/">Kdenlive</a> for video editing and <a href="https://launchpad.net/kazam">Kazam</a> for recording screen activity. I initially tried using <a href="http://www.pitivi.org/">Pitivi</a> and <a href="http://www.openshot.org/">OpenShot</a> for video editing, but the former did not seem user friendly and the latter kept crashing on my system. For the desktop recording I first tried using <a href="http://recordmydesktop.sourceforge.net/about.php">RecordMyDesktop</a> but gave up on it since it’s too heavy on resources and recoreded poor quality screencasts with not too many customization options.</p>
+
+<p>For creating informative visuals, I’m using <a href="https://www.libreoffice.org/discover/impress/">LibreOffice Impress</a> so that I can create a slide, take it’s screenshot when in slideshow mode and put in the screencast. However I’ve generally found that using slides does not serve well the content delivery in a screencast and will probably not feature too many slides in future screencasts.</p>
+
+<p><a href="https://www.sublimetext.com/3">Sublime Text 3</a> is my primary text editor. I use it’s in built code execution functionality (by pressing <code>Ctrl + Shift + B</code>) to execute a code snippet and display the results immediately.</p>
+
+<h1 id="creating-the-audio">Creating the audio</h1>
+
+<p>I am using Audacity for recording sound. Sadly my mic produces a lot of noise, so for removing that noise in Audacity, I use the inbuilt noise reduction tools.</p>
+
+<p>Noise reduction in Audacity can be achieved by first selecting a small part of the sound that does not contain speech, then go to Effects -&gt; Noise Reduction and click on ‘Get Noise Profile’. Then select the whole sound wave with <code>Ctrl + A</code>. Go to Effects -&gt; Noise Reduction again and click ‘OK’. It should considerably reduce static noise from your sound file.</p>
+
+<p>All files are exported to Ogg Vorbis.</p>
+
+<h1 id="putting-it-all-together">Putting it all together</h1>
+
+<p>I did some research on the screencasting process and found <a href="http://devblog.avdi.org/2013/01/21/my-screencasting-process/">this article</a> by Avdi Grimm and <a href="https://build-podcast.com/setup/">this one</a> by Sayanee Basu extremely helpful.</p>
+
+<p>I first started by writing the transcript along with any code samples that I had to show. I made it a point to describe the code being typed/displayed on the screen since it’s generally more useful to have a voice over explaning the code than having to pause the video and go over it yourself.</p>
+
+<p>Then I recorded the voice over just for the part that featured slides. I imported the screenshots of the slides in kdenlive and adjusted them such that they fit the voice over. Recording the code samples was a bit of a challenge. I started typing out the code and talking about it into the mic. This was more difficult than I thought, almost like playing a Guitar and singing at the same time. I ended up recording the screencast in 4 separate takes, with several retakes for each take.</p>
+
+<p>After importing the screencast with voice over into kdenlive and separating the audio and video components, I did some cuts to reduce redundancy or imperfections in my VO. Some of the parts of the video where there was a lot of typing had to be sped up by using kdenlive’s Speed tool.</p>
+
+<p>Once this was upto my satisfaction, I exported it to mp4.</p>
+
+<p>The video of my first screencast is now up on YouTube in the video below. Have a look and leave your feedback in the comments!</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WW6M4Df-soQ" frameborder="0" allowfullscreen=""></iframe>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/16/summary-of-work-this-summer-for-gsoc-2015/">Summary of Work This Summer for GSOC 2015</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Over this summer as a part of <a href="www.google-melange.com">Google Summer of Code 2015</a>, <a href="www.github.com/v0dro/daru/">daru</a> received a lot of upgrades and new features which have made a pretty robust tool for data analysis in pure ruby. Of course, a lot of work still remains for bringing daru at par with the other data analysis solutions on offer today, but I feel the work done this summer has put daru on that path.</p>
+
+<p>The new features led to the inclusion of daru in many of SciRuby’s gems, which use daru’s data storage, access and indexing features for storing and carrying around data. <a href="https://github.com/SciRuby/statsample">Statsample</a>, <a href="https://github.com/SciRuby/statsample-glm">statsample-glm</a>, <a href="https://github.com/SciRuby/statsample-timeseries">statsample-timeseries</a>, <a href="https://github.com/SciRuby/statsample-bivariate-extension">statsample-bivariate-extensions</a> are all now compatible with daru and use Vector and DataFrame as their primary data structures. Daru’s <a href="http://nbviewer.ipython.org/github/SciRuby/sciruby-notebooks/blob/master/Visualization/Visualizing%20data%20with%20daru%20DataFrame.ipynb">plotting functionality</a>, that interfaced with <a href="https://github.com/domitry/nyaplot">nyaplot</a> for creating interactive plots directly from the data was also significantly overhauled.</p>
+
+<p>Also, new gems developed by other GSOC students, notably <a href="https://github.com/dilcom/gnuplotrb">Ivan’s GnuplotRB gem</a> and <a href="https://github.com/agisga/mixed_models">Alexej’s mixed_models gem</a> both accept data from daru data structures. Do see their repo pages for seeing interesting ways of using daru.</p>
+
+<p>The work on daru is also proving to be quite useful for other people, which led a talk/presentation at <a href="http://www.deccanrubyconf.org/">DeccanRubyConf 2015</a>, which is one of the three major ruby conferences in India. You can see the slides and notebooks presented at the talk <a href="https://github.com/v0dro/talks/tree/master/DeccanRubyConf15">here</a>. Given the current interest in data analysis and the need for a viable solution in ruby, I plan to take daru much further. Keep watching the repo for interesting updates :)</p>
+
+<p>In the rest of this post I’ll elaborate on all the work done this summer.</p>
+
+<h2 id="pre-mid-term-submissions">Pre-mid term submissions</h2>
+
+<p>Daru as a gem before GSOC was not exactly user friendly. There were many cases, particularly the iterators, that required some thinking before anybody used them. This is against the design philosophy of daru, or even ruby general, where surprising programmers with ubiqtuos constructs is usually frowned down upon by the community. So the first thing that I did mainly concerned overhauling the daru’s many iterators for both <code>Vector</code> and <code>DataFrame</code>.</p>
+
+<p>For example, the <code>#map</code> iterator from <code>Enumerable</code> returns an <code>Array</code> no matter object you call it on. This was not the case before, where <code>#map</code> would a <code>Daru::Vector</code> or <code>Daru::DataFrame</code>. This behaviour was changed, and now <code>#map</code> returns an <code>Array</code>. If you want a <code>Vector</code> or a <code>DataFrame</code> of the modified values, you should call <code>#recode</code> on <code>Vector</code> or <code>DataFrame</code>.</p>
+
+<p>Each of these iterators also accepts an optional argument, <code>:row</code> or <code>:vector</code>, which will define the axis over which iteration is supposed to be carried out. So now there are the <code>#each</code>, <code>#map</code>, <code>#map!</code>, <code>#recode</code>, <code>#recode!</code>, <code>#collect</code>, <code>#collect_matrix</code>, <code>#all?</code>, <code>#any?</code>, <code>#keep_vector_if</code> and <code>#keep_row_if</code>. To iterate over elements along with their respective indexes (or labels), you can likewise use <code>#each_row_with_index</code>, <code>#each_vector_with_index</code>, <code>#map_rows_with_index</code>, <code>#map_vector_with_index</code>, <code>#collect_rows_with_index</code>, <code>#collect_vector_with_index</code> or <code>#each_index</code>. I urge you to go over the docs of each of these methods to utilize the full power of daru.</p>
+
+<p>Apart from this there was also quite a bit of refactoring involved for many methods (courtesy <a href="https://github.com/agisga">Alexej</a>). This has made daru much faster than previous versions.</p>
+
+<p>The next (major) thing to do was making daru compatible with statsample. This was very essential since statsample is very important tool for statistics in ruby and it was using its own <code>Vector</code> and <code>Dataset</code> classes, which weren’t very robust as computation tools and very difficult to use when it came to cleaning or munging data. So I replaced statsample’s Vector and Dataset clases with Daru::Vector and Daru::DataFrame. It involved a significant amount of work on both statsample and daru. Statsample because many constructs had to changed to make them compatible with daru, and daru because there was a lot of essential functionality in these classes that had to be ported to daru.</p>
+
+<p>Porting code from statsample to daru improved daru significantly. There were a whole of statistics methods in statsample that were imported into daru and you can now use all them from daru. Statsample also works well with <a href="https://github.com/clbustos/rubyvis">rubyvis</a>, a great tool for visualization. <a href="https://github.com/SciRuby/statsample#visualizations">You can now do that with daru as well</a>.</p>
+
+<p>Many new methods for reading and writing data to and from files were also added to daru. You can now read and write data to and from CSV, Excel, plain text files or even SQL databases.</p>
+
+<p>In effect, daru is now completely compatible with statsample (and all the other statsample extensions). You can use daru data structures for storing data and pass them to statsample for performing computations. The biggest advantage of this approach is that the analysed data can be passed around to other scientific ruby libraries (some of which listed above) that use daru as well. Since daru offers in-built functions to better ‘see’ your data, better visualization is possible.</p>
+
+<p>See these <a href="https://github.com/v0dro/daru#blog-posts">blogs</a> and <a href="https://github.com/v0dro/daru#notebooks">notebooks</a> for a complete overview of daru’s new features.</p>
+
+<p>Also see the <a href="https://github.com/SciRuby/statsample#notebooks">notebooks in the statsample README</a> for using daru with statsample.</p>
+
+<h2 id="post-mid-term-submissions">Post-mid term submissions</h2>
+
+<p>Most of time post the mid term submissions was spent in implementing the time series functions for daru.</p>
+
+<p>I implemented a new index, the DateTimeIndex, which can used for indexing data on time stamps. It enables users to query data based on time stamps. Time stamps can either be specified with precise ruby DateTime objects or can be specified as strings, which will lead to retrival of all the data falling under that time. For example specifying ‘2012’ returns all data that falls in the year 2012. See detailed usage of <code>DateTimeIndex</code> in conjunction with other daru constructs <a href="https://github.com/v0dro/daru/blob/master/README.md">in the daru README</a>.</p>
+
+<p>An essential utility in implementing <code>DateTimeIndex</code> was <code>DateOffset</code>, which is a new set of classes that offsets dates based on certain rules or business logic. It can advance or lag a ruby <code>DateTime</code> to the nearest day or any day of the week or the end or beginning of the month etc. <code>DateOffset</code> is an essential part of <code>DateTimeIndex</code> and can also be used as a standalone utility for advancing/lagging <code>DateTime</code> objects. <a href="http://v0dro.github.io/blog/2015/07/27/date-offsets-in-daru/">This blog post</a> elaborates more on the nuances of <code>DateOffset</code> and its usage.</p>
+
+<p>The last thing done during the post mid term was complete compatibility with <a href="https://github.com/SciRuby/statsample-timeseries">statsample-timeseries</a>, which was created by <a href="https://github.com/AnkurGel">Ankur Goel</a> during GSOC 2013. It offers many uesful functions for analysis of time series data. It now works with daru containers. See some use cases <a href="https://github.com/SciRuby/statsample-timeseries/blob/master/README.rdoc">here</a>.</p>
+
+<p>Thats all, as far as I can remember.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/16/elaboration-on-certain-internals-of-daru/">Elaboration on Certain Internals of Daru</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In this blog post I will elaborate on how a few of the features in <a href="https://github.com/v0dro/daru">daru</a> were implemeted. Notably I will stress on what spurred a need for that particular design of the code.</p>
+
+<p>This post is primarily intended to serve as documentation for me and future contributors. If readers have any inputs on improving this post, I’d be happy to accept new contributions :)</p>
+
+<h2 id="index-factory-architecture">Index factory architecture</h2>
+
+<p>Daru currently supports three types of indexes, Index, MultiIndex and DateTimeIndex.</p>
+
+<p>It became very tedious to write if statements in the Vector or DataFrame codebase whenever a new data structure was to be created, since there were 3 possible indexes that could be attached with every data set. This mainly depended on what kind of data was present in the index, i.e. tuples would create a MultiIndex, DateTime objects or date-like strings would create a DateTimeIndex, and everything else would create a Daru::Index.</p>
+
+<p>This looked something like the perfect use case for the <a href="https://en.wikipedia.org/wiki/Factory_method_pattern">factory pattern</a>, the only hurdle being that the factory pattern in the pure sense of the term would be a superclass, something called <code>Daru::IndexFactory</code> that created an Index, DateTimeIndex or MultiIndex index using some methods and logic. The problem is that I did not want to call a separate class for creating Indexes. This would break existing code and possibly cause problems in libraries that were already using daru (viz. <a href="https://github.com/SciRuby/statsample">statsample</a>), not to mention confusing users about which class they’re actually supposed to be using.</p>
+
+<p>The solution came after I read <a href="http://blog.sidu.in/2007/12/rubys-new-as-factory.html">this blog post</a>, which demonstrates that the <code>.new</code> method for any class can be overridden. Thus, instead of calling <code>initialize</code> for creating the instance of a class, it calls the overridden <code>new</code>, which can then call initialize for instantiating an instance of that class. It so happens that you can make <code>new</code> return any object you want, unlike initialize which must an instance of the class it is declared in. Thus, for the factory pattern implementation of Daru::Index, we over-ride the <code>.new</code> method of the Daru::Index and write logic such that it manufactures the appropriate kind of index based on the data that is passed to <code>Daru::Index.new(data)</code>. The pseudo code for doing this looks something like this:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+<a href="#n19" name="n19">19</a>
+<strong><a href="#n20" name="n20">20</a></strong>
+</pre></td>
+  <td class="code"><pre>
+<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Daru::Index</span>
+  <span style="color:#777"># some stuff...</span>
+
+  <span style="color:#080;font-weight:bold">def</span> <span style="color:#069">self</span>.<span style="color:#06B;font-weight:bold">new</span> *args, &amp;block
+    source = args[<span style="color:#00D">0</span>]
+
+    <span style="color:#080;font-weight:bold">if</span> source_looks_like_a_multi_index
+      create_multi_index_and_return
+    <span style="color:#080;font-weight:bold">elsif</span> source_looks_like_date_time_index
+      create_date_time_index_and_return
+    <span style="color:#080;font-weight:bold">else</span> <span style="color:#777"># Create the Daru::Index by calling initialize</span>
+      i = <span style="color:#069">self</span>.allocate
+      i.send <span style="color:#A60">:initialize</span>, *args, &amp;block
+      i
+    <span style="color:#080;font-weight:bold">end</span>
+  <span style="color:#080;font-weight:bold">end</span>
+
+  <span style="color:#777"># more stuff...</span>
+<span style="color:#080;font-weight:bold">end</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>Also, since over-riding <code>.new</code> tampers with the subclasses of the class as well, <a href="https://github.com/v0dro/daru/blob/master/lib/daru/index.rb#L14">an <code>inherited</code> hook that replaces the over-ridden <code>.new</code></a> of the inherited class with the original one was added to <code>Daru::Index</code>.</p>
+
+<h2 id="working-of-the-where-clause">Working of the where clause</h2>
+
+<p>The where clause in daru lets users query data with a Array containing boolean variables. So whenever you call <code>where</code> on Daru::Vector or DataFrame, and pass in an Array containing true or false values, all the rows corresponding with <code>true</code> will be returned as a Vector or DataFrame respectively.</p>
+
+<p>Since the where clause works in cojunction with the comparator methods of Daru::Vector (which return a Boolean Array), it was essential for these boolean arrays to be combined together such that piecewise AND and OR operations could be performed between multiple boolean arrays. Hence, the <code>Daru::Core::Query::BoolArray</code> class was created, which is specialized for handling boolean arrays and performing piecewise boolean operations.</p>
+
+<p>The BoolArray defines the <code>#&amp;</code> method for piecewise AND operations and it defines the <code>#|</code> method for piecewise OR operations. They work as follows:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+</pre></td>
+  <td class="code"><pre>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
+
+a = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Query</span>::<span style="color:#036;font-weight:bold">BoolArray</span>.new([<span style="color:#069">true</span>,<span style="color:#069">false</span>,<span style="color:#069">false</span>,<span style="color:#069">true</span>,<span style="color:#069">false</span>,<span style="color:#069">true</span>])
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:84314110 bool_arry=[true, false, false, true, false, true])</span>
+b = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Core</span>::<span style="color:#036;font-weight:bold">Query</span>::<span style="color:#036;font-weight:bold">BoolArray</span>.new([<span style="color:#069">false</span>,<span style="color:#069">true</span>,<span style="color:#069">false</span>,<span style="color:#069">true</span>,<span style="color:#069">false</span>,<span style="color:#069">true</span>])
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:84143650 bool_arry=[false, true, false, true, false, true])</span>
+a &amp; b
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:83917880 bool_arry=[false, false, false, true, false, true])</span>
+a | b
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:83871560 bool_arry=[true, true, false, true, false, true])</span>
+</pre></td>
+</tr></table>
+</div>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/03/finding-and-combining-data-in-daru/">Finding and Combining Data in Daru</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2 id="arel-like-query-syntax">Arel-like query syntax</h2>
+
+<p><a href="https://github.com/rails/arel">Arel</a> is a very popular ruby gem that is one of the major components of the most popular ruby framework, <a href="https://github.com/rails/rails">Rails</a>. It is an ORM-helper of sorts that exposes a beatiful and intuitive syntax for creating SQL strings by chaining Ruby methods.</p>
+
+<p>Daru successfully adopts this syntax and the result is a very intuitive and readable syntax for obtaining any sort of data from a DataFrame or Vector.</p>
+
+<p>As a quick demonstration, lets create a DataFrame which looks like this:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+</pre></td>
+  <td class="code"><pre>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
+
+df = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({
+  <span style="color:#606">a</span>: [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>,<span style="color:#00D">6</span>]*<span style="color:#00D">100</span>,
+  <span style="color:#606">b</span>: [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">a</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">b</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">c</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">d</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">e</span><span style="color:#710">'</span></span>,<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">f</span><span style="color:#710">'</span></span>]*<span style="color:#00D">100</span>,
+  <span style="color:#606">c</span>: [<span style="color:#00D">11</span>,<span style="color:#00D">22</span>,<span style="color:#00D">33</span>,<span style="color:#00D">44</span>,<span style="color:#00D">55</span>,<span style="color:#00D">66</span>]*<span style="color:#00D">100</span>
+}, <span style="color:#606">index</span>: (<span style="color:#00D">1</span>..<span style="color:#00D">600</span>).to_a.shuffle)
+df.head(<span style="color:#00D">5</span>)
+
+<span style="color:#777">#=&gt; </span>
+<span style="color:#777">##&lt;Daru::DataFrame:80543480 @name = 3fc642f2-bd9a-4f6f-b4a8-0779253720f5 @size = 5&gt;</span>
+<span style="color:#777">#                    a          b          c </span>
+<span style="color:#777">#       109          1          a         11 </span>
+<span style="color:#777">#       381          2          b         22 </span>
+<span style="color:#777">#       598          3          c         33 </span>
+<span style="color:#777">#       390          4          d         44 </span>
+<span style="color:#777">#       344          5          e         55</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>To select all rows where <code>df[:a]</code> equals 2 or <code>df[:c]</code> equals 55, just write this:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+</pre></td>
+  <td class="code"><pre>
+selected = df.where(df[<span style="color:#A60">:a</span>].eq(<span style="color:#00D">2</span>) | df[<span style="color:#A60">:c</span>].eq(<span style="color:#00D">55</span>))
+selected.head(<span style="color:#00D">5</span>)
+
+<span style="color:#777"># =&gt; </span>
+<span style="color:#777">##&lt;Daru::DataFrame:79941980 @name = 74175f76-9dce-4b5d-b85b-bdfbb650953e @size = 5&gt;</span>
+<span style="color:#777">#                    a          b          c </span>
+<span style="color:#777">#       381          2          b         22 </span>
+<span style="color:#777">#       344          5          e         55 </span>
+<span style="color:#777">#       135          2          b         22 </span>
+<span style="color:#777">#       524          5          e         55 </span>
+<span style="color:#777">#       266          2          b         22 </span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>As is easily seen above, the Daru::Vector class has special comparators defined on it, which allow it to check each value of the Vector and return an object that can be evaluated by the <code>DataFrame#where</code> method.</p>
+
+<p><strong>Notice that to club the two comparators above, we have used the union OR (<code>|</code>) operator.</strong></p>
+
+<p>Daru::Vector has a bunch of comparator methods defined on it, which can be used with <code>#where</code> for obtaining the desired results. All of these return an object of type <code>Daru::Core::Query::BoolArray</code>, which is read by <code>#where</code>. <code>BoolArray</code> uses the methods <code>|</code> (also aliased as <code>#or</code>) and <code>&amp;</code> (also aliased as <code>#and</code>) for piecewise logical operations on other <code>BoolArray</code> objects.</p>
+
+<p>BoolArray consists of an internal Array that contains <code>true</code> for every entry in the Vector that returns <code>true</code> for an operation between the comparable operand and a Vector entry.</p>
+
+<p>For example,</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+</pre></td>
+  <td class="code"><pre>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
+
+vector = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new([<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>,<span style="color:#00D">6</span>,<span style="color:#00D">7</span>,<span style="color:#00D">8</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>])
+vector.eq(<span style="color:#00D">3</span>)
+<span style="color:#777">#=&gt;(Daru::Core::Query::BoolArray:82379030 bool_arry=[false, false, true, false, false, false, false, false, false, true])</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>The <code>#&amp;</code> (or <code>#and</code>) and <code>#|</code> (or  <code>#or</code>) methods on BoolArray apply a logical <code>and</code> and a logical <code>or</code> respectively between each element of the BoolArray and return another BoolArray that contains the results. For example:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+</pre></td>
+  <td class="code"><pre>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
+
+vector = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new([<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>,<span style="color:#00D">6</span>,<span style="color:#00D">7</span>,<span style="color:#00D">7</span>,<span style="color:#00D">8</span>,<span style="color:#00D">9</span>,<span style="color:#00D">9</span>,<span style="color:#00D">9</span>,<span style="color:#00D">7</span>,<span style="color:#00D">5</span>,<span style="color:#00D">4</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>])
+vector.eq(<span style="color:#00D">4</span>).or(vector.mt(<span style="color:#00D">8</span>))
+<span style="color:#777">#=&gt; (Daru::Core::Query::BoolArray:82294620 bool_arry=[false, false, false, true, false, false, false, false, false, true, true, true, false, false, true, false, true]) </span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>The following comparators can be used with a <code>Daru::Vector</code>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Comparator Method</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code>eq</code></td>
+      <td style="text-align: left">Uses <code>==</code> and returns <code>true</code> for each <strong>equal</strong> entry</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>not_eq</code></td>
+      <td style="text-align: left">Uses <code>!=</code> and returns <code>true</code> for each <strong>unequal</strong> entry</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>lt</code></td>
+      <td style="text-align: left">Uses <code>&lt;</code> and returns <code>true</code> for each entry <strong>less than</strong> the supplied object</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>lteq</code></td>
+      <td style="text-align: left">Uses <code>&lt;=</code> and returns <code>true</code> for each entry <strong>less than or equal to</strong> the supplied object</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>mt</code></td>
+      <td style="text-align: left">Uses <code>&gt;</code> and returns <code>true</code> for each entry <strong>more than</strong> the supplied object</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>mteq</code></td>
+      <td style="text-align: left">Uses <code>&gt;=</code> and returns <code>true</code> for each entry <strong>more than or equal to</strong> the supplied object</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>in</code></td>
+      <td style="text-align: left">Uses <code>==</code> for each element in the collection (Array, Daru::Vector, etc.) passed and returns <code>true</code> for a match</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A major advantage of using the <code>#where</code> clause over <code>DataFrame#filter</code> or <code>Vector#keep_if</code>, apart from better readability and usability, is that it is much faster. <a href="https://github.com/v0dro/daru/blob/master/benchmarks/where_vs_filter.rb">These benchmarks</a> prove my point.</p>
+
+<p>I’ll conclude this chapter with a little more complex example of using the arel-like query syntax with a <code>Daru::Vector</code> object:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+</pre></td>
+  <td class="code"><pre>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
+
+vec = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new([<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>,<span style="color:#00D">5</span>,<span style="color:#00D">6</span>,<span style="color:#00D">3</span>,<span style="color:#00D">336</span>,<span style="color:#00D">3</span>,<span style="color:#00D">6</span>,<span style="color:#00D">2</span>,<span style="color:#00D">6</span>,<span style="color:#00D">2</span>,<span style="color:#00D">35</span>,<span style="color:#00D">346</span>,<span style="color:#00D">7</span>,<span style="color:#00D">3</span>,<span style="color:#00D">45</span>,<span style="color:#00D">23</span>,<span style="color:#00D">26</span>,<span style="color:#00D">7</span>,<span style="color:#00D">345</span>,<span style="color:#00D">2525</span>,<span style="color:#00D">22</span>,<span style="color:#00D">66</span>,<span style="color:#00D">2</span>])
+vec.where((vec.eq(<span style="color:#00D">4</span>) | vec.eq(<span style="color:#00D">1</span>) | vec.mt(<span style="color:#00D">300</span>)) &amp; vec.lt(<span style="color:#00D">2000</span>))
+<span style="color:#777"># =&gt; </span>
+<span style="color:#777"># #&lt;Daru::Vector:70585830 @name = nil @size = 5 &gt;</span>
+<span style="color:#777">#     nil</span>
+<span style="color:#777">#   0   1</span>
+<span style="color:#777">#   3   4</span>
+<span style="color:#777">#   7 336</span>
+<span style="color:#777">#  14 346</span>
+<span style="color:#777">#  21 345</span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>For more examples on using the arel-like query syntax, see <a href="">this notebook</a>.</p>
+<h2 id="joins">Joins</h2>
+
+<p>Daru::DataFrame offers the <code>#join</code> method for performing SQL style joins between two DataFrames. Currently #join supports inner, left outer, right outer and full outer joins between DataFrames.</p>
+
+<p>In order to demonstrate joins, lets consider a single example of an inner on two DataFrames:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+<a href="#n16" name="n16">16</a>
+<a href="#n17" name="n17">17</a>
+<a href="#n18" name="n18">18</a>
+</pre></td>
+  <td class="code"><pre>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
+
+left = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({
+  <span style="color:#A60">:id</span>   =&gt; [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>],
+  <span style="color:#A60">:name</span> =&gt; [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Pirate</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Monkey</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Ninja</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Spaghetti</span><span style="color:#710">'</span></span>]
+})
+right = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({
+  <span style="color:#A60">:id</span> =&gt; [<span style="color:#00D">1</span>,<span style="color:#00D">2</span>,<span style="color:#00D">3</span>,<span style="color:#00D">4</span>],
+  <span style="color:#A60">:name</span> =&gt; [<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Rutabaga</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Pirate</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Darth Vader</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Ninja</span><span style="color:#710">'</span></span>]
+})
+left.join(right, <span style="color:#606">on</span>: [<span style="color:#A60">:name</span>], <span style="color:#606">how</span>: <span style="color:#A60">:inner</span>)
+
+<span style="color:#777">#=&gt; </span>
+<span style="color:#777">##&lt;Daru::DataFrame:73134350 @name = 7cc250a9-108c-4ea3-99ab-dcb828ff2b88 @size = 2&gt;</span>
+<span style="color:#777">#                 id_1       name       id_2 </span>
+<span style="color:#777">#         0          1     Pirate          2 </span>
+<span style="color:#777">#         1          3      Ninja          4 </span>
+</pre></td>
+</tr></table>
+</div>
+
+<p>For more examples please refer <a href="">this notebook</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/07/31/analysis-of-time-series-in-daru/">Analysis of Time Series in Daru</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The newest release of daru brings alongwith it added support for time series data analysis, manipulation and visualization.</p>
+
+<p>A time series is any data is indexed (or labelled) by time. This includes the stock market index, prices of crude oil or precious metals, or even geo-locations over a period of time.</p>
+
+<p>The primary manner in which daru implements a time series is by indexing data objects (i.e Daru::Vector or Daru::DataFrame) on a new index called the DateTimeIndex. A DateTimeIndex consists of dates, which can queried individually or sliced.</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>A very basic time series can be created with something like this:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+</pre></td>
+  <td class="code"><pre>require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">distribution</span><span style="color:#710">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
+
+rng = <span style="color:#036;font-weight:bold">Distribution</span>::<span style="color:#036;font-weight:bold">Normal</span>.rng
+
+index  = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DateTimeIndex</span>.date_range(<span style="color:#A60">:start</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">2012-4-2</span><span style="color:#710">'</span></span>, <span style="color:#A60">:periods</span> =&gt; <span style="color:#00D">1000</span>, <span style="color:#A60">:freq</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">D</span><span style="color:#710">'</span></span>)
+vector = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new(<span style="color:#00D">1000</span>.times.map {rng.call}, <span style="color:#606">index</span>: index)
+</pre></td>
+</tr></table>
+</div>
+<p><img class="center" src="/images/daru_time_series/simple_vector.png" alt="'A Simple Vector indexed on DateTimeIndex'" /></p>
+
+<p>In the above code, the <code>DateTimeIndex.date_range</code> function is creating a <code>DateTimeIndex</code> starting from a particular date and spanning for 1000 periods, with a frequency of 1 day between period. For a complete coverage of DateTimeIndex see <a href="">this</a> notebook. For an introduction to the date offsets used by daru see <a href="http://v0dro.github.io/blog/2015/07/27/date-offsets-in-daru/">this blog post</a>.</p>
+
+<p>The index is passed into the Vector like a normal <code>Daru::Index</code> object.</p>
+
+<h2 id="statistics-functions-and-plotting-for-time-series">Statistics functions and plotting for time series</h2>
+
+<p>Many functions are avaiable in daru for computing useful statistics and analysis. A brief of summary of statistics methods available on time series is as follows:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>Method Name</strong></th>
+      <th style="text-align: center"><strong>Description</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code>rolling_mean</code></td>
+      <td style="text-align: center">Calculate Moving Average</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>rolling_median</code></td>
+      <td style="text-align: center">Calculate Moving Median</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>rolling_std</code></td>
+      <td style="text-align: center">Calculate Moving Standard Deviation</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>rolling_variance</code></td>
+      <td style="text-align: center">Calculate Moving Variance</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>rolling_max</code></td>
+      <td style="text-align: center">Calculate Moving Maximum value</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>rolling_min</code></td>
+      <td style="text-align: center">Calcuclate moving minimum value</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>rolling_count</code></td>
+      <td style="text-align: center">Calculate moving non-missing values</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>rolling_sum</code></td>
+      <td style="text-align: center">Calculate moving sum</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>ema</code></td>
+      <td style="text-align: center">Calculate exponential moving average</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>macd</code></td>
+      <td style="text-align: center">Moving Average Convergence-Divergence</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>acf</code></td>
+      <td style="text-align: center">Calculate Autocorrelation Co-efficients of the Series</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code>acvf</code></td>
+      <td style="text-align: center">Provide the auto-covariance value</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>To demonstrate, the rolling mean of a Daru::Vector can be computed as follows:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+</pre></td>
+  <td class="code"><pre>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">distribution</span><span style="color:#710">'</span></span>
+
+rng    = <span style="color:#036;font-weight:bold">Distribution</span>::<span style="color:#036;font-weight:bold">Normal</span>.rng
+vector = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">Vector</span>.new(
+  <span style="color:#00D">1000</span>.times.map { rng.call }, 
+  <span style="color:#606">index</span>: <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DateTimeIndex</span>.date_range(
+    <span style="color:#A60">:start</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">2012-4-2</span><span style="color:#710">'</span></span>, <span style="color:#A60">:periods</span> =&gt; <span style="color:#00D">1000</span>, <span style="color:#A60">:freq</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">D</span><span style="color:#710">'</span></span>)
+)
+<span style="color:#777"># Compute the cumulative sum</span>
+vector = vector.cumsum
+rolling = vector.rolling_mean <span style="color:#00D">60</span>
+
+rolling.tail
+</pre></td>
+</tr></table>
+</div>
+<p><img class="center" src="/images/daru_time_series/rolling_mean.png" alt="'Rolling Mean Tail'" /></p>
+
+<p>This time series can be very easily plotted with its rolling mean by using the <a href="https://github.com/dilcom/gnuplotrb">GnuplotRB</a> gem:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+</pre></td>
+  <td class="code"><pre>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">gnuplotrb</span><span style="color:#710">'</span></span>
+
+<span style="color:#036;font-weight:bold">GnuplotRB</span>::<span style="color:#036;font-weight:bold">Plot</span>.new(
+  [vector , <span style="color:#606">with</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">lines</span><span style="color:#710">'</span></span>, <span style="color:#606">title</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Vector</span><span style="color:#710">'</span></span>],
+  [rolling, <span style="color:#606">with</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">lines</span><span style="color:#710">'</span></span>, <span style="color:#606">title</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Rolling Mean</span><span style="color:#710">'</span></span>])
+</pre></td>
+</tr></table>
+</div>
+
+<p><img class="center" src="/images/daru_time_series/cumsum_rolling_line_graph.png" alt="'Line Graph of Rolling mean and cumsum'" /></p>
+
+<p>These methods are also available on DataFrame, which results in calling them on each of numeric vectors:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+</pre></td>
+  <td class="code"><pre>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">daru</span><span style="color:#710">'</span></span>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">distribution</span><span style="color:#710">'</span></span>
+
+rng    = <span style="color:#036;font-weight:bold">Distribution</span>::<span style="color:#036;font-weight:bold">Normal</span>.rng
+index  = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DateTimeIndex</span>.date_range(<span style="color:#A60">:start</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">2012-4-2</span><span style="color:#710">'</span></span>, <span style="color:#A60">:periods</span> =&gt; <span style="color:#00D">1000</span>, <span style="color:#A60">:freq</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">D</span><span style="color:#710">'</span></span>)
+df = <span style="color:#036;font-weight:bold">Daru</span>::<span style="color:#036;font-weight:bold">DataFrame</span>.new({
+  <span style="color:#606">a</span>: <span style="color:#00D">1000</span>.times.map { rng.call },
+  <span style="color:#606">b</span>: <span style="color:#00D">1000</span>.times.map { rng.call },
+  <span style="color:#606">c</span>: <span style="color:#00D">1000</span>.times.map { rng.call }
+}, <span style="color:#606">index</span>: index)
+</pre></td>
+</tr></table>
+</div>
+<p><img class="center" src="/images/daru_time_series/dataframe.png" alt="'DateTime indexed DataFrame'" /></p>
+
+<p>In a manner similar to that done with Vectors above, we can easily plot each Vector of the DataFrame with GNU plot:</p>
+
+<div class="language-ruby highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+</pre></td>
+  <td class="code"><pre>
+require <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">gnuplotrb</span><span style="color:#710">'</span></span>
+
+<span style="color:#777"># Calculate cumulative sum of each Vector</span>
+df = df.cumsum
+
+<span style="color:#777"># Compute rolling sum of each Vector with a loopback length of 60.</span>
+r_sum = df.rolling_sum(<span style="color:#00D">60</span>)
+
+plots = []
+r_sum.each_vector_with_index <span style="color:#080;font-weight:bold">do</span> |vec,n|
+  plots &lt;&lt; <span style="color:#036;font-weight:bold">GnuplotRB</span>::<span style="color:#036;font-weight:bold">Plot</span>.new([vec, <span style="color:#606">with</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">lines</span><span style="color:#710">'</span></span>, <span style="color:#606">title</span>: n])
+<span style="color:#080;font-weight:bold">end</span>
+<span style="color:#036;font-weight:bold">GnuplotRB</span>::<span style="color:#036;font-weight:bold">Multiplot</span>.new(*plots, <span style="color:#606">layout</span>: [<span style="color:#00D">3</span>,<span style="color:#00D">1</span>], <span style="color:#606">title</span>: <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Rolling sums</span><span style="color:#710">'</span></span>)
+</pre></td>
+</tr></table>
+</div>
+<p><img class="center" src="/images/daru_time_series/dataframe_plot.png" alt="'Plotting the DataFrame'" /></p>
+
+<h2 id="usage-with-statsample-timeseries">Usage with statsample-timeseries</h2>
+
+<p>Daru now integrates with <a href="https://github.com/SciRuby/statsample-timeseries">statsample-timeseries</a>, a <a href="https://github.com/sciruby/statsample">statsample</a> extension that provides many useful statistical analysis tools commonly applied to time series.</p>
+
+<p>Some examples with working examples of daru and statsample-timseries are coming soon. Stay tuned!</p>
 </div>
   
   
@@ -655,6 +1501,8 @@ puts glm.log_likelihood
     </article>
   
   <div class="pagination">
+    
+      <a class="prev" href="/posts/4">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -669,23 +1517,23 @@ puts glm.log_likelihood
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2017/10/23/explanation-of-exafmm-learning-codes/">Explanation of ExaFMM Learning Codes.</a>
+        <a href="/blog/2018/06/07/notes-using-numpy/">Notes Using Numpy</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2016/11/24/gsoc-2016-wrap-up-for-sciruby/">GSOC 2016 Wrap Up for SciRuby</a>
+        <a href="/blog/2018/05/01/remote-file-editing-with-emacs/">Remote File Editing With Emacs.</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2016/08/27/advice-for-future-gsoc-students-and-mentors-based-on-my-experience/">Advice for Future GSOC Students and Mentors Based on My Experience.</a>
+        <a href="/blog/2018/05/01/building-a-fast-matrix-multiplication-algorithm/">Building a FAST Matrix Multiplication Algorithm.</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2016/08/21/setting-up-a-lexical-analyser-and-parser-in-ruby/">Setting Up a Lexical Analyser and Parser in Ruby</a>
+        <a href="/blog/2018/04/20/emacs-org-mode-notes/">Emacs Org-mode Notes</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2016/08/16/random-thoughts-on-music-theory/">Random Thoughts on Music Theory.</a>
+        <a href="/blog/2018/04/20/bash-scripting-to-automate-porting-to-other-machines/">Bash Scripting to Automate Porting to Other Machines</a>
       </li>
     
   </ul>
@@ -730,7 +1578,7 @@ puts glm.log_likelihood
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2017 - Sameer Deshmukh -
+  Copyright &copy; 2018 - Sameer Deshmukh -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

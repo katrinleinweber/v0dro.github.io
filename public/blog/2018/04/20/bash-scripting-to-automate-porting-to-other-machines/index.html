@@ -1,0 +1,77 @@
+<p>I need to log into multiple machines every now and then and its really annoying to
+set everything up from scratch. Here’s some simple things I did with bash scripting
+for automating most of my workflow.</p>
+
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+<p><strong>Table of Contents</strong></p>
+
+<ul>
+  <li><a href="#bash-basics">Bash basics</a>
+    <ul>
+      <li><a href="#if-statements">If statements</a></li>
+    </ul>
+  </li>
+  <li><a href="#scripting-protips">Scripting protips</a>
+    <ul>
+      <li><a href="#checking-env-variables">Checking env variables</a></li>
+      <li><a href="#checking-for-programs">Checking for programs</a></li>
+    </ul>
+  </li>
+  <li><a href="#resources">Resources</a></li>
+</ul>
+
+<!-- markdown-toc end -->
+
+<h1 id="bash-basics">Bash basics</h1>
+
+<p>A bash must have the line <code>#!/bin/bash</code> on the 1st line to let the OS know that this
+is a bash script.</p>
+
+<h2 id="if-statements">If statements</h2>
+
+<p>You can check for existence of environment variables and execute specfic things. To
+check whether a env variable exists, following syntax can be used:</p>
+
+<p>If statements have the basic syntax:</p>
+<pre><code>if [ &lt;some test&gt; ]; then
+  &lt;commands&gt;
+elif [ &lt;some test&gt; ]; then
+  &lt;commands&gt;
+else
+  &lt;commands&gt;
+fi
+</code></pre>
+<p>The square brackets in the above <code>if</code> statement are actually a reference to the command
+<code>test</code>. This means that all operators that <code>test</code> allows may be used here as well. See
+<code>man test</code> to the see capabilities of the <code>test</code> command.</p>
+
+<h1 id="scripting-protips">Scripting protips</h1>
+
+<h2 id="checking-env-variables">Checking env variables</h2>
+
+<p>You can just check whether env variables exist or not with <code>if $VAR_NAME</code>. You need to
+specify a call to <code>test</code> inside square brackets and specify <code>-z</code> if you want to check
+whether the variables does not exist and <code>-n</code> if you want to check if the variable
+exists.</p>
+
+<p>For example, cheking if <code>$SERVER_ENV</code> variable exists or not will look like this:</p>
+<pre><code>if [-n "$SERVER_ENV"]; then
+    echo "SERVER_ENV exists"
+fi
+</code></pre>
+<h2 id="checking-for-programs">Checking for programs</h2>
+
+<p>If you want to check whether a particular program exists or not, use <code>hash &lt;command_name&gt;</code>.</p>
+
+<p>For example, to see if git exists and print an error if not:</p>
+<pre><code>if ! hash git 2&gt;/dev/null; then
+    echo "Please install git before proceeding."
+    exit 1
+fi
+</code></pre>
+
+<h1 id="resources">Resources</h1>
+
+<ul>
+  <li><a href="https://stackoverflow.com/questions/592620/check-if-a-program-exists-from-a-bash-script">Checking whether program exists.</a></li>
+</ul>

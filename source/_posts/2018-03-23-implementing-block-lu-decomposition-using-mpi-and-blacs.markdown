@@ -14,9 +14,10 @@ and installing the various libraries that are required for this purpose. Hopeful
 will find something useful in this post too. This post will cover only LU factorization of dense
 matrices. Hierarchical matrices will be covered in another post.
 
-I have written about using the scalapack C++ interface for a simple block LU decomposition in [this](URL) post. 
+I have written about using the scalapack C++ interface for a simple block LU decomposition 
+in [this](URL) post. 
 
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-generate-toc again -->
 **Table of Contents**
 
 - [Installing libraries](#installing-libraries)
@@ -25,11 +26,17 @@ I have written about using the scalapack C++ interface for a simple block LU dec
     - [Synchronous block LU](#synchronous-block-lu)
     - [Resources](#resources)
 - [Implementation with MPI](#implementation-with-mpi)
-- [Implementation with BLACS](#implementation-with-blacs)
     - [Block cyclic data distribution](#block-cyclic-data-distribution)
+        - [Block cyclic nomenclature](#block-cyclic-nomenclature)
+    - [ScaLAPACK protips](#scalapack-protips)
+        - [Use of M and N in routines](#use-of-m-and-n-in-routines)
     - [BLACS protips](#blacs-protips)
-    - [Asynchronous block LU](#asynchronous-block-lu-1)
-    - [Synchronous block LU](#synchronous-block-lu-1)
+        - [BLACS topologies](#blacs-topologies)
+        - [BLACS general APIs](#blacs-general-apis)
+    - [Asynchronous block LU](#asynchronous-block-lu)
+    - [Synchronous block LU](#synchronous-block-lu)
+- [Resources](#resources)
+    - [BLACS](#blacs)
 
 <!-- markdown-toc end -->
 
@@ -134,7 +141,6 @@ Some resources that I found during this phase are as follows:
 
 Each process should hold only the part of the matrix that it is working upon.
 
-
 ## Block cyclic data distribution
 
 The block cyclic distribution is a central idea in the case of PBLAS and BLACS.
@@ -177,8 +183,6 @@ for that case since there is only one sub-matrix block per process.
 
 ### BLACS topologies
 
-
-
 ### BLACS general APIs
 
 Similar to MPI, BLACS contains some routines for sending and receiving data in 
@@ -200,7 +204,7 @@ void Cdgesd2d(
 matrices. This routine will block until the message is received. Its prototype looks like so:
 ``` cpp
 void Cdgerv2d(
-    int CBLACS_CONTEXT, // CBLACS context
+    int CBLACS_CONTEXT, // CBLACS conntext
     int M, // row size of matrix block
     int N, // col size of matrix block
     double *A, // pointer to matrix data.
@@ -220,7 +224,7 @@ The prototype of this routine is as follows:
 // Cd stands for 'C double'
 // ge is 'general rectangular matrix'
 // br is 'broadcast receive'
-Cdgebr2d(
+void Cdgebr2d(
     int CBLACS_CONTEXT, // CBLACS context
     char* SCOPE, // scope of the broadcast. Can be "Row", "Column" or "All"
     char* TOP, // indicates communication pattern to use for broadcast.
@@ -246,6 +250,8 @@ Cdgebs2d(
     int LDA // leading dimension of A.
 );
 ```
+The `TOP` argument specifies the communication pattern to use. Leave it as a blank space
+(`" "`) to use the default.
 
 ## Asynchronous block LU
 

@@ -20,14 +20,18 @@ A particular course in college called Computational Problem Solving required me 
     - [Heap sort](#heap-sort)
 - [Printing directory contents](#printing-directory-contents)
     - [Lessons learnt](#lessons-learnt)
+- [Strings](#strings)
 - [Zipping in Python](#zipping-in-python)
 - [Weird python keywords](#weird-python-keywords)
     - [in keyword](#in-keyword)
         - [Inside if statements](#inside-if-statements)
         - [Inside for statements](#inside-for-statements)
+- [Mutable (saved) function arguments](#mutable-saved-function-arguments)
+- [Decorators](#decorators)
+- [The super method](#the-super-method)
+- [The Garbage Collector](#the-garbage-collector)
 
 <!-- markdown-toc end -->
-
 
 # Sorting
 
@@ -344,3 +348,23 @@ references). Bad because it increases the complexity of C extensions (but there'
 Cython for that).
 
 Link: https://rushter.com/blog/python-garbage-collector/
+
+# CLI programs
+
+CLI arguments are parsed using the `argparse` module.
+
+In order to write a simple parser that accepts two arguments, `--major` and `--file`,
+you can use code that looks like this:
+``` python
+parser = argparse.ArgumentParser(description="Remake matrix output by MPI processes.")
+parser.add_argument('--file', dest="file", help="file extension name to read.")
+parser.add_argument('--major', dest="major", default="col",\
+    help="row or col major (default row)")
+args = parser.parse_args()
+```
+
+It's a fairly straightforward module that can be used without much hassle.
+
+Link:
+
+* https://docs.python.org/3.3/howto/argparse.html#id1

@@ -1,0 +1,13 @@
+<p>When programming with MPI you might get run time errors like segfaults due to faulty IO programming or the like.</p>
+
+<p>Since you’re programming in a distributed environment, using gdb with MPI programs is a bit of a challenge, but is quite possible and reasonalbly easy to use as well. All you need to do is use the <code>mpirun</code> command with gdb in the following manner:</p>
+<pre><code>mpirun -np &lt;num_processes&gt; xterm -e gdb ./a.out
+</code></pre>
+
+<p>A modified Makefile using the above command would look like so:</p>
+<pre><code>mpi_debug: mpi_types.o $(SOURCES)
+	$(CXX) $? -llapacke -llapack -lcblas
+    mpirun -np 2 xterm -e gdb ./a.out
+</code></pre>
+
+<p>You can then call <code>run</code> inside gdb for each process. <a href="https://stackoverflow.com/questions/329259/how-do-i-debug-an-mpi-program">This stackoverflow answer</a> provides more insights into this.</p>

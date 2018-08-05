@@ -1,0 +1,245 @@
+<p>I’m writing this blog as I’m learning latex and setting up emacs to use it. Previously
+I mainly use LyX for writing research papers but the lack of text leads to lesser
+customization options sometimes, which is why I’ll be shifting to plain text LaTeX
+henceforth.</p>
+
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+<p><strong>Table of Contents</strong></p>
+
+<ul>
+  <li><a href="#latex-protips">Latex protips</a></li>
+  <li><a href="#emacs-latex-setup">Emacs latex setup</a></li>
+  <li><a href="#resources">Resources</a></li>
+</ul>
+
+<!-- markdown-toc end -->
+
+<h1 id="latex-protips">Latex protips</h1>
+
+<h2 id="structure-of-documents">Structure of documents</h2>
+
+<p>Docs consist of preamble and main document. The preamble contains commands for telling latex
+which packages you will use and what kind of document you want to setup.</p>
+
+<p>A sample preamble looks like so:</p>
+<pre><code>% Preamble
+% ---
+\documentclass{article}
+
+% Packages
+% ---
+\usepackage{amsmath} % Advanced math typesetting
+\usepackage[utf8]{inputenc} % Unicode support (Umlauts etc.)
+\usepackage{hyperref} % Add a link to your document
+\usepackage{graphicx} % Add pictures to your document
+\usepackage{listings} % Source code formatting and highlighting
+</code></pre>
+
+<p>Only the <code>documentclass</code> command is mandatory. The rest are optional. <code>usepackage</code> cannot be
+used inside the main document. When using the <code>article</code> documentclass, latex will add the page
+numbers automatically to the bottom of each document.</p>
+
+<p>The main document is contained inside the <code>document</code> environment like this:</p>
+<pre><code>\begin{document}
+% ...
+% ... Text goes here
+% ...
+\end{document}
+</code></pre>
+
+<h2 id="environments">Environments</h2>
+
+<p>Latex comes with many pre-defined environments which you can use for setting up your
+documents with minimal work. They come with some useful defaults too. For example, to
+write a new Design Thinking assignment, I wrote the following preamble:</p>
+<div class="language-latex highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+</pre></td>
+  <td class="code"><pre>\documentclass{article}
+\title{Assignment 2: One hour observation}
+\date{2018-4-22}
+\author{Sameer Deshmukh}
+</pre></td>
+</tr></table>
+</div>
+<p>Then using the <code>\maketitle</code> command inside the document body will directly create the
+title page for us.</p>
+
+<h2 id="sections-and-paragraphs">Sections and paragraphs</h2>
+
+<p>Add sections using <code>\section{Section-name}</code> and sub-sections using <code>\subsection{sub-sec-name}</code>.
+You can add as many <code>sub</code>’s to the subsection in order to specify multiple subsections. Using
+the <code>\paragraph{Name goes here}</code> command will add a paragraph to the section.</p>
+
+<h2 id="adding-images">Adding images</h2>
+
+<p>You need the <code>graphicx</code> package to use images in your documents. Then use the 
+<code>\graphicspath{ {folder-name/} }</code> command to tell latex the directory in which the images
+are stored w.r.t the current directory. These should be declared in the preamble.</p>
+
+<p>You can then use the <code>\includegraphics{graphic-name}</code> command to show images in your
+document wherever you want.</p>
+
+<p>You can specify various parameters to <code>includegraphics</code> for working with the image like
+height, width and scaling inside square brackets. For example:”</p>
+<pre><code>\includegraphics[width=3cm, height=4cm]{image}
+</code></pre>
+<p>Just seeting width to <code>\textwidth</code> and leaving out height will keep the default height
+and set the width to the width of the text in the document. Like this:</p>
+<pre><code>\includegraphics[width=\textwidth]{image}
+</code></pre>
+<p>See the <a href="https://www.sharelatex.com/learn/Inserting_Images#Reference_guide">reference guide</a> for
+a more detailed description of the lengths and units that can be specified.</p>
+
+<h2 id="useful-commands">Useful commands</h2>
+
+<ul>
+  <li>New page - <code>\newpage</code>.</li>
+  <li>Make a title page - <code>\maketitle</code>.</li>
+</ul>
+
+<h3 id="text-formatting">Text formatting</h3>
+
+<p>Use <code>\textbf{text}</code> for bold text, <code>\underline{text}</code> for underlined text and
+<code>\textit{text}</code> for italics.</p>
+
+<h3 id="symbols">Symbols</h3>
+
+<ul>
+  <li>Empty set: <code>\emptyset</code> is a 0 with a back slash through it.</li>
+  <li>Uptack or falsum: <code>\bot</code> looks like Japanese 上 but without the upper dash.</li>
+  <li>Is a member of: <code>\in</code>, for denoting that something is a part of a set.</li>
+  <li>Not equal to: <code>\neq</code>.</li>
+  <li>Set union: <code>\cup</code></li>
+</ul>
+
+<h2 id="writing-algorithms">Writing algorithms</h2>
+
+<h3 id="setup-of-environment">Setup of environment</h3>
+
+<p>I’m using the <code>algorithmicx</code> package for writing algorithms. This package will be installed
+with the <code>texlive-full</code> package on the Ubuntu repos. Put the following lines in the preamble
+to use:</p>
+<pre><code>\usepackage{algorithm}
+\usepackage{algpseudocode}
+</code></pre>
+<p>This is because algorithmicx pacakage is just a bundle of style files with macros that build
+on top of <code>algorithm</code> and <code>algorithmic</code>. It does not define a package of itself.</p>
+
+<p>The algorithms should lie inside the <code>algorithm</code> environment. You can use <code>\caption</code> and
+<code>\label</code> to define those properties respectively. For example:</p>
+<pre><code>\begin{algorithm}
+  \caption{Leader election in arbitrary graph}
+  \label{leader_election}
+\end{algorithm}
+</code></pre>
+
+<h3 id="writing-algorithms-1">Writing algorithms</h3>
+
+<p>The actual algorithm should be written inside the <code>algorithmic</code> block. An optional numerical
+argument can specify in how many lines do you want the lines to be numbered. Example:</p>
+<pre><code>\begin{algorithmic}[1]
+  \State \textbf{when} {START} \textbf{is received do}
+\end{algorithmic}
+</code></pre>
+
+<h3 id="basic-commands-for-algorithms">Basic commands for algorithms</h3>
+
+<p>Variables and program statements in general should be written inside <code>$</code> signs so that they
+will be italicized. Here’s a list of basic commands for writing various tasks:</p>
+
+<ul>
+  <li><code>\gets</code>: Assignment using a left pointing arrow like <code>&lt;-</code>.</li>
+  <li>For loop: <code>\For{&lt;condition&gt;} &lt;text&gt; \EndFor</code></li>
+  <li>Comments: Use <code>\Comment</code> for comments.</li>
+</ul>
+
+<h2 id="checking-for-installed-latex-packages">Checking for installed latex packages</h2>
+
+<p>Use the <code>kpsewhich</code> command to see if a package is installed (alongwith its path). Example:</p>
+<pre><code>kpsewhich algorithm.sty 
+</code></pre>
+
+<h2 id="writing-custom-latex-commands">Writing custom latex commands</h2>
+
+<p>If you want to create certain kinds of custom blocks or more crazy things, you can create
+your own custom commands that make such tasks easier. Below is the code for a custom <code>When</code>
+command that will insert a <code>When</code> block into the code for denoting certain events.</p>
+<pre><code>\algrenewcommand\algorithmicindent{3.0em}
+\algnewcommand{\IIf}[1]{\State\algorithmicif\ #1 \algorithmicthen}
+\algnewcommand{\EndIIf}{\unskip\ \algorithmicend\ \algorithmicif}
+\newcommand*\Let[2]{\State #1 $\gets$ #2}
+\algdef{SN}[when]{When}{EndWhen}
+[3][\null]{
+  \ifthenelse{\equal{#1}{\null}}{
+    \ifthenelse{\equal{#3}{}}{
+      {\bf when} \Call{#2}{\null} {\bf is received do}
+    }{
+      {\bf when} \Call{#2}{#3} {\bf is received do}
+    }
+  }{
+    \ifthenelse{\equal{#3}{}}{
+      {\bf when} \Call{#2}{\null} {\bf is received from #1 do}
+    }{
+      {\bf when} \Call{#2}{#3} {\bf is received from #1 do}
+    }
+  }
+}
+\renewcommand{\thealgorithm}{}
+</code></pre>
+
+<h1 id="emacs-latex-setup">Emacs latex setup</h1>
+
+<p>I mainly followed other blog posts to setup this one. First install texlive and auctex packages
+from your package manager.</p>
+
+<p>Then add the following to your emacs init file:</p>
+<pre><code>;; setup auctex
+(require `tex-site)
+(require `tex-style)
+(add-hook `LaTeX-mode-hook `turn-on-reftex)
+
+;; spellcheck in LaTex mode
+(add-hook `latex-mode-hook `flyspell-mode)
+(add-hook `tex-mode-hook `flyspell-mode)
+(add-hook `bibtex-mode-hook `flyspell-mode)
+
+;; Math mode for LaTex
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+</code></pre>
+
+<h2 id="auctex-protips">Auctex protips</h2>
+
+<p>Using auctex for your document editing provides some powerful features for editing and previewing
+documents. Here’s a list of what can be done:</p>
+<ul>
+  <li>Preview a section right inside the buffer: <code>C-c C-p C-d</code>.</li>
+  <li>Preview the entire buffer: <code>C-c C-p C-b</code>.</li>
+  <li>Compile into a PDF: <code>C-c C-c</code>.</li>
+</ul>
+
+<h2 id="preview-latex-symbols-within-emacs">Preview latex symbols within emacs</h2>
+
+<h2 id="view-formatted-pdf">View formatted PDF</h2>
+
+<p>The <code>docview-mode</code> can be used for previewing a PDF file from within emacs. This mode is bundled
+with emacs 24. Put the line <code>(setq doc-view-continuous 1)</code> in your init file so that you can
+scroll through PDFs seamlessly.</p>
+
+<h1 id="resources">Resources</h1>
+
+<ul>
+  <li><a href="https://piotrkazmierczak.com/2010/emacs-as-the-ultimate-latex-editor/">Using auctex with emacs</a></li>
+  <li><a href="http://hal.case.edu/~rrc/blog/2013/11/04/latex/">Latex, Auctex and emacs.</a></li>
+  <li><a href="https://www.latex-tutorial.com">Latex tutorial.</a></li>
+  <li><a href="https://piotrkazmierczak.com/2012/previewing-latex-symbols-without-preview-latex/">Preview Latex symbols without preview-latex.</a></li>
+  <li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/DocView-Navigation.html">DocView navigation.</a></li>
+  <li><a href="https://www.sharelatex.com/learn/Inserting_Images">Inserting images in latex.</a></li>
+  <li><a href="http://tug.ctan.org/macros/latex/contrib/algorithmicx/algorithmicx.pdf">Algorithmicx package tutorial.</a></li>
+  <li><a href="https://tex.stackexchange.com/questions/29429/how-to-use-algorithmicx-package">algorithmicx package with latex.</a></li>
+  <li><a href="https://tex.stackexchange.com/questions/229355/algorithm-algorithmic-algorithmicx-algorithm2e-algpseudocode-confused">Comparison between various algorithm environments.</a></li>
+  <li><a href="https://tex.stackexchange.com/questions/22798/nice-looking-empty-set">Nice looking empty set.</a></li>
+</ul>

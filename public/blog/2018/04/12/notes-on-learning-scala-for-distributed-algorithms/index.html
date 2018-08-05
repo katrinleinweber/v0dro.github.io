@@ -1,0 +1,413 @@
+<p>I’m currently taking a college course on <a href="http://www.coord.c.titech.ac.jp/c/distribalgo/">distributed algorithms</a>, that uses scala for
+teaching. I’m not familiar with distributed algorithms or scala, so in this blog I will
+document my learnings and provide some protips on a simple scala setup.</p>
+
+<h1 id="scala-setup">Scala setup</h1>
+
+<p>We advised by the instructor so use scala using the intelliJ IDE, but since I’m
+not a big fan of IDEs and prefer using my editor (emacs). I thought I get away
+with simply installing scala from the command line (<code>apt-get install scala</code>)
+and invoking my programs from the command line using the <code>scalac</code> or <code>scala</code>
+programs.</p>
+
+<p>The course requires using a dependency called <a href="URL">scalaneko</a>, which of course
+needs to specified before building your program. I tried to compile this with
+a simple Makefile that looked like this:</p>
+<pre><code>run:
+	scala -cp scalaneko_2.12-0.19.0-SNAPSHOT.jar hello_world.scala
+</code></pre>
+
+<p>Above Makefile simply tries to specify the classpath using the <code>-cp</code> flag and runs
+the scala file. However, this approach fails with errors that probably are hinting
+towards the dependency being compiled using a different version of scala.</p>
+
+<p>Therefore, I decided to use SBT for this purpose. SBT is more complex tool for my
+simple usage but I think the time saved in the long run would be worth it.</p>
+
+<p>For installation, followed the setup guide <a href="">here</a>. I read the <a href="https://www.scala-sbt.org/1.x/docs/Getting-Started.html">getting started guide</a> to see how to make it work.
+Here’s a brief description (make sure sbt is installed first):
+First cd into the folder you want to setup your first project. Then execute:</p>
+<pre><code>sbt new sbt/scala-seed.g8
+</code></pre>
+<p>Type a project name (say <code>hello</code>) when prompted for it. You then cd into the <code>hello</code>
+directory and execute <code>sbt</code>. Once inside the prompt, type <code>run</code>. This whole process
+takes a while to complete since it downloads and compiles many sources.</p>
+
+<h1 id="scala-syntax-protips">Scala syntax protips</h1>
+
+<h2 id="values-and-variables">Values and variables</h2>
+
+<p>Scala supports values and variables. Values cannot be changed and are technically
+constants (immutable). Values are declared with <code>val</code> and variables with <code>var</code>.</p>
+
+<p>Since scala supports type inference you don’t need to explicitly declare the type
+of your values or variables.</p>
+
+<h2 id="for-loop">For loop</h2>
+
+<p>For loops have the following syntax:</p>
+<div class="language-scala highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+</pre></td>
+  <td class="code"><pre>var count = 0
+for (i &lt;- 0 to 10) count = count + i
+count
+</pre></td>
+</tr></table>
+</div>
+
+<h2 id="functions">Functions</h2>
+
+<p>Since scala is an object-oriented <em>functional</em> programming language, functions are
+basically objects that you create with the keyword <code>def</code>. For example:</p>
+<div class="language-scala highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+</pre></td>
+  <td class="code"><pre>def sum(a: Int, b: Int): Int = a + b
+sum(900,100)
+</pre></td>
+</tr></table>
+</div>
+<p>The <code>Int</code> after the colon is the return type. You can leave out specifying the
+return type in most cases since scala can infer that by itself. Just like any
+functional language, functions can be stored and passed around like objects.</p>
+
+<p>If you don’t want your function to return a value (like <code>void</code>) in C, use <code>Unit</code>
+as the return value:</p>
+<div class="language-scala highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+</pre></td>
+  <td class="code"><pre>def print(a: Int): Unit = println(a)
+print(3)
+</pre></td>
+</tr></table>
+</div>
+
+<p>Like Ruby, the last statement in the body of a function is its return value.</p>
+
+<h3 id="higher-order-functions">Higher-order functions</h3>
+
+<p>Scala allows defining functios that take other functions as its arguments.
+This can be done by specifying the argument types and return type of the function
+as the data type of the variable that accepts this. For example:</p>
+<div class="language-scala highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+</pre></td>
+  <td class="code"><pre>def apply(f: Int =&gt; String, v: Int) = f(v)
+</pre></td>
+</tr></table>
+</div>
+<p>In the above code the <code>apply</code> function will accept a function <code>f</code> as an arguement
+which accepts one <code>Int</code> and returns a <code>String</code>.</p>
+
+<h3 id="functions-as-variables">Functions as variables</h3>
+
+<p>Functions can be assigned to a <code>val</code> by specifying the prototype of the function:</p>
+<div class="language-scala highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+</pre></td>
+  <td class="code"><pre>val sum: (Int, Int) =&gt; Int = (a: Int, b: Int) =&gt; a + b
+sum(3,6)
+</pre></td>
+</tr></table>
+</div>
+
+<p>Or even by a simple assignment using the <code>new</code> keyword:</p>
+<div class="language-scala highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+</pre></td>
+  <td class="code"><pre>val verboseSum = new Function2[Int, Int, Int] {
+    def apply(a: Int, b: Int): Int = a + b
+}
+
+verboseSum(3,6)
+</pre></td>
+</tr></table>
+</div>
+
+<p>In the assingnment we’ve used with <code>new Function2[-T1,-T2,+R]</code> constructor. This is a
+<a href="http://www.scala-lang.org/api/2.9.1/scala/Function2.html">special scala trait</a> that can be used for
+defining anonymous functions. <code>Function2</code> specifies that the this function will accept
+parameters of type <code>T1</code> and <code>T2</code> and will return a type <code>R</code>.</p>
+
+<h3 id="passing-blocks-to-method-calls">Passing blocks to method calls</h3>
+
+<p>Passing blocks to functions (similar to Ruby <code>do..end</code> blocks) is done by specifying curly
+braces with the method call. Example:</p>
+<pre><code>Receive {
+  // do something...
+}
+</code></pre>
+
+<h2 id="classes">Classes</h2>
+
+<p>Classes are defined using the <code>class</code> keyword. Using a default constructor, the class
+can be defined like so:</p>
+<div class="language-scala highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+</pre></td>
+  <td class="code"><pre>class User
+
+val user1 = new User
+</pre></td>
+</tr></table>
+</div>
+
+<p>A constructor can be used by directly specifying the expected argument with the classname:</p>
+<pre><code>class Point(x: Int, y: Int) {
+    def move(dx: Int, dy: Int) {
+        dx = x + 1
+        dy = y + 1
+    }
+}
+
+new point1 = Point(2,3)
+point1.x
+</code></pre>
+
+<h3 id="singleton-classes">Singleton classes</h3>
+
+<p>Singleton classes in scala are created using the <code>object</code> keyword. This is something
+like a module in Ruby. You cannot instantiate objects of such classes. You can simply
+access the functions by name instead of creating objects. The <code>main</code> function of a
+program must be defined inside a singleton class by the name of the package.</p>
+
+<h3 id="inheritance">Inheritance</h3>
+
+<p>Inheritance is done using the <code>extends</code> keyword and the <code>with</code> keyword. You can use
+<code>extends</code> only once when defining a class and <code>with</code> multiple times after that. <code>with</code>
+is used for multiple inheritance.</p>
+
+<h4 id="instantiating-base-class-with-certain-values">Instantiating base class with certain values</h4>
+
+<h3 id="case-classes">Case classes</h3>
+
+<p>Case classes are useful for modelling immutable data.</p>
+
+<h4 id="defining-case-classes">Defining case classes</h4>
+
+<p>Defined using the <code>case class</code> keyword. These classes do not require the <code>new</code> keyword
+for instantiation because they have an implicit <code>apply</code> method defined internally. You
+can use these classes like so:</p>
+<div class="language-scala highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+</pre></td>
+  <td class="code"><pre>case class Book(isbn: String)
+
+val frankenstein = Book(&quot;978-0486282114&quot;)
+</pre></td>
+</tr></table>
+</div>
+<p>All attributes of case classes are public and are immutable.</p>
+
+<h2 id="pattern-matching">Pattern matching</h2>
+
+<p>Pattern matching is a powerful tool in Scala for matching an input vs. a set of possible
+outcomes. It similar in nature to other FP languages like OCaml.</p>
+
+<p>At its simplest, it can be thought of as a switch-case statement in Java, but with more
+power. A simple example would be:</p>
+<div class="language-scala highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+</pre></td>
+  <td class="code"><pre>import scala.util.Random
+
+val x: Int = Random.nextInt(10)
+
+x match {
+  case 0 =&gt; &quot;zero&quot;
+  case 1 =&gt; &quot;one&quot;
+  case 2 =&gt; &quot;two&quot;
+  case _ =&gt; &quot;many&quot;
+}
+</pre></td>
+</tr></table>
+</div>
+
+<h3 id="list-pattern-matching">List pattern matching</h3>
+
+<h3 id="pattern-matching-anonymous-functions">Pattern matching anonymous functions</h3>
+
+<p>Scala provides a way of pattern matching anonymous functions. These are basically blocks
+containing the usual <code>case</code> statements but without the <code>match</code>.</p>
+
+<h2 id="operators">Operators</h2>
+
+<p>This warrants a new section because scala uses a lot of fancy operators for doing all sorts
+of ‘magic’ things that can be confusing at first.</p>
+
+<h2 id="eccentric-things">Eccentric things</h2>
+
+<h3 id="in-code-todo-statements">In-code TODO statements</h3>
+
+<p>Scala allows you to throw NotImplementedError using a simpler syntax where you can define
+a value <code>???</code> to throw an exception:</p>
+<div class="language-scala highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+</pre></td>
+  <td class="code"><pre>def ???: Nothing = throw new NotImplementedError
+
+def answerToLifeAndEverything() = ???
+</pre></td>
+</tr></table>
+</div>
+
+<h3 id="option-types">Option types</h3>
+
+<h3 id="importing-package-inside-classes">Importing package inside classes</h3>
+
+<p>If you write some case classes (or anything for that matter) inside an <code>object</code>, you need to
+declare <code>import ObjectName._</code> inside any class where you want to use members defined inside
+that object. This is because the symbols get namespaced.</p>
+
+<h1 id="distributed-algorithms-in-scala">Distributed algorithms in scala</h1>
+
+<p>Professor Xavier’s lab has written a library called <a href="http://www.coord.c.titech.ac.jp/projects/scalaneko/api/neko/">scalaneko</a> that is useful
+for prototyping and implementing distributed systems using scala. This assingnment
+asks us write an algorithm that does a parallel traversal of a connected graph
+of processes using scala.</p>
+
+<h2 id="scalaneko-protips">Scalaneko protips</h2>
+
+<p>The basic unit of concurrency is a processs. Each process can contain many protocols. Protocols
+implement the actual algorithms of the system. Protocols and processes exchange information
+through events. There are two types of events: signals and messages. Signals allows protocols
+within the same process to notify each other. Messages are for protocol instances to communicate
+across different processes. Therefore, only messages are transmitted through the network.</p>
+
+<p>Working with scalaneko basically involves the following steps:</p>
+
+<h3 id="initialize-scalaneko-environment">Initialize scalaneko environment</h3>
+
+<p>Create a main object that provides the basic parameters for the execution, such as total
+number of processes to create and their initializer. For example:</p>
+<div class="language-scala highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+</pre></td>
+  <td class="code"><pre>object HelloNeko
+  extends Main(topology.Clique(2))(
+    ProcessInitializer { p =&gt; 
+      new Hello(p) 
+    }
+  )
+</pre></td>
+</tr></table>
+</div>
+<p>In the above code we initialize scalaneko with 2 processes and then state that each process
+should be an instance of the <code>Hello</code> class.</p>
+
+<h3 id="create-and-use-protocols">Create and use protocols</h3>
+
+<p>You need to create protocols for the communication logic. This is done by extending a process class
+like <code>Hello</code> in the above code using the <code>ActiveProtocol</code> class provided by scalaneko. Inside
+the class you must define a method called <code>run</code> which will be called by ActiveProtocol inside
+its own thread for running the protocol.</p>
+
+<p>Messages are sent using the <code>ActiveProtocol.SEND</code> method and received via blocking calls to
+<code>ActiveProtocol.RECEIVE</code> method. You should call <code>listenTo</code> to register messages of a
+particular type before you can receive them.</p>
+
+<p>You can also override the <code>ActiveProtocol.onReceive</code> method to process messages reactively.
+Those that are not caught by <code>onReceive</code> are sent into a receive queue and must be handled using
+<code>Receive</code>.</p>
+
+<p>The <code>SEND</code> function in <code>ActiveProtocol</code> has the type:</p>
+<pre><code>def SEND(m: Event): Unit 
+</code></pre>
+<p>The <code>Event</code> in the argument can be an object of type that inherits from <code>Unicastmessage</code> or
+<code>Broadcastmessage</code>.</p>
+
+<h3 id="process-initialization">Process initialization</h3>
+
+<p>Process initialization is done using the <code>ProcessInitializer</code> class, whose sole role is
+to create protocols of a process and combine them. For example:</p>
+<pre><code>ProcessInitializer { p =&gt;
+    val app  = new PingPong(p)
+    val fifo = new FIFOChannel(p)
+    app --&gt; fifo
+}
+</code></pre>
+
+<p>In the above example, each process is initialized by executing the above code. The
+code creates two protocols while registering them into the object p given as argument
+(which represents the process being initialized). Then, the two protocols are connected
+such that all SEND operations of protocol <code>app</code> are handed to protocol <code>fifo</code>. The send
+operations of protocol fifo use the default target which is the network interface of
+the process.</p>
+
+<h3 id="messages-and-signals">Messages and signals</h3>
+
+<p>Signals happen inside a process, and can go from one protocol to another, but never crosses
+process boundaries. Represented by class <code>neko.Signal</code>. A message is an event that crosses
+process boundaries, but is typically interpreted by the same protocol in the target process.
+Represented by a subclass of <code>neko.Message</code>.</p>
+
+<p>Messages can be multicast (<code>neko.MulticastMessage</code>), unicast (<code>neko.UnicastMessage</code>) or
+a wrapper (<code>neko.Wrapper</code>) that wraps an existing message.</p>
+
+<h3 id="message-sending-methoology">Message sending methoology</h3>
+
+<p>The <code>SEND</code> and <code>DELIVER</code> functions are used for sending messages. Both of them work with
+objects of type Event. Thugh they sound the same they have some important differences.</p>
+<pre><code>         application
+  |                      ^
+  V                      |
++----------------------------+
+| onSend        DELIVER(...) |
+|                            | Reactive protocol
+| SEND(...)        onReceive |
++----------------------------+
+  |                      ^
+  V                      |
+          network
+</code></pre>
+<p>Having a look at Professor Xavier’s Tarry traversal codes, I think that SEND is more
+useful for communicating from one process to another and DELIVER for communicating
+to the App class that send the initiator message and stuff like that.</p>
+
+<h1 id="resources">Resources</h1>
+
+<ul>
+  <li><a href="http://uclmr.github.io/stat-nlp-book-scala/05_tutorial/01_intro_to_scala_part1.html">Scala crash course.</a></li>
+  <li><a href="http://docs.scala-lang.org/tutorials/tour/higher-order-functions.html.html">Higher-order functions.</a></li>
+  <li><a href="http://www.scala-lang.org/api/2.9.1/scala/Function2.html">Scala Function2.</a></li>
+  <li><a href="https://www.safaribooksonline.com/library/view/learning-scala/9781449368814/ch09.html">Objects and classes in scala.</a></li>
+  <li><a href="https://stackoverflow.com/questions/41031166/scala-extends-vs-with">Extends vs with.</a></li>
+  <li><a href="http://scala-lang.org/files/archive/spec/2.12/05-classes-and-objects.html">Classes and objects in scala official docs.</a></li>
+  <li><a href="https://alvinalexander.com/scala/how-to-declare-constructor-parameters-extending-scala-class">Declare constructor parameters of extended scala class.</a></li>
+  <li><a href="https://docs.scala-lang.org/tour/case-classes.html">Scala case classes</a></li>
+  <li><a href="http://danielwestheide.com/blog/2012/12/12/the-neophytes-guide-to-scala-part-4-pattern-matching-anonymous-functions.html">Pattern matching anonymous functions.</a></li>
+  <li><a href="https://github.com/ghik/opinionated-scala/wiki/Methods-and-operators">Magic in scala methods and operators.</a></li>
+  <li><a href="http://www.coord.c.titech.ac.jp/projects/scalaneko/api/neko/">ScalaNeko API docs.</a></li>
+  <li><a href="https://en.wikipedia.org/wiki/Chang_and_Roberts_algorithm">Chang-Roberts algorithm.</a></li>
+  <li><a href="http://danielwestheide.com/blog/2012/12/19/the-neophytes-guide-to-scala-part-5-the-option-type.html">Scala Option type.</a></li>
+</ul>

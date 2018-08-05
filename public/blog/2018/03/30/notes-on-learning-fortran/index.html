@@ -1,0 +1,229 @@
+<p>I’ve been trying to understand the distributed <a href="http://people.eecs.berkeley.edu/~demmel/cs267/lecture12/pdgetrf.f">block LU code written in ScaLAPACK</a>, which is written in FORTRAN. In order to understand the algorithms properly I took a 30 min crash course in FORTRAN. In this blog post I’ll write some details about the language that are relevant to understanding the ScaLAPACK code.</p>
+
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-generate-toc again -->
+<p><strong>Table of Contents</strong></p>
+
+<ul>
+  <li><a href="#learning-resources">Learning resources</a></li>
+  <li><a href="#salient-fortran-features">Salient FORTRAN features</a>
+    <ul>
+      <li><a href="#program-structure">Program structure</a></li>
+      <li><a href="#printing">Printing</a></li>
+    </ul>
+  </li>
+  <li><a href="#fortran-wrt-scalapack">FORTRAN w.r.t ScaLAPACK</a>
+    <ul>
+      <li><a href="#subroutines-and-functions">Subroutines and functions</a></li>
+      <li><a href="#arrays">Arrays</a></li>
+      <li><a href="#logical-and-comparison-expressions">Logical and comparison expressions</a></li>
+      <li><a href="#loops">Loops</a></li>
+    </ul>
+  </li>
+</ul>
+
+<!-- markdown-toc end -->
+
+<h1 id="learning-resources">Learning resources</h1>
+
+<ul>
+  <li><a href="https://www.tutorialspoint.com/fortran/index.htm">Fortran tutorial on tutorialspoint</a>.</li>
+  <li><a href="https://www.fortrantutorial.com/">Fortran tutorial website</a>.</li>
+  <li><a href="http://www.chem.ox.ac.uk/fortran/subprograms.html">Functions and subroutines</a>.</li>
+  <li><a href="http://pages.mtu.edu/~shene/COURSES/cs201/NOTES/F90-Basics.pdf">Presentation on F90 basics</a>.</li>
+  <li><a href="http://www.fortran.com/fortran_storenew/Html/Info/books/gd3_c04_1.html">Fortran Arrays</a>.</li>
+  <li><a href="http://www.pcc.qub.ac.uk/tec/courses/f90/stu-notes/F90_notesMIF_6.html">Logical and comparison expressions</a>.</li>
+</ul>
+
+<h1 id="salient-fortran-features">Salient FORTRAN features</h1>
+
+<p>Here’s a simple addition program:</p>
+<div class="language-fortran highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+<a href="#n7" name="n7">7</a>
+<a href="#n8" name="n8">8</a>
+<a href="#n9" name="n9">9</a>
+<strong><a href="#n10" name="n10">10</a></strong>
+<a href="#n11" name="n11">11</a>
+<a href="#n12" name="n12">12</a>
+<a href="#n13" name="n13">13</a>
+<a href="#n14" name="n14">14</a>
+<a href="#n15" name="n15">15</a>
+</pre></td>
+  <td class="code"><pre>program addNumbers
+
+! This simple program adds two numbers. This is a comment.
+   implicit none
+   
+! Type declarations
+   real :: a, b, result 
+   
+! Executable statements 
+   a = 12.0
+   b = 15.0
+   result = a + b
+   print *, 'The total is ', result
+   
+end program addNumbers 
+</pre></td>
+</tr></table>
+</div>
+
+<p>Each program begins with keyword <code>program &lt;prog_name&gt;</code> and ends with <code>end program &lt;prog_name&gt;</code>.</p>
+
+<p>A statement <code>implicit none</code> allows the compiler to check whether all variable types are declared correctly. This statement must be there to check if types have been declared correctly.</p>
+
+<h2 id="program-structure">Program structure</h2>
+
+<p>A full program should be kept inside a <code>program</code> statement. A simple ‘hello world!’ program
+looks like so:</p>
+<pre><code>program hello
+  implicit none
+
+  print*,"Hello"
+  print*,"World!"
+end program
+</code></pre>
+
+<h2 id="printing">Printing</h2>
+
+<p>Write to standard output using the <code>print</code> statement.</p>
+
+<p>Link: https://en.wikibooks.org/wiki/Fortran/Fortran_simple_input_and_output</p>
+
+<p>Printing multi-dimensional arrays can be tricky since the <code>print</code> statement by
+default outputs newlines after each printing. Here’s a link that explains how
+to print 2d arrays in fortran using <code>write</code>:</p>
+
+<p>Link: https://jblevins.org/log/array-write</p>
+
+<p>If you want to use format specifiers with floating point numbers, read below link:</p>
+
+<p>Link: https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap05/format.html</p>
+
+<h1 id="fortran-wrt-scalapack">FORTRAN w.r.t ScaLAPACK</h1>
+
+<h2 id="subroutines-and-functions">Subroutines and functions</h2>
+
+<p>I will now explain the <code>pdgetrf</code> routine from ScaLAPACK.</p>
+
+<p>The <code>SUBROUTINE</code> keyword is used for defining subroutines. For example:</p>
+<pre><code>SUBROUTINE PDGETRF( M, N, A, IA, JA, DESCA, IPIV, INFO )
+</code></pre>
+<p>Types of arguments to subroutines are defined in the subroutine definition itself. For example, in scalapack:</p>
+<div class="language-fortran highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+</pre></td>
+  <td class="code"><pre>*     .. Scalar Arguments ..
+      INTEGER            IA, INFO, JA, M, N
+*     ..
+*     .. Array Arguments ..
+      INTEGER            DESCA( * ), IPIV( * )
+      DOUBLE PRECISION   A( * )
+</pre></td>
+</tr></table>
+</div>
+
+<p>Unlike in C, the argument types are not declared alongwith the  name and argument list.</p>
+
+<p>Functions and subroutines are different in FORTRAN. The main difference lies in the fact that functions can be used in an expression and can return only one value (exactly like functions in C or Java). A subroutine on the other hand, cannot be used in expressions, but has the advantage that it can be used for returning multiple values. In the respect of returning multiple values it is somewhat similar to MATLAB functions.</p>
+
+<p>A subroutine ends with the <code>RETURN</code> and <code>END</code> statement. The arguements passed to a subroutine are similar to call by reference in the case of C. If you modify any value inside the subroutine, the value will be modified in the calling function too.</p>
+
+<p>In order to tell the compiler the return value of a function, you must use the name of the function in an assignment statement that will tell the compiler the value to be returned. For example:</p>
+<div class="language-fortran highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+<a href="#n4" name="n4">4</a>
+<a href="#n5" name="n5">5</a>
+<a href="#n6" name="n6">6</a>
+</pre></td>
+  <td class="code"><pre> REAL FUNCTION AVRAGE(X,Y,Z)
+     REAL X,Y,Z,SUM
+     SUM = X + Y + Z
+     AVRAGE = SUM /3.0
+ RETURN
+ END
+</pre></td>
+</tr></table>
+</div>
+
+<h2 id="arrays">Arrays</h2>
+
+<p>Arrays are used/declared in a similar manner to C. For example, to declare an array:</p>
+<div class="language-fortran highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+</pre></td>
+  <td class="code"><pre>INTEGER            IDUM1( 1 ), IDUM2( 1 )
+</pre></td>
+</tr></table>
+</div>
+<p>Array elements can be accessed using round brackets:</p>
+<div class="language-fortran highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+</pre></td>
+  <td class="code"><pre>ICTXT = DESCA( 7 )
+</pre></td>
+</tr></table>
+</div>
+
+<p>By default, arrays in fortran begin from index <code>1</code>.</p>
+
+<p>One can also specify the <code>kind</code> parameter in the array to tell the compiler which of its suppported
+kinds it should use.</p>
+
+<p>Multi-dimensional arrays are referenced in their indexing the same way as C arrays <code>(row, col)</code> but
+the internal storage is of course column major. See the second link below.</p>
+
+<p>Link:</p>
+<ul>
+  <li>https://stackoverflow.com/questions/838310/fortran-90-kind-parameter</li>
+  <li>https://www.obliquity.com/computer/fortran/array.html</li>
+</ul>
+
+<h2 id="logical-and-comparison-expressions">Logical and comparison expressions</h2>
+
+<p>Logical and comparison operators are written enclosed in dots. So <code>&amp;&amp;</code> in C is
+<code>.AND.</code> in fortran. Similarly, <code>!=</code> is <code>.NE.</code>.</p>
+
+<h2 id="loops">Loops</h2>
+
+<p>Fortran has a curious way of writing loops, given that I’m coming from the C world. 
+Loops are written using the <code>do-continue</code> syntax. Each loop statement in a program 
+requires a statement label. Any label number can be used but the <code>do</code> and <code>continue</code>
+of a single block must have the same label.</p>
+
+<p>The variable that is defined in the line of the <code>do</code> block is the counter variable.
+Its default step is <code>1</code> but you can change that as you want.</p>
+
+<p>The general form is:</p>
+<div class="language-fortran highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+</pre></td>
+  <td class="code"><pre>do label var =  expr1, expr2, expr3
+  ! statements
+label continue
+</pre></td>
+</tr></table>
+</div>
+
+<p>In the above loop, <code>var</code> is the loop variable (this must be an integer). <code>expr1</code>
+specifies the initial value of <code>var</code>, <code>expr2</code> is the terminating bound, and 
+<code>expr3</code> is the increment (step).</p>
+
+<p>Many Fortran 77 compilers allow <code>do</code>-loops to be closed by the <code>enddo</code> 
+statement. The advantage of this is that the statement label can then be omitted
+since it is assumed that an <code>enddo</code> closes the nearest previous do statement. 
+The <code>enddo</code> construct is widely used, but it is not a part of ANSI Fortran 77.</p>

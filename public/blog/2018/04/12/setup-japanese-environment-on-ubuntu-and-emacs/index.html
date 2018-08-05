@@ -1,0 +1,64 @@
+<p>I’m currently living in Japan and learning Japanese in University. In order to make
+learning easier I’m using the <a href="https://ankiweb.net">Anki</a> app. However, Ubuntu and 
+emacs don’t come with easy Japanese functionality out of the box and in this post 
+I will document the efforts I took to make this happen.</p>
+
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+<p><strong>Table of Contents</strong></p>
+
+<ul>
+  <li><a href="#ubuntu-setup">Ubuntu setup</a></li>
+  <li><a href="#emacs-setup">Emacs setup</a></li>
+  <li><a href="#resources">Resources</a></li>
+</ul>
+
+<!-- markdown-toc end -->
+
+<h1 id="ubuntu-setup">Ubuntu setup</h1>
+
+<p>For ubuntu, the preferred Japanese input method is a Japanese keyboard called mozc.
+Use the link in the resources below for this purpose.</p>
+
+<p>Then, setup the following ENV variables in your .bashrc:</p>
+<pre><code>export QT_IM_MODULE=fcitx
+export GTK_IM_MODULE=fcitx
+</code></pre>
+<p>You can go the text entry setting and set the keyboard change button to ‘pause’,
+which I did.</p>
+
+<h1 id="debian-setup">Debian setup</h1>
+
+<p>You can’t install mozc on Debian GUI so you should first install the <code>ibus-mozc</code> package
+and then use the ibus GUI for selecting mozc.</p>
+
+<h1 id="emacs-setup">Emacs setup</h1>
+
+<p>You can then proceed to setup your emacs with the mozc keyboard. For this purpose,
+you should first copy-paste the file <code>mozc.el</code> from the <a href="https://github.com/google/mozc/blob/master/src/unix/emacs/mozc.el">mozc sources</a>
+into your .emacs.d/ folder and then paste the following into your <code>init.el</code> (after
+loading the mozc.el file).</p>
+<div class="language-elisp highlighter-coderay"><table class="CodeRay"><tr>
+  <td class="line-numbers"><pre><a href="#n1" name="n1">1</a>
+<a href="#n2" name="n2">2</a>
+<a href="#n3" name="n3">3</a>
+</pre></td>
+  <td class="code"><pre>(require 'mozc)
+(setq default-input-method &quot;japanese-mozc&quot;)
+(setq mozc-candidate-style 'overlay)
+</pre></td>
+</tr></table>
+</div>
+<p>Once this is done, install the <code>emacs-mozc-bin</code> package from the ubuntu sources
+so that emacs can communicate with the mozc server.</p>
+
+<p>You should now be able to change between Japanese and English keyboards using the
+<code>C-\</code> command inside emacs. This does not change your system input.</p>
+
+<h1 id="resources">Resources</h1>
+
+<ul>
+  <li><a href="https://moritzmolch.com/2287">Ubuntu setup instructions for mozc.</a></li>
+  <li><a href="https://www.emacswiki.org/emacs/WritingJapanese">Writing Japanese in emacs</a></li>
+  <li><a href="https://wiki.archlinux.org/index.php/mozc#Mozc_for_Emacs">Archlinux mozc emacs.</a></li>
+</ul>
+

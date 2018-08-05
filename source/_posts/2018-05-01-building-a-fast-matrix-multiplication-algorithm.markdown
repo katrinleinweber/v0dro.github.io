@@ -432,6 +432,25 @@ job-ID     prior   name       user         state submit/start at     queue      
 
 Once the job is done, it will deposit the error and output in separate files in your pwd.
 
+You can use `qdel <task_id>` for deleting a submitted job.
+
+## Debugging using TSUBAME tools
+
+Tools like Allinea DDT can be used from TSUBAME for debugging parallel applications.
+
+For this purpose you need to switch on X window forwarding in your login session and
+start an interactive session on TSUBAME. When you ssh into TSUBAME you should also
+login using the `-Y` option.
+
+To test if X forwarding works, use a command like `xterm` and see if its opens a window
+locally. You can use Allinea DDT for parallel debugging.
+
+After compiling, you can execute the binary using `ddt a.out` command.
+
+Link:
+* https://kb.iu.edu/d/bdnt
+* https://computing.llnl.gov/tutorials/allineaDDT/Examples.pdf
+
 ## CPU information on f-node
 
 On an f-node of TSUBAME, the CPU information is as follows:
