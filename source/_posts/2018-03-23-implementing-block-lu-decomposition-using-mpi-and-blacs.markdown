@@ -162,6 +162,78 @@ I'm using when talking about certain kinds of blocks:
 * Matrix sub-blocks :: Each matrix block is divided into sub-blocks that are scattered
 over processes. Each of these sub-blocks corresponds to a single process block.
 
+## MPI communication protips
+
+### Communicating lower triangular matrices with `MPI_Type_indexed`
+
+For communicating arrays that are not contiguos in memory it is useful to use the
+`MPI_Type_indexed` function for sending/receiving a non-contiguos array stored in memory.
+
+If using `indexed` for sending, one must keep in mind that the array will be sent and
+received in the exact same form that it is sent. So for example, if you have a 4x4 matrix
+stored in an array of length 16 and you wish to send the lower triangle of this array,
+you will need to reserve an array of length 16 at the receiving process too. The receiving
+array will be populated at the positions that are indicated by the displacement and length
+arrays that you commit when making the data type.
+
+Here's a sample code for sending the lower triangle part of a 4x4 matrix stored as a 1D array:
+``` cpp
+// Sample program for demoing sending the lower triangle of a square
+// matrix using types made by the MPI_Type_indexed function.
+
+#include "mpi.h"
+#include <iostream>
+using namespace std;
+
+int main()
+{
+  MPI_Init(NULL, NULL);
+  int mpi_rank, mpi_size;
+  MPI_Comm_size(MPI_COMM_WORLD, &mpi_size);
+  MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
+
+  double A[16], G[16];
+  int displs[4] = {0, 4, 8, 12};
+  int lens[4] = {1, 2, 3, 4};
+  MPI_Datatype tril;
+  MPI_Status status;
+
+  for (int i = 0; i < 16; i++)
+    A[i] = i+1;
+
+  MPI_Type_indexed(4, lens, displs, MPI_DOUBLE, &tril);
+  MPI_Type_commit(&tril);
+
+  if (mpi_rank == 0) {
+    MPI_Send(A, 1, tril, 1, 0, MPI_COMM_WORLD);
+  }
+
+  if (mpi_rank == 1) {
+    MPI_Recv(G, 1, tril, 0, 0, MPI_COMM_WORLD, &status);
+
+    for (int i = 0; i < 4; i++) {
+      for (int j = 0; j < 4; j++) {
+        if (j <= i)
+          cout << G[i*4 + j] << " ";
+        else
+          cout << " ";
+      }
+      cout << endl;
+    }
+  }
+  MPI_Type_free(&tril);
+  MPI_Finalize();
+}
+```
+
+### Communicating lower triangular matrices using MPI_Pack.
+
+
+
+Link:
+
+* https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&cad=rja&uact=8&ved=2ahUKEwj37KWzyNfcAhWCQN4KHcXACzUQFjACegQICBAC&url=http%3A%2F%2Fwww.mathnet.or.kr%2Fmathnet%2Fpaper_file%2Fiowa%2FGlenn%2FMPI.Derived.Types.Yanmei.April14.2005.doc&usg=AOvVaw3Qbf0Sbs6SWcAuddAZrFqG
+
 ## ScaLAPACK protips
 
 ### Use of M and N in routines
