@@ -368,3 +368,81 @@ It's a fairly straightforward module that can be used without much hassle.
 Link:
 
 * https://docs.python.org/3.3/howto/argparse.html#id1
+
+# C extensions
+
+Python C extensions tend to be somewhat more complex than Ruby extensions because
+you need to manually keep a count of the objects due to Python's use of a generational
+GC (no mark-and-sweep) with reference counting. The exception handling mechanism is
+also somewhat different from Ruby and is worth noting.
+
+Python also uses a significantly different mechanism for calling C functions from
+Python methods. Before being able to call functions, you need to 'register' the
+function in a 'method table'.
+
+Read on for details.
+
+## Module initialization
+
+Modules are initialized using the `PyInit_modulename` function. This function never
+accepts any arguments and must be defined with argument `void`.
+
+## Module methods
+
+Defining a C functions that is callable from Python requires you first write a function
+with a prototype as:
+```
+static PyObject * method_name(PyObject *self, PyObject *args) {}
+```
+
+## Error handling
+
+Python stores exceptions inside a static global variable. If no exceptions occur this
+variable is `NULL`. If an exception occurs, the function is supposed to store the
+exception handle in this variable and return an error value (like a `NULL` pointer).
+
+## Method calling
+
+We need to first list the names and addresses of functions in a "method table". This
+is how it can be done:
+```
+static PyMethodDef SpamMethods[] = {
+    ...
+    {"system",  spam_system, METH_VARARGS,
+     "Execute a shell command."},
+    ...
+    {NULL, NULL, 0, NULL}        /* Sentinel */
+};
+```
+This table should be passed to the initialization function of the module whenever
+it gets called.
+
+There are some special functions like `PyArg_ParseTupleAndKeywords` that can be
+used for parsing arguments passed into a Python method.
+
+Links:
+
+* https://docs.python.org/2.0/ext/parseTupleAndKeywords.html
+
+## Specifying class properties
+
+The `PyTypeObject` structure defines a Python type. This structure defines most of the
+important attribtutes of a python object like various C functions for initializing
+objects and freeing memory allocated by them when they're GC'd. It also stores a pointer
+to the struct that contains the method table for the class.
+
+Following are some important attributes:
+
+* tp_str - Point to function implementing the built-in `str()` operator.
+* tp_new - Point to function implementing instance creation function.
+
+Links:
+
+* https://docs.python.org/3/c-api/typeobj.html
+
+General Links:
+
+* https://docs.python.org/2/extending/extending.html
+* https://docs.python.org/3/extending/building.html
+* https://www.pythonsheets.com/notes/python-capi.html#pyobject-with-member-and-methods
+* https://docs.python.org/3/c-api/index.html
