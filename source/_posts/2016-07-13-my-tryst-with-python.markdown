@@ -318,6 +318,12 @@ to call a particular method.
 
 Link: http://www.pythonforbeginners.com/super/working-python-super-function
 
+# Special methods
+
+## Equality of objects
+
+Over-ride the `__eq__` method.
+
 # The Garbage Collector
 
 The Python interpreter maintains a count of references to each object in memory.
@@ -369,6 +375,10 @@ Link:
 
 * https://docs.python.org/3.3/howto/argparse.html#id1
 
+# Packaging and creating your own modules
+
+Follow the common directory structure.
+
 # C extensions
 
 Python C extensions tend to be somewhat more complex than Ruby extensions because
@@ -387,20 +397,6 @@ Read on for details.
 Modules are initialized using the `PyInit_modulename` function. This function never
 accepts any arguments and must be defined with argument `void`.
 
-## Module methods
-
-Defining a C functions that is callable from Python requires you first write a function
-with a prototype as:
-```
-static PyObject * method_name(PyObject *self, PyObject *args) {}
-```
-
-## Error handling
-
-Python stores exceptions inside a static global variable. If no exceptions occur this
-variable is `NULL`. If an exception occurs, the function is supposed to store the
-exception handle in this variable and return an error value (like a `NULL` pointer).
-
 ## Method calling
 
 We need to first list the names and addresses of functions in a "method table". This
@@ -414,6 +410,12 @@ static PyMethodDef SpamMethods[] = {
     {NULL, NULL, 0, NULL}        /* Sentinel */
 };
 ```
+Each entry in the table is an initialization for the struct of type `PyMethodDef`.
+The 3rd argument specifies what kind of a Python method this will be and what
+parameters will be passed to it when its gets called by the Python interpreter. Those
+are flags that can OR'd. In the above case `METH_VARARGS` will create an instance
+method.
+
 This table should be passed to the initialization function of the module whenever
 it gets called.
 
@@ -423,6 +425,43 @@ used for parsing arguments passed into a Python method.
 Links:
 
 * https://docs.python.org/2.0/ext/parseTupleAndKeywords.html
+
+## Instance methods
+
+Defining a C functions that is callable from Python requires you first write a function
+with a prototype as:
+```
+static PyObject * method_name(PyObject *self, PyObject *args) {}
+```
+In the above example, the first arg `self` is a pointer to the Python instance that calls
+this method (Python class) and `*args` is an array of Python objects that contains the
+arguments.
+
+## Class methods
+
+If you want to mark a C function as a Python class method rather than an instance method,
+you should pass the `METH_CLASS` parameter in the 3rd arg of the `PyMethodDef` initialization.
+
+For example:
+```
+{ "deserialize", (PyCFunction)ndtype_deserialize, METH_O|METH_CLASS, doc_deserialize }
+```
+
+This will pass `PyTypeObject *` as the first parameter of the function instead of an
+instance of the class. So the `ndtype_deserialize` function will look like so:
+```
+static PyObject * ndtype_deserialize(PyTypeObject *tp, PyObject *bytes);
+```
+
+Link:
+
+* https://docs.python.org/3/c-api/structures.html#METH_CLASS
+
+## Error handling
+
+Python stores exceptions inside a static global variable. If no exceptions occur this
+variable is `NULL`. If an exception occurs, the function is supposed to store the
+exception handle in this variable and return an error value (like a `NULL` pointer).
 
 ## Specifying class properties
 
@@ -439,6 +478,30 @@ Following are some important attributes:
 Links:
 
 * https://docs.python.org/3/c-api/typeobj.html
+
+## PyCapsule a.k.a providing C API for other extension modules
+
+Python allows for a special way for exposing the functions of a C extension to C extensions
+of other Python libraries using the `PyCapsule` constructs. It allows you encapsulate
+the C API inside a Python module belonging to a particular namespace, which the other C
+extension can simply load and extract the pointer to the API from.
+
+Links:
+
+* https://docs.python.org/2/extending/extending.html#using-capsules
+
+## Creating Python objects from C structs
+
+There is a macro called `PyObject_HEAD` that allows one to give Python-object like behaviour
+to any C struct. It defines some variables within the struct that make it behave like
+a Python object. You can then call `PyObject_GC_New` and `PyObject_GC_Track` for informing the
+Python GC to keep track of these objects.
+
+This seems very useful since it allows you to easily typecast between C structs and Python objects.
+
+Link:
+
+* https://docs.python.org/2/c-api/structures.html#c.PyObject_HEAD
 
 General Links:
 
