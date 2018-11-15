@@ -1,0 +1,29 @@
+---
+title: Notes on C++
+date: 2018-10-01T11:37:33+09:00
+---
+
+Some things that strike me as peculiar when using C++.
+
+## Use of const
+
+The `const` keyword can be used for declaring a variable as immutable when it is being
+used/returned from a function or for indicating that a function does not make any
+modifications to the values that contained within a class or to the arguments that
+are passed to it. The latter behaviour is called const correctness. It can be specified
+in a function by making the function declaration like so:
+```
+int foo(int a) const; // <- notice the const at the end.
+```
+
+## Smart pointers
+
+Smart pointers are an interesting way of implementing the "Resource Acquisition is Initilization"
+idiom. In practical terms, the main principle of RAII is to give ownership of any heap-allocated 
+resource—for example, dynamically-allocated memory or system object handles—to a stack-allocated
+object whose destructor contains the code to delete or free the resource and also any associated 
+cleanup code.
+
+Links:
+
+* https://msdn.microsoft.com/en-us/library/hh279674.aspx

@@ -186,6 +186,12 @@ The iterator contains pairs of tuples. You can then create a list out of these t
 
 # Weird python keywords
 
+## nonlocal
+
+Allows a closure to access and modify variables outside of its immediate scope.
+
+Link: https://stackoverflow.com/questions/1261875/python-nonlocal-statement
+
 ## in keyword
 
 ### Inside if statements
@@ -324,6 +330,10 @@ Link: http://www.pythonforbeginners.com/super/working-python-super-function
 
 Over-ride the `__eq__` method.
 
+## Getting items
+
+The `[]` method can be used by over-riding the `__getitem__` method.
+
 # The Garbage Collector
 
 The Python interpreter maintains a count of references to each object in memory.
@@ -436,6 +446,41 @@ static PyObject * method_name(PyObject *self, PyObject *args) {}
 In the above example, the first arg `self` is a pointer to the Python instance that calls
 this method (Python class) and `*args` is an array of Python objects that contains the
 arguments.
+
+### Magic methods
+
+Magic methods like `__getitem__` need to be implmented separately using some different keywords.
+The `sq_item` parameter needs to be a particular C function for it to function as the `[]`
+operator on an object. You need to implment functions for the PySequence protocol.
+
+Links:
+
+* https://docs.python.org/3/c-api/typeobj.html#c.PySequenceMethods.sq_item
+* https://docs.python.org/3/c-api/object.html#c.PyObject_GetItem
+
+### PyMappingMethods
+
+A lot of the information about a type is stored in a type called PyTypeObject. This struct
+contains a field called `tp_mapping` that stores function pointers for various functions that
+implement the mapping protocol for Python.
+
+It basically helps to implement various 'array-like' functions like `len()` and the `[]` operator
+on objects.
+
+In order to implement the `[]` operator, you need to implement the function `mp_subscript` 
+that will be called by the `PyObject_GetItem()` function that implements the `__getitem__`
+magic function. This is like implementing the `[]` function in Ruby. The function that you
+implement must have the same prototype as `PyObject_GetItem()`:
+```
+PyObject* PyObject_GetItem(PyObject *o, PyObject *key)
+```
+In the above function, `o` is the calling object (like `self`) and `key` is what is passed
+into `[]`. So it would read like `o[key]`.
+
+Links:
+
+* https://docs.python.org/3/c-api/typeobj.html
+* https://docs.python.org/3/c-api/typeobj.html#mapping-structs
 
 ## Class methods
 

@@ -64,14 +64,11 @@ scanning in C for performance reasons.
 
 All functions should be defined as `static`.
 
-### Other functions
+### bang and boolean methods
 
-You will usually need other C functions for various tasks when writing extensions. The names
-for these functions should begin with the top-level namespace that is defined for your Ruby
-library. For example, if you have a library `Nokogiri`:
-```
-
-```
+Ruby supports method names ending in bang (`String#chomp!`) and boolean methods
+ending in question mark (`Array#empty?`). The corresponding function in C will
+end with `_bang` and `_qmark` respectively.
 
 ### Struct definitions
 
@@ -130,6 +127,12 @@ Links:
 Macros should be `ALL_CAPITAL_WITH_SNAKE_CASE`.
 
 ## C APIs
+
+Some important features of C APIs that will be exposed to other extensions of other
+Ruby gems:
+
+* API functions or any indirect functions that they call should never raise Ruby errors.
+* Error conditions should be indicated by a numerical value. Ideally
 
 ## Internal Ruby objects for C extensions
 
