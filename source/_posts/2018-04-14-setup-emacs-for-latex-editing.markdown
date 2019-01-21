@@ -228,6 +228,14 @@ The `docview-mode` can be used for previewing a PDF file from within emacs. This
 with emacs 24. Put the line `(setq doc-view-continuous 1)` in your init file so that you can
 scroll through PDFs seamlessly.
 
+## Writing posters using a0poster
+
+a0poster is a package for writing scientific posters.
+
+### a0poster protips
+
+
+
 # Resources
 
 * [Using auctex with emacs](https://piotrkazmierczak.com/2010/emacs-as-the-ultimate-latex-editor/) 
@@ -240,3 +248,4 @@ scroll through PDFs seamlessly.
 * [algorithmicx package with latex.](https://tex.stackexchange.com/questions/29429/how-to-use-algorithmicx-package)
 * [Comparison between various algorithm environments.](https://tex.stackexchange.com/questions/229355/algorithm-algorithmic-algorithmicx-algorithm2e-algpseudocode-confused)
 * [Nice looking empty set.](https://tex.stackexchange.com/questions/22798/nice-looking-empty-set)
+* [Blog post explaining emacs with auctex](https://tex-talk.net/2012/08/tex-and-gnu-emacs-a-simpletons-journey/).

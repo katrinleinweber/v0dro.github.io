@@ -17,4 +17,10 @@ mpi_debug: mpi_types.o $(SOURCES)
     mpirun -np 2 xterm -e gdb ./a.out
 ```
 
-You can then call `run` inside gdb for each process. [This stackoverflow answer](https://stackoverflow.com/questions/329259/how-do-i-debug-an-mpi-program) provides more insights into this.
+You can then call `run` inside gdb for each process. [This stackoverflow answer](https://stackoverflow.com/questions/329259/how-do-i-debug-an-mpi-program) provides more insights into this. Basically
+just use the `-ex` argument right after the `gdb` command.
+
+For example:
+```
+mpirun -np 4 xterm -e gdb -ex="run" --args ./a.out
+```
