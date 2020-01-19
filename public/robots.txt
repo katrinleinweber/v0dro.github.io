@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: 
-
-Sitemap: http://v0dro.github.io/sitemap.xml 

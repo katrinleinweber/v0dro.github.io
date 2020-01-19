@@ -1,6 +1,0 @@
----
-layout: post
-title: "Super Awesome Stuff"
-date: 2014-03-13T15:20:00Z
----
-
