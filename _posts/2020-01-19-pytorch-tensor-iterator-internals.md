@@ -21,20 +21,26 @@ date: 2020-01-19 16:00 +0900
 
 # Introduction
 
-The [`TensorIterator`](https://github.com/pytorch/pytorch/blob/master/aten/src/ATen/native/TensorIterator.cpp)
-C++ class within pytorch is a complex yet useful class that
+Pytorch is a massive
+codebase (approx. 12 GB after taking into account the build and generated files), and having
+a method for iterating over tensors in a very efficient manner that is independent of
+data type, dimension, striding and hardware is a critical feature that can lead to a very
+massive simplification of the codebase and make distributed development much faster and
+smoother. The [`TensorIterator`](https://github.com/pytorch/pytorch/blob/master/aten/src/ATen/native/TensorIterator.cpp) C++ class within pytorch is a complex yet useful class that
 is used for iterating over the elements of a tensor over any dimension and implicitly
-parallelizing various operations in a device independent manner. It does this through
+parallelizing various operations in a device independent manner.
+
+It does this through
 a C++ API that is independent of type and device of the tensor, freeing the programmer
 of having to worry about the datatype or device when writing iteration logic for pytorch
-tensors.
+tensors. For those coming from the numpy universe, `NpyIter` is a close cousin of `TensorIterator`.
 
 This post is deep dive into the working of `TensorIterator` and how it works, and is
 an essential part of learning to contribute to the pytorch codebase since iterations
 over tensors in the C++ codebase are extremly commonplace. This post is aimed at someone
 who wants to contribute to pytorch, and you should be atleast familiar with some of the
 basic terminologies of the pytorch codebase that can be found in Edward Yang's 
-[blog post](http://blog.ezyang.com/2019/05/pytorch-internals/).
+[blog post](http://blog.ezyang.com/2019/05/pytorch-internals/**.
 
 # History of TensorIterator
 
