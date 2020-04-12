@@ -162,7 +162,7 @@ df = Daru::DataFrame.from_csv 'music_data.tsv', col_sep: "\t"
 
 ```
 
-{%img center /images/daru1/create_music_df.png 'Create a DataFrame from a TSV file.'%}
+![/assets//images/daru1/create_music_df.png][Create a DataFrame from a TSV file.]
 
 As you can see the *timestamp* field is in a somewhat non-Ruby format which is pretty difficult for the default Time class to understand, so we destructively map time zone information (IST in this case) and then change every *timestamp* string field into a Ruby _Time_ object, so that operations on time can be easily performed.
 
@@ -173,7 +173,7 @@ Notice the syntax for referencing a particular vector. Use 'row' for referencing
 df.timestamp.recode! { |ts| ts += "+5:30"}
 
 ```
-{%img center /images/daru1/dmap_vector.png 'Destructively map a given vector.'%}
+![/assets//images/daru1/dmap_vector.png][Destructively map a given vector.]
 
 ``` ruby
 
@@ -185,7 +185,7 @@ end
 
 ```
 
-{%img center /images/daru1/df_row_map.png center 'Map all rows of a DataFrame.'%}
+![/assets//images/daru1/df_row_map.png][Map all rows of a DataFrame.]
 
 #### Basic Querying
 
@@ -193,7 +193,7 @@ A bunch of rows can be selected by specifying a range:
 
 `df.row[900..923]`
 
-{%img center /images/daru1/range_row_access.png center 'Accessing rows with a range' %}
+![/assets//images/daru1/range_row_access.png][Accessing rows with a range]
 
 #### Data Analysis
 
@@ -205,13 +205,13 @@ Lets dive deeper by actually trying to extract something useful from the data th
 artists = df.group_by(:artname).size
 ```
 
-{%img center /images/daru1/get_max_artists.png 'Create a vector of artist names vs number of times they appear.'%}
+![/assets//images/daru1/get_max_artists.png][Create a vector of artist names vs number of times they appear.]
 
 To get the maximum value out of these, use `#max_index`. This will return a Vector which has the max:
 
 `count.max_index`
 
-{%img center /images/daru1/artists_max.png 'Obtain the most heard artist.' %}
+![/assets//images/daru1/artists_max.png][Obtain the most heard artist.]
 
 #### Plotting
 
@@ -230,7 +230,7 @@ top_ten.plot type: :bar do |plt|
 end
 ```
 
-{%img center /images/daru1/plot_top_ten.png 'Top ten artists plotted.'%}
+![/assets//images/daru1/plot_top_ten.png][Top ten artists plotted.]
 
 More examples can be found in [the notebooks section of the daru README](https://github.com/v0dro/daru#notebooks).
 

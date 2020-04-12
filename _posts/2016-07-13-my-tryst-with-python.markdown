@@ -57,7 +57,7 @@ while all_elements_have_not_been_checked
 ```
 
 This GIF from [Wikipedia](https://en.wikipedia.org/wiki/Insertion_sort) explains it pretty well:
-{%img center /images/tryst_with_python/insertion_sort.gif 'Insertion sort' %}
+![/assets//images/tryst_with_python/insertion_sort.gif][Insertion sort]
 
 Here's my python script. Python experts are welcome to suggest edits to make it faster/smaller.
 ``` python

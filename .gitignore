@@ -24,3 +24,4 @@ test/_templates
 test/_posts
 test/_layouts
 .jekyll-metadata
+.jekyll-cache

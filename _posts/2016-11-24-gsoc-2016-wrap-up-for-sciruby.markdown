@@ -30,12 +30,12 @@ The GSOC 2016 mentor's summit was fantastic. It was great meeting all the contri
 
 Here are some photos that I took at the summit:
 
-{%img /images/gsoc_summit/1.JPG 'ID card'%}
+![/assets//images/gsoc_summit/1.JPG][ID card]
 
-{%img /images/gsoc_summit/2.JPG 'A visit to the Computer History Museum'%}
+![/assets//images/gsoc_summit/2.JPG][A visit to the Computer History Museum]
 
-{%img /images/gsoc_summit/3.JPG 'The (now discontinued) self driving car'%}
+![/assets//images/gsoc_summit/3.JPG][The (now discontinued) self driving car]
 
-{%img /images/gsoc_summit/4.JPG 'Chocolate table at the GSOC summit'%}
+![/assets//images/gsoc_summit/4.JPG][Chocolate table at the GSOC summit]
 
-{%img /images/gsoc_summit/5.JPG 'Attendees from India'%}
+![/assets//images/gsoc_summit/5.JPG][Attendees from India]

@@ -122,7 +122,7 @@ df.sort([:a,:d],
 )
 ```
 
-{%img center /images/daru2/sorted_df.png 'Hierarchically sorted DataFrame' %}
+![/assets//images/daru2/sorted_df.png][Hierarchically sorted DataFrame]
 
 Vector objects also have a similar sorting method implemented. Check the docs for more details. Indexing is preserved while sorting of both DataFrame and Vector.
 
@@ -141,7 +141,7 @@ df.plot type: :line, x: :a, y: :b do |p,d|
   d.color "green"
 end
 ```
-{%img center /images/daru2/line_graph.png 'Line Graph From DataFrame'%}
+![/assets//images/daru2/line_graph.png][Line Graph From DataFrame]
 
 As you can see, the `#plot` function exposes the `Nyaplot::Plot` and `Nyaplot::Diagram` objects to user after populating them with the relevant data. So the new interface lets experienced users utilize the full power of nyaplot but keeps basic plotting very simple to use for new users or for quick and dirty visualization needs. Unfortunately for now, until a viable solution to interfacing with nyaplot is found, you will need to use the nyaplot API directly.
 
@@ -172,7 +172,7 @@ To calculate the mean of numeric vectors:
 df.mean
 ```
 
-{%img center /images/daru2/df_mean.png 'Calculate Mean of Numeric Vectors' %}
+![/assets//images/daru2/df_mean.png][Calculate Mean of Numeric Vectors]
 
 Apart from that you can use the `#describe` method to calculate many statistical features of numeric Vectors in one shot and see a summary of statistics for numerical vectors in the DataFrame that is returned. For example,
 
@@ -181,7 +181,7 @@ Apart from that you can use the `#describe` method to calculate many statistical
 df.describe
 ```
 
-{%img center /images/daru2/df_describe.png 'Describe Multiple Statistics in One Shot'%}
+![/assets//images/daru2/df_describe.png][Describe Multiple Statistics in One Shot]
 
 The covariance and correlation coeffiecients between the numeric vectors can also be found with `#cov` and `#corr`
 
@@ -237,7 +237,7 @@ df_mi = Daru::DataFrame.new([
     vector_arry2], order: order_mi, index: multi_index)
 ```
 
-{%img center /images/daru2/multi_index_table.png 'DataFrame with hierarchical indexing' %}
+![/assets//images/daru2/multi_index_table.png][DataFrame with hierarchical indexing]
 
 Selecting a top level index from the hierarchy will select all the rows under that name, and return a new DataFrame with just that much data and indexes.
 
@@ -246,7 +246,7 @@ Selecting a top level index from the hierarchy will select all the rows under th
 df_mi.row[:a]
 ```
 
-{%img center /images/daru2/multi_index_partial.png 'Partial Selection Of Multi Indexed DataFrame'%}
+![/assets//images/daru2/multi_index_partial.png][Partial Selection Of Multi Indexed DataFrame]
 
 Alternatively passing the entire tuple will return just that row as a `Daru::Vector`, indexed according to the column index.
 
@@ -254,7 +254,7 @@ Alternatively passing the entire tuple will return just that row as a `Daru::Vec
 
 df_mi.row[:a, :one,:bar]
 ```
-{%img center /images/daru2/multi_index_exact.png 'Selecting A Single Row From A Multi Indexed DataFrame' %}
+![/assets//images/daru2/multi_index_exact.png][Selecting A Single Row From A Multi Indexed DataFrame]
 
 Hierachical indexing is especially useful when aggregating or splitting data, or generating data summaries as we'll see in the following examples.
 
@@ -340,7 +340,7 @@ The `Daru::Core::GroupBy` object contains a bunch of methods for creating summar
 
 grouped.mean
 ```
-{%img center /images/daru2/group_by_mean.png 'Aggregating by Mean After Grouping' %}
+![/assets//images/daru2/group_by_mean.png][Aggregating by Mean After Grouping]
 
 A hierarchichally indexed DataFrame is returned. Check the `GroupBy` docs for more aggregation methods.
 
@@ -350,7 +350,7 @@ You can generate an excel-style pivot table with the `#pivot_table` function. Th
 
 To demonstrate with an example, consider [this CSV file on sales data](https://github.com/v0dro/daru/blob/master/spec/fixtures/sales-funnel.csv).
 
-{%img center /images/daru2/pivot_table_data.png 'Data For Pivot Table Demo' %}
+![/assets//images/daru2/pivot_table_data.png][Data For Pivot Table Demo]
 
 To look at the data from the point of view of the manager and rep:
 
@@ -359,7 +359,7 @@ To look at the data from the point of view of the manager and rep:
 sales.pivot_table index: [:manager, :rep]
 ```
 
-{%img center /images/daru2/pivot_table_index.png 'Data Pivoted on Index Only.' %}
+![/assets//images/daru2/pivot_table_index.png][Data Pivoted on Index Only.]
 
 You can see that the pivot table has summarized the data and grouped it according to the manager and representative.
 
@@ -370,7 +370,7 @@ To see the sales broken down by the products:
 sales.pivot_table(index: [:manager,:rep], values: :price, vectors: [:product], agg: :sum)
 ```
 
-{%img center /images/daru2/pivoted_data.png 'Data Pivoted to Reflect Sales' %}
+![/assets//images/daru2/pivoted_data.png][Data Pivoted to Reflect Sales]
 
 ## Compatibility with statsample
 
