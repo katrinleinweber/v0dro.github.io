@@ -37,11 +37,11 @@ Along the way, we saw the monolithic Nandi statue on the left, and [Matanga hill
 
 A flight of steps lead to a grand entrance which opens at the Achyutraya Temple. This temple was build by the successor of King Krishnadevaraya, Achyuta Deva Raya, and is a temple to Lord Venkateshwara, but its ruins are popularly reffered to by the name of its patron. 
 
-{%img assets/images/hampi-bengaluru-allepy/achyutraya_temple.JPG 'Achyutraya Temple'%}
+![/assets//images/hampi-bengaluru-allepy/achyutraya_temple.JPG][Achyutraya Temple]
 
 After walking over some huge rocks by the river, we reached the King's Balance, a stone weighing scale where the King would be weighed against gold, which would then be given away to the priests. We then (finally) reached the Vitthal Temple.
 
-{%img /images/hampi-bengaluru-allepy/vitthal_front.JPG 'The Sun Chariot With The Vitthal Temple In The Background'%}
+![/assets//images/hampi-bengaluru-allepy/vitthal_front.JPG][The Sun Chariot With The Vitthal Temple In The Background]
 
 The Vithhal Temple is probably one of the grandest in Hampi and possibly in all of India. It is housed inside
 a massive complex with ornately carved walls, entrances and pillars. The complex houses five mantapas, 4 in
@@ -54,7 +54,7 @@ so the sound is fairly diminished now.
 
 The central mantap houses an inner temple, where the actual idols were kept and worshipped. The original idols of Vitthal and Rukumai were taken to Pandharpur in Maharashtra during the invasion of Vijaynagar. One unique feature  of the Vitthal temple is that the place where one performs ['pradakshina'](http://en.wikipedia.org/wiki/Parikrama) is underground.
 
-{% img right /images/hampi-bengaluru-allepy/underground_parikrama.JPG 300 500 'The Underground Pradakshina Path' %}
+![/assets//images/hampi-bengaluru-allepy/underground_parikrama.JPG][The Underground Pradakshina Path]
 
 There are tiny inlets for light in the roof, which reflects off a stream of water on the floor, which in turn provides
 illumination for the entire chamber.

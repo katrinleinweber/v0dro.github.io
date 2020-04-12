@@ -21,6 +21,7 @@ gem "minima", "~> 2.0"
 group :jekyll_plugins do
   gem "jekyll-feed"
   gem "jekyll-compose"
+  gem "kramdown-syntax-coderay"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -25,7 +25,7 @@ rng = Distribution::Normal.rng
 index  = Daru::DateTimeIndex.date_range(:start => '2012-4-2', :periods => 1000, :freq => 'D')
 vector = Daru::Vector.new(1000.times.map {rng.call}, index: index)
 ```
-{% img center /images/daru_time_series/simple_vector.png 'A Simple Vector indexed on DateTimeIndex' %}
+![/assets//images/daru_time_series/simple_vector.png][A Simple Vector indexed on DateTimeIndex]
 
 In the above code, the `DateTimeIndex.date_range` function is creating a `DateTimeIndex` starting from a particular date and spanning for 1000 periods, with a frequency of 1 day between period. For a complete coverage of DateTimeIndex see [this]() notebook. For an introduction to the date offsets used by daru see [this blog post](http://v0dro.github.io/blog/2015/07/27/date-offsets-in-daru/).
 
@@ -72,7 +72,7 @@ rolling = vector.rolling_mean 60
 
 rolling.tail
 ```
-{% img center /images/daru_time_series/rolling_mean.png 'Rolling Mean Tail' %}
+![/assets//images/daru_time_series/rolling_mean.png][Rolling Mean Tail]
 
  
 This time series can be very easily plotted with its rolling mean by using the [GnuplotRB](https://github.com/dilcom/gnuplotrb) gem:
@@ -86,7 +86,7 @@ GnuplotRB::Plot.new(
   [rolling, with: 'lines', title: 'Rolling Mean'])
 ```
 
-{% img center /images/daru_time_series/cumsum_rolling_line_graph.png 'Line Graph of Rolling mean and cumsum' %}
+![/assets//images/daru_time_series/cumsum_rolling_line_graph.png][Line Graph of Rolling mean and cumsum]
 
 These methods are also available on DataFrame, which results in calling them on each of numeric vectors:
 
@@ -103,7 +103,7 @@ df = Daru::DataFrame.new({
   c: 1000.times.map { rng.call }
 }, index: index)
 ```
-{% img center /images/daru_time_series/dataframe.png 'DateTime indexed DataFrame' %}
+![/assets//images/daru_time_series/dataframe.png][DateTime indexed DataFrame]
 
 
 In a manner similar to that done with Vectors above, we can easily plot each Vector of the DataFrame with GNU plot:
@@ -124,7 +124,7 @@ r_sum.each_vector_with_index do |vec,n|
 end
 GnuplotRB::Multiplot.new(*plots, layout: [3,1], title: 'Rolling sums')
 ```
-{% img center /images/daru_time_series/dataframe_plot.png 'Plotting the DataFrame' %}
+![/assets//images/daru_time_series/dataframe_plot.png][Plotting the DataFrame]
 
 ## Usage with statsample-timeseries
 

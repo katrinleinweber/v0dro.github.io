@@ -46,7 +46,7 @@ One thing that puzzled me when I started off with regression was the purpose of 
 
 The logistic graph generally looks like this:
 
-{% img center /images/glm/logistic.gif "Generic Graph of Logistic Regression." %}
+![/assets//images/glm/logistic.gif][Generic Graph of Logistic Regression.]
 
 #### Normal Regression
 
@@ -56,7 +56,7 @@ Normally distributed data is symmetric about the center and its mean is equal to
 
 A normal regression graph generally looks like this:
   
-{% img center /images/glm/normal.png "Generic Graph of Normal Regression" %}
+![/assets//images/glm/normal.png][Generic Graph of Normal Regression]
 
 #### Poisson Regression
 
@@ -68,7 +68,7 @@ The meaning of the co-efficient in the case of poisson is "for increase 1 of _x_
 
 A poisson graph looks something like this:
   
-{% img center /images/glm/poisson.png "Graph of Poisson Regression" %}
+![/assets//images/glm/poisson.png][Graph of Poisson Regression]
 
 #### Probit Regression
 
@@ -82,7 +82,7 @@ The coefficient of _x_ is interpreted as "one unit change in _x_ leads to a chan
 
 Looking at the graph of probit, one can see the similarities between logit and probit:
   
-{% img center /images/glm/probit.png %}
+![/assets//images/glm/probit.png][label]
 
 ## Finding the coefficients of a GLM
 
